@@ -1,21 +1,21 @@
 { config, pkgs, ... }:
 
 let
-  hardware =
-    fetchTarball
+  hardware = fetchTarball
       https://github.com/NixOS/nixos-hardware/archive/master.tar.gz;
-  unstable =
-    fetchTarball
+  unstable = fetchTarball
       https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz;
-  moz =
-    import (fetchTarball
-      https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz);
+  moz = fetchTarball
+      https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz;
+  homeManager = fetchTarball
+      https://github.com/rycee/home-manager/archive/master.tar.gz;
 in
 {
   imports =
     [ "${hardware}/common/cpu/intel"
       "${hardware}/common/pc/ssd"
       "${hardware}/common/pc/laptop"
+      "${homeManager}/nixos"
       ./hardware-configuration.nix
     ];
 
@@ -23,11 +23,12 @@ in
     packageOverrides = pkgs: {
       unstable = import unstable {
         config = config.nixpkgs.config;
-        overlays = [ moz ];
+        overlays = [ (import moz) ];
       };
     };
   };
 
+  boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.tmpOnTmpfs = true;
@@ -112,6 +113,7 @@ in
     polybar
     qutebrowser
     ranger
+    niv
     ripgrep
     ripgrep-all
     rofi
@@ -121,7 +123,14 @@ in
     texlive.combined.scheme-full
     w3m
     weechat
+    zlib
+    zopfli
   ];
+
+  environment.variables = {
+    VISUAL = "nvim";
+    EDITOR = "nvim";
+  };
 
   programs.ssh.startAgent = true;
 
@@ -129,6 +138,15 @@ in
   services.interception-tools.enable = true;
   services.system-config-printer.enable = true;
   services.printing.enable = true;
+
+  location.provider = "geoclue2";
+  services.redshift = {
+    enable = true;
+    temperature = {
+      day = 6500;
+      night = 2300;
+    };
+  };
 
   sound.enable = true;
   hardware.pulseaudio.enable = true;
@@ -154,7 +172,12 @@ in
     extraGroups = [ "wheel" "networkmanager" "tty" "video" "audio" "disk" ]; # Enable ‘sudo’ for the user.
   };
 
+  home-manager.users.hazel = { pkgs, ... }: {
+
+  };
+
   system.autoUpgrade.enable = true;
+  nix.optimise.automatic = true;
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
