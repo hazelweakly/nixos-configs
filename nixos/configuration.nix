@@ -9,6 +9,10 @@ let
       https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz;
   homeManager = fetchTarball
       https://github.com/rycee/home-manager/archive/master.tar.gz;
+  hie = import (fetchTarball
+      https://github.com/infinisil/all-hies/tarball/master) {};
+  ghcide = import (fetchTarball
+      https://github.com/hercules-ci/ghcide-nix/tarball/master) {};
 in
 {
   imports =
@@ -16,6 +20,7 @@ in
       "${hardware}/common/pc/ssd"
       "${hardware}/common/pc/laptop"
       "${homeManager}/nixos"
+      ./cachix.nix 
       ./hardware-configuration.nix
     ];
 
@@ -90,6 +95,10 @@ in
     nodejs
     universal-ctags
     kitty
+
+    cachix
+    (hie.selection { selector = p: { inherit (p) ghc865; }; })
+    ghcide.ghcide-ghc865
 
     bat
     bspwm
