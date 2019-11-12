@@ -17,15 +17,16 @@ let
     { };
 in {
   imports = [
+    ./hardware-configuration.nix
     "${hardware}/common/cpu/intel"
     "${hardware}/common/pc/ssd"
     "${hardware}/common/pc/laptop"
     "${homeManager}/nixos"
     ./cachix.nix
-    ./hardware-configuration.nix
   ];
 
   nixpkgs.config = {
+    allowUnfree = true;
     packageOverrides = pkgs: {
       unstable = import unstable {
         config = config.nixpkgs.config;
@@ -54,7 +55,6 @@ in {
   time.timeZone = "America/Los_Angeles";
 
   nix.trustedUsers = [ "hazel" ];
-  nixpkgs.config.allowUnfree = true;
 
   fonts = {
     fonts = with pkgs.unstable; [
@@ -73,6 +73,14 @@ in {
     fontconfig.useEmbeddedBitmaps = true;
   };
 
+  # Eventually most of this will migrate to home-manager
+  # There exists a natural tension between home-manager and configuration.nix
+  # where both want to manage everything if they can but I'd like to have as
+  # much of my config work with root and sudo as possible (eg neovim plugins,
+  # zsh, etc)
+  # I think the best way forward for that will to be to pull the home-manager
+  # stuff out to a couple different files and import the common stuff into a
+  # users.root as well
   environment.systemPackages = with pkgs.unstable; [
     bc
     lsd
@@ -113,6 +121,7 @@ in {
     nix-prefetch-git
     nix-prefetch-scripts
     cabal-install
+    direnv
 
     python3
     bat
@@ -154,6 +163,8 @@ in {
   environment.variables = {
     VISUAL = "nvim";
     EDITOR = "nvim";
+    # Scroll with a toushcreen in firefox
+    MOZ_USE_XINPUT2 = "1";
   };
 
   programs.ssh.startAgent = true;
@@ -182,7 +193,7 @@ in {
   services.xserver.libinput = {
     naturalScrolling = true;
     disableWhileTyping = true;
-    accelSpeed = "0.75";
+    accelSpeed = "0.5";
   };
 
   services.xserver.displayManager.slim = {
@@ -200,9 +211,44 @@ in {
     extraGroups = [ "wheel" "networkmanager" "tty" "video" "audio" "disk" ];
   };
 
-  home-manager.users.hazel = { pkgs, ... }:
-    {
+  # Use pkgs from system closure by ignoring input args
+  home-manager.users.hazel = { ... }:
+    let
+      lorri = import (fetchTarball {
+        url = "https://github.com/target/lorri/archive/rolling-release.tar.gz";
+      }) { };
 
+      path = with pkgs.unstable;
+        lib.makeSearchPath "bin" [ nix gnutar git mercurial ];
+    in {
+
+      home.packages = [ lorri ];
+
+      systemd.user.sockets.lorri = {
+        Unit = { Description = "lorri build daemon"; };
+        Socket = { ListenStream = "%t/lorri/daemon.socket"; };
+        Install = { WantedBy = [ "sockets.target" ]; };
+      };
+
+      systemd.user.services.lorri = {
+        Unit = {
+          Description = "lorri build daemon";
+          Documentation = "https://github.com/target/lorri";
+          ConditionUser = "!@system";
+          Requires = "lorri.socket";
+          After = "lorri.socket";
+          RefuseManualStart = true;
+        };
+
+        Service = {
+          ExecStart = "${lorri}/bin/lorri daemon";
+          PrivateTmp = true;
+          ProtectSystem = "strict";
+          WorkingDirectory = "%h";
+          Restart = "on-failure";
+          Environment = "PATH=${path} RUST_BACKTRACE=1";
+        };
+      };
     };
 
   system.autoUpgrade.enable = true;
