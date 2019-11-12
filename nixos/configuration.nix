@@ -2,27 +2,28 @@
 
 let
   hardware = fetchTarball
-      https://github.com/NixOS/nixos-hardware/archive/master.tar.gz;
+    "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz";
   unstable = fetchTarball
-      https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz;
+    "https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz";
   moz = fetchTarball
-      https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz;
-  homeManager = fetchTarball
-      https://github.com/rycee/home-manager/archive/master.tar.gz;
-  hie = import (fetchTarball
-      https://github.com/infinisil/all-hies/tarball/master) {};
-  ghcide = import (fetchTarball
-      https://github.com/hercules-ci/ghcide-nix/tarball/master) {};
-in
-{
-  imports =
-    [ "${hardware}/common/cpu/intel"
-      "${hardware}/common/pc/ssd"
-      "${hardware}/common/pc/laptop"
-      "${homeManager}/nixos"
-      ./cachix.nix 
-      ./hardware-configuration.nix
-    ];
+    "https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz";
+  homeManager =
+    fetchTarball "https://github.com/rycee/home-manager/archive/master.tar.gz";
+  hie =
+    import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master")
+    { };
+  ghcide = import
+    (fetchTarball "https://github.com/hercules-ci/ghcide-nix/tarball/master")
+    { };
+in {
+  imports = [
+    "${hardware}/common/cpu/intel"
+    "${hardware}/common/pc/ssd"
+    "${hardware}/common/pc/laptop"
+    "${homeManager}/nixos"
+    ./cachix.nix
+    ./hardware-configuration.nix
+  ];
 
   nixpkgs.config = {
     packageOverrides = pkgs: {
@@ -55,21 +56,28 @@ in
   nix.trustedUsers = [ "hazel" ];
   nixpkgs.config.allowUnfree = true;
 
-  fonts.fonts = with pkgs.unstable; [
-    noto-fonts
-    noto-fonts-cjk
-    noto-fonts-emoji
-    liberation_ttf
-    fira-code
-    fira-code-symbols
-    mplus-outline-fonts
-    dina-font
-    proggyfonts
-  ];
+  fonts = {
+    fonts = with pkgs.unstable; [
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
+      liberation_ttf
+      fira-code
+      fira-code-symbols
+      mplus-outline-fonts
+      dina-font
+      proggyfonts
+    ];
+
+    fontconfig.penultimate.enable = true;
+    fontconfig.useEmbeddedBitmaps = true;
+  };
 
   environment.systemPackages = with pkgs.unstable; [
     bc
     lsd
+    lastpass-cli
+    google-chrome-beta
     firefox-devedition-bin
     # Wait for https://github.com/mozilla/nixpkgs-mozilla/issues/199 to be fixed
     # latest.firefox-nightly-bin
@@ -80,11 +88,10 @@ in
     neovim
     networkmanager
     nix-index
-    nix-prefetch-git
-    nix-prefetch-scripts
     wget
     which
     zsh
+    nixfmt
 
     aspell
     aspellDicts.en
@@ -92,14 +99,22 @@ in
     ncurses
 
     yarn
-    nodejs
+    nodejs-12_x
+    nodePackages.node2nix
     universal-ctags
     kitty
 
     cachix
     (hie.selection { selector = p: { inherit (p) ghc865; }; })
     ghcide.ghcide-ghc865
+    haskellPackages.turtle
+    haskellPackages.hoogle
+    cabal2nix
+    nix-prefetch-git
+    nix-prefetch-scripts
+    cabal-install
 
+    python3
     bat
     bspwm
     chromium
@@ -111,7 +126,6 @@ in
     ghc
     gnumake
     gnupg
-    haskellPackages.turtle
     highlight
     libnotify
     libxml2
@@ -128,6 +142,7 @@ in
     rofi
     scrot
     stack
+    # stack2nix
     sxhkd
     texlive.combined.scheme-full
     w3m
@@ -164,7 +179,11 @@ in
   services.xserver.layout = "us";
   services.xserver.xkbVariant = "altgr-intl";
 
-  services.xserver.libinput.naturalScrolling = true;
+  services.xserver.libinput = {
+    naturalScrolling = true;
+    disableWhileTyping = true;
+    accelSpeed = "0.75";
+  };
 
   services.xserver.displayManager.slim = {
     enable = true;
@@ -178,12 +197,13 @@ in
     isNormalUser = true;
     home = "/home/hazel";
     shell = pkgs.zsh;
-    extraGroups = [ "wheel" "networkmanager" "tty" "video" "audio" "disk" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "networkmanager" "tty" "video" "audio" "disk" ];
   };
 
-  home-manager.users.hazel = { pkgs, ... }: {
+  home-manager.users.hazel = { pkgs, ... }:
+    {
 
-  };
+    };
 
   system.autoUpgrade.enable = true;
   nix.optimise.automatic = true;
