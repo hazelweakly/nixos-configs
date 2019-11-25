@@ -30,7 +30,7 @@ in {
     packageOverrides = pkgs: {
       unstable = import unstable {
         config = config.nixpkgs.config;
-        overlays = [ (import moz) ];
+        overlays = [ (import moz) (import "${moz}/rust-src-overlay.nix") ];
       };
     };
   };
@@ -85,11 +85,12 @@ in {
     bc
     lsd
     lastpass-cli
-    google-chrome-beta
+    google-chrome
     firefox-devedition-bin
     # Wait for https://github.com/mozilla/nixpkgs-mozilla/issues/199 to be fixed
     # latest.firefox-nightly-bin
     latest.rustChannels.nightly.rust
+    binutils.bintools
     git
     htop
     home-manager
@@ -107,7 +108,7 @@ in {
     ncurses
 
     yarn
-    nodejs-12_x
+    nodejs-13_x
     nodePackages.node2nix
     universal-ctags
     kitty
@@ -165,9 +166,19 @@ in {
     EDITOR = "nvim";
     # Scroll with a toushcreen in firefox
     MOZ_USE_XINPUT2 = "1";
+    RUST_SRC_PATH = "${
+        (pkgs.unstable.latest.rustChannels.nightly.rust.override {
+          extensions = [ "rust-src" ];
+        })
+      }/lib/rustlib/src/rust/src";
   };
 
   programs.ssh.startAgent = true;
+  programs.zsh = {
+    enable = true;
+    enableCompletion = false;
+    promptInit = "";
+  };
 
   services.thermald.enable = true;
   services.interception-tools.enable = true;
@@ -223,6 +234,33 @@ in {
     in {
 
       home.packages = [ lorri ];
+
+      programs.git = {
+        enable = true;
+        userName = "hazelweakly";
+        userEmail = "hazel@theweaklys.com";
+        package = pkgs.gitAndTools.gitFull;
+        extraConfig = {
+          core = { pager = "diff-so-fancy | less --tabs=4 -RFX"; };
+          color = {
+            ui = true;
+            diff-highlight = {
+              oldNormal = "red bold";
+              oldHighlight = "red bold 52";
+              newNormal = "green bold";
+              newHighlight = "green bold 22";
+            };
+            diff = {
+              meta = "11";
+              frag = "magenta bold";
+              commit = "yellow bold";
+              old = "red bold";
+              new = "green bold";
+              whitespace = "red reverse";
+            };
+          };
+        };
+      };
 
       systemd.user.sockets.lorri = {
         Unit = { Description = "lorri build daemon"; };

@@ -4,6 +4,4 @@
 # solution.
 
 ln -s $PWD/nixos /etc
-
-mkdir -p $HOME/.config/nixpkgs
-# ln -s $PWD/home.nix $HOME/.config/nixpkgs/home.nix
+chown -R $USER. /etc/nixos
