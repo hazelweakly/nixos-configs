@@ -1,26 +1,18 @@
 { config, pkgs, ... }:
-
 let
-  hardware = fetchTarball
-    "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz";
-  unstable = fetchTarball
-    "https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz";
-  moz = fetchTarball
-    "https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz";
-  homeManager =
-    fetchTarball "https://github.com/rycee/home-manager/archive/master.tar.gz";
-  hie =
-    import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master")
-    { };
-  ghcide = import
-    (fetchTarball "https://github.com/hercules-ci/ghcide-nix/tarball/master")
-    { };
-in {
+  sources = import ./nix/sources.nix;
+  unstable = sources.nixpkgs;
+  moz = sources.nixpkgs-mozilla;
+  homeManager = sources.home-manager;
+  hie = sources.all-hies;
+  ghcide = sources.ghcide-nix;
+in
+  {
   imports = [
     ./hardware-configuration.nix
-    "${hardware}/common/cpu/intel"
-    "${hardware}/common/pc/ssd"
-    "${hardware}/common/pc/laptop"
+    "${sources.nixos-hardware}/common/cpu/intel"
+    "${sources.nixos-hardware}/common/pc/ssd"
+    "${sources.nixos-hardware}/common/pc/laptop"
     "${homeManager}/nixos"
     ./cachix.nix
   ];
@@ -57,17 +49,7 @@ in {
   nix.trustedUsers = [ "hazel" ];
 
   fonts = {
-    fonts = with pkgs.unstable; [
-      noto-fonts
-      noto-fonts-cjk
-      noto-fonts-emoji
-      liberation_ttf
-      fira-code
-      fira-code-symbols
-      mplus-outline-fonts
-      dina-font
-      proggyfonts
-    ];
+    fonts = with pkgs.unstable; [ noto-fonts noto-fonts-cjk noto-fonts-emoji ];
 
     fontconfig.penultimate.enable = true;
     fontconfig.useEmbeddedBitmaps = true;
@@ -90,10 +72,10 @@ in {
     # Wait for https://github.com/mozilla/nixpkgs-mozilla/issues/199 to be fixed
     # latest.firefox-nightly-bin
     latest.rustChannels.nightly.rust
+    # cargo-edit
     binutils.bintools
     git
     htop
-    home-manager
     neovim
     networkmanager
     nix-index
@@ -114,8 +96,8 @@ in {
     kitty
 
     cachix
-    (hie.selection { selector = p: { inherit (p) ghc865; }; })
-    ghcide.ghcide-ghc865
+    ((import hie {}).selection { selector = p: { inherit (p) ghc865; }; })
+    (import ghcide {}).ghcide-ghc865
     haskellPackages.turtle
     haskellPackages.hoogle
     cabal2nix
@@ -148,7 +130,6 @@ in {
     ranger
     niv
     ripgrep
-    ripgrep-all
     rofi
     scrot
     stack
@@ -215,20 +196,20 @@ in {
 
   services.xserver.desktopManager.plasma5.enable = true;
 
+  virtualisation.docker.enable = true;
+
   users.users.hazel = {
     isNormalUser = true;
     home = "/home/hazel";
     shell = pkgs.zsh;
-    extraGroups = [ "wheel" "networkmanager" "tty" "video" "audio" "disk" ];
+    extraGroups =
+      [ "wheel" "networkmanager" "tty" "video" "audio" "disk" "docker" ];
   };
 
   # Use pkgs from system closure by ignoring input args
   home-manager.users.hazel = { ... }:
     let
-      lorri = import (fetchTarball {
-        url = "https://github.com/target/lorri/archive/rolling-release.tar.gz";
-      }) { };
-
+      lorri = sources.lorri;
       path = with pkgs.unstable;
         lib.makeSearchPath "bin" [ nix gnutar git mercurial ];
     in {

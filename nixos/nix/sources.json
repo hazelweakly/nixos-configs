@@ -1,0 +1,86 @@
+{
+    "all-hies": {
+        "branch": "master",
+        "description": "Cached Haskell IDE Engine Nix builds for all GHC versions",
+        "homepage": "",
+        "owner": "infinisil",
+        "repo": "all-hies",
+        "rev": "8d9b0e770c8e2264ef4882623a205548d9fdaa03",
+        "sha256": "1lqvyn3as7wp4njdk4hl34qiwbnys192shv425jvw27014hgl3vy",
+        "type": "tarball",
+        "url": "https://github.com/infinisil/all-hies/archive/8d9b0e770c8e2264ef4882623a205548d9fdaa03.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "ghcide-nix": {
+        "branch": "master",
+        "description": "Nix installation for ghcide",
+        "homepage": "https://github.com/digital-asset/ghcide",
+        "owner": "hercules-ci",
+        "repo": "ghcide-nix",
+        "rev": "4f3e98f211f34698805eb7a3c5f7b4361d97f541",
+        "sha256": "0ffzf4h0qmvgpviy878czxfbn3cv3af9y4aj4cfdk8xi3lw8py67",
+        "type": "tarball",
+        "url": "https://github.com/hercules-ci/ghcide-nix/archive/4f3e98f211f34698805eb7a3c5f7b4361d97f541.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "home-manager": {
+        "branch": "master",
+        "description": "Manage a user environment using Nix",
+        "homepage": "",
+        "owner": "rycee",
+        "repo": "home-manager",
+        "rev": "ed9a6e34addd2a0fc6940af3ec8f0d8425ca299e",
+        "sha256": "0rc6c896w2hf2vqnrds4nvlrwmyibqsk731aakxg1rdmkz45mmmj",
+        "type": "tarball",
+        "url": "https://github.com/rycee/home-manager/archive/ed9a6e34addd2a0fc6940af3ec8f0d8425ca299e.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "lorri": {
+        "branch": "master",
+        "description": "Your project's nix-env",
+        "homepage": "",
+        "owner": "target",
+        "repo": "lorri",
+        "rev": "0a1730104d1767e9efd7502d93e39af45bf9c73b",
+        "sha256": "0sk1q6xicbmwpb58dhjnvpnmnwr8mjd690mnjpixxp6rcmzzg22g",
+        "type": "tarball",
+        "url": "https://github.com/target/lorri/archive/0a1730104d1767e9efd7502d93e39af45bf9c73b.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "nixos-hardware": {
+        "branch": "master",
+        "description": "A collection of NixOS modules covering hardware quirks.",
+        "homepage": "",
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "rev": "adecd1113c2d4137ef23237f9af450736fd8d2cc",
+        "sha256": "1k4zl5c0ak525japzxmddimzac1szhlwd83b7i4v24a32lbwhlkz",
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixos-hardware/archive/adecd1113c2d4137ef23237f9af450736fd8d2cc.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "nixpkgs": {
+        "branch": "nixos-unstable",
+        "description": "Nix Packages collection",
+        "homepage": null,
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "3140fa89c51233397f496f49014f6b23216667c2",
+        "sha256": "18p0d5lnfvzsyfah02mf6bi249990pfwnylwhqdh8qi70ncrk3f8",
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/3140fa89c51233397f496f49014f6b23216667c2.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "nixpkgs-mozilla": {
+        "branch": "master",
+        "description": "mozilla related nixpkgs (extends nixos/nixpkgs repo)",
+        "homepage": null,
+        "owner": "mozilla",
+        "repo": "nixpkgs-mozilla",
+        "rev": "d46240e8755d91bc36c0c38621af72bf5c489e13",
+        "sha256": "0icws1cbdscic8s8lx292chvh3fkkbjp571j89lmmha7vl2n71jg",
+        "type": "tarball",
+        "url": "https://github.com/mozilla/nixpkgs-mozilla/archive/d46240e8755d91bc36c0c38621af72bf5c489e13.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    }
+}
