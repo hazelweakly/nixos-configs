@@ -55,6 +55,10 @@ in
     fontconfig.useEmbeddedBitmaps = true;
   };
 
+  # TODO: Finish stripping pkgs of all this extra global stuff and stick more
+  # packages deeper in eg my zsh config necessitates `lsd` but nothing else
+  # does. Neovim requires things like hie, rust, etc.
+  #
   # Eventually most of this will migrate to home-manager
   # There exists a natural tension between home-manager and configuration.nix
   # where both want to manage everything if they can but I'd like to have as
@@ -80,9 +84,8 @@ in
     networkmanager
     nix-index
     wget
-    which
-    zsh
     nixfmt
+    calibre
 
     aspell
     aspellDicts.en
@@ -98,9 +101,6 @@ in
     cachix
     ((import hie {}).selection { selector = p: { inherit (p) ghc865; }; })
     (import ghcide {}).ghcide-ghc865
-    haskellPackages.turtle
-    haskellPackages.hoogle
-    cabal2nix
     nix-prefetch-git
     nix-prefetch-scripts
     cabal-install
@@ -108,11 +108,7 @@ in
 
     python3
     bat
-    bspwm
-    chromium
-    dunst
     fd
-    feh
     fzf
     gcc
     ghc
@@ -123,23 +119,13 @@ in
     libxml2
     mpv
     mupdf
-    ncdu
     pandoc
-    polybar
-    qutebrowser
     ranger
     niv
     ripgrep
-    rofi
-    scrot
     stack
-    # stack2nix
-    sxhkd
     texlive.combined.scheme-full
     w3m
-    weechat
-    zlib
-    zopfli
   ];
 
   environment.variables = {
