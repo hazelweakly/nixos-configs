@@ -1,33 +1,17 @@
-{ config, pkgs, ... }:
-let
+with {
+  pkgs = import ./nix { };
   sources = import ./nix/sources.nix;
-  unstable = sources.nixpkgs;
-  moz = sources.nixpkgs-mozilla;
-  homeManager = sources.home-manager;
-  hie = sources.all-hies;
-  ghcide = sources.ghcide-nix;
-in
-  {
+}; {
   imports = [
     ./hardware-configuration.nix
     "${sources.nixos-hardware}/common/cpu/intel"
     "${sources.nixos-hardware}/common/pc/ssd"
     "${sources.nixos-hardware}/common/pc/laptop"
-    "${homeManager}/nixos"
+    "${sources.home-manager}/nixos"
     ./cachix.nix
   ];
 
-  nixpkgs.config = {
-    allowUnfree = true;
-    packageOverrides = pkgs: {
-      unstable = import unstable {
-        config = config.nixpkgs.config;
-        overlays = [ (import moz) (import "${moz}/rust-src-overlay.nix") ];
-      };
-    };
-  };
-
-  boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.tmpOnTmpfs = true;
@@ -49,7 +33,7 @@ in
   nix.trustedUsers = [ "hazel" ];
 
   fonts = {
-    fonts = with pkgs.unstable; [ noto-fonts noto-fonts-cjk noto-fonts-emoji ];
+    fonts = with pkgs; [ noto-fonts noto-fonts-cjk noto-fonts-emoji ];
 
     fontconfig.penultimate.enable = true;
     fontconfig.useEmbeddedBitmaps = true;
@@ -67,7 +51,7 @@ in
   # I think the best way forward for that will to be to pull the home-manager
   # stuff out to a couple different files and import the common stuff into a
   # users.root as well
-  environment.systemPackages = with pkgs.unstable; [
+  environment.systemPackages = with pkgs; [
     bc
     lsd
     lastpass-cli
@@ -80,7 +64,19 @@ in
     binutils.bintools
     git
     htop
-    neovim
+
+    xmonad-with-packages
+
+    neovim-remote
+    nodePackages.neovim
+    python37Packages.pynvim
+    ((neovim.override { withNodeJs = true; }).passthru.unwrapped.overrideAttrs
+      (o: {
+        version = "master";
+        src = sources.neovim;
+        buildInputs = o.buildInputs ++ [ utf8proc ];
+      }))
+
     networkmanager
     nix-index
     wget
@@ -99,8 +95,10 @@ in
     kitty
 
     cachix
-    ((import hie {}).selection { selector = p: { inherit (p) ghc865; }; })
-    (import ghcide {}).ghcide-ghc865
+    ((import sources.all-hies { }).selection {
+      selector = p: { inherit (p) ghc865; };
+    })
+    (import sources.ghcide-nix { }).ghcide-ghc865
     nix-prefetch-git
     nix-prefetch-scripts
     cabal-install
@@ -129,12 +127,13 @@ in
   ];
 
   environment.variables = {
+    _JAVA_AWT_WM_NONREPARENTING = "1";
     VISUAL = "nvim";
     EDITOR = "nvim";
     # Scroll with a toushcreen in firefox
     MOZ_USE_XINPUT2 = "1";
     RUST_SRC_PATH = "${
-        (pkgs.unstable.latest.rustChannels.nightly.rust.override {
+        (pkgs.latest.rustChannels.nightly.rust.override {
           extensions = [ "rust-src" ];
         })
       }/lib/rustlib/src/rust/src";
@@ -164,23 +163,48 @@ in
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
-  services.xserver.enable = true;
-  services.xserver.layout = "us";
-  services.xserver.xkbVariant = "altgr-intl";
-
-  services.xserver.libinput = {
-    naturalScrolling = true;
-    disableWhileTyping = true;
-    accelSpeed = "0.5";
-  };
-
-  services.xserver.displayManager.slim = {
+  services.xserver = {
     enable = true;
-    autoLogin = true;
-    defaultUser = "hazel";
-  };
+    layout = "us";
+    xkbVariant = "altgr-intl";
+    autoRepeatDelay = 240;
+    autoRepeatInterval = 30;
 
-  services.xserver.desktopManager.plasma5.enable = true;
+    libinput = {
+      naturalScrolling = true;
+      disableWhileTyping = true;
+      accelSpeed = "0.5";
+    };
+
+    displayManager.sddm = {
+      enable = true;
+      autoLogin = {
+        enable = true;
+        user = "hazel";
+      };
+    };
+
+    desktopManager.plasma5.enable = true;
+
+    # TODO: Figure out how to get this done with
+    # keeping plasma because I'll lose too much time replicating plasma's setup
+    # wrt stuff like NetworkManager, printer, etc. *sigh* whatevs. The
+    # convenience is worth losing some street cred I suppose.
+
+    # desktopManager.default = "none";
+    # desktopManager.xterm.enable = false;
+    # windowManager.default = "xmonad";
+    # windowManager.xmonad = {
+    #   enable = true;
+    #   enableContribAndExtras = true;
+    #   haskellPackages = pkgs.unstable.haskellPackages;
+    #   config = /home/hazel/.config/xmonad/xmonad.hs;
+    # };
+    # displayManager.sessionCommands = lib.mkAfter ''
+    #   ${pkgs.unstable.xorg.xset}/bin/xset r rate 240 30
+    # '';
+
+  };
 
   virtualisation.docker.enable = true;
 
@@ -195,12 +219,38 @@ in
   # Use pkgs from system closure by ignoring input args
   home-manager.users.hazel = { ... }:
     let
-      lorri = sources.lorri;
-      path = with pkgs.unstable;
-        lib.makeSearchPath "bin" [ nix gnutar git mercurial ];
+      lorri = import sources.lorri { };
+      path = with pkgs; lib.makeSearchPath "bin" [ nix gnutar git mercurial ];
     in {
 
       home.packages = [ lorri ];
+
+      programs.rofi = {
+        enable = true;
+        font = "Pragmata Pro 11";
+        fullscreen = true;
+        extraConfig = ''
+          rofi.theme: ./onelight.rasi
+        '';
+      };
+
+      # home.file.".config/autostart/plasmashell.desktop".text = ''
+      #   [Desktop Entry]
+      #   Exec=
+      #   X-DBUS-StartupType=Unique
+      #   Name=Plasma Desktop Workspace
+      #   Type=Application
+      #   X-KDE-StartupNotify=false
+      #   X-DBUS-ServiceName=org.kde.plasmashell
+      #   OnlyShowIn=KDE;
+      #   X-KDE-autostart-phase=0
+      #   Icon=plasma
+      #   NoDisplay=true
+      # '';
+      home.file.".local/share/xmonad/touch".text = "";
+      # home.file.".config/plasma-workspace/env/set_window_manager.sh".text = ''
+      #   export KDEWM=/home/hazel/.local/share/xmonad/xmonad-x86_64-linux
+      # '';
 
       programs.git = {
         enable = true;
