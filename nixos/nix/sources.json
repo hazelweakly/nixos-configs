@@ -5,10 +5,10 @@
         "homepage": "",
         "owner": "infinisil",
         "repo": "all-hies",
-        "rev": "8d9b0e770c8e2264ef4882623a205548d9fdaa03",
-        "sha256": "1lqvyn3as7wp4njdk4hl34qiwbnys192shv425jvw27014hgl3vy",
+        "rev": "c6e93d2d641ef48703eabed8ec5cde3d774cb0e5",
+        "sha256": "08nikzynnp9nkjixplnmqk7yp2nc4w5wp3id4av8hy835im7vjb6",
         "type": "tarball",
-        "url": "https://github.com/infinisil/all-hies/archive/8d9b0e770c8e2264ef4882623a205548d9fdaa03.tar.gz",
+        "url": "https://github.com/infinisil/all-hies/archive/c6e93d2d641ef48703eabed8ec5cde3d774cb0e5.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "ghcide-nix": {
@@ -17,10 +17,10 @@
         "homepage": "https://github.com/digital-asset/ghcide",
         "owner": "hercules-ci",
         "repo": "ghcide-nix",
-        "rev": "4f3e98f211f34698805eb7a3c5f7b4361d97f541",
-        "sha256": "0ffzf4h0qmvgpviy878czxfbn3cv3af9y4aj4cfdk8xi3lw8py67",
+        "rev": "bde3f34356b5154750acbba3d06205f03662a72d",
+        "sha256": "07zhnnzxcxhzfxmhqcaccc5h76x9jq5pca6nlx9rn5y9x1gfpdva",
         "type": "tarball",
-        "url": "https://github.com/hercules-ci/ghcide-nix/archive/4f3e98f211f34698805eb7a3c5f7b4361d97f541.tar.gz",
+        "url": "https://github.com/hercules-ci/ghcide-nix/archive/bde3f34356b5154750acbba3d06205f03662a72d.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "home-manager": {
@@ -29,10 +29,10 @@
         "homepage": "",
         "owner": "rycee",
         "repo": "home-manager",
-        "rev": "ed9a6e34addd2a0fc6940af3ec8f0d8425ca299e",
-        "sha256": "0rc6c896w2hf2vqnrds4nvlrwmyibqsk731aakxg1rdmkz45mmmj",
+        "rev": "621c98f15a31e7f0c1389f69aaacd0ac267ce29e",
+        "sha256": "16wjjxd5rkahasnzzxvc7jqxyfpw13fnzhlkld1wwp60vj9p8ns2",
         "type": "tarball",
-        "url": "https://github.com/rycee/home-manager/archive/ed9a6e34addd2a0fc6940af3ec8f0d8425ca299e.tar.gz",
+        "url": "https://github.com/rycee/home-manager/archive/621c98f15a31e7f0c1389f69aaacd0ac267ce29e.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "lorri": {
@@ -41,10 +41,22 @@
         "homepage": "",
         "owner": "target",
         "repo": "lorri",
-        "rev": "0a1730104d1767e9efd7502d93e39af45bf9c73b",
-        "sha256": "0sk1q6xicbmwpb58dhjnvpnmnwr8mjd690mnjpixxp6rcmzzg22g",
+        "rev": "152a3ccdc3025dd12f0bdb69a260550f12114722",
+        "sha256": "1915f027766kjfy650pxw9zzsk7ifxgn48dkr38wrlqrvlpxyv4s",
         "type": "tarball",
-        "url": "https://github.com/target/lorri/archive/0a1730104d1767e9efd7502d93e39af45bf9c73b.tar.gz",
+        "url": "https://github.com/target/lorri/archive/152a3ccdc3025dd12f0bdb69a260550f12114722.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "neovim": {
+        "branch": "master",
+        "description": "Vim-fork focused on extensibility and usability",
+        "homepage": "https://neovim.io",
+        "owner": "neovim",
+        "repo": "neovim",
+        "rev": "9f3d483c79f03c48239fdc82cc02e8685a03d22a",
+        "sha256": "0y19djar9swpfarj50i292jm0qc06i83szppndl34xk23sabj25b",
+        "type": "tarball",
+        "url": "https://github.com/neovim/neovim/archive/9f3d483c79f03c48239fdc82cc02e8685a03d22a.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixos-hardware": {
@@ -77,10 +89,10 @@
         "homepage": null,
         "owner": "mozilla",
         "repo": "nixpkgs-mozilla",
-        "rev": "d46240e8755d91bc36c0c38621af72bf5c489e13",
-        "sha256": "0icws1cbdscic8s8lx292chvh3fkkbjp571j89lmmha7vl2n71jg",
+        "rev": "09576806ab6ac6992f6797ecb5a5cb4b3097fba1",
+        "sha256": "1zm7011d6qhvp4lib56i16i99am9gy0sd2y3zl7six8r7wh2ihn3",
         "type": "tarball",
-        "url": "https://github.com/mozilla/nixpkgs-mozilla/archive/d46240e8755d91bc36c0c38621af72bf5c489e13.tar.gz",
+        "url": "https://github.com/mozilla/nixpkgs-mozilla/archive/09576806ab6ac6992f6797ecb5a5cb4b3097fba1.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }

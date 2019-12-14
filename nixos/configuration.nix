@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   sources = import ./nix/sources.nix;
   unstable = sources.nixpkgs;
@@ -6,8 +6,7 @@ let
   homeManager = sources.home-manager;
   hie = sources.all-hies;
   ghcide = sources.ghcide-nix;
-in
-  {
+in {
   imports = [
     ./hardware-configuration.nix
     "${sources.nixos-hardware}/common/cpu/intel"
@@ -80,7 +79,11 @@ in
     binutils.bintools
     git
     htop
-    neovim
+    (lib.overrideDerivation (neovim.passthru.unwrapped.overrideAttrs (old: rec {
+      version = "master";
+      src = sources.neovim;
+      buildInputs = old.buildInputs ++ [ utf8proc ];
+    })) (o: { withNodeJS = true; }))
     networkmanager
     nix-index
     wget
@@ -99,8 +102,8 @@ in
     kitty
 
     cachix
-    ((import hie {}).selection { selector = p: { inherit (p) ghc865; }; })
-    (import ghcide {}).ghcide-ghc865
+    ((import hie { }).selection { selector = p: { inherit (p) ghc865; }; })
+    (import ghcide { }).ghcide-ghc865
     nix-prefetch-git
     nix-prefetch-scripts
     cabal-install
@@ -164,23 +167,46 @@ in
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
-  services.xserver.enable = true;
-  services.xserver.layout = "us";
-  services.xserver.xkbVariant = "altgr-intl";
-
-  services.xserver.libinput = {
-    naturalScrolling = true;
-    disableWhileTyping = true;
-    accelSpeed = "0.5";
-  };
-
-  services.xserver.displayManager.slim = {
+  services.xserver = {
     enable = true;
-    autoLogin = true;
-    defaultUser = "hazel";
-  };
+    layout = "us";
+    xkbVariant = "altgr-intl";
+    autoRepeatDelay = 240;
+    autoRepeatInterval = 30;
 
-  services.xserver.desktopManager.plasma5.enable = true;
+    libinput = {
+      naturalScrolling = true;
+      disableWhileTyping = true;
+      accelSpeed = "0.5";
+    };
+
+    displayManager.slim = {
+      enable = true;
+      autoLogin = true;
+      defaultUser = "hazel";
+    };
+
+    desktopManager.plasma5.enable = true;
+
+    # TODO: Figure out how to get this done with
+    # keeping plasma because I'll lose too much time replicating plasma's setup
+    # wrt stuff like NetworkManager, printer, etc. *sigh* whatevs. The
+    # convenience is worth losing some street cred I suppose.
+
+    # desktopManager.default = "none";
+    # desktopManager.xterm.enable = false;
+    # windowManager.default = "xmonad";
+    # windowManager.xmonad = {
+    #   enable = true;
+    #   enableContribAndExtras = true;
+    #   haskellPackages = pkgs.unstable.haskellPackages;
+    #   config = /home/hazel/.config/xmonad/xmonad.hs;
+    # };
+    # displayManager.sessionCommands = lib.mkAfter ''
+    #   ${pkgs.unstable.xorg.xset}/bin/xset r rate 240 30
+    # '';
+
+  };
 
   virtualisation.docker.enable = true;
 
