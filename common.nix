@@ -8,6 +8,7 @@ with {
     "${sources.nixos-hardware}/common/pc/laptop"
     "${sources.home-manager}/nixos"
     ./cachix.nix
+    ./home.nix
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -79,7 +80,6 @@ with {
     #   selector = p: { inherit (p) ghc865; };
     # })
     # (import sources.ghcide-nix { }).ghcide-ghc865
-    direnv
 
     # Programs implicitly relied on in shell
     lsd
@@ -133,8 +133,8 @@ with {
     enable = true;
     layout = "us";
     xkbVariant = "altgr-intl";
-    autoRepeatDelay = 240;
-    autoRepeatInterval = 30;
+    autoRepeatDelay = 190;
+    autoRepeatInterval = 35;
 
     libinput = {
       naturalScrolling = true;
@@ -181,96 +181,6 @@ with {
     extraGroups =
       [ "wheel" "networkmanager" "tty" "video" "audio" "disk" "docker" ];
   };
-
-  # Use pkgs from system closure by ignoring input args
-  home-manager.users.hazel = { ... }:
-    let
-      lorri = import sources.lorri { };
-      path = with pkgs; lib.makeSearchPath "bin" [ nix gnutar git mercurial ];
-    in {
-
-      home.packages = [ lorri ];
-
-      # programs.rofi = {
-      #   enable = true;
-      #   font = "Pragmata Pro 11";
-      #   fullscreen = true;
-      #   extraConfig = ''
-      #     rofi.theme: ./onelight.rasi
-      #   '';
-      # };
-
-      # home.file.".config/autostart/plasmashell.desktop".text = ''
-      #   [Desktop Entry]
-      #   Exec=
-      #   X-DBUS-StartupType=Unique
-      #   Name=Plasma Desktop Workspace
-      #   Type=Application
-      #   X-KDE-StartupNotify=false
-      #   X-DBUS-ServiceName=org.kde.plasmashell
-      #   OnlyShowIn=KDE;
-      #   X-KDE-autostart-phase=0
-      #   Icon=plasma
-      #   NoDisplay=true
-      # '';
-      # home.file.".local/share/xmonad/touch".text = "";
-      # home.file.".config/plasma-workspace/env/set_window_manager.sh".text = ''
-      #   export KDEWM=/home/hazel/.local/share/xmonad/xmonad-x86_64-linux
-      # '';
-
-      programs.git = {
-        enable = true;
-        userName = "hazelweakly";
-        userEmail = "hazel@theweaklys.com";
-        package = pkgs.gitAndTools.gitFull;
-        extraConfig = {
-          core = { pager = "diff-so-fancy | less --tabs=4 -RFX"; };
-          color = {
-            ui = true;
-            diff-highlight = {
-              oldNormal = "red bold";
-              oldHighlight = "red bold 52";
-              newNormal = "green bold";
-              newHighlight = "green bold 22";
-            };
-            diff = {
-              meta = "11";
-              frag = "magenta bold";
-              commit = "yellow bold";
-              old = "red bold";
-              new = "green bold";
-              whitespace = "red reverse";
-            };
-          };
-        };
-      };
-
-      systemd.user.sockets.lorri = {
-        Unit = { Description = "lorri build daemon"; };
-        Socket = { ListenStream = "%t/lorri/daemon.socket"; };
-        Install = { WantedBy = [ "sockets.target" ]; };
-      };
-
-      systemd.user.services.lorri = {
-        Unit = {
-          Description = "lorri build daemon";
-          Documentation = "https://github.com/target/lorri";
-          ConditionUser = "!@system";
-          Requires = "lorri.socket";
-          After = "lorri.socket";
-          RefuseManualStart = true;
-        };
-
-        Service = {
-          ExecStart = "${lorri}/bin/lorri daemon";
-          PrivateTmp = true;
-          ProtectSystem = "strict";
-          WorkingDirectory = "%h";
-          Restart = "on-failure";
-          Environment = "PATH=${path} RUST_BACKTRACE=1";
-        };
-      };
-    };
 
   system.autoUpgrade.enable = true;
   nix.optimise.automatic = true;
