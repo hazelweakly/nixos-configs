@@ -2,9 +2,14 @@
 
 let
   moz = import sources.nixpkgs-mozilla;
-  rust = import "${sources.nixpkgs-mozilla}/rust-src-overlay.nix";
+  nur = self: super: {
+    nur = (super.nur or { }) // import sources.NUR {
+      nurpkgs = self;
+      pkgs = self;
+    };
+  };
 
 in import sources.nixpkgs {
-  overlays = [ moz rust ];
-  config = { allowUnfree = true; };
+  overlays = [ moz nur ];
+  config.allowUnfree = true;
 }

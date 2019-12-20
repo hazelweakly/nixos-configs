@@ -1,7 +1,11 @@
+{ ... }:
 with { pkgs = import ./nix { }; }; {
+  programs.home-manager.enable = true;
+  nixpkgs.config.allowUnfree = true; # y tho
+
   programs.firefox = {
     enable = true;
-    package = pkgs.firefox-devedition-bin;
+    package = pkgs.latest.firefox-nightly-bin.override { pname = "firefox"; };
   };
 
   services.lorri.enable = true;

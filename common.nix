@@ -8,7 +8,6 @@ with {
     "${sources.nixos-hardware}/common/pc/laptop"
     "${sources.home-manager}/nixos"
     ./cachix.nix
-    ./home.nix
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -41,9 +40,9 @@ with {
       # antialias = false;
       # subpixel.lcdfilter = "none";
       defaultFonts = {
-        monospace = ["PragmataPro"];
-        sansSerif = ["Noto Sans"];
-        serif = ["Noto Serif"];
+        monospace = [ "PragmataPro" ];
+        sansSerif = [ "Noto Sans" ];
+        serif = [ "Noto Serif" ];
       };
     };
   };
@@ -52,8 +51,6 @@ with {
     # Actually global
     lastpass-cli
     google-chrome
-    firefox-devedition-bin
-    git
     calibre
     kitty
     cachix
@@ -181,6 +178,8 @@ with {
     extraGroups =
       [ "wheel" "networkmanager" "tty" "video" "audio" "disk" "docker" ];
   };
+
+  home-manager.users.hazel = import ./home.nix;
 
   system.autoUpgrade.enable = true;
   nix.optimise.automatic = true;

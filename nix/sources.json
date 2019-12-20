@@ -1,4 +1,16 @@
 {
+    "NUR": {
+        "branch": "master",
+        "description": "Nix User Repository: User contributed nix packages [maintainer=@Mic92]",
+        "homepage": "",
+        "owner": "nix-community",
+        "repo": "NUR",
+        "rev": "1368b9a3a53b605e12a1fcde6d9669779ac2d56e",
+        "sha256": "1gyj5iz9q6yzdaalwyiy5dvqwixs3sz4rpjc76n24xp4n08fn37v",
+        "type": "tarball",
+        "url": "https://github.com/nix-community/NUR/archive/1368b9a3a53b605e12a1fcde6d9669779ac2d56e.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "all-hies": {
         "branch": "master",
         "description": "Cached Haskell IDE Engine Nix builds for all GHC versions",
@@ -17,10 +29,10 @@
         "homepage": "https://github.com/digital-asset/ghcide",
         "owner": "hercules-ci",
         "repo": "ghcide-nix",
-        "rev": "bde3f34356b5154750acbba3d06205f03662a72d",
-        "sha256": "07zhnnzxcxhzfxmhqcaccc5h76x9jq5pca6nlx9rn5y9x1gfpdva",
+        "rev": "f0de6033203963f1b40e2ee38fb60d36873449ac",
+        "sha256": "1n8lbj322219v9y2akavlli0n034yp1mj84j0hw9sa0l3ldzaf1r",
         "type": "tarball",
-        "url": "https://github.com/hercules-ci/ghcide-nix/archive/bde3f34356b5154750acbba3d06205f03662a72d.tar.gz",
+        "url": "https://github.com/hercules-ci/ghcide-nix/archive/f0de6033203963f1b40e2ee38fb60d36873449ac.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "home-manager": {
@@ -35,28 +47,16 @@
         "url": "https://github.com/rycee/home-manager/archive/0f1c9f25cf03cd5ed62db05c461af7e13f84a7b6.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
-    "lorri": {
-        "branch": "master",
-        "description": "Your project's nix-env",
-        "homepage": "",
-        "owner": "target",
-        "repo": "lorri",
-        "rev": "61caab4d1a79fe7ec9470d5670677ee3e8b84e4f",
-        "sha256": "1savc0cc6ijkw5zhxgra405r8zyfb52rihlp95i8qcp9f859ask2",
-        "type": "tarball",
-        "url": "https://github.com/target/lorri/archive/61caab4d1a79fe7ec9470d5670677ee3e8b84e4f.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
     "neovim": {
         "branch": "master",
         "description": "Vim-fork focused on extensibility and usability",
         "homepage": "https://neovim.io",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "65aca4d857ab9ff278f410b17ef31d91e48a37b7",
-        "sha256": "00v4g7ccb4j51p5abipcp06r4jr0lm8q8vc6gslcwaqqiicl9239",
+        "rev": "416de695f9e71e494e3b6e4187e850e560abf7af",
+        "sha256": "1fkdy945z7hxrz2vhlj3dpvca73sp3mvj7d5pi44izcqnz16vzwc",
         "type": "tarball",
-        "url": "https://github.com/neovim/neovim/archive/65aca4d857ab9ff278f410b17ef31d91e48a37b7.tar.gz",
+        "url": "https://github.com/neovim/neovim/archive/416de695f9e71e494e3b6e4187e850e560abf7af.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixos-hardware": {
@@ -87,12 +87,12 @@
         "branch": "master",
         "description": "mozilla related nixpkgs (extends nixos/nixpkgs repo)",
         "homepage": null,
-        "owner": "mozilla",
+        "owner": "colemickens",
         "repo": "nixpkgs-mozilla",
-        "rev": "09576806ab6ac6992f6797ecb5a5cb4b3097fba1",
-        "sha256": "1zm7011d6qhvp4lib56i16i99am9gy0sd2y3zl7six8r7wh2ihn3",
+        "rev": "f901c780552cb2f45549b3019fe976a6173068ba",
+        "sha256": "0a5nn35hqxbs29bpbldwvyrzny0x75xqb0b9havq2lz49milh3zd",
         "type": "tarball",
-        "url": "https://github.com/mozilla/nixpkgs-mozilla/archive/09576806ab6ac6992f6797ecb5a5cb4b3097fba1.tar.gz",
+        "url": "https://github.com/colemickens/nixpkgs-mozilla/archive/f901c780552cb2f45549b3019fe976a6173068ba.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }
