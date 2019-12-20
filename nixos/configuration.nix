@@ -1,1 +1,0 @@
-/etc/nixos/precision7740.nix
