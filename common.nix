@@ -35,15 +35,10 @@ with {
   fonts = {
     enableDefaultFonts = true;
     fonts = with pkgs; [ noto-fonts noto-fonts-cjk noto-fonts-emoji ];
-    fontconfig = {
-      # hinting.enable = false;
-      # antialias = false;
-      # subpixel.lcdfilter = "none";
-      defaultFonts = {
-        monospace = [ "PragmataPro" ];
-        sansSerif = [ "Noto Sans" ];
-        serif = [ "Noto Serif" ];
-      };
+    fontconfig.defaultFonts = {
+      monospace = [ "PragmataPro" ];
+      sansSerif = [ "Noto Sans" ];
+      serif = [ "Noto Serif" ];
     };
   };
 

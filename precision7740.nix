@@ -13,6 +13,7 @@ with {
 
   networking.interfaces.eno1.useDHCP = true;
   networking.interfaces.wlp111s0.useDHCP = true;
+  services.openvpn.servers = import ./openvpn.nix;
 
   system.stateVersion = "20.03";
 }
