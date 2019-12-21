@@ -7,6 +7,7 @@ with {
     ./common.nix
   ];
 
+  boot.kernelModules = [ "kvm-intel" "kvm-amd" "amdgpu" ];
   # boot.plymouth.logo = pkgs.fetchurl {
   #   url = "https://pbs.twimg.com/profile_images/499601444920496128/Fc5vigRB_400x400.png"
   # };

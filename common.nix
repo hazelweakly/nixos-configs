@@ -136,13 +136,35 @@ with {
 
     displayManager.gdm = {
       enable = true;
-      autoLogin = {
-        enable = true;
-        user = "hazel";
-      };
+      wayland = false;
+      # autoLogin = {
+      #   enable = true;
+      #   user = "hazel";
+      # };
     };
 
-    desktopManager.gnome3.enable = true;
+    desktopManager.gnome3 = {
+      enable = true;
+      flashback.enableMetacity = true;
+      flashback.customSessions = [
+        {
+          wmLabel = "XMonad";
+          wmCommand = "${pkgs.xmonad-with-packages}/bin/xmonad";
+          wmName = "xmonad";
+        }
+        {
+          wmLabel = "META";
+          wmCommand = "${pkgs.gnome3.metacity}/bin/metacity";
+          wmName = "metacity";
+        }
+      ];
+    };
+    windowManager.xmonad = {
+      enable = true;
+      enableContribAndExtras = true;
+      haskellPackages = pkgs.haskellPackages;
+    };
+    windowManager.default = "xmonad";
 
     # TODO: Figure out how to get this done with
     # keeping plasma because I'll lose too much time replicating plasma's setup

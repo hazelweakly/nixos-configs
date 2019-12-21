@@ -1,0 +1,53 @@
+sanitise tridactyllocal tridactylsync
+
+set newtab about:blank
+set smoothscroll true
+set theme shydactyl
+set allowautofocus false
+
+" Git{Hub,Lab} git clone via SSH yank
+bind yg composite js "git clone " + document.location.href.replace(/https?:\/\//,"git@").replace("/",":").replace(/$/,".git") | clipboard yank
+
+" Only hint search results on Google and DDG
+bindurl www.google.com f hint -Jc .rc > .r > a
+bindurl www.google.com F hint -Jbc .rc>.r>a
+
+bindurl ^https://duckduckgo.com f hint -Jc [class=result__a]
+bindurl ^https://duckduckgo.com F hint -Jbc [class=result__a]
+
+unbind <C-a>
+unbind <C-c>
+unbind <C-i>
+unbind <C-f>
+
+bind j scrollline 5
+bind k scrollline -5
+
+bind J tabnext
+bind K tabprev
+bind gh tabmove -1
+bind gl tabmove +1
+
+" Make yy use canonical / short links on the 5 websites that support them
+bind yy clipboard yankshort
+
+" Stupid workaround to let hint -; be used with composite which steals semi-colons
+command hint_focus hint -;
+
+set hintfiltermode vimperator-reflow
+set hintnames numeric
+
+set hintdelay 100
+
+" Don't run tridactyl on misbehaving sites
+autocmd DocStart mail.google.com mode ignore
+autocmd DocStart mattermost* mode ignore
+
+command fixamo_quiet jsb tri.excmds.setpref("privacy.resistFingerprinting.block_mozAddonManager", "true").then(tri.excmds.setpref("extensions.webextensions.restrictedDomains", '""'))
+command fixamo js tri.excmds.setpref("privacy.resistFingerprinting.block_mozAddonManager", "true").then(tri.excmds.setpref("extensions.webextensions.restrictedDomains", '""').then(tri.excmds.fillcmdline_tmp(3000, "Permissions added to user.js. Please restart Firefox to make them take affect.")))
+
+fixamo_quiet
+
+jsb browser.webRequest.onHeadersReceived.addListener(tri.request.clobberCSP,{urls:["<all_urls>"],types:["main_frame"]},["blocking","responseHeaders"])
+
+" vim: set filetype=vim:

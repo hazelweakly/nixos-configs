@@ -1,12 +1,25 @@
 { ... }:
 with { pkgs = import ./nix { }; }; {
-  programs.home-manager.enable = true;
-  nixpkgs.config.allowUnfree = true; # y tho
+  nixpkgs = { inherit (pkgs) config overlays; };
 
   programs.firefox = {
     enable = true;
     package = pkgs.latest.firefox-nightly-bin.override { pname = "firefox"; };
+    profiles.default = {
+      isDefault = true;
+      id = 0;
+      settings = {
+        "layers.acceleration.force-enabled" = true;
+        "gfx.webrender.all" = true;
+        "gfx.canvas.azure.accelerated" = true;
+        "layout.css.devPixelsPerPx" = "1.25";
+        "pdfjs.enableWebGL" = true;
+      };
+    };
+    # TODO: Figure out why tridactyl won't install nicely
   };
+
+  xdg.configFile."tridactyl/tridactylrc".source = ./dots/tridactylrc;
 
   services.lorri.enable = true;
   programs.direnv = {
