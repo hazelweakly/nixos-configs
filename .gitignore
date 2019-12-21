@@ -1,2 +1,4 @@
 configuration.nix
 openvpn.nix
+*.hi
+*.o

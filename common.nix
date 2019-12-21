@@ -132,60 +132,23 @@ with {
       naturalScrolling = true;
       disableWhileTyping = true;
       accelSpeed = "0.5";
-      tapping = true;
       calibrationMatrix = ".5 0 0 0 .5 0 0 0 1";
     };
 
     displayManager.gdm = {
       enable = true;
-      wayland = false;
-      # autoLogin = {
-      #   enable = true;
-      #   user = "hazel";
-      # };
+      autoLogin.enable = true;
+      autoLogin.user = "hazel";
     };
 
-    desktopManager.gnome3 = {
-      enable = true;
-      flashback.enableMetacity = true;
-      flashback.customSessions = [
-        {
-          wmLabel = "XMonad";
-          wmCommand = "${pkgs.xmonad-with-packages}/bin/xmonad";
-          wmName = "xmonad";
-        }
-        {
-          wmLabel = "META";
-          wmCommand = "${pkgs.gnome3.metacity}/bin/metacity";
-          wmName = "metacity";
-        }
-      ];
-    };
+    desktopManager.gnome3.enable = true;
     windowManager.xmonad = {
       enable = true;
       enableContribAndExtras = true;
       haskellPackages = pkgs.haskellPackages;
+      # This breaks mod+Q to reload config
+      config = ./dots/xmonad/xmonad.hs;
     };
-    windowManager.default = "xmonad";
-
-    # TODO: Figure out how to get this done with
-    # keeping plasma because I'll lose too much time replicating plasma's setup
-    # wrt stuff like NetworkManager, printer, etc. *sigh* whatevs. The
-    # convenience is worth losing some street cred I suppose.
-
-    # desktopManager.default = "none";
-    # desktopManager.xterm.enable = false;
-    # windowManager.default = "xmonad";
-    # windowManager.xmonad = {
-    #   enable = true;
-    #   enableContribAndExtras = true;
-    #   haskellPackages = pkgs.unstable.haskellPackages;
-    #   config = /home/hazel/.config/xmonad/xmonad.hs;
-    # };
-    # displayManager.sessionCommands = lib.mkAfter ''
-    #   ${pkgs.unstable.xorg.xset}/bin/xset r rate 240 30
-    # '';
-
   };
 
   virtualisation.docker.enable = true;

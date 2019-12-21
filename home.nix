@@ -20,39 +20,13 @@ with { pkgs = import ./nix { }; }; {
   };
 
   xdg.configFile."tridactyl/tridactylrc".source = ./dots/tridactylrc;
+  xdg.configFile."kitty/kitty.conf".source = ./dots/kitty.conf;
 
   services.lorri.enable = true;
   programs.direnv = {
     enable = true;
     enableZshIntegration = true;
   };
-
-  # programs.rofi = {
-  #   enable = true;
-  #   font = "Pragmata Pro 11";
-  #   fullscreen = true;
-  #   extraConfig = ''
-  #     rofi.theme: ./onelight.rasi
-  #   '';
-  # };
-
-  # home.file.".config/autostart/plasmashell.desktop".text = ''
-  #   [Desktop Entry]
-  #   Exec=
-  #   X-DBUS-StartupType=Unique
-  #   Name=Plasma Desktop Workspace
-  #   Type=Application
-  #   X-KDE-StartupNotify=false
-  #   X-DBUS-ServiceName=org.kde.plasmashell
-  #   OnlyShowIn=KDE;
-  #   X-KDE-autostart-phase=0
-  #   Icon=plasma
-  #   NoDisplay=true
-  # '';
-  # home.file.".local/share/xmonad/touch".text = "";
-  # home.file.".config/plasma-workspace/env/set_window_manager.sh".text = ''
-  #   export KDEWM=/home/hazel/.local/share/xmonad/xmonad-x86_64-linux
-  # '';
 
   programs.git = {
     enable = true;
