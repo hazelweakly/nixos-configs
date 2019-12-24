@@ -3,17 +3,21 @@ sanitise tridactyllocal tridactylsync
 set newtab about:blank
 set smoothscroll true
 set theme shydactyl
-set allowautofocus false
+" like set allowautofocus false but doesn't break CodeMirror
+autocmd TabEnter .* unfocus
 
 " Git{Hub,Lab} git clone via SSH yank
 bind yg composite js "git clone " + document.location.href.replace(/https?:\/\//,"git@").replace("/",":").replace(/$/,".git") | clipboard yank
 
-" Only hint search results on Google and DDG
-bindurl www.google.com f hint -Jc .rc > .r > a
+" Only hint useful things
+bindurl www.google.com f hint -Jc .rc a:not([href="#"])
 bindurl www.google.com F hint -Jbc .rc>.r>a
 
 bindurl ^https://duckduckgo.com f hint -Jc [class=result__a]
 bindurl ^https://duckduckgo.com F hint -Jbc [class=result__a]
+
+bindurl www.reddit.com f hint -Jc [data-event-action]
+bindurl www.reddit.com F hint -Jbc [data-event-action]
 
 unbind <C-a>
 unbind <C-c>

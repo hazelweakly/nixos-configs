@@ -5,10 +5,10 @@
         "homepage": "",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "1071a739a6b4935d5582c5e4841d2f30e0f07ee8",
-        "sha256": "03jpfkd9bnqfkx5hp1wx4d23ngw0cqr7a6x213bjmz5kdzkmpyf0",
+        "rev": "ec75d1ba3f1d7632120e0381a39cefc71b1d4db0",
+        "sha256": "1lrggsivcjxqd4j28m8gdiimm3lar2iz64w3mmr65s04db04i37a",
         "type": "tarball",
-        "url": "https://github.com/nix-community/NUR/archive/1071a739a6b4935d5582c5e4841d2f30e0f07ee8.tar.gz",
+        "url": "https://github.com/nix-community/NUR/archive/ec75d1ba3f1d7632120e0381a39cefc71b1d4db0.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "all-hies": {
@@ -47,16 +47,28 @@
         "url": "https://github.com/rycee/home-manager/archive/0f1c9f25cf03cd5ed62db05c461af7e13f84a7b6.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "mhnix": {
+        "branch": "master",
+        "description": "Nix build configuration for Matterhorn (using devnix).",
+        "homepage": null,
+        "owner": "kquick",
+        "repo": "mhnix",
+        "rev": "dec5433ab2fa3fe45d31ec0d6df3aa2e632190e6",
+        "sha256": "0ddy9nld1wpm0pn6b6zi4hps18awd4wxr3wpqsakg0h4qsd6pzpy",
+        "type": "tarball",
+        "url": "https://github.com/kquick/mhnix/archive/dec5433ab2fa3fe45d31ec0d6df3aa2e632190e6.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "neovim": {
         "branch": "master",
         "description": "Vim-fork focused on extensibility and usability",
         "homepage": "https://neovim.io",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "138480939a6d696d77b866474bcdda054d8fbfa1",
-        "sha256": "0a0svxsv3x8cd5vlv14n7vmbzj5si6x1gigah0zivc91qxmrm7vh",
+        "rev": "2ef72437fc2e20ed7eee2520d818d3039b8e52bb",
+        "sha256": "179w7dkfvxn5i4ih61cxjz7fnflba9fjrdww3cxpnb9yg4q9rcb9",
         "type": "tarball",
-        "url": "https://github.com/neovim/neovim/archive/138480939a6d696d77b866474bcdda054d8fbfa1.tar.gz",
+        "url": "https://github.com/neovim/neovim/archive/2ef72437fc2e20ed7eee2520d818d3039b8e52bb.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixos-hardware": {
@@ -77,10 +89,10 @@
         "homepage": null,
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "d942688fc137169b577e7bf0c09e01a2ac919b73",
-        "sha256": "01072zihcgi0vwld69ffcr08na88703wy6plxp5cb3n1wysfx81g",
+        "rev": "eeaf1f702d4b3d57b4657a162a5e536210b23efb",
+        "sha256": "03pq2argqgbbb4rxnnzvgn2dsk1w5lcqphx8vbz66091bpxpg7j3",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/d942688fc137169b577e7bf0c09e01a2ac919b73.tar.gz",
+        "url": "https://github.com/NixOS/nixpkgs/archive/eeaf1f702d4b3d57b4657a162a5e536210b23efb.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs-mozilla": {
