@@ -164,4 +164,5 @@ with {
 
   system.autoUpgrade.enable = true;
   nix.optimise.automatic = true;
+  nix.autoOptimiseStore = true;
 }
