@@ -15,5 +15,6 @@ in {
   nix.nixPath = [
     "nixpkgs=${sources.nixpkgs}"
     "nixos-config=/etc/nixos/configuration.nix"
+    "nixpkgs-overlays=/etc/nixos/overlays-compat/"
   ];
 }
