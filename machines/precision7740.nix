@@ -24,6 +24,4 @@ in {
 
   nix.maxJobs = pkgs.lib.mkDefault 16;
   powerManagement.cpuFreqGovernor = pkgs.lib.mkDefault "powersave";
-  # High-DPI console
-  i18n.consoleFont = pkgs.lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
 }

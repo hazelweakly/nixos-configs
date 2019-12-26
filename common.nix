@@ -21,12 +21,10 @@ with {
   networking.hostName = "hazelweaklyeakly";
   networking.firewall.enable = false;
 
-  i18n = {
-    consoleFont = "latarcyrheb-sun20";
-    consoleKeyMap = "us";
-    defaultLocale = "en_US.UTF-8";
-    supportedLocales = [ "en_US.UTF-8/UTF-8" ];
-  };
+  console.font = "latarcyrheb-sun20";
+  console.keyMap = "us";
+  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" ];
 
   time.timeZone = "America/Los_Angeles";
 
