@@ -2,13 +2,10 @@ with {
   pkgs = import ./nix { };
   sources = import ./nix/sources.nix;
 }; {
-  imports = [ ./machines/precision7740.nix ./common.nix ];
+  imports = [ ./machines/precision7740.nix ./common.nix ./work.nix ];
 
   boot.kernelModules = [ "kvm-intel" "kvm-amd" "amdgpu" ];
-  boot.plymouth.logo = ./dots/Untitled.png;
-  # boot.plymouth.logo = pkgs.fetchurl {
-  #   url = "https://pbs.twimg.com/profile_images/499601444920496128/Fc5vigRB_400x400.png"
-  # };
+  boot.plymouth.logo = ./dots/galois.png;
 
   environment.systemPackages = with pkgs;
     [ (import "${sources.mhnix}/configs.nix" { }).matterhorn ];

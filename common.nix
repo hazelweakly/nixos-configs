@@ -7,6 +7,7 @@ with {
     "${sources.nixos-hardware}/common/pc/ssd"
     "${sources.nixos-hardware}/common/pc/laptop"
     "${sources.home-manager}/nixos"
+    ./nixpkgs.nix
     ./cachix.nix
   ];
 
