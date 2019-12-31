@@ -96,9 +96,9 @@ with {
 
   programs.ssh.startAgent = true;
   programs.zsh = {
-    enable = true;
-    enableCompletion = false;
-    promptInit = "";
+    enable = false;
+    # enableCompletion = false;
+    # promptInit = ":";
   };
 
   services.thermald.enable = true;
@@ -162,7 +162,6 @@ with {
 
   home-manager.users.hazel = import ./home.nix;
 
-  system.autoUpgrade.enable = true;
   nix.optimise.automatic = true;
   nix.autoOptimiseStore = true;
 }
