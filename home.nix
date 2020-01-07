@@ -19,6 +19,25 @@ with { pkgs = import ./nix { }; }; {
     # TODO: Figure out why tridactyl won't install nicely
   };
 
+  programs.fzf = {
+    enable = true;
+    changeDirWidgetCommand = "fd -t d -L -c always .";
+    changeDirWidgetOptions = [
+      "--preview 'lsd --group-dirs first --icon always -t --tree {} | head -200'"
+    ];
+    defaultCommand = "fd -t f -I -L -c always 2> /dev/null";
+    defaultOptions = [ "--color=light --ansi --layout=reverse" ];
+    fileWidgetCommand = "fd -L -c always .";
+    fileWidgetOptions = let
+      preview =
+        "(bat --style numbers,changes --color always --paging never --theme GitHub {} || tree -C {}) 2> /dev/null";
+    in [ "--preview '${preview} | head -200'" ];
+    historyWidgetOptions = [
+      ''
+        --preview 'echo {} | cut -d\" \" -f2- | fold -w $(($(tput cols)-4))' --preview-window down:4:hidden --bind '?:toggle-preview' ''
+    ];
+  };
+
   xdg.configFile."tridactyl/tridactylrc".source = ./dots/tridactylrc;
   xdg.configFile."kitty/kitty.conf".source = ./dots/kitty.conf;
 

@@ -76,7 +76,6 @@ with {
     lsd
     bat
     fd
-    fzf
     ripgrep
   ];
 
@@ -96,9 +95,8 @@ with {
 
   programs.ssh.startAgent = true;
   programs.zsh = {
-    enable = false;
-    # enableCompletion = false;
-    # promptInit = ":";
+    enable = true;
+    enableGlobalCompInit = false;
   };
 
   services.thermald.enable = true;
