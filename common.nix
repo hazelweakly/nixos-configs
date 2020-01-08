@@ -1,14 +1,16 @@
-with {
-  pkgs = import ./nix { };
-  sources = import ./nix/sources.nix;
-}; {
+with { pkgs = import ./nix { }; }; {
   imports = [
-    "${sources.nixos-hardware}/common/cpu/intel"
-    "${sources.nixos-hardware}/common/pc/ssd"
-    "${sources.nixos-hardware}/common/pc/laptop"
-    "${sources.home-manager}/nixos"
-    ./nixpkgs.nix
+    "${pkgs.sources.nixos-hardware}/common/cpu/intel"
+    "${pkgs.sources.nixos-hardware}/common/pc/ssd"
+    "${pkgs.sources.nixos-hardware}/common/pc/laptop"
+    "${pkgs.sources.home-manager}/nixos"
     ./cachix.nix
+  ];
+
+  nix.nixPath = [
+    "nixpkgs=${pkgs.sources.nixpkgs}"
+    "nixos-config=/etc/nixos/configuration.nix"
+    "nixpkgs-overlays=/etc/nixos/nix/overlays-compat/"
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;

@@ -1,7 +1,6 @@
-with { pkgs = import ../nix { }; };
-let nixos = "${(import ../nix/sources.nix).nixpkgs}/nixos";
-in {
-  imports = [ (import "${nixos}/modules/installer/scan/not-detected.nix") ];
+with { pkgs = import ../nix { }; }; {
+  imports =
+    [ "${pkgs.sources.nixpkgs}/nixos/modules/installer/scan/not-detected.nix" ];
 
   boot.initrd.availableKernelModules =
     [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
