@@ -43,7 +43,9 @@ with { pkgs = import ./nix { }; }; {
 
   xdg.configFile."tridactyl/tridactylrc".source = ./dots/tridactylrc;
   xdg.configFile."kitty".source = ./dots/kitty;
+  xdg.configFile."nvim".source = ./dots/nvim;
   xdg.configFile."nixpkgs/config.nix".text = "{ allowUnfree = true; }";
+  xdg.enable = true;
 
   services.lorri.enable = true;
   programs.direnv.enable = true;

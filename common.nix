@@ -17,6 +17,7 @@ with { pkgs = import ./nix { }; }; {
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.timeout = 0;
   boot.tmpOnTmpfs = true;
   boot.plymouth.enable = true;
 
