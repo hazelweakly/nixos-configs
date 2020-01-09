@@ -1,7 +1,6 @@
 with { pkgs = import ./nix { }; }; {
   imports = [ ./machines/precision7740.nix ./common.nix ./work.nix ];
 
-  boot.kernelModules = [ "kvm-intel" "kvm-amd" "amdgpu" ];
   boot.plymouth.logo = ./dots/galois.png;
 
   environment.systemPackages = with pkgs;
@@ -10,6 +9,10 @@ with { pkgs = import ./nix { }; }; {
   networking.interfaces.eno1.useDHCP = true;
   networking.interfaces.wlp111s0.useDHCP = true;
   services.openvpn.servers = import ./openvpn.nix;
+  environment.etc."systemd/sleep.conf".text = ''
+    AllowHibernation=no
+    SuspendState=freeze
+  '';
 
   system.stateVersion = "20.03";
 }

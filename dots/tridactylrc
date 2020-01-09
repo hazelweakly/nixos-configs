@@ -7,7 +7,7 @@ set theme shydactyl
 autocmd TabEnter .* unfocus
 
 " Git{Hub,Lab} git clone via SSH yank
-bind yg composite js "git clone " + document.location.href.replace(/https?:\/\//,"git@").replace("/",":").replace(/$/,".git") | clipboard yank
+bind yg composite js document.location.href.replace(/https?:\/\//,"git@").replace("/",":").replace(/$/,".git") | clipboard yank
 
 " Only hint useful things
 bindurl www.google.com f hint -Jc .rc a:not([href="#"]), .card-section a:not([href="#"]), .bkWMgd [data-init-vis="true"] a:not([href="#"])
@@ -46,6 +46,7 @@ set hintdelay 100
 " Don't run tridactyl on misbehaving sites
 autocmd DocStart mail.google.com mode ignore
 autocmd DocStart mattermost* mode ignore
+autocmd DocStart *spicehtml5-main.jsp* mode ignore
 
 command fixamo_quiet jsb tri.excmds.setpref("privacy.resistFingerprinting.block_mozAddonManager", "true").then(tri.excmds.setpref("extensions.webextensions.restrictedDomains", '""'))
 command fixamo js tri.excmds.setpref("privacy.resistFingerprinting.block_mozAddonManager", "true").then(tri.excmds.setpref("extensions.webextensions.restrictedDomains", '""').then(tri.excmds.fillcmdline_tmp(3000, "Permissions added to user.js. Please restart Firefox to make them take affect.")))

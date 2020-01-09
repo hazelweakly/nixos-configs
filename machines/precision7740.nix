@@ -5,7 +5,9 @@ with { pkgs = import ../nix { }; }; {
   boot.initrd.availableKernelModules =
     [ "xhci_pci" "nvme" "usb_storage" "usbhid" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ "kvm-intel" "kvm-amd" ];
+  boot.kernelParams =
+    [ "radeon.si_support=0" "amdgpu.si_support=1" "amdgpu.dc=1" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {

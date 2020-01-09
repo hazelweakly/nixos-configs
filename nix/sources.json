@@ -47,6 +47,18 @@
         "url": "https://github.com/rycee/home-manager/archive/1b7b1bc294e99ab1795fe7dad183c1d2ae58a099.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "lorri": {
+        "branch": "master",
+        "description": "Your project's nix-env",
+        "homepage": "",
+        "owner": "target",
+        "repo": "lorri",
+        "rev": "7b84837b9988d121dd72178e81afd440288106c5",
+        "sha256": "0rkga944jl6i0051vbsddfqbvzy12168cbg4ly2ng1rk0x97dbr8",
+        "type": "tarball",
+        "url": "https://github.com/target/lorri/archive/7b84837b9988d121dd72178e81afd440288106c5.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "mhnix": {
         "branch": "master",
         "description": "Nix build configuration for Matterhorn (using devnix).",

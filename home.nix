@@ -14,6 +14,9 @@ with { pkgs = import ./nix { }; }; {
         "gfx.canvas.azure.accelerated" = true;
         "layout.css.devPixelsPerPx" = "1.25";
         "pdfjs.enableWebGL" = true;
+        "browser.ctrlTab.recentlyUsedOrder" = false;
+        "browser.newtab.extensionControlled" = true;
+        "browser.newtab.privateAllowed" = true;
       };
     };
     # TODO: Figure out why tridactyl won't install nicely
@@ -40,12 +43,17 @@ with { pkgs = import ./nix { }; }; {
 
   xdg.configFile."tridactyl/tridactylrc".source = ./dots/tridactylrc;
   xdg.configFile."kitty".source = ./dots/kitty;
+  xdg.configFile."nixpkgs/config.nix".text = "{ allowUnfree = true; }";
 
   services.lorri.enable = true;
-  programs.direnv = {
-    enable = true;
-    enableZshIntegration = true;
-  };
+  programs.direnv.enable = true;
+  # programs.zsh = {
+  #   enable = true;
+  #   dotDir = ".config/zsh";
+  #   # Already configured with zplugin
+  #   enableCompletions = false;
+  #   initExtraBeforeCompInit =
+  # };
 
   programs.git = {
     enable = true;
@@ -53,26 +61,8 @@ with { pkgs = import ./nix { }; }; {
     userEmail = "hazel@theweaklys.com";
     package = pkgs.gitAndTools.gitFull;
     extraConfig = {
-      core = { pager = "diff-so-fancy | less --tabs=4 -RFX"; };
-      color = {
-        ui = true;
-        diff-highlight = {
-          oldNormal = "red bold";
-          oldHighlight = "white red";
-          newNormal = "green bold";
-          newHighlight = "white green";
-        };
-        diff = {
-          meta = "11";
-          func = "12";
-          frag = "magenta bold";
-          commit = "yellow bold";
-          old = "red bold";
-          new = "green bold";
-          whitespace = "red reverse";
-        };
-      };
-      diff-so-fancy.markEmptyLines = false;
+      core = { pager = "${pkgs.gitAndTools.delta}/bin/delta --commit-style=box --highlight-removed --light"; };
+      color.ui = true;
     };
   };
 }
