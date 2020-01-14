@@ -14,6 +14,10 @@ with { pkgs = import ./nix { }; }; {
     "nixpkgs-overlays=/etc/nixos/nix/overlays-compat/"
   ];
 
+  nix.binaryCaches = [ "https://hydra.iohk.io" ];
+  nix.binaryCachePublicKeys =
+    [ "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ=" ];
+
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
