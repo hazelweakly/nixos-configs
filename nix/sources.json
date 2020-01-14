@@ -83,6 +83,18 @@
         "url": "https://github.com/neovim/neovim/archive/3d1531aee5d92375b69098de8f8c788ea407b066.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "niv": {
+        "branch": "master",
+        "description": "Easy dependency management for Nix projects",
+        "homepage": "https://github.com/nmattia/niv",
+        "owner": "nmattia",
+        "repo": "niv",
+        "rev": "c8f74f44b5f5df2c8f20a1834460d012e74d78f9",
+        "sha256": "0zmhxgl37f1p2aiqjmiccflpgga6phj6vmqs3jd33z0frj6hsy5c",
+        "type": "tarball",
+        "url": "https://github.com/nmattia/niv/archive/c8f74f44b5f5df2c8f20a1834460d012e74d78f9.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "nixos-hardware": {
         "branch": "master",
         "description": "A collection of NixOS modules covering hardware quirks.",
@@ -111,12 +123,12 @@
         "branch": "master",
         "description": "mozilla related nixpkgs (extends nixos/nixpkgs repo)",
         "homepage": null,
-        "owner": "colemickens",
+        "owner": "mozilla",
         "repo": "nixpkgs-mozilla",
-        "rev": "f901c780552cb2f45549b3019fe976a6173068ba",
-        "sha256": "0a5nn35hqxbs29bpbldwvyrzny0x75xqb0b9havq2lz49milh3zd",
+        "rev": "5300241b41243cb8962fad284f0004afad187dad",
+        "sha256": "1h3g3817anicwa9705npssvkwhi876zijyyvv4c86qiklrkn5j9w",
         "type": "tarball",
-        "url": "https://github.com/colemickens/nixpkgs-mozilla/archive/f901c780552cb2f45549b3019fe976a6173068ba.tar.gz",
+        "url": "https://github.com/mozilla/nixpkgs-mozilla/archive/5300241b41243cb8962fad284f0004afad187dad.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }

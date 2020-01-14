@@ -16,6 +16,7 @@ function! VimrcLoadPlugins()
 
     " Linting + LSP
     Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+    Plug 'direnv/direnv.vim'
     Plug 'sbdchd/neoformat'
     Plug 'kizza/actionmenu.nvim'
 
