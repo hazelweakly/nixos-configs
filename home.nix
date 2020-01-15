@@ -1,5 +1,7 @@
-{ ... }:
-with { pkgs = import ./nix { }; }; {
+{ config, ... }:
+with { pkgs = import ./nix { }; };
+with builtins;
+with pkgs.lib; {
   nixpkgs = { inherit (pkgs) config overlays; };
 
   programs.firefox = {
@@ -49,13 +51,36 @@ with { pkgs = import ./nix { }; }; {
 
   services.lorri.enable = true;
   programs.direnv.enable = true;
-  # programs.zsh = {
-  #   enable = true;
-  #   dotDir = ".config/zsh";
-  #   # Already configured with zplugin
-  #   enableCompletions = false;
-  #   initExtraBeforeCompInit =
-  # };
+
+  programs.zsh = let
+    zshFilesIn = d:
+      mapAttrs (n: _: readFile (d + "/${n}"))
+      (filterAttrs (n: _: hasSuffix ".zsh" n) (readDir d));
+    zshrc = ''
+      compctl -/ -W ~/src src
+    '' + (concatStringsSep "\n" (attrValues (zshFilesIn ./dots/zsh)));
+  in {
+    enable = true;
+    dotDir = ".config/zsh";
+    enableCompletion = true;
+    defaultKeymap = "emacs";
+    initExtraBeforeCompInit = ''
+      if [[ -r "${config.xdg.cacheHome}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
+        source "${config.xdg.cacheHome}/p10k-instant-prompt-''${(%):-%n}.zsh"
+      fi
+      typeset -A ZPLGM=(
+        BIN_DIR         ${config.xdg.dataHome}/zsh/zplugin/bin
+        HOME_DIR        ${config.xdg.dataHome}/zsh/zplugin
+        COMPINIT_OPTS   -C
+      )
+      if ! [[ -d ${config.xdg.dataHome}/zsh/zplugin/bin ]]; then
+        mkdir -p ${config.xdg.dataHome}/zsh/zplugin
+        git clone --depth=1 https://github.com/zdharma/zplugin.git ${config.xdg.dataHome}/zsh/zplugin/bin
+      fi
+      source ${config.xdg.dataHome}/zsh/zplugin/bin/zplugin.zsh
+    '';
+    initExtra = zshrc;
+  };
 
   programs.git = {
     enable = true;
@@ -63,7 +88,10 @@ with { pkgs = import ./nix { }; }; {
     userEmail = "hazel@theweaklys.com";
     package = pkgs.gitAndTools.gitFull;
     extraConfig = {
-      core = { pager = "${pkgs.gitAndTools.delta}/bin/delta --commit-style=box --highlight-removed --light"; };
+      core = {
+        pager =
+          "${pkgs.gitAndTools.delta}/bin/delta --commit-style=box --highlight-removed --light";
+      };
       color.ui = true;
     };
   };

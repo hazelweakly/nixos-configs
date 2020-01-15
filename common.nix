@@ -89,6 +89,7 @@ with { pkgs = import ./nix { }; }; {
   };
 
   programs.ssh.startAgent = true;
+  environment.pathsToLink = [ "/share/zsh" ];
   programs.zsh = {
     enable = true;
     enableGlobalCompInit = false;
