@@ -39,11 +39,20 @@ with { pkgs = import ./nix { }; }; {
 
   nix.trustedUsers = [ "hazel" ];
 
-  fonts = {
+  fonts = let luxi = pkgs.callPackage ./luxi.nix { };
+  in {
     enableDefaultFonts = true;
-    fonts = with pkgs; [ noto-fonts noto-fonts-cjk noto-fonts-emoji ];
+    fonts = with pkgs; [
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
+      victor-mono
+      powerline-fonts
+      corefonts
+      luxi
+    ];
     fontconfig.defaultFonts = {
-      monospace = [ "PragmataPro" ];
+      monospace = [ "Victor Mono" ];
       sansSerif = [ "Noto Sans" ];
       serif = [ "Noto Serif" ];
     };

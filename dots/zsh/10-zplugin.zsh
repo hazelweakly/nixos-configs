@@ -8,6 +8,9 @@
     zplugin ice lucid
     zplugin light mafredri/zsh-async
 
+    zplugin ice wait'0a' as'completion' atinit'local i; for i in *.completion; do source $i; done' lucid
+    zplugin light %HOME/.config/zsh/completions
+
     zplugin ice wait'0' blockf atpull'zplugin creinstall -q .' lucid
     zplugin light zsh-users/zsh-completions
 

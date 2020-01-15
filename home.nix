@@ -52,13 +52,13 @@ with pkgs.lib; {
   services.lorri.enable = true;
   programs.direnv.enable = true;
 
+  xdg.configFile."zsh/completions/src.completion".text =
+    "compctl -/ -W ~/src src";
   programs.zsh = let
     zshFilesIn = d:
       mapAttrs (n: _: readFile (d + "/${n}"))
       (filterAttrs (n: _: hasSuffix ".zsh" n) (readDir d));
-    zshrc = ''
-      compctl -/ -W ~/src src
-    '' + (concatStringsSep "\n" (attrValues (zshFilesIn ./dots/zsh)));
+    zshrc = concatStringsSep "\n" (attrValues (zshFilesIn ./dots/zsh));
   in {
     enable = true;
     dotDir = ".config/zsh";
