@@ -55,10 +55,8 @@ with pkgs.lib; {
   xdg.configFile."zsh/completions/src.completion".text =
     "compctl -/ -W ~/src src";
   programs.zsh = let
-    zshFilesIn = d:
-      mapAttrs (n: _: readFile (d + "/${n}"))
-      (filterAttrs (n: _: hasSuffix ".zsh" n) (readDir d));
-    zshrc = concatStringsSep "\n" (attrValues (zshFilesIn ./dots/zsh));
+    zshrc = concatMapStringsSep "\n" (n: readFile (./dots/zsh + "/${n}"))
+      (filter (hasSuffix ".zsh") (attrNames (readDir ./dots/zsh)));
   in {
     enable = true;
     dotDir = ".config/zsh";
