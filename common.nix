@@ -45,13 +45,13 @@ with { pkgs = import ./nix { }; }; {
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
-      victor-mono
       powerline-fonts
       corefonts
       luxi
     ];
     fontconfig.defaultFonts = {
-      monospace = [ "Victor Mono" ];
+      # Until fixed, this is installed in ~/.local/share/fonts
+      monospace = [ "VictorMono Nerd Font" ];
       sansSerif = [ "Noto Sans" ];
       serif = [ "Noto Serif" ];
     };

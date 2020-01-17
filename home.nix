@@ -43,6 +43,8 @@ with pkgs.lib; {
     ];
   };
 
+  home.file.".local/share/fonts/VictorMono".source = ./dots/VictorMono;
+
   xdg.configFile."tridactyl/tridactylrc".source = ./dots/tridactylrc;
   xdg.configFile."kitty".source = ./dots/kitty;
   xdg.configFile."nvim".source = ./dots/nvim;

@@ -5,34 +5,10 @@
         "homepage": "",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "dcaacaa2e34710c7b191be1f51f011b92152a33a",
-        "sha256": "0qqrdxscn8327z2zwh7hybyzbw210j9yxxdarcn1fh4k3lpgpz72",
+        "rev": "1536f193a349ef934094994dd22546e0b69bae61",
+        "sha256": "0wzmi4zb843c1l6xwjgv5gailna28j1maypcsiivvk2brc8i22gd",
         "type": "tarball",
-        "url": "https://github.com/nix-community/NUR/archive/dcaacaa2e34710c7b191be1f51f011b92152a33a.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "all-hies": {
-        "branch": "master",
-        "description": "Cached Haskell IDE Engine Nix builds for all GHC versions",
-        "homepage": "",
-        "owner": "infinisil",
-        "repo": "all-hies",
-        "rev": "4b984030c8080d944372354a7b558c49858057e7",
-        "sha256": "0109l0ls7gh2gydrgx45168lg45kgmgwaw9jpjm8mwvwd1brssfk",
-        "type": "tarball",
-        "url": "https://github.com/infinisil/all-hies/archive/4b984030c8080d944372354a7b558c49858057e7.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "ghcide-nix": {
-        "branch": "master",
-        "description": "Nix installation for ghcide",
-        "homepage": "https://github.com/digital-asset/ghcide",
-        "owner": "hercules-ci",
-        "repo": "ghcide-nix",
-        "rev": "caab5c37a80c4b706ebdc5b50ad610cc96d6b9e2",
-        "sha256": "0vyvjv82q9w6fy51a7vmyva38qca7b2q67yznbsgi8ma64g5aqsa",
-        "type": "tarball",
-        "url": "https://github.com/hercules-ci/ghcide-nix/archive/caab5c37a80c4b706ebdc5b50ad610cc96d6b9e2.tar.gz",
+        "url": "https://github.com/nix-community/NUR/archive/1536f193a349ef934094994dd22546e0b69bae61.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "home-manager": {
@@ -41,10 +17,10 @@
         "homepage": "",
         "owner": "rycee",
         "repo": "home-manager",
-        "rev": "b053dc8697058fc6bf343a9dcae47665a018ec77",
-        "sha256": "16qz4psi72w7sbll6siq5r19wj3np92lmxrzhqk39x4bhxcvb0cg",
+        "rev": "4b04050953be214e5e3b7233a5bf2fbe0090a196",
+        "sha256": "1lh3zls8vkvxl373myfr5cdlvnvbh25ks5gqbk6m538mfm3n0c8l",
         "type": "tarball",
-        "url": "https://github.com/rycee/home-manager/archive/b053dc8697058fc6bf343a9dcae47665a018ec77.tar.gz",
+        "url": "https://github.com/rycee/home-manager/archive/4b04050953be214e5e3b7233a5bf2fbe0090a196.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "lorri": {
@@ -53,22 +29,10 @@
         "homepage": "",
         "owner": "target",
         "repo": "lorri",
-        "rev": "ce6470ce1403c8566b5172d35f138d8a643dc200",
-        "sha256": "0js838ksdyx9w541nn4an733r9a51j3avdpnk98k2l5m9rhs2b8h",
+        "rev": "e2a92b801f2040b61c11883c857f9d558b51629b",
+        "sha256": "1mz822rf05g47yic19x0daynfawr6v2zx99mvib6zk82iw2xj9pn",
         "type": "tarball",
-        "url": "https://github.com/target/lorri/archive/ce6470ce1403c8566b5172d35f138d8a643dc200.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "mhnix": {
-        "branch": "master",
-        "description": "Nix build configuration for Matterhorn (using devnix).",
-        "homepage": null,
-        "owner": "kquick",
-        "repo": "mhnix",
-        "rev": "dec5433ab2fa3fe45d31ec0d6df3aa2e632190e6",
-        "sha256": "0ddy9nld1wpm0pn6b6zi4hps18awd4wxr3wpqsakg0h4qsd6pzpy",
-        "type": "tarball",
-        "url": "https://github.com/kquick/mhnix/archive/dec5433ab2fa3fe45d31ec0d6df3aa2e632190e6.tar.gz",
+        "url": "https://github.com/target/lorri/archive/e2a92b801f2040b61c11883c857f9d558b51629b.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "neovim": {
@@ -77,10 +41,10 @@
         "homepage": "https://neovim.io",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "8ba3354d74a8f90ded0997100bdbe845a8c5382f",
-        "sha256": "0dv4zr5h76hrx4nkmkw1w1gsnshw9aai6i8vy1iffkih91frw07v",
+        "rev": "8fe0635e7338e32e8aedeb8f2e2c0f246876375c",
+        "sha256": "0921v8gc95ki2ck39nd1d61np8hsnvnjv9ahc481bj11d255rdp0",
         "type": "tarball",
-        "url": "https://github.com/neovim/neovim/archive/8ba3354d74a8f90ded0997100bdbe845a8c5382f.tar.gz",
+        "url": "https://github.com/neovim/neovim/archive/8fe0635e7338e32e8aedeb8f2e2c0f246876375c.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "niv": {
