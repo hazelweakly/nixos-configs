@@ -24,7 +24,7 @@ function! VimrcLoadPlugins()
     Plug 'lambdalisue/suda.vim'
     Plug 'farmergreg/vim-lastplace'
     " Plug 'cohama/lexima.vim'
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all --xdg --no-update-rc' }
+    Plug 'junegunn/fzf'
     Plug 'junegunn/fzf.vim'
     Plug 'junegunn/vim-easy-align'
     Plug '907th/vim-auto-save'

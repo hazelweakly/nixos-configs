@@ -31,5 +31,3 @@ bindkey '^[f' forward-word-dir
 
 bindkey '^[[1;5D' backward-word
 bindkey '^[[1;5C' forward-word
-
-bindkey '^I' fzf_completion

@@ -54,8 +54,11 @@ with pkgs.lib; {
   services.lorri.enable = true;
   programs.direnv.enable = true;
 
-  xdg.configFile."zsh/completions/src.completion".text =
-    "compctl -/ -W ~/src src";
+  xdg.configFile."fsh/q-jmnemonic.ini".source = ./dots/zsh/q-jmnemonic.ini;
+  xdg.configFile."zsh/completions/_src".text = ''
+    #compdef src
+    compdef '_path_files -/ -W ~/src' src
+  '';
   programs.zsh = let
     zshrc = concatMapStringsSep "\n" (n: readFile (./dots/zsh + "/${n}"))
       (filter (hasSuffix ".zsh") (attrNames (readDir ./dots/zsh)));
@@ -69,15 +72,15 @@ with pkgs.lib; {
         source "${config.xdg.cacheHome}/p10k-instant-prompt-''${(%):-%n}.zsh"
       fi
       typeset -A ZPLGM=(
-        BIN_DIR         ${config.xdg.dataHome}/zsh/zplugin/bin
-        HOME_DIR        ${config.xdg.dataHome}/zsh/zplugin
+        BIN_DIR         ${config.xdg.dataHome}/zsh/zinit/bin
+        HOME_DIR        ${config.xdg.dataHome}/zsh/zinit
         COMPINIT_OPTS   -C
       )
-      if ! [[ -d ${config.xdg.dataHome}/zsh/zplugin/bin ]]; then
-        mkdir -p ${config.xdg.dataHome}/zsh/zplugin
-        git clone --depth=1 https://github.com/zdharma/zplugin.git ${config.xdg.dataHome}/zsh/zplugin/bin
+      if ! [[ -d ${config.xdg.dataHome}/zsh/zinit/bin ]]; then
+        mkdir -p ${config.xdg.dataHome}/zsh/zinit
+        git clone --depth=1 https://github.com/zdharma/zinit.git ${config.xdg.dataHome}/zsh/zinit/bin
       fi
-      source ${config.xdg.dataHome}/zsh/zplugin/bin/zplugin.zsh
+      source ${config.xdg.dataHome}/zsh/zinit/bin/zinit.zsh
     '';
     initExtra = zshrc;
   };

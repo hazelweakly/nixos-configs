@@ -4,6 +4,14 @@ export ZSH_AUTOSUGGEST_USE_ASYNC=true
 export ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 export REVIEW_BASE=master
 export DIRENV_LOG_FORMAT=
+export FZF_TAB_OPTS=(
+    --ansi --color=light
+    --nth=2,3 --delimiter='\0'  # Don't search FZF_TAB_PREFIX
+    --layout=reverse --height=90%
+    --tiebreak=begin -m --bind=tab:down,ctrl-j:accept,change:top,ctrl-space:toggle --cycle
+    '--query=$query'   # $query will be expanded to query string at runtime.
+    '--header-lines=$#headers' # $#headers will be expanded to lines of headers at runtime
+)
 
 # TODO: Replace this with the actual thing
 # https://github.com/sharkdp/vivid

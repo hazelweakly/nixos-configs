@@ -25,7 +25,9 @@ src() {
 }
 
 gcd() {
-    git clone "$1" && cd "${"${1##*/}"/.git/}"
+    target="$1"
+    shift
+    git clone "$target" $@ && cd "${"${target##*/}"/.git/}"
 }
 
 with() {
@@ -49,4 +51,12 @@ ghci-with() {
   nix-shell \
     -p "haskellPackages.ghcWithPackages (ps: with ps; [ $* ])" \
     --run ghci
+}
+
+zup() {
+    zini delete --all && \
+        zini self-update && \
+        zini update -r -q --all && \
+        fd -uu -e zwc -x rm && \
+        zini compile --all
 }
