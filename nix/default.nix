@@ -1,8 +1,8 @@
 { sources ? import ./sources.nix }:
 let
   moz = import sources.nixpkgs-mozilla;
-  niv = _: pkgs: { inherit (import sources.niv { }) niv; };
-  lorri = self: super: { lorri = import sources.lorri { pkgs = self; }; };
+  niv = _: _: { inherit (import sources.niv { }) niv; };
+  lorri = pkgs: _: { lorri = import sources.lorri { inherit pkgs; }; };
   nur = self: _: {
     nur = import sources.NUR {
       nurpkgs = self;

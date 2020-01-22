@@ -12,7 +12,8 @@ zstyle ':completion:*' completer _expand_alias _complete _extensions _match _app
 zstyle ':completion:*' regular false
 zstyle ':completion:*' list-grouped false
 zstyle ':completion:*' list-separator ''
-zstyle ':completion:*' matcher-list 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' matcher-list 'r:|?=** m:{a-z\-}={A-Z\_}'
+# 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
 zstyle ':completion:*:manuals'    separate-sections true
 zstyle ':completion:*:manuals.*'  insert-sections   true
