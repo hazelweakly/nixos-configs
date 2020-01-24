@@ -3,11 +3,11 @@ with { pkgs = import ./nix { }; }; {
     "${pkgs.sources.nixos-hardware}/common/cpu/intel"
     "${pkgs.sources.nixos-hardware}/common/pc/laptop"
     "${pkgs.sources.nixos-hardware}/common/pc/laptop/ssd"
-    "${pkgs.sources.nixos-hardware}/common/pc/laptop/acpi_call.nix"
     "${pkgs.sources.home-manager}/nixos"
     ./cachix.nix
   ];
 
+  nixpkgs.config.allowUnfree = true;
   nix.nixPath = [
     "nixpkgs=${pkgs.sources.nixpkgs}"
     "nixos-config=/etc/nixos/configuration.nix"
@@ -57,37 +57,44 @@ with { pkgs = import ./nix { }; }; {
     };
   };
 
-  environment.systemPackages = with pkgs; [
-    # Actually global
-    lastpass-cli
-    google-chrome
-    calibre
-    kitty
-    cachix
-    gnomeExtensions.gsconnect
-
-    # Stuff relied on by my nvim configs
-    neovim-remote
-    nodePackages.neovim
-    python37Packages.pynvim
-    python3
-    ((neovim.override { withNodeJs = true; }).passthru.unwrapped.overrideAttrs
-      (o: {
+  environment.systemPackages = with pkgs;
+    let
+      nvim = (neovim-unwrapped.overrideAttrs (o: {
         version = "master";
         src = sources.neovim;
         buildInputs = o.buildInputs ++ [ utf8proc ];
-      }))
-    nixfmt
-    yarn
-    nodejs_latest
-    universal-ctags
+      }));
+      nvimWrapper = callPackage
+        "${sources.nixpkgs}/pkgs/applications/editors/neovim/wrapper.nix" {
+          nodejs = nodejs_latest;
+        };
+      myNvim = nvimWrapper nvim {
+        vimAlias = true;
+        viAlias = true;
+        withNodeJs = true;
+        extraPython3Packages = (p: with p; [ black ]);
+      };
+    in [
+      # Actually global
+      lastpass-cli
+      google-chrome
+      calibre
+      kitty
+      cachix
+      vulkan-loader
+      tridactyl-native
 
-    # Programs implicitly relied on in shell
-    lsd
-    bat
-    fd
-    ripgrep
-  ];
+      (symlinkJoin {
+        name = "nvim";
+        paths = [ myNvim perl nixfmt yarn universal-ctags ];
+      })
+
+      # Programs implicitly relied on in shell
+      lsd
+      bat
+      fd
+      ripgrep
+    ];
 
   environment.variables = {
     _JAVA_AWT_WM_NONREPARENTING = "1";
@@ -123,6 +130,10 @@ with { pkgs = import ./nix { }; }; {
 
   sound.enable = true;
   hardware.pulseaudio.enable = true;
+  hardware.enableAllFirmware = true;
+  services.tlp.enable = false;
+  hardware.opengl.enable = true;
+  services.chrony.enable = true;
 
   services.xserver = {
     enable = true;

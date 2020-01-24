@@ -23,4 +23,7 @@ with { pkgs = import ../nix { }; }; {
 
   nix.maxJobs = pkgs.lib.mkDefault 4;
   powerManagement.cpuFreqGovernor = pkgs.lib.mkDefault "powersave";
+
+  networking.interfaces.wlp58s0.useDHCP = true;
+  system.stateVersion = "19.09";
 }

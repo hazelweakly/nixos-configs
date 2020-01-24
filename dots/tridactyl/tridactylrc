@@ -3,6 +3,7 @@ sanitise tridactyllocal tridactylsync
 set newtab about:blank
 set smoothscroll true
 set theme shydactyl
+colorscheme googlelight
 " like set allowautofocus false but doesn't break CodeMirror
 autocmd TabEnter .* unfocus
 
@@ -20,6 +21,7 @@ bindurl www.reddit.com f hint -Jc [data-event-action], .md a[href], #header a[hr
 bindurl www.reddit.com F hint -Jbc [data-event-action], .md a[href], #header a[href]
 
 unbind <C-a>
+unbind <C-x>
 unbind <C-c>
 unbind <C-i>
 unbind <C-f>
@@ -35,8 +37,9 @@ bind gl tabmove +1
 " Make yy use canonical / short links on the 5 websites that support them
 bind yy clipboard yankshort
 
-" Stupid workaround to let hint -; be used with composite which steals semi-colons
-command hint_focus hint -;
+" Handy multiwindow/multitasking binds
+bind gd tabdetach
+bind gD composite tabduplicate | tabdetach
 
 set hintfiltermode vimperator-reflow
 set hintnames numeric
@@ -49,7 +52,6 @@ autocmd DocStart mattermost* mode ignore
 autocmd DocStart *spicehtml5-main.jsp* mode ignore
 
 command fixamo_quiet jsb tri.excmds.setpref("privacy.resistFingerprinting.block_mozAddonManager", "true").then(tri.excmds.setpref("extensions.webextensions.restrictedDomains", '""'))
-command fixamo js tri.excmds.setpref("privacy.resistFingerprinting.block_mozAddonManager", "true").then(tri.excmds.setpref("extensions.webextensions.restrictedDomains", '""').then(tri.excmds.fillcmdline_tmp(3000, "Permissions added to user.js. Please restart Firefox to make them take affect.")))
 
 fixamo_quiet
 

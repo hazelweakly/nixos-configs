@@ -5,9 +5,7 @@ with { pkgs = import ../nix { }; }; {
   boot.initrd.availableKernelModules =
     [ "xhci_pci" "nvme" "usb_storage" "usbhid" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" "kvm-amd" ];
-  boot.kernelParams =
-    [ "radeon.si_support=0" "amdgpu.si_support=1" "amdgpu.dc=1" ];
+  boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
@@ -27,4 +25,9 @@ with { pkgs = import ../nix { }; }; {
 
   nix.maxJobs = pkgs.lib.mkDefault 16;
   powerManagement.cpuFreqGovernor = pkgs.lib.mkDefault "powersave";
+
+  networking.interfaces.eno1.useDHCP = true;
+  networking.interfaces.wlp111s0.useDHCP = true;
+  services.openvpn.servers = import ../openvpn.nix;
+  system.stateVersion = "20.03";
 }

@@ -21,7 +21,6 @@ with pkgs.lib; {
         "browser.newtab.privateAllowed" = true;
       };
     };
-    # TODO: Figure out why tridactyl won't install nicely
   };
 
   programs.fzf = {
@@ -45,7 +44,7 @@ with pkgs.lib; {
 
   home.file.".local/share/fonts/VictorMono".source = ./dots/VictorMono;
 
-  xdg.configFile."tridactyl/tridactylrc".source = ./dots/tridactylrc;
+  xdg.configFile."tridactyl".source = ./dots/tridactyl;
   xdg.configFile."kitty".source = ./dots/kitty;
   xdg.configFile."nvim".source = ./dots/nvim;
   xdg.configFile."nixpkgs/config.nix".text = "{ allowUnfree = true; }";
