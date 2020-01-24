@@ -28,6 +28,18 @@ with { pkgs = import ../nix { }; }; {
 
   networking.interfaces.eno1.useDHCP = true;
   networking.interfaces.wlp111s0.useDHCP = true;
-  services.openvpn.servers = import ../openvpn.nix;
+  services.openvpn.servers = {
+    galois-onsite = {
+      autoStart = false;
+      config = "config /root/vpn/hweakly_onsite.ovpn";
+      updateResolvConf = true;
+    };
+    galois-offsite = {
+      config = "config /root/vpn/hweakly_offsite.ovpn";
+      updateResolvConf = true;
+    };
+  };
+  systemd.services.openvpn-galois-offsite.after = [ "network-online.target" ];
+  systemd.services.openvpn-galois-onsite.after = [ "network-online.target" ];
   system.stateVersion = "20.03";
 }
