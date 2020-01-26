@@ -42,6 +42,63 @@ with pkgs.lib; {
     ];
   };
 
+  programs.tmux = {
+    enable = true;
+    shortcut = "Space";
+    escapeTime = 0;
+    historyLimit = 100000;
+    plugins = with pkgs.tmuxPlugins; [
+      sensible
+      fpp
+      copycat
+      {
+        plugin = yank;
+        extraConfig = "set -g @yank_with_mouse off ";
+      }
+      open
+    ];
+    extraConfig = ''
+      set -g mouse on
+      set -g -a terminal-overrides ',*:Ss=\E[%p1%d q:Se=\E[2 q'
+
+      unbind v
+      unbind h
+      unbind % # Split vertically
+      unbind '"' # Split horizontally
+      bind - split-window -v -c "#{pane_current_path}"
+      bind | split-window -h -c "#{pane_current_path}"
+      bind-key ! break-pane -d
+
+      # Instead of vim-tmux-navigator plugin
+      is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
+        | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
+      bind-key -n M-h if-shell "$is_vim" "send-keys M-h"  "select-pane -L"
+      bind-key -n M-j if-shell "$is_vim" "send-keys M-j"  "select-pane -D"
+      bind-key -n M-k if-shell "$is_vim" "send-keys M-k"  "select-pane -U"
+      bind-key -n M-l if-shell "$is_vim" "send-keys M-l"  "select-pane -R"
+      bind-key -T copy-mode-vi 'M-h' select-pane -L
+      bind-key -T copy-mode-vi 'M-j' select-pane -D
+      bind-key -T copy-mode-vi 'M-k' select-pane -U
+      bind-key -T copy-mode-vi 'M-l' select-pane -R
+
+      ##### VI #####
+      set -g status on
+      set -g status-justify centre
+      set-window-option -g window-status-format "♦"
+      set-window-option -g window-status-current-format "♦"
+      set-window-option -g mode-keys vi
+      set -g status-right ""
+      set -g status-left ""
+      set -g status-interval 1
+      set -g status-position bottom
+
+      set -g status-bg default
+      set -g status-fg default
+      set-window-option -g window-status-current-style fg=colour1
+      set-window-option -g window-status-style fg=colour9
+    '';
+  };
+
   home.file.".local/share/fonts/VictorMono".source = ./dots/VictorMono;
 
   xdg.configFile."tridactyl".source = ./dots/tridactyl;

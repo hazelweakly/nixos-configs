@@ -42,6 +42,7 @@ function! VimrcLoadPlugins()
     Plug 'rhysd/git-messenger.vim'
     Plug 'dhruvasagar/vim-zoom'
     Plug 'voldikss/vim-floaterm'
+    Plug 'christoomey/vim-tmux-navigator'
 
     Plug 'machakann/vim-sandwich'
     Plug 'wellle/targets.vim'
@@ -174,12 +175,19 @@ function! VimrcLoadPluginSettings()
     let g:vista#renderer#enable_icon = 1
     let g:vista_fzf_preview = ['right:40%']
     let g:vista_echo_cursor_strategy = 'floating_win'
-    nmap <silent> <C-T> :Vista finder<CR>
+    noremap <silent> <C-T> :Vista finder<CR>
 
     " vim-floaterm
     let g:floaterm_position = 'center'
     let g:floaterm_winblend = '30'
     let g:floaterm_keymap_toggle = '<F12>'
+
+    " vim-tmux-navigation
+    let g:tmux_navigator_no_mappings = 1
+    nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
+    nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
+    nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
+    nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
 
     " actionmenu.vim
     let s:code_actions = []
