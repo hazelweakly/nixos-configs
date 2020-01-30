@@ -5,8 +5,8 @@
     zinit ice depth'1' lucid
     zinit light romkatv/powerlevel10k
 
-    zinit ice wait'0a' as'completion' lucid
-    zinit snippet %HOME/.config/zsh/completions/_src
+    # Run interactively
+    # zinit creinstall %HOME/.config/zsh/completions/_src
 
     zinit ice wait'0' blockf atpull'zinit creinstall -q .' lucid
     zinit light zsh-users/zsh-completions

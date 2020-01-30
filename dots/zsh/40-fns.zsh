@@ -54,8 +54,7 @@ ghci-with() {
 }
 
 zup() {
-    zini delete --clean && \
-        zini self-update && \
+    zini self-update && \
         zini update -r -q --all && \
         fd -uu -e zwc -x rm && \
         rm -rf ~/.config/zsh/.zcompdump && \

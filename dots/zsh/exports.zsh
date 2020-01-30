@@ -4,6 +4,7 @@ export ZSH_AUTOSUGGEST_USE_ASYNC=true
 export ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 export REVIEW_BASE=master
 export DIRENV_LOG_FORMAT=
+export FZF_TAB_PREFIX=
 export FZF_TAB_OPTS=(
     --ansi --color=light
     --nth=2,3 --delimiter='\0'  # Don't search FZF_TAB_PREFIX

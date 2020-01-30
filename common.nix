@@ -87,7 +87,7 @@ with { pkgs = import ./nix { }; }; {
 
       (symlinkJoin {
         name = "nvim";
-        paths = [ myNvim perl nixfmt yarn universal-ctags tmux ];
+        paths = [ myNvim perl nixfmt yarn universal-ctags tmux shfmt ];
       })
 
       # Programs implicitly relied on in shell
@@ -185,5 +185,4 @@ with { pkgs = import ./nix { }; }; {
   home-manager.users.hazel = import ./home.nix;
 
   nix.optimise.automatic = true;
-  nix.autoOptimiseStore = true;
 }
