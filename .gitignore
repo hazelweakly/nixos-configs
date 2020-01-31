@@ -1,5 +1,4 @@
 configuration.nix
-openvpn.nix
 work.nix
 *.hi
 *.o
