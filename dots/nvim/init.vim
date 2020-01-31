@@ -48,6 +48,8 @@ function! VimrcLoadPlugins()
     Plug 'wellle/targets.vim'
     Plug 'romainl/vim-cool'
     Plug 'andymass/vim-matchup'
+    Plug 'psliwka/vim-smoothie'
+    Plug 'ryanoasis/vim-devicons'
 
     Plug 'laggardkernel/vim-one'
     Plug 'https://gitlab.com/protesilaos/tempus-themes-vim.git'
@@ -62,6 +64,10 @@ function! VimrcLoadPluginSettings()
     " vim-cool
     let g:CoolTotalMatches = 1
 
+    " vim-smoothie
+    let g:smoothie_base_speed = 30
+    let g:smoothie_update_interval = 10
+
     " vim-matchup
     let g:matchup_transmute_enabled = 1
     let g:matchup_matchparen_deferred = 1
@@ -70,8 +76,66 @@ function! VimrcLoadPluginSettings()
 
     " fzf.vim
     " fzf in floating windows
-    lua require('navigation')
-    let g:fzf_layout = { 'window': 'lua NavigationFloatingWin()' }
+    let $FZF_DEFAULT_OPTS="--color=light --reverse "
+    let $FZF_DEFAULT_COMMAND = 'fd -t f -I -L -E ".git/*"'
+    function! CreateCenteredFloatingWindow()
+        let width = min([&columns - 4, max([80, &columns - 20])])
+        let height = min([&lines - 4, max([20, &lines - 10])])
+        let top = ((&lines - height) / 2) - 1
+        let left = (&columns - width) / 2
+        let opts = {'relative': 'editor', 'row': top, 'col': left, 'width': width, 'height': height, 'style': 'minimal'}
+
+        let top = "╭" . repeat("─", width - 2) . "╮"
+        let mid = "│" . repeat(" ", width - 2) . "│"
+        let bot = "╰" . repeat("─", width - 2) . "╯"
+        let lines = [top] + repeat([mid], height - 2) + [bot]
+        let s:buf = nvim_create_buf(v:false, v:true)
+        call nvim_buf_set_lines(s:buf, 0, -1, v:true, lines)
+        call nvim_open_win(s:buf, v:true, opts)
+        set winhl=Normal:Floating
+        let opts.row += 1
+        let opts.height -= 2
+        let opts.col += 2
+        let opts.width -= 4
+        call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
+        au BufWipeout <buffer> exe 'bw '.s:buf
+    endfunction
+
+    let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
+
+    " Files + devicons + floating fzf
+    function! Fzf_dev()
+        let l:fzf_files_options = '--preview "bat --line-range :'.&lines.' --theme="GitHub" --style=numbers,changes --color always {2..-1}"'
+        function! s:files()
+            let l:files = split(system($FZF_DEFAULT_COMMAND), '\n')
+            return s:prepend_icon(l:files)
+        endfunction
+
+        function! s:prepend_icon(candidates)
+            let l:result = []
+            for l:candidate in a:candidates
+                let l:filename = fnamemodify(l:candidate, ':p:t')
+                let l:icon = WebDevIconsGetFileTypeSymbol(l:filename, isdirectory(l:filename))
+                call add(l:result, printf('%s %s', l:icon, l:candidate))
+            endfor
+
+            return l:result
+        endfunction
+
+        function! s:edit_file(item)
+            let l:pos = stridx(a:item, ' ')
+            let l:file_path = a:item[pos+1:-1]
+            execute 'silent e' l:file_path
+        endfunction
+
+        call fzf#run({
+                    \ 'source': <sid>files(),
+                    \ 'sink':   function('s:edit_file'),
+                    \ 'options': '-m --reverse ' . l:fzf_files_options,
+                    \ 'down':    '40%',
+                    \ 'window': 'call CreateCenteredFloatingWindow()'})
+
+    endfunction
 
     " Customize Rg and Files commands to add preview
     command! -bang -nargs=* Rg
@@ -83,7 +147,7 @@ function! VimrcLoadPluginSettings()
     command! -bang -nargs=? -complete=dir Files
                 \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
-    nnoremap <silent> <leader>f :Files<CR>
+    nnoremap <silent> <leader>f :call Fzf_dev()<CR>
     nnoremap <silent> <leader>h :History<CR>
     nnoremap <silent> <leader>b :Buffers<CR>
     nnoremap <silent> <leader><space> :Rg<CR>
@@ -174,8 +238,10 @@ function! VimrcLoadPluginSettings()
     " vista.vim
     let g:vista#renderer#enable_icon = 1
     let g:vista_fzf_preview = ['right:40%']
+    let $FZF_PREVIEW_COMMAND='bat --theme="GitHub" --style=numbers,changes --color always {}'
+
     let g:vista_echo_cursor_strategy = 'floating_win'
-    noremap <silent> <C-T> :Vista finder<CR>
+    nnoremap <silent> <C-t> :Vista finder<CR>
 
     " vim-floaterm
     let g:floaterm_position = 'center'
@@ -275,7 +341,6 @@ function! VimrcLoadMappings()
 endfunction
 
 function! VimrcLoadSettings()
-    set incsearch
     set nojoinspaces
     set inccommand=nosplit
     set pumblend=30
@@ -286,13 +351,11 @@ function! VimrcLoadSettings()
     set completeopt=menu,menuone,noinsert
     set nrformats=bin,hex,octal,alpha
     set breakindent
-    set backspace=indent,eol,start
     set clipboard=unnamedplus
     set backup
     set undofile
     set lazyredraw
     set virtualedit=block
-    set mouse=
     set dir=$XDG_DATA_HOME/nvim/swap//
     set undodir=$XDG_DATA_HOME/nvim/undo//
     set backupdir=$XDG_DATA_HOME/nvim/backup//
@@ -301,28 +364,21 @@ function! VimrcLoadSettings()
     set listchars=tab:▸\ ,extends:❯,precedes:❮,trail:⌴
     set showbreak=↪\ \ 
     set fillchars=diff:⣿,vert:│,fold:\
-    set showcmd
-    set cmdheight=1
     set scrolloff=2
     set sidescrolloff=2
     set number
     set shortmess+=caIA
-    set formatoptions+=j
 
     set expandtab
     set softtabstop=4
     set shiftwidth=4
-    set ignorecase
     set smartcase
-    set hlsearch
     set noshowmatch
     set nowrap
     set nofoldenable
 
     set redrawtime=10000
     set synmaxcol=200
-    set timeout
-    set ttimeout
     set timeoutlen=350
     set ttimeoutlen=10
     set termguicolors
@@ -330,7 +386,6 @@ function! VimrcLoadSettings()
     set splitright
     set splitbelow
     set nofixendofline
-    set autoread
     set pyx=3
 
     let g:netrw_dirhistmax=0

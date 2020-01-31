@@ -25,11 +25,11 @@ with pkgs.lib; {
 
   programs.fzf = {
     enable = true;
-    changeDirWidgetCommand = "fd -t d -L -c always .";
+    changeDirWidgetCommand = "fd -H -t d -L -E '.git/*' -c always .";
     changeDirWidgetOptions = [
       "--preview 'lsd --group-dirs first --icon always -t --tree {} | head -200'"
     ];
-    defaultCommand = "fd -t f -I -L -c always 2> /dev/null";
+    defaultCommand = "fd -H -t f -I -L -E '.git/*' -c always 2> /dev/null";
     defaultOptions = [ "--color=light --ansi --layout=reverse" ];
     fileWidgetCommand = "fd -L -c always .";
     fileWidgetOptions = let
@@ -104,6 +104,7 @@ with pkgs.lib; {
   xdg.configFile."tridactyl".source = ./dots/tridactyl;
   xdg.configFile."kitty".source = ./dots/kitty;
   xdg.configFile."nvim".source = ./dots/nvim;
+  xdg.configFile."glirc".source = ./dots/glirc;
   xdg.configFile."nixpkgs/config.nix".text = "{ allowUnfree = true; }";
   xdg.enable = true;
 

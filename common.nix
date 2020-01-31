@@ -83,11 +83,12 @@ with { pkgs = import ./nix { }; }; {
       cachix
       vulkan-loader
       tridactyl-native
-      weechat
+      glirc
+      file
 
       (symlinkJoin {
         name = "nvim";
-        paths = [ myNvim perl nixfmt yarn universal-ctags tmux shfmt ];
+        paths = [ myNvim perl nixfmt yarn universal-ctags tmux shfmt bat ];
       })
 
       # Programs implicitly relied on in shell
