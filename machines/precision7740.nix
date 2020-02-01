@@ -7,6 +7,7 @@ with { pkgs = import ../nix { }; }; {
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
+  boot.blacklistedKernelModules = [ "radeon" "amdgpu" ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/d9bedf23-52c0-43d1-a03d-27d0302363b1";
