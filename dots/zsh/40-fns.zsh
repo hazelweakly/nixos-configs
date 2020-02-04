@@ -63,6 +63,5 @@ zup() {
 
 update() {
     nixpkgs="$(nix eval --raw '(import /etc/nixos/nix {}).sources.nixpkgs.outPath')"
-    path="nixos-config=/etc/nixos/configuration.nix:nixpkgs=$nixpkgs"
-    sudo nixos-rebuild -I $path switch
+    sudo nixos-rebuild -I "nixpkgs=$nixpkgs" switch
 }

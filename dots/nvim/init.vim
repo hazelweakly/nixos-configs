@@ -17,8 +17,9 @@ function! VimrcLoadPlugins()
     " Linting + LSP
     Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
     Plug 'direnv/direnv.vim'
-    Plug 'sbdchd/neoformat'
+    Plug 'sbdchd/neoformat', { 'for' : ['python', 'nix'] }
     Plug 'kizza/actionmenu.nvim'
+    Plug 'editorconfig/editorconfig-vim'
 
     Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey','WhichKey!'] }
     Plug 'lambdalisue/suda.vim'
@@ -48,10 +49,8 @@ function! VimrcLoadPlugins()
     Plug 'wellle/targets.vim'
     Plug 'romainl/vim-cool'
     Plug 'andymass/vim-matchup'
-    Plug 'psliwka/vim-smoothie'
     Plug 'ryanoasis/vim-devicons'
 
-    Plug 'laggardkernel/vim-one'
     Plug 'https://gitlab.com/protesilaos/tempus-themes-vim.git'
 
     " Languages
@@ -64,10 +63,6 @@ function! VimrcLoadPluginSettings()
     " vim-cool
     let g:CoolTotalMatches = 1
 
-    " vim-smoothie
-    let g:smoothie_base_speed = 30
-    let g:smoothie_update_interval = 10
-
     " vim-matchup
     let g:matchup_transmute_enabled = 1
     let g:matchup_matchparen_deferred = 1
@@ -77,7 +72,7 @@ function! VimrcLoadPluginSettings()
     " fzf.vim
     " fzf in floating windows
     let $FZF_DEFAULT_OPTS="--color=light --reverse "
-    let $FZF_DEFAULT_COMMAND = 'fd -t f -I -L -E ".git/*"'
+    let $FZF_DEFAULT_COMMAND = 'fd -t f -L'
     function! CreateCenteredFloatingWindow()
         let width = min([&columns - 4, max([80, &columns - 20])])
         let height = min([&lines - 4, max([20, &lines - 10])])
@@ -177,14 +172,10 @@ function! VimrcLoadPluginSettings()
                 \ 'coc-highlight',
                 \ 'coc-html',
                 \ 'coc-json',
-                \ 'coc-lit-html',
                 \ 'coc-pairs',
-                \ 'coc-phpls',
                 \ 'coc-prettier',
                 \ 'coc-rust-analyzer',
                 \ 'coc-sh',
-                \ 'coc-styled-components',
-                \ 'coc-svg',
                 \ 'coc-tslint-plugin',
                 \ 'coc-tsserver',
                 \ 'coc-vimlsp',
@@ -230,9 +221,10 @@ function! VimrcLoadPluginSettings()
     nmap gn <Plug>(coc-git-nextchunk)
 
     " neoformat
+    let g:neoformat_only_msg_on_error = 1
     augroup fmt
         autocmd!
-        au BufWritePre * try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | finally | silent Neoformat | endtry
+        au BufWritePre *.py,*.nix try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | finally | silent Neoformat | endtry
     augroup END
 
     " vista.vim

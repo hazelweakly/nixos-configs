@@ -39,6 +39,7 @@
     vcs                     # git status
     # =========================[ Line #2 ]=========================
     newline
+    nix_shell               # nix shell indicator
     pchar                   # prompt symbol
   )
 
@@ -544,6 +545,16 @@
   typeset -g POWERLEVEL9K_MIDNIGHT_COMMANDER_FOREGROUND=178
   # Icon to show when in a midnight commander shell.
   typeset -g POWERLEVEL9K_MIDNIGHT_COMMANDER_VISUAL_IDENTIFIER_EXPANSION='${P9K_VISUAL_IDENTIFIER}'
+
+  #[ nix_shell: nix shell (https://nixos.org/nixos/nix-pills/developing-with-nix-shell.html) ]##
+  # Nix shell color.
+  typeset -g POWERLEVEL9K_NIX_SHELL_FOREGROUND=010
+
+  # Tip: If you want to see just the icon without "pure" and "impure", uncomment the next line.
+  typeset -g POWERLEVEL9K_NIX_SHELL_CONTENT_EXPANSION=
+
+  # Custom icon.
+  # typeset -g POWERLEVEL9K_NIX_SHELL_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
   ######################################[ ram: free RAM ]#######################################
   # RAM color.
