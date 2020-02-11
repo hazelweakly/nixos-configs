@@ -81,10 +81,9 @@ with { pkgs = import ./nix { }; }; {
       calibre
       kitty
       cachix
-      vulkan-loader
       tridactyl-native
-      glirc
       file
+      timewarrior
 
       (symlinkJoin {
         name = "nvim";
