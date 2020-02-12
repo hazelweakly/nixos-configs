@@ -84,6 +84,7 @@ with { pkgs = import ./nix { }; }; {
       tridactyl-native
       file
       timewarrior
+      mupdf
 
       (symlinkJoin {
         name = "nvim";

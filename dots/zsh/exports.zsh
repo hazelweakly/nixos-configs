@@ -6,7 +6,7 @@ export REVIEW_BASE=master
 export DIRENV_LOG_FORMAT=
 export FZF_TAB_PREFIX=
 export FZF_TAB_OPTS=(
-    --ansi --color=light
+    --ansi --color=light --expect='/'
     --nth=2,3 --delimiter='\0'  # Don't search FZF_TAB_PREFIX
     --layout=reverse --height=90%
     --tiebreak=begin -m --bind=tab:down,ctrl-j:accept,change:top,ctrl-space:toggle --cycle
