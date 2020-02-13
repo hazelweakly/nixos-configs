@@ -20,6 +20,7 @@ function! VimrcLoadPlugins()
     Plug 'sbdchd/neoformat', { 'for' : ['python', 'nix'] }
     Plug 'kizza/actionmenu.nvim'
     Plug 'editorconfig/editorconfig-vim'
+    Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 
     Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey','WhichKey!'] }
     Plug 'lambdalisue/suda.vim'
@@ -362,8 +363,8 @@ function! VimrcLoadSettings()
     set shortmess+=caIA
 
     set expandtab
-    set softtabstop=4
-    set shiftwidth=4
+    set softtabstop=2
+    set shiftwidth=2
     set smartcase
     set noshowmatch
     set nowrap
