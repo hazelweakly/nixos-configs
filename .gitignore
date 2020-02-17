@@ -2,3 +2,4 @@ configuration.nix
 work.nix
 *.hi
 *.o
+dots/zsh/completions/

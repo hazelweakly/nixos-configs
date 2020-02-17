@@ -182,7 +182,8 @@ function! VimrcLoadPluginSettings()
                 \ 'coc-vimlsp',
                 \ 'coc-vimtex',
                 \ 'coc-yaml',
-                \ 'coc-emmet'
+                \ 'coc-emmet',
+                \ 'coc-vetur'
                 \ ]
 
     if executable('docker-langserver')
@@ -295,6 +296,63 @@ function! VimrcLoadPluginSettings()
 
     " suda.vim: Write file with sudo
     command! W :w suda://%
+
+    " firenvim
+    function! s:IsFirenvimActive(event) abort
+      if !exists('*nvim_get_chan_info')
+        return 0
+      endif
+      let l:ui = nvim_get_chan_info(a:event.chan)
+      return has_key(l:ui, 'client') && has_key(l:ui.client, "name") &&
+            \ l:ui.client.name is# "Firenvim"
+    endfunction
+    let g:dont_write = v:false
+    function! My_Write(timer) abort
+      let g:dont_write = v:false
+      write
+    endfunction
+
+    function! Delay_My_Write() abort
+      if g:dont_write
+        return
+      end
+      let g:dont_write = v:true
+      call timer_start(10000, 'My_Write')
+    endfunction
+
+    function! OnUIEnter(event) abort
+      if s:IsFirenvimActive(a:event)
+        setl noconfirm noshowmode noshowcmd noruler nonumber
+        setl laststatus=0 shortmess+=F cmdheight=1
+
+        let l:bufname=expand('%:t')
+        if l:bufname =~? 'github.com'
+          set ft=markdown
+        elseif l:bufname =~? 'cocalc.com' || l:bufname =~? 'kaggleusercontent.com'
+          set ft=python
+        elseif l:bufname =~? 'localhost'
+          " Jupyter notebooks don't have any more specific buffer information.
+          " If you use some other locally hosted app you want editing function
+          " in, set it here.
+          set ft=python
+        elseif l:bufname =~? 'reddit.com'
+          set ft=markdown
+        elseif l:bufname =~? 'stackexchange.com' || l:bufname =~? 'stackoverflow.com'
+          set ft=markdown
+        elseif l:bufname =~? 'slack.com' || l:bufname =~? 'gitter.com' || l:bufname =~? 'mattermost\..\+.com'
+          set ft=markdown
+          normal! i
+          inoremap <CR> <Esc>:w<CR>:call firenvim#press_keys("<LT>CR>")<CR>ggdGa
+          inoremap <s-CR> <CR>
+        endif
+
+        nnoremap <Esc><Esc> :call firenvim#focus_page()<CR>
+        nnoremap <C-z> :call firenvim#hide_frame()<CR>
+        au TextChanged * ++nested call Delay_My_Write()
+        au TextChangedI * ++nested call Delay_My_Write()
+      endif
+    endfunction
+    autocmd UIEnter * call OnUIEnter(deepcopy(v:event))
 endfunction
 
 function! VimrcLoadMappings()
@@ -365,6 +423,7 @@ function! VimrcLoadSettings()
     set expandtab
     set softtabstop=2
     set shiftwidth=2
+    set ignorecase " Required so that smartcase works
     set smartcase
     set noshowmatch
     set nowrap

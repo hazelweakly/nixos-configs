@@ -40,5 +40,6 @@ unsetopt check_jobs       # Don't report on jobs when shell exit.
 setopt combining_chars
 unsetopt mail_warning
 
-HISTSIZE=1000000
-SAVEHIST=1000000
+export HISTSIZE=1000000
+export SAVEHIST=1000000
+# export HISTFILE=$HOME/.cache/.zsh_history

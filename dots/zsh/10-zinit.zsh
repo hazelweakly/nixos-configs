@@ -6,7 +6,7 @@
     zinit light romkatv/powerlevel10k
 
     # Run interactively
-    # zinit creinstall %HOME/.config/zsh/completions/_src
+    # zinit creinstall %HOME/.config/zsh/completions
 
     zinit ice wait'0' blockf atpull'zinit creinstall -q .' lucid
     zinit light zsh-users/zsh-completions
