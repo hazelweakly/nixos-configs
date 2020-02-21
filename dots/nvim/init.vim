@@ -307,6 +307,9 @@ function! VimrcLoadPluginSettings()
     command! W :w suda://%
 
     " firenvim
+    let g:firenvim_config = { 'localSettings': {}, 'globalSettings': {} }
+    let ls = g:firenvim_config['localSettings']
+    let ls['.*'] = {'takeover':'never', 'cmdline': 'firenvim' }
     function! s:IsFirenvimActive(event) abort
       if !exists('*nvim_get_chan_info')
         return 0
