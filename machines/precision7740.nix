@@ -3,22 +3,21 @@ with { pkgs = import ../nix { }; }; {
     [ "${pkgs.sources.nixpkgs}/nixos/modules/installer/scan/not-detected.nix" ];
 
   boot.initrd.availableKernelModules =
-    [ "xhci_pci" "nvme" "usb_storage" "usbhid" "sd_mod" "rtsx_pci_sdmmc" ];
+    [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
-  boot.blacklistedKernelModules = [ "radeon" "amdgpu" ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/d9bedf23-52c0-43d1-a03d-27d0302363b1";
+    device = "/dev/disk/by-uuid/892530c7-1d95-4e13-853f-f9f00aebdc17";
     fsType = "btrfs";
   };
 
   boot.initrd.luks.devices."root".device =
-    "/dev/disk/by-uuid/a68a8df4-413e-4004-bd35-99f56ee3fc8f";
+    "/dev/disk/by-uuid/655aa5e7-3a95-44c1-8af6-337aa3127343";
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/2559-5058";
+    device = "/dev/disk/by-uuid/A802-48E5";
     fsType = "vfat";
   };
 
@@ -42,5 +41,5 @@ with { pkgs = import ../nix { }; }; {
   };
   systemd.services.openvpn-galois-offsite.after = [ "network-online.target" ];
   systemd.services.openvpn-galois-onsite.after = [ "network-online.target" ];
-  system.stateVersion = "20.03";
+  system.stateVersion = "20.09";
 }

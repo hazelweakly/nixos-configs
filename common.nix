@@ -184,6 +184,8 @@ with { pkgs = import ./nix { }; }; {
   };
 
   home-manager.users.hazel = import ./home.nix;
+  systemd.services.home-manager-hazel.preStart =
+    "${pkgs.nix}/bin/nix-env -i -E";
 
   nix.optimise.automatic = true;
 }

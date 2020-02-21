@@ -1,10 +1,14 @@
 function! VimrcLoadPlugins()
     " Install vim-plug if not available
-    if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
-        silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
-                    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    let plug_install = 0
+    let autoload_plug_path = stdpath('data') . '/site/autoload/plug.vim'
+    if !filereadable(autoload_plug_path)
+        silent exe 'curl -fLo --create-dirs ' . autoload_plug_path .
+                    \ 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+        execute 'source ' . fnameescape(autoload_plug_path)
+        let plug_install = 1
     endif
+    unlet autoload_plug_path
 
     if !isdirectory($HOME . '/.local/share/nvim/backup')
         call mkdir($HOME . '/.local/share/nvim/swap', "p", 0700)
@@ -58,6 +62,11 @@ function! VimrcLoadPlugins()
     Plug 'lervag/vimtex'
     Plug 'sheerun/vim-polyglot'
     call plug#end()
+
+    if plug_install
+      PlugInstall --sync
+    endif
+    unlet plug_install
 endfunction
 
 function! VimrcLoadPluginSettings()
