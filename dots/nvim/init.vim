@@ -21,7 +21,7 @@ function! VimrcLoadPlugins()
     " Linting + LSP
     Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
     Plug 'direnv/direnv.vim'
-    Plug 'sbdchd/neoformat', { 'for' : ['python', 'nix'] }
+    Plug 'sbdchd/neoformat', { 'for' : ['python', 'nix', 'terraform', 'sh'] }
     Plug 'kizza/actionmenu.nvim'
     Plug 'editorconfig/editorconfig-vim'
     Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
@@ -173,6 +173,10 @@ function! VimrcLoadPluginSettings()
     let g:coc_snippet_next = '<M-n>'
     let g:coc_snippet_prev = '<M-p>'
 
+    let g:coc_filetype_map = {
+          \ 'yaml.ansible': 'yaml',
+          \ }
+
     let g:coc_global_extensions = [
                 \ 'coc-css',
                 \ 'coc-diagnostic',
@@ -232,11 +236,8 @@ function! VimrcLoadPluginSettings()
     nmap gn <Plug>(coc-git-nextchunk)
 
     " neoformat
+    " see also: after/ftplugin/{sh,nix,terraform,python}
     let g:neoformat_only_msg_on_error = 1
-    augroup fmt
-        autocmd!
-        au BufWritePre *.py,*.nix try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | finally | silent Neoformat | endtry
-    augroup END
 
     " vista.vim
     let g:vista#renderer#enable_icon = 1

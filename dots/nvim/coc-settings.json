@@ -24,7 +24,8 @@
   "scss.lint.unknownProperties": "ignore",
   "css.lint.unknownProperties": "ignore",
   "yaml.schemas": {
-    "https://raw.githubusercontent.com/docker/cli/master/cli/compose/schema/data/config_schema_v3.9.json": "/docker-compose.*yml"
+    "https://raw.githubusercontent.com/docker/cli/master/cli/compose/schema/data/config_schema_v3.9.json": "/docker-compose.*yml",
+    "http://json.schemastore.org/ansible-stable-2.9": "/playbook.yml"
   },
   "yaml.format.enable": true,
   "languageserver": {
