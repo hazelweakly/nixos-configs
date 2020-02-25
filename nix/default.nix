@@ -1,4 +1,4 @@
-{ sources ? import ./sources.nix }:
+{ sources ? import ./sources.nix, system ? builtins.currentSystem }:
 let
   moz = import sources.nixpkgs-mozilla;
   niv = _: _: { inherit (import sources.niv { }) niv; };
@@ -16,4 +16,4 @@ let
   srcs = _: _: { inherit sources; };
   overlays = [ moz nur srcs lorri niv search ];
   config = { allowUnfree = true; };
-in import sources.nixpkgs { inherit config overlays; }
+in import sources.nixpkgs { inherit config overlays system; }
