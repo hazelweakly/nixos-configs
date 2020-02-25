@@ -5,10 +5,10 @@
         "homepage": "",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "ccd107dc0c3765733f7a352d87c868428537ec1b",
-        "sha256": "1ivj18p6rzrm7x2dbcfgbc71v3s2mjchrb8wnxgacjhxd2z9dvhb",
+        "rev": "771a6741d0f5cad172a0c64165e874cbc06327bb",
+        "sha256": "1swvjrmb6ga7azm0s2qqhrj8sfp2xwf133z34hh8rp6xkvvvmzvq",
         "type": "tarball",
-        "url": "https://github.com/nix-community/NUR/archive/ccd107dc0c3765733f7a352d87c868428537ec1b.tar.gz",
+        "url": "https://github.com/nix-community/NUR/archive/771a6741d0f5cad172a0c64165e874cbc06327bb.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "home-manager": {
@@ -17,10 +17,10 @@
         "homepage": "",
         "owner": "rycee",
         "repo": "home-manager",
-        "rev": "9ab59dd6ac4422d99093b56dc3b9ab1044c4d12d",
-        "sha256": "08aj4sf8rf76mbvycdm4006436bl2h2d3c0llakjw7jc6s1z156i",
+        "rev": "03b622b35685522749fd54eeb06bf08d78d9b4f3",
+        "sha256": "14pbrw3f45ljqslqpsn7zky6iyijq3cnnm5nsadlpllp8rcl5wlz",
         "type": "tarball",
-        "url": "https://github.com/rycee/home-manager/archive/9ab59dd6ac4422d99093b56dc3b9ab1044c4d12d.tar.gz",
+        "url": "https://github.com/rycee/home-manager/archive/03b622b35685522749fd54eeb06bf08d78d9b4f3.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "lorri": {
@@ -65,10 +65,10 @@
         "homepage": "https://github.com/nmattia/niv",
         "owner": "nmattia",
         "repo": "niv",
-        "rev": "5fc9a36c9750593fb1cb906ecff2699c7ec2413c",
-        "sha256": "0fhpjwwdd5m1ml09sr2z4pgvqqcqhbr4qa8ayfidcyjb8n3mlhpq",
+        "rev": "98c74a80934123cb4c3bf3314567f67311eb711a",
+        "sha256": "1w8n54hapd4x9f1am33icvngkqns7m3hl9yair38yqq08ffwg0kn",
         "type": "tarball",
-        "url": "https://github.com/nmattia/niv/archive/5fc9a36c9750593fb1cb906ecff2699c7ec2413c.tar.gz",
+        "url": "https://github.com/nmattia/niv/archive/98c74a80934123cb4c3bf3314567f67311eb711a.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixos-hardware": {
