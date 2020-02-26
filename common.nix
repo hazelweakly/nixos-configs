@@ -101,8 +101,8 @@ with { pkgs = import ./nix { }; }; {
   environment.variables = {
     _JAVA_AWT_WM_NONREPARENTING = "1";
     VISUAL = "nvim";
-    EDITOR = "nvim";
     MOZ_USE_XINPUT2 = "1";
+    LPASS_AGENT_TIMEOUT = "0";
   };
 
   programs.ssh.startAgent = true;

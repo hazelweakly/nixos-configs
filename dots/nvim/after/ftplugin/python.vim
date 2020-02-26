@@ -3,8 +3,8 @@ augroup neoformat
   au BufWritePre <buffer> try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | finally | silent Neoformat | endtry
 augroup END
 
-let b:undo_ftplugin = get(b:, 'undo_ftplugin', '')
-      \ .(empty(get(b:, 'undo_ftplugin', '')) ? '' : '|')
-      \ ."
-      \|  exe 'au! neoformat * <buffer>'
-      \  "
+if !exists("b:undo_ftplugin")
+  let b:undo_ftplugin = '#!'
+endif
+
+let b:undo_ftplugin .= " | exe 'au! neoformat * <buffer>' "
