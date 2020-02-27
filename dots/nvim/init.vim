@@ -24,6 +24,7 @@ function! VimrcLoadPlugins()
     Plug 'sbdchd/neoformat', { 'for' : ['python', 'nix', 'terraform', 'sh'] }
     Plug 'kizza/actionmenu.nvim'
     Plug 'editorconfig/editorconfig-vim'
+    Plug 'tpope/vim-sleuth'
     Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 
     Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey','WhichKey!'] }
@@ -34,6 +35,7 @@ function! VimrcLoadPlugins()
     Plug 'junegunn/fzf.vim'
     Plug 'junegunn/vim-easy-align'
     Plug '907th/vim-auto-save'
+    Plug 'blueyed/vim-diminactive'
 
     " filetype ]] [[
     Plug 'arp242/jumpy.vim'
@@ -432,10 +434,14 @@ function! VimrcLoadSettings()
     set sidescrolloff=2
     set number
     set shortmess+=caIA
+    set winwidth=79
+    set winheight=50
 
-    set expandtab
-    set softtabstop=2
-    set shiftwidth=2
+    " not needed with vim-sleuth
+    " set expandtab
+    " set softtabstop=2
+    " set shiftwidth=2
+
     set ignorecase " Required so that smartcase works
     set smartcase
     set noshowmatch
