@@ -55,8 +55,8 @@ ghci-with() {
 
 zup() {
     zini self-update && \
-        zini update -r -q --all && \
-        fd -uu -e zwc -x rm && \
+        zini update -r -q --all --parallel && \
+        fd -uu -e zwc -x rm 2>/dev/null && \
         rm -rf ~/.config/zsh/.zcompdump && \
         zini compile --all
 }
