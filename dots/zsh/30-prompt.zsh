@@ -1325,7 +1325,7 @@
     [[ -e $dir/Dockerfile || -e $dir/docker-compose.yml ]] && break
     dir=${dir:h}
     done
-    _p9k_cached_cmd_stdout docker --version && [[ $_P9K_RETVAL == D?* ]] || return
+    _p9k_cached_cmd docker --version && [[ $_P9K_RETVAL == D?* ]] || return
     printf '%s' "v${${${_P9K_RETVAL//\%/%%}/Docker version /}%.*}"
   }
 

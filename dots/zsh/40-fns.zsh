@@ -4,7 +4,7 @@ list_all() {
 }
 chpwd_functions=(${chpwd_functions[@]} "list_all")
 
-mcd() { mkdir "$@"; cd "$@" }
+mcd() { mkdir -p "$@"; cd "$@" }
 
 ranger-cd() {
   tempfile="$(mktemp -t tmp.XXXXXX)"
@@ -35,9 +35,6 @@ with() {
 }
 
 nr() {
-    # last="${@: -1}"
-    # init="${@:1:$(($# - 1))}"
-    # init=${init:-$last}
     init="$1"
     shift
     nix run "nixpkgs.$init" -c ${@:-$init}
@@ -56,12 +53,15 @@ ghci-with() {
 zup() {
     zini self-update && \
         zini update -r -q --all --parallel && \
-        fd -uu -e zwc -x rm 2>/dev/null && \
+        fd -uu -e zwc . $HOME -x rm -f 2>/dev/null && \
         rm -rf ~/.config/zsh/.zcompdump && \
         zini compile --all
 }
 
 update() {
-    nixpkgs="$(nix eval --raw '(import /etc/nixos/nix {}).sources.nixpkgs.outPath')"
-    sudo nixos-rebuild -I "nixpkgs=$nixpkgs" switch
+    sudo nixos-rebuild \
+      -I "nixpkgs=$(nix eval --raw '(import /etc/nixos/nix {}).sources.nixpkgs.outPath')" \
+      -I "nixos-config=/etc/nixos/configuration.nix" \
+      -I "nixpkgs-overlays=/etc/nixos/nix/overlays-compat/" \
+      switch
 }
