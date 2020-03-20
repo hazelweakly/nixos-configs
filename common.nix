@@ -7,7 +7,8 @@ with { pkgs = import ./nix { }; }; {
     ./cachix.nix
   ];
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = pkgs.config;
+  nixpkgs.overlays = pkgs.overlays;
   nix.nixPath = [
     "nixpkgs=${pkgs.sources.nixpkgs}"
     "nixos-config=/etc/nixos/configuration.nix"
