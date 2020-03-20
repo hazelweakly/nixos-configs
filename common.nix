@@ -15,10 +15,6 @@ with { pkgs = import ./nix { }; }; {
     "nixpkgs-overlays=/etc/nixos/nix/overlays-compat/"
   ];
 
-  nix.binaryCaches = [ "https://hydra.iohk.io" ];
-  nix.binaryCachePublicKeys =
-    [ "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ=" ];
-
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -51,53 +47,31 @@ with { pkgs = import ./nix { }; }; {
       luxi
     ];
     fontconfig.defaultFonts = {
-      # Until fixed, this is installed in ~/.local/share/fonts
       monospace = [ "VictorMono Nerd Font" ];
       sansSerif = [ "Noto Sans" ];
       serif = [ "Noto Serif" ];
     };
   };
 
-  environment.systemPackages = with pkgs;
-    let
-      nvim = (neovim-unwrapped.overrideAttrs (o: {
-        version = "master";
-        src = sources.neovim;
-        buildInputs = o.buildInputs ++ [ utf8proc ];
-      }));
-      nvimWrapper = callPackage
-        "${sources.nixpkgs}/pkgs/applications/editors/neovim/wrapper.nix" {
-          nodejs = nodejs_latest;
-        };
-      myNvim = nvimWrapper nvim {
-        vimAlias = true;
-        viAlias = true;
-        withNodeJs = true;
-        extraPython3Packages = (p: with p; [ black ]);
-      };
-    in [
-      # Actually global
-      lastpass-cli
-      google-chrome
-      calibre
-      kitty
-      cachix
-      tridactyl-native
-      file
-      timewarrior
-      mupdf
+  environment.systemPackages = with pkgs; [
+    # Actually global
+    lastpass-cli
+    google-chrome
+    calibre
+    kitty
+    cachix
+    tridactyl-native
+    file
+    timewarrior
+    mupdf
+    (callPackage ./neovim.nix { })
 
-      (symlinkJoin {
-        name = "nvim";
-        paths = [ myNvim perl nixfmt yarn universal-ctags tmux shfmt bat ];
-      })
-
-      # Programs implicitly relied on in shell
-      lsd
-      bat
-      fd
-      ripgrep
-    ];
+    # Programs implicitly relied on in shell
+    lsd
+    bat
+    fd
+    ripgrep
+  ];
 
   environment.variables = {
     _JAVA_AWT_WM_NONREPARENTING = "1";
