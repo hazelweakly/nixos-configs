@@ -17,7 +17,7 @@ with { pkgs = import ../nix { }; }; {
     "/dev/disk/by-uuid/655aa5e7-3a95-44c1-8af6-337aa3127343";
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/A802-48E5";
+    device = "/dev/disk/by-uuid/8F7B-1633";
     fsType = "vfat";
   };
 
