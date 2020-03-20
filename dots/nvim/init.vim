@@ -1,3 +1,4 @@
+" Inspiration: https://gitlab.com/CraftedCart/dotfiles/-/tree/master/.config%2Fnvim
 function! VimrcLoadPlugins()
     " Install vim-plug if not available
     let plug_install = 0
@@ -36,6 +37,7 @@ function! VimrcLoadPlugins()
     Plug 'junegunn/vim-easy-align'
     Plug '907th/vim-auto-save'
     Plug 'blueyed/vim-diminactive'
+    Plug 'camspiers/lens.vim'
 
     " filetype ]] [[
     Plug 'arp242/jumpy.vim'
@@ -80,6 +82,9 @@ function! VimrcLoadPluginSettings()
     let g:matchup_matchparen_deferred = 1
     let g:matchup_matchparen_status_offscreen = 0
     let g:matchup_delim_stopline = 2500
+
+    " lens.vim
+    let g:lens#disabled_filetypes = ['nerdtree', 'fzf', 'actionmenu']
 
     " fzf.vim
     " fzf in floating windows
@@ -240,6 +245,7 @@ function! VimrcLoadPluginSettings()
     " neoformat
     " see also: after/ftplugin/{sh,nix,terraform,python}
     let g:neoformat_only_msg_on_error = 1
+    command! -nargs=* NeoformatDisable :au! neoformat<CR>
 
     " vista.vim
     let g:vista#renderer#enable_icon = 1
@@ -265,6 +271,10 @@ function! VimrcLoadPluginSettings()
     let s:code_actions = []
 
     func! ActionMenuCodeActions() abort
+      if coc#util#has_float()
+        call coc#util#float_hide()
+      endif
+
       let s:code_actions = CocAction('codeActions')
       let l:menu_items = map(copy(s:code_actions), { index, item -> item['title'] })
       call actionmenu#open(l:menu_items, 'ActionMenuCodeActionsCallback')
@@ -434,8 +444,10 @@ function! VimrcLoadSettings()
     set sidescrolloff=2
     set number
     set shortmess+=caIA
-    set winwidth=79
-    set winheight=50
+
+    " breaks popup windows
+    " set winwidth=79
+    " set winheight=50
 
     " not needed with vim-sleuth
     " set expandtab
