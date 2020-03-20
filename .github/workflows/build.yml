@@ -1,0 +1,15 @@
+name: Build configuration
+
+on: { push: { branches: [master] } }
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: cachix/install-nix-action@v8
+      - uses: cachix/cachix-action@v5
+        with:
+          name: hazel-nix-configs
+          signingKey: "${{ secrets.CACHIX_SIGNING_KEY }}"
+          file: .github/release.nix
