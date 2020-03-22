@@ -2,7 +2,7 @@
 let
   moz = import sources.nixpkgs-mozilla;
   niv = _: _: { inherit (import sources.niv { }) niv; };
-  lorri = pkgs: _: { lorri = import sources.lorri { inherit pkgs; }; };
+  lorri = _: _: { lorri = import sources.lorri { }; };
   search = _: super: {
     haskellPackages = super.recurseIntoAttrs super.haskellPackages;
     nodePackages = super.recurseIntoAttrs super.nodePackages;
