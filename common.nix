@@ -64,6 +64,7 @@ with { pkgs = import ./nix { }; }; {
     file
     timewarrior
     mupdf
+    niv
     (callPackage ./neovim.nix { })
 
     # Programs implicitly relied on in shell
@@ -77,6 +78,7 @@ with { pkgs = import ./nix { }; }; {
     _JAVA_AWT_WM_NONREPARENTING = "1";
     VISUAL = "nvim";
     MOZ_USE_XINPUT2 = "1";
+    MOZ_ENABLE_WAYLAND = "1";
     LPASS_AGENT_TIMEOUT = "0";
   };
 
@@ -111,6 +113,8 @@ with { pkgs = import ./nix { }; }; {
   services.tlp.enable = false;
   hardware.opengl.enable = true;
   services.chrony.enable = true;
+
+  services.foldingathome.enable = true;
 
   services.xserver = {
     enable = true;
