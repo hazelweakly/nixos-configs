@@ -40,6 +40,12 @@ nr() {
     nix run "nixpkgs.$init" -c ${@:-$init}
 }
 
+nrr() {
+  init="$1"
+  shift
+  nix run "nixpkgs.$init" -c $init $@
+}
+
 ghc-shell() {
   nix-shell -p "haskellPackages.ghcWithPackages (ps: with ps; [ $* ])"
 }
