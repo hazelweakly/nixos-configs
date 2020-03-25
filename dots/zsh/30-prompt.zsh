@@ -1316,17 +1316,16 @@
   typeset -g POWERLEVEL9K_CUSTOM_DOCKER_VERSION_BACKGROUND=none
   typeset -g POWERLEVEL9K_CUSTOM_DOCKER_VERSION_FOREGROUND=teal
   typeset -g POWERLEVEL9K_CUSTOM_DOCKER_VERSION_ICON=$'\UF308 '
+
+  function instant_prompt_docker_version() {
+    printf '%s' "$POWERLEVEL9K_CUSTOM_DOCKER_VERSION_ICON"
+  }
+
   function prompt_docker_version() {
     (( $+commands[docker] )) || return
-
-    local dir=$PWD
-    while true; do
-    [[ $dir == / ]] && return
-    [[ -e $dir/Dockerfile || -e $dir/docker-compose.yml ]] && break
-    dir=${dir:h}
-    done
-    _p9k_cached_cmd docker --version && [[ $_P9K_RETVAL == D?* ]] || return
-    printf '%s' "v${${${_P9K_RETVAL//\%/%%}/Docker version /}%.*}"
+    _p9k_upglob 'Dockerfile|docker-compose.yml' && return
+    _p9k_cached_cmd 0 docker --version && [[ $_p9k__ret == D?* ]] || return
+    printf '%s' "v${${${_p9k__ret//\%/%%}/Docker version /}%.*}"
   }
 
   # User-defined prompt segments may optionally provide an instant_prompt_* function. Its job
