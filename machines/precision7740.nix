@@ -1,12 +1,23 @@
-with { pkgs = import ../nix { }; }; {
+{ config, ... }:
+let
+  pkgs = import ../nix { };
+  nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
+    export __NV_PRIME_RENDER_OFFLOAD=1
+    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
+    export __GLX_VENDOR_LIBRARY_NAME=nvidia
+    export __VK_LAYER_NV_optimus=NVIDIA_only
+    exec -a "$0" "$@"
+  '';
+  nvidia_x11 = config.boot.kernelPackages.nvidia_x11;
+  nvidia_gl = nvidia_x11.out;
+  nvidia_gl_32 = nvidia_x11.lib32;
+in {
   imports =
     [ "${pkgs.sources.nixpkgs}/nixos/modules/installer/scan/not-detected.nix" ];
 
   boot.initrd.availableKernelModules =
     [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
-  boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/892530c7-1d95-4e13-853f-f9f00aebdc17";
@@ -21,7 +32,43 @@ with { pkgs = import ../nix { }; }; {
     fsType = "vfat";
   };
 
-  swapDevices = [ ];
+  nixpkgs.config.allowUnfree = true;
+
+  environment.systemPackages = [ nvidia_x11 nvidia-offload ];
+  boot.extraModulePackages = [ nvidia_x11 ];
+  boot.blacklistedKernelModules = [ "nouveau" ];
+  services.xserver.videoDrivers = [ "modesetting" "nvidia" ];
+  hardware.nvidia.prime.offload.enable = true;
+  hardware.nvidia.modesetting.enable = true;
+  hardware.nvidia.prime = {
+    # Bus ID of the Intel GPU. You can find it using lspci, either under 3D or VGA
+    intelBusId = "PCI:0:2:0";
+    # Bus ID of the NVIDIA GPU. You can find it using lspci, either under 3D or VGA
+    nvidiaBusId = "PCI:1:0:0";
+  };
+  hardware.opengl = {
+    enable = true;
+    driSupport32Bit = true;
+    extraPackages = with pkgs; [
+      nvidia_gl
+      intel-ocl
+      libvdpau-va-gl
+      vaapiIntel
+      vaapiVdpau
+    ];
+    extraPackages32 = with pkgs.pkgsi686Linux; [
+      nvidia_gl_32
+      libvdpau-va-gl
+      vaapiIntel
+      vaapiVdpau
+    ];
+  };
+
+  systemd.services.nvidia-control-devices = {
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig.ExecStart =
+      "${config.boot.kernelPackages.nvidia_x11.bin}/bin/nvidia-smi";
+  };
 
   nix.maxJobs = pkgs.lib.mkDefault 16;
   powerManagement.cpuFreqGovernor = pkgs.lib.mkDefault "powersave";

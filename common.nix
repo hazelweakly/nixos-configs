@@ -15,7 +15,11 @@ with { pkgs = import ./nix { }; }; {
     "nixpkgs-overlays=/etc/nixos/nix/overlays-compat/"
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
+  # https://bugzilla.kernel.org/show_bug.cgi?id=206329
+  # v5.6 or v5.5.10+ (maybe)
+  # boot.kernelPackages = pkgs.linuxPackages_testing;
+  boot.kernelPackages = pkgs.linuxPackages_5_4;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 0;
@@ -23,7 +27,9 @@ with { pkgs = import ./nix { }; }; {
   boot.plymouth.enable = true;
 
   networking.useDHCP = false;
+  # networking.wireless.iwd.enable = true;
   networking.networkmanager.enable = true;
+  # networking.networkmanager.wifi.backend = "iwd";
   networking.hostName = "hazelweaklyeakly";
   networking.firewall.enable = false;
 
@@ -78,7 +84,6 @@ with { pkgs = import ./nix { }; }; {
     _JAVA_AWT_WM_NONREPARENTING = "1";
     VISUAL = "nvim";
     MOZ_USE_XINPUT2 = "1";
-    MOZ_ENABLE_WAYLAND = "1";
     LPASS_AGENT_TIMEOUT = "0";
   };
 
@@ -115,6 +120,8 @@ with { pkgs = import ./nix { }; }; {
   services.chrony.enable = true;
 
   services.foldingathome.enable = true;
+  services.foldingathome.team = 242964;
+  services.foldingathome.user = "Hazel Weakly";
 
   services.xserver = {
     enable = true;
@@ -132,9 +139,10 @@ with { pkgs = import ./nix { }; }; {
 
     displayManager.gdm = {
       enable = true;
-      autoLogin.enable = true;
+      autoLogin.enable = false;
       autoLogin.user = "hazel";
       autoSuspend = false;
+      wayland = false;
     };
     displayManager.setupCommands = "stty -ixon";
 
