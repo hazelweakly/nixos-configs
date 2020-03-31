@@ -64,7 +64,7 @@
     node_version            # node.js version
     go_version              # go version (https://golang.org)
     rust_version            # rustc version (https://www.rust-lang.org)
-    custom_docker_version
+    docker_version
     # dotnet_version        # .NET version (https://dotnet.microsoft.com)
     rbenv                   # ruby version from rbenv (https://github.com/rbenv/rbenv)
     rvm                     # ruby version from rvm (https://rvm.io)
@@ -1312,20 +1312,11 @@
     p10k segment -s NORM -f 010 -i 'λ'
   }
 
-  typeset -g POWERLEVEL9K_CUSTOM_DOCKER_VERSION=prompt_docker_version
-  typeset -g POWERLEVEL9K_CUSTOM_DOCKER_VERSION_BACKGROUND=none
-  typeset -g POWERLEVEL9K_CUSTOM_DOCKER_VERSION_FOREGROUND=teal
-  typeset -g POWERLEVEL9K_CUSTOM_DOCKER_VERSION_ICON=$'\UF308 '
-
-  function instant_prompt_docker_version() {
-    printf '%s' "$POWERLEVEL9K_CUSTOM_DOCKER_VERSION_ICON"
-  }
-
   function prompt_docker_version() {
     (( $+commands[docker] )) || return
     _p9k_upglob 'Dockerfile|docker-compose.yml' && return
     _p9k_cached_cmd 0 docker --version && [[ $_p9k__ret == D?* ]] || return
-    printf '%s' "v${${${_p9k__ret//\%/%%}/Docker version /}%.*}"
+    p10k segment -i $'\UF308' -f 014 -t "v${${${_p9k__ret//\%/%%}/Docker version /}%.*}"
   }
 
   # User-defined prompt segments may optionally provide an instant_prompt_* function. Its job
@@ -1383,5 +1374,6 @@
   (( ! $+functions[p10k] )) || p10k reload
 }
 
+export ZLE_RPROMPT_INDENT=0
 (( ${#p10k_config_opts} )) && setopt ${p10k_config_opts[@]}
 'builtin' 'unset' 'p10k_config_opts'
