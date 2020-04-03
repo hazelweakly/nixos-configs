@@ -17,7 +17,8 @@ This is in hopes that these files and git history can be useful to people just s
 
 Future directions:
 
-- Use flakes when possible
+- Use flakes when possible. https://github.com/nrdxp/nixflk/network/members
+- https://github.com/lovesegfault/nix-config/tree/master inspiration from this
 
 ## Install Instructions
 
