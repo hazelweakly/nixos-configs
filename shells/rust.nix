@@ -8,10 +8,12 @@
 #   overlays = [ moz ];
 #   config.allowUnfree = true;
 # }
+#
+# Pick a date using this: https://rust-lang-nursery.github.io/rust-toolstate/
+# https://rust-lang.github.io/rustup-components-history/
 
-with pkgs;
-let rPkg = rustChannelOf { inherit date channel; };
-in mkShell {
+let rPkg = pkgs.rustChannelOf { inherit date channel; };
+in pkgs.mkShell {
   buildInputs = [ rPkg.rust ];
   RUST_BACKTRACE = 1;
 
