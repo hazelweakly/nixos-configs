@@ -1,6 +1,8 @@
 { pkgs ? import ./nix { } }:
 with pkgs;
 let
+  linters = [ shellcheck languagetool vim-vint nodePackages.write-good hlint ];
+  formatters = [ shfmt nixfmt python37Packages.black haskellPackages.brittany ];
   nvim = (neovim-unwrapped.overrideAttrs (o: {
     version = "master";
     src = sources.neovim;
@@ -14,9 +16,9 @@ let
     vimAlias = true;
     viAlias = true;
     withNodeJs = true;
-    extraPython3Packages = (p: with p; [ black ]);
   };
 in symlinkJoin {
   name = "nvim";
-  paths = [ myNvim perl nixfmt yarn universal-ctags tmux shfmt bat ];
+  paths = [ myNvim perl yarn universal-ctags tmux bat ] ++ linters
+    ++ formatters;
 }
