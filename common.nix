@@ -15,11 +15,9 @@ with { pkgs = import ./nix { }; }; {
     "nixpkgs-overlays=/etc/nixos/nix/overlays-compat/"
   ];
 
-  # boot.kernelPackages = pkgs.linuxPackages_latest;
   # https://bugzilla.kernel.org/show_bug.cgi?id=206329
   # v5.6 or v5.5.10+ (maybe)
-  # boot.kernelPackages = pkgs.linuxPackages_testing;
-  boot.kernelPackages = pkgs.linuxPackages_5_4;
+  boot.kernelPackages = pkgs.linuxPackages;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 0;
@@ -27,11 +25,11 @@ with { pkgs = import ./nix { }; }; {
   boot.plymouth.enable = true;
 
   networking.useDHCP = false;
-  # networking.wireless.iwd.enable = true;
-  networking.networkmanager.enable = true;
-  # networking.networkmanager.wifi.backend = "iwd";
   networking.hostName = "hazelweaklyeakly";
   networking.firewall.enable = false;
+  networking.networkmanager.enable = true;
+  networking.networkmanager.wifi.backend = "iwd";
+  networking.networkmanager.wifi.powersave = false;
 
   console.font = "latarcyrheb-sun20";
   console.keyMap = "us";
@@ -83,6 +81,7 @@ with { pkgs = import ./nix { }; }; {
   environment.variables = {
     _JAVA_AWT_WM_NONREPARENTING = "1";
     VISUAL = "nvim";
+    EDITOR = "nvim";
     MOZ_USE_XINPUT2 = "1";
     LPASS_AGENT_TIMEOUT = "0";
   };
@@ -98,6 +97,12 @@ with { pkgs = import ./nix { }; }; {
   services.interception-tools.enable = true;
   services.system-config-printer.enable = true;
   services.printing.enable = true;
+  services.printing.drivers = with pkgs; [
+    gutenprint
+    gutenprintBin
+    canon-cups-ufr2
+    brlaser
+  ];
   services.openssh.enable = true;
   services.openssh.permitRootLogin = "yes";
   services.fwupd.enable = true;
