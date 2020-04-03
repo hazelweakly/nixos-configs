@@ -22,7 +22,7 @@ function! VimrcLoadPlugins()
     " Linting + LSP
     Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
     Plug 'direnv/direnv.vim'
-    Plug 'sbdchd/neoformat', { 'for' : ['python', 'nix', 'terraform', 'sh'] }
+    Plug 'sbdchd/neoformat', { 'for' : ['terraform'] }
     Plug 'kizza/actionmenu.nvim'
     Plug 'editorconfig/editorconfig-vim'
     Plug 'tpope/vim-sleuth'
@@ -67,7 +67,7 @@ function! VimrcLoadPlugins()
     Plug 'sheerun/vim-polyglot'
     call plug#end()
 
-    if plug_install
+    if plug_install || len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
       PlugInstall --sync
     endif
     unlet plug_install
@@ -186,6 +186,7 @@ function! VimrcLoadPluginSettings()
 
     let g:coc_global_extensions = [
                 \ 'coc-css',
+                \ 'coc-cssmodules',
                 \ 'coc-diagnostic',
                 \ 'coc-docker',
                 \ 'coc-eslint',
@@ -243,9 +244,9 @@ function! VimrcLoadPluginSettings()
     nmap gn <Plug>(coc-git-nextchunk)
 
     " neoformat
-    " see also: after/ftplugin/{sh,nix,terraform,python}
+    " see also: after/ftplugin/terraform
     let g:neoformat_only_msg_on_error = 1
-    command! -nargs=* NeoformatDisable :au! neoformat<CR>
+    command! NeoformatDisable au! neoformat
 
     " vista.vim
     let g:vista#renderer#enable_icon = 1
@@ -487,6 +488,11 @@ function! VimrcLoadSettings()
                     \|   PlugInstall --sync | q
                     \| endif
         au VimEnter * call vista#RunForNearestMethodOrFunction()
+    augroup END
+
+    augroup win_resize
+        au!
+        au VimResized * wincmd =
     augroup END
 
     set statusline=%f\ %h%w%m%r%=%{NearestMethodOrFunction()}%-8.(%)\ %-14.(%l,%c%V%)\ %P

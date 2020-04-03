@@ -53,5 +53,27 @@
         }
       }
     }
+  },
+  "diagnostic-languageserver.filetypes": {
+    "vim": "vint",
+    "email": "languagetool",
+    "markdown": "write-good",
+    "sh": "shellcheck",
+    "haskell": "hlint"
+  },
+  "diagnostic-languageserver.formatFiletypes": {
+    "sh": "shfmt",
+    "nix": "nixfmt",
+    "haskell": "brittany"
+  },
+  "diagnostic-languageserver.formatters": {
+    "shfmt": {
+      "command": "shfmt",
+      "args": ["-i", "2", "-bn", "-ci", "-sr"]
+    },
+    "nixfmt": {
+      "command": "nixfmt",
+      "args": []
+    }
   }
 }
