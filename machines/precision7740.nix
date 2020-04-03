@@ -8,9 +8,6 @@ let
     export __VK_LAYER_NV_optimus=NVIDIA_only
     exec -a "$0" "$@"
   '';
-  nvidia_x11 = config.boot.kernelPackages.nvidia_x11;
-  nvidia_gl = nvidia_x11.out;
-  nvidia_gl_32 = nvidia_x11.lib32;
 in {
   imports =
     [ "${pkgs.sources.nixpkgs}/nixos/modules/installer/scan/not-detected.nix" ];
@@ -32,37 +29,12 @@ in {
     fsType = "vfat";
   };
 
-  nixpkgs.config.allowUnfree = true;
-
-  environment.systemPackages = [ nvidia_x11 nvidia-offload ];
-  boot.extraModulePackages = [ nvidia_x11 ];
+  environment.systemPackages = [ nvidia-offload ];
   boot.blacklistedKernelModules = [ "nouveau" ];
-  services.xserver.videoDrivers = [ "modesetting" "nvidia" ];
+  services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia.prime.offload.enable = true;
-  hardware.nvidia.modesetting.enable = true;
-  hardware.nvidia.prime = {
-    # Bus ID of the Intel GPU. You can find it using lspci, either under 3D or VGA
-    intelBusId = "PCI:0:2:0";
-    # Bus ID of the NVIDIA GPU. You can find it using lspci, either under 3D or VGA
-    nvidiaBusId = "PCI:1:0:0";
-  };
-  hardware.opengl = {
-    enable = true;
-    driSupport32Bit = true;
-    extraPackages = with pkgs; [
-      nvidia_gl
-      intel-ocl
-      libvdpau-va-gl
-      vaapiIntel
-      vaapiVdpau
-    ];
-    extraPackages32 = with pkgs.pkgsi686Linux; [
-      nvidia_gl_32
-      libvdpau-va-gl
-      vaapiIntel
-      vaapiVdpau
-    ];
-  };
+  hardware.nvidia.prime.intelBusId = "PCI:0:2:0";
+  hardware.nvidia.prime.nvidiaBusId = "PCI:1:0:0";
 
   systemd.services.nvidia-control-devices = {
     wantedBy = [ "multi-user.target" ];
@@ -74,7 +46,7 @@ in {
   powerManagement.cpuFreqGovernor = pkgs.lib.mkDefault "powersave";
 
   networking.interfaces.eno1.useDHCP = true;
-  networking.interfaces.wlp111s0.useDHCP = true;
+  networking.interfaces.wlan0.useDHCP = true;
   services.openvpn.servers = {
     galois-onsite = {
       autoStart = false;
