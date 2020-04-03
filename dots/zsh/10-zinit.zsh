@@ -26,12 +26,9 @@
     zinit ice wait'1' lucid
     zinit light MichaelAquilina/zsh-you-should-use
 
-    # zinit ice wait'1a' pick'zsh/fzf-zsh-completion.sh' lucid
-    # zinit light lincheney/fzf-tab-completion
+    zinit ice depth'1' wait'1' atinit'zpcompinit; zpcdreplay' atpull'fast-theme -q XDG:q-jmnemonic' lucid
+    zinit light zdharma/fast-syntax-highlighting
 
     zinit ice wait'1b' lucid
     zinit light Aloxaf/fzf-tab
-
-    zinit ice depth'1' wait'2' atinit'zpcompinit; zpcdreplay' atpull'fast-theme -q XDG:q-jmnemonic' lucid
-    zinit light zdharma/fast-syntax-highlighting
 }
