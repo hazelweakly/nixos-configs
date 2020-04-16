@@ -15,9 +15,8 @@ with { pkgs = import ./nix { }; }; {
     "nixpkgs-overlays=/etc/nixos/nix/overlays-compat/"
   ];
 
-  # https://bugzilla.kernel.org/show_bug.cgi?id=206329
-  # v5.6 or v5.5.10+ (maybe)
-  boot.kernelPackages = pkgs.linuxPackages;
+  # https://bugzilla.kernel.org/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=NEEDINFO&bug_status=REOPENED&field0-0-0=product&field0-0-1=component&field0-0-2=alias&field0-0-3=short_desc&field0-0-4=status_whiteboard&field0-0-5=content&no_redirect=1&order=changeddate%20DESC%2Cbug_status%2Cpriority%2Cassigned_to%2Cbug_id&query_format=advanced&type0-0-0=substring&type0-0-1=substring&type0-0-2=substring&type0-0-3=substring&type0-0-4=substring&type0-0-5=matches&value0-0-0=ax200&value0-0-1=ax200&value0-0-2=ax200&value0-0-3=ax200&value0-0-4=ax200&value0-0-5=%22ax200%22
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 0;
@@ -120,7 +119,7 @@ with { pkgs = import ./nix { }; }; {
   sound.enable = true;
   hardware.pulseaudio.enable = true;
   hardware.enableAllFirmware = true;
-  services.tlp.enable = false;
+  services.tlp.enable = true;
   hardware.opengl.enable = true;
   services.chrony.enable = true;
 
@@ -166,13 +165,26 @@ with { pkgs = import ./nix { }; }; {
 
   virtualisation.docker.enable = true;
   virtualisation.docker.enableOnBoot = false;
+  environment.etc."docker/daemon.json".text =
+    ''{ "features": { "buildkit": true } }'';
+
+  virtualisation.libvirtd.enable = true;
+  boot.extraModprobeConfig = "options kvm_intel nested=1";
 
   users.users.hazel = {
     isNormalUser = true;
     home = "/home/hazel";
     shell = pkgs.zsh;
-    extraGroups =
-      [ "wheel" "networkmanager" "tty" "video" "audio" "disk" "docker" ];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "tty"
+      "video"
+      "audio"
+      "disk"
+      "docker"
+      "libvirtd"
+    ];
   };
 
   home-manager.users.hazel = import ./home.nix;

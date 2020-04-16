@@ -30,12 +30,21 @@ in {
   };
 
   environment.systemPackages = [ nvidia-offload ];
-  boot.blacklistedKernelModules = [ "nouveau" ];
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia.prime.offload.enable = true;
   hardware.nvidia.prime.intelBusId = "PCI:0:2:0";
   hardware.nvidia.prime.nvidiaBusId = "PCI:1:0:0";
+  hardware.opengl = {
+    enable = true;
+    extraPackages = with pkgs; [
+      vaapiIntel
+      vaapiVdpau
+      libvdpau-va-gl
+      intel-media-driver
+    ];
+  };
 
+  # TODO: Figure out why this is needed and whether or not it harms battery life
   systemd.services.nvidia-control-devices = {
     wantedBy = [ "multi-user.target" ];
     serviceConfig.ExecStart =

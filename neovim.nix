@@ -19,6 +19,6 @@ let
   };
 in symlinkJoin {
   name = "nvim";
-  paths = [ myNvim perl yarn universal-ctags tmux bat ] ++ linters
+  paths = [ myNvim perl yarn universal-ctags tmux bat clojure-lsp ] ++ linters
     ++ formatters;
 }

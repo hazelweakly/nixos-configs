@@ -14,6 +14,9 @@ let
     };
   };
   srcs = _: _: { inherit sources; };
-  overlays = [ moz nur srcs lorri niv search ];
+  intel = self: super: {
+    vaapiIntel = super.vaapiIntel.override { enableHybridCodec = true; };
+  };
+  overlays = [ moz nur srcs lorri niv search intel ];
   config = { allowUnfree = true; };
 in import sources.nixpkgs { inherit config overlays system; }

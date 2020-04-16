@@ -19,6 +19,7 @@ with pkgs.lib; {
         "browser.ctrlTab.recentlyUsedOrder" = false;
         "browser.newtab.extensionControlled" = true;
         "browser.newtab.privateAllowed" = true;
+        "accessibility.typeaheadfind.enablesound" = false;
       };
     };
   };
@@ -100,6 +101,13 @@ with pkgs.lib; {
   };
 
   home.file.".local/share/fonts/VictorMono".source = ./dots/VictorMono;
+  home.file.".timewarrior/extensions/totals.py" = {
+    source = pkgs.writeScript "totals" ''
+      #!${pkgs.stdenv.shell}
+      PATH=${pkgs.python.withPackages (p: [ p.dateutil ])}/bin:$PATH
+      exec python ${pkgs.timewarrior}/share/doc/timew/ext/totals.py
+    '';
+  };
 
   xdg.configFile."tridactyl".source = ./dots/tridactyl;
   xdg.configFile."kitty".source = ./dots/kitty;

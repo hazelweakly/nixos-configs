@@ -38,6 +38,7 @@ function! VimrcLoadPlugins()
     Plug '907th/vim-auto-save'
     Plug 'blueyed/vim-diminactive'
     Plug 'camspiers/lens.vim'
+    Plug 'wsdjeg/vim-fetch'
 
     " filetype ]] [[
     Plug 'arp242/jumpy.vim'
@@ -89,7 +90,7 @@ function! VimrcLoadPluginSettings()
     " fzf.vim
     " fzf in floating windows
     let $FZF_DEFAULT_OPTS="--color=light --reverse "
-    let $FZF_DEFAULT_COMMAND = 'fd -t f -L'
+    let $FZF_DEFAULT_COMMAND = 'fd -t f -L -H'
     function! CreateCenteredFloatingWindow()
         let width = min([&columns - 4, max([80, &columns - 20])])
         let height = min([&lines - 4, max([20, &lines - 10])])
@@ -152,7 +153,7 @@ function! VimrcLoadPluginSettings()
     " Customize Rg and Files commands to add preview
     command! -bang -nargs=* Rg
                 \ call fzf#vim#grep(
-                \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+                \   'rg -H --column --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
                 \   fzf#vim#with_preview('right:40%', '?'),
                 \   <bang>0)
 
