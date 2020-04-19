@@ -3,13 +3,15 @@ with pkgs;
 let
   linters = [ shellcheck languagetool vim-vint nodePackages.write-good hlint ];
   formatters = [ shfmt nixfmt python37Packages.black haskellPackages.brittany ];
+  bins = [ perl yarn universal-ctags tmux bat exa clojure-lsp ];
+
   nvim = (neovim-unwrapped.overrideAttrs (o: {
     version = "master";
     src = sources.neovim;
     buildInputs = o.buildInputs ++ [ utf8proc ];
   }));
   nvimWrapper = callPackage
-    "${sources.nixpkgs}/pkgs/applications/editors/neovim/wrapper.nix" {
+    (sources.nixpkgs + "/pkgs/applications/editors/neovim/wrapper.nix") {
       nodejs = nodejs_latest;
     };
   myNvim = nvimWrapper nvim {
@@ -17,8 +19,16 @@ let
     viAlias = true;
     withNodeJs = true;
   };
-in symlinkJoin {
+
+  binPath = lib.makeBinPath (linters ++ formatters ++ bins);
+
+in stdenv.mkDerivation {
   name = "nvim";
-  paths = [ myNvim perl yarn universal-ctags tmux bat clojure-lsp ] ++ linters
-    ++ formatters;
+  buildInputs = [ makeWrapper ];
+  buildCommand = ''
+    makeWrapper "${myNvim}/bin/nvim" "$out/bin/nvim" --suffix PATH : ${binPath}
+    ln -sfn "$out/bin/nvim" "$out/bin/vim"
+    ln -sfn "$out/bin/nvim" "$out/bin/vi"
+  '';
+  preferLocalBuild = true;
 }
