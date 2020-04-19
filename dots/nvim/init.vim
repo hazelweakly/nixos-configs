@@ -34,6 +34,8 @@ function! VimrcLoadPlugins()
     " Plug 'cohama/lexima.vim'
     Plug 'junegunn/fzf'
     Plug 'junegunn/fzf.vim'
+    Plug 'chengzeyi/fzf-preview.vim'
+    Plug 'Shougo/neomru.vim'
     Plug 'junegunn/vim-easy-align'
     Plug '907th/vim-auto-save'
     Plug 'blueyed/vim-diminactive'
@@ -88,83 +90,19 @@ function! VimrcLoadPluginSettings()
     let g:lens#disabled_filetypes = ['nerdtree', 'fzf', 'actionmenu']
 
     " fzf.vim
-    " fzf in floating windows
     let $FZF_DEFAULT_OPTS="--color=light --reverse "
     let $FZF_DEFAULT_COMMAND = 'fd -t f -L -H'
-    function! CreateCenteredFloatingWindow()
-        let width = min([&columns - 4, max([80, &columns - 20])])
-        let height = min([&lines - 4, max([20, &lines - 10])])
-        let top = ((&lines - height) / 2) - 1
-        let left = (&columns - width) / 2
-        let opts = {'relative': 'editor', 'row': top, 'col': left, 'width': width, 'height': height, 'style': 'minimal'}
+    let $BAT_THEME="GitHub"
+    let &shell = "/usr/bin/env bash"
+    let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9 } }
 
-        let top = "╭" . repeat("─", width - 2) . "╮"
-        let mid = "│" . repeat(" ", width - 2) . "│"
-        let bot = "╰" . repeat("─", width - 2) . "╯"
-        let lines = [top] + repeat([mid], height - 2) + [bot]
-        let s:buf = nvim_create_buf(v:false, v:true)
-        call nvim_buf_set_lines(s:buf, 0, -1, v:true, lines)
-        call nvim_open_win(s:buf, v:true, opts)
-        set winhl=Normal:Floating
-        let opts.row += 1
-        let opts.height -= 2
-        let opts.col += 2
-        let opts.width -= 4
-        call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
-        au BufWipeout <buffer> exe 'bw '.s:buf
-    endfunction
-
-    let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
-
-    " Files + devicons + floating fzf
-    function! Fzf_dev()
-        let l:fzf_files_options = '--preview "bat --line-range :'.&lines.' --theme="GitHub" --style=numbers,changes --color always {2..-1}"'
-        function! s:files()
-            let l:files = split(system($FZF_DEFAULT_COMMAND), '\n')
-            return s:prepend_icon(l:files)
-        endfunction
-
-        function! s:prepend_icon(candidates)
-            let l:result = []
-            for l:candidate in a:candidates
-                let l:filename = fnamemodify(l:candidate, ':p:t')
-                let l:icon = WebDevIconsGetFileTypeSymbol(l:filename, isdirectory(l:filename))
-                call add(l:result, printf('%s %s', l:icon, l:candidate))
-            endfor
-
-            return l:result
-        endfunction
-
-        function! s:edit_file(item)
-            let l:pos = stridx(a:item, ' ')
-            let l:file_path = a:item[pos+1:-1]
-            execute 'silent e' l:file_path
-        endfunction
-
-        call fzf#run({
-                    \ 'source': <sid>files(),
-                    \ 'sink':   function('s:edit_file'),
-                    \ 'options': '-m --reverse ' . l:fzf_files_options,
-                    \ 'down':    '40%',
-                    \ 'window': 'call CreateCenteredFloatingWindow()'})
-
-    endfunction
-
-    " Customize Rg and Files commands to add preview
-    command! -bang -nargs=* Rg
-                \ call fzf#vim#grep(
-                \   'rg -H --column --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
-                \   fzf#vim#with_preview('right:40%', '?'),
-                \   <bang>0)
-
-    command! -bang -nargs=? -complete=dir Files
-                \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-
-    nnoremap <silent> <leader>f :call Fzf_dev()<CR>
-    nnoremap <silent> <leader>h :History<CR>
-    nnoremap <silent> <leader>b :Buffers<CR>
-    nnoremap <silent> <leader><space> :Rg<CR>
-    xnoremap <silent> <leader><space> y:Rg <C-R>"<CR>
+    " fzf-preview.vim
+    nnoremap <silent> <leader>f :<C-u>FZFFiles<CR>
+    nnoremap <silent> <leader>h :FZFHistory<CR>
+    nnoremap <silent> <leader>b :<C-u>FZFWindows<CR>
+    nnoremap          <leader><space> :<C-u>FZFRg<Space>
+    xnoremap <silent> <leader><space> y:FZFRg <C-R>"<CR>
+    nnoremap <silent> <leader>/ :<C-u>FZFBLines<CR>
 
     " coc.nvim
     nmap <silent> gd <Plug>(coc-definition)
