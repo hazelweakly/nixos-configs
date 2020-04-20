@@ -1,13 +1,4 @@
-{ config, ... }:
-let
-  pkgs = import ../nix { };
-  nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
-    export __NV_PRIME_RENDER_OFFLOAD=1
-    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
-    export __GLX_VENDOR_LIBRARY_NAME=nvidia
-    export __VK_LAYER_NV_optimus=NVIDIA_only
-    exec -a "$0" "$@"
-  '';
+let pkgs = import ../nix { };
 in {
   imports =
     [ "${pkgs.sources.nixpkgs}/nixos/modules/installer/scan/not-detected.nix" ];
@@ -27,28 +18,6 @@ in {
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/8F7B-1633";
     fsType = "vfat";
-  };
-
-  environment.systemPackages = [ nvidia-offload ];
-  services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.nvidia.prime.offload.enable = true;
-  hardware.nvidia.prime.intelBusId = "PCI:0:2:0";
-  hardware.nvidia.prime.nvidiaBusId = "PCI:1:0:0";
-  hardware.opengl = {
-    enable = true;
-    extraPackages = with pkgs; [
-      vaapiIntel
-      vaapiVdpau
-      libvdpau-va-gl
-      intel-media-driver
-    ];
-  };
-
-  # TODO: Figure out why this is needed and whether or not it harms battery life
-  systemd.services.nvidia-control-devices = {
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig.ExecStart =
-      "${config.boot.kernelPackages.nvidia_x11.bin}/bin/nvidia-smi";
   };
 
   nix.maxJobs = pkgs.lib.mkDefault 16;
