@@ -2,8 +2,18 @@
 with pkgs;
 let
   linters = [ shellcheck languagetool vim-vint nodePackages.write-good hlint ];
-  formatters = [ shfmt nixfmt python37Packages.black haskellPackages.brittany ];
-  bins = [ perl yarn universal-ctags tmux bat exa clojure-lsp ];
+  # formatters = [ shfmt nixfmt python37Packages.black haskellPackages.brittany ];
+  formatters = [ shfmt nixfmt python37Packages.black ];
+  bins = [
+    perl
+    yarn
+    universal-ctags
+    tmux
+    bat
+    exa
+    clojure-lsp
+    (import sources.ghcide-nix { }).ghcide-ghc883
+  ];
 
   nvim = (neovim-unwrapped.overrideAttrs (o: {
     version = "master";
