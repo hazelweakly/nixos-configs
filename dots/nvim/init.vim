@@ -97,11 +97,11 @@ function! VimrcLoadPluginSettings()
     let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9 } }
 
     " fzf-preview.vim
-    nnoremap <silent> <leader>f :<C-u>FZFFiles<CR>
-    nnoremap <silent> <leader>h :FZFHistory<CR>
-    nnoremap <silent> <leader>b :<C-u>FZFWindows<CR>
-    nnoremap          <leader><space> :<C-u>FZFRg<Space>
-    xnoremap <silent> <leader><space> y:FZFRg <C-R>"<CR>
+    nnoremap <silent> <leader>f :Files<CR>
+    nnoremap <silent> <leader>h :History<CR>
+    nnoremap <silent> <leader>b :Buffers<CR>
+    nnoremap          <leader><space> :<C-u>Rg<Space>
+    xnoremap <silent> <leader><space> y:Rg <C-R>"<CR>
     nnoremap <silent> <leader>/ :<C-u>FZFBLines<CR>
 
     " coc.nvim
@@ -282,7 +282,7 @@ function! VimrcLoadPluginSettings()
         return
       end
       let g:dont_write = v:true
-      call timer_start(10000, 'My_Write')
+      call timer_start(1000, 'My_Write')
     endfunction
 
     function! OnUIEnter(event) abort
@@ -315,6 +315,7 @@ function! VimrcLoadPluginSettings()
         nnoremap <C-z> :call firenvim#hide_frame()<CR>
         au TextChanged * ++nested call Delay_My_Write()
         au TextChangedI * ++nested call Delay_My_Write()
+        startinsert
       endif
     endfunction
     autocmd UIEnter * call OnUIEnter(deepcopy(v:event))
