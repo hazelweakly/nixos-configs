@@ -1,4 +1,8 @@
-with { pkgs = import ./nix { }; }; {
+with { pkgs = import ./nix { }; };
+let
+  papis = with pkgs.python3Packages;
+    (toPythonApplication (callPackage ./papis.nix { }));
+in {
   imports = [
     "${pkgs.sources.nixos-hardware}/common/cpu/intel"
     "${pkgs.sources.nixos-hardware}/common/pc/laptop"
@@ -69,6 +73,9 @@ with { pkgs = import ./nix { }; }; {
     mupdf
     niv
     (callPackage ./neovim.nix { })
+    zoom-us
+    neuron
+    papis
 
     # Programs implicitly relied on in shell
     lsd
@@ -82,6 +89,7 @@ with { pkgs = import ./nix { }; }; {
     VISUAL = "nvim";
     EDITOR = "nvim";
     MOZ_USE_XINPUT2 = "1";
+    MOZ_ENABLE_WAYLAND = "1";
     LPASS_AGENT_TIMEOUT = "0";
   };
 
@@ -91,6 +99,8 @@ with { pkgs = import ./nix { }; }; {
     enable = true;
     enableGlobalCompInit = false;
   };
+  programs.adb.enable = true;
+  programs.gnupg.agent.enable = true;
 
   services.thermald.enable = true;
   services.interception-tools.enable = true;
@@ -146,7 +156,6 @@ with { pkgs = import ./nix { }; }; {
       autoLogin.enable = false;
       autoLogin.user = "hazel";
       autoSuspend = false;
-      wayland = false;
     };
     displayManager.setupCommands = "stty -ixon";
 
@@ -169,6 +178,7 @@ with { pkgs = import ./nix { }; }; {
     ''{ "features": { "buildkit": true } }'';
 
   virtualisation.libvirtd.enable = true;
+  virtualisation.libvirtd.onBoot = "ignore";
   boot.extraModprobeConfig = "options kvm_intel nested=1";
 
   users.users.hazel = {
@@ -184,6 +194,7 @@ with { pkgs = import ./nix { }; }; {
       "disk"
       "docker"
       "libvirtd"
+      "adbusers"
     ];
   };
 

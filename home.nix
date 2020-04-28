@@ -12,6 +12,8 @@ with pkgs.lib; {
       id = 0;
       settings = {
         "layers.acceleration.force-enabled" = true;
+        "layers.omtp.enabled" = true;
+        "layout.display-list.retain" = true;
         "gfx.webrender.all" = true;
         "gfx.canvas.azure.accelerated" = true;
         "layout.css.devPixelsPerPx" = "1.25";
@@ -20,27 +22,32 @@ with pkgs.lib; {
         "browser.newtab.extensionControlled" = true;
         "browser.newtab.privateAllowed" = true;
         "accessibility.typeaheadfind.enablesound" = false;
+        "widget.wayland-dmabuf-webgl.enabled" = true;
+        "widget.wayland-dmabuf-textures.enabled" = true;
+        "widget.wayland-dmabuf-vaapi.enabled" = true;
+        "media.ffvpx.enabled" = false;
+        # security.sandbox.content.level = 0;
       };
     };
   };
 
-  programs.fzf = {
+  programs.fzf = let fd = "fd -HLE .git -c always";
+  in {
     enable = true;
-    changeDirWidgetCommand = "fd -H -t d -L -E '.git/*' -c always .";
+    changeDirWidgetCommand = "${fd} -td .";
     changeDirWidgetOptions = [
       "--preview 'lsd --group-dirs first --icon always -t --tree {} | head -200'"
     ];
-    defaultCommand = "fd -H -t f -I -L -E '.git/*' -c always 2> /dev/null";
+    defaultCommand = "${fd} -tf 2> /dev/null";
     defaultOptions = [ "--color=light --ansi --layout=reverse" ];
-    fileWidgetCommand = "fd -L -c always .";
+    fileWidgetCommand = "${fd} .";
     fileWidgetOptions = let
       preview =
         "(bat --style numbers,changes --color always --paging never --theme GitHub {} || tree -C {}) 2> /dev/null";
     in [ "--preview '${preview} | head -200'" ];
-    historyWidgetOptions = [
-      ''
-        --preview 'echo {} | cut -d\" \" -f2- | fold -w $(($(tput cols)-4))' --preview-window down:4:hidden --bind '?:toggle-preview' ''
-    ];
+    historyWidgetOptions = [''
+      --preview 'echo {} | cut -d\" \" -f2- | fold -w $(($(tput cols)-4))' --preview-window down:4:hidden --bind '?:toggle-preview'
+    ''];
   };
 
   programs.tmux = {

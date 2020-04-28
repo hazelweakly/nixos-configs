@@ -3,6 +3,9 @@ let
   moz = import sources.nixpkgs-mozilla;
   niv = _: _: { inherit (import sources.niv { }) niv; };
   lorri = _: _: { lorri = import sources.lorri { }; };
+  neuron = _: _: {
+    neuron = import sources.neuron { gitRev = sources.neuron.rev; };
+  };
   search = _: super: {
     haskellPackages = super.recurseIntoAttrs super.haskellPackages;
     nodePackages = super.recurseIntoAttrs super.nodePackages;
@@ -17,6 +20,6 @@ let
   intel = self: super: {
     vaapiIntel = super.vaapiIntel.override { enableHybridCodec = true; };
   };
-  overlays = [ moz nur srcs lorri niv search intel ];
+  overlays = [ moz nur srcs lorri niv search intel neuron ];
   config = { allowUnfree = true; };
 in import sources.nixpkgs { inherit config overlays system; }

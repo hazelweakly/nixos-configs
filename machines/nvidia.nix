@@ -11,9 +11,11 @@ let
 in with pkgs.lib; {
   environment.systemPackages = [ nvidia-offload ];
   services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia.modesetting.enable = true;
   hardware.nvidia.prime.offload.enable = true;
   hardware.nvidia.prime.intelBusId = "PCI:0:2:0";
   hardware.nvidia.prime.nvidiaBusId = "PCI:1:0:0";
+  services.xserver.displayManager.gdm.nvidiaWayland = true;
 
   # https://github.com/NixOS/nixpkgs/pull/73530
 
@@ -39,4 +41,3 @@ in with pkgs.lib; {
   #   };
   # };
 }
-
