@@ -66,7 +66,7 @@ zup() {
 
 update() {
     echo "Downloading sources"
-    nix eval --raw 'builtins.toJSON (builtins.removeAttrs (import /etc/nixos/nix {}).sources ["__functor"])' >/dev/null 2>&1
+    nix eval --raw '(builtins.toJSON (builtins.removeAttrs (import /etc/nixos/nix {}).sources ["__functor"]))' >/dev/null 2>&1
     echo "Rebuilding"
     sudo nixos-rebuild \
       -I "nixpkgs=$(nix eval --raw '(import /etc/nixos/nix {}).sources.nixpkgs.outPath')" \

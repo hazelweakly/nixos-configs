@@ -13,6 +13,8 @@ export FZF_TAB_OPTS=(
     '--query=$query'   # $query will be expanded to query string at runtime.
     '--header-lines=$#headers' # $#headers will be expanded to lines of headers at runtime
 )
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export BAT_THEME="GitHub"
 
 # TODO: Replace this with the actual thing
 # https://github.com/sharkdp/vivid
