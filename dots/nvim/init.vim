@@ -91,7 +91,7 @@ function! VimrcLoadPluginSettings()
 
     " fzf.vim
     let $FZF_DEFAULT_OPTS="--color=light --reverse "
-    let $FZF_DEFAULT_COMMAND = 'fd -t f -L -H'
+    let $FZF_DEFAULT_COMMAND = 'fd -t f -L -H -E .git'
     let $BAT_THEME="GitHub"
     let &shell = "/usr/bin/env bash"
     let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9 } }
@@ -100,7 +100,7 @@ function! VimrcLoadPluginSettings()
     nnoremap <silent> <leader>f :Files<CR>
     nnoremap <silent> <leader>h :History<CR>
     nnoremap <silent> <leader>b :Buffers<CR>
-    nnoremap          <leader><space> :<C-u>Rg<Space>
+    nnoremap          <leader><space> :<C-u>Rg<Space><CR>
     xnoremap <silent> <leader><space> y:Rg <C-R>"<CR>
     nnoremap <silent> <leader>/ :<C-u>FZFBLines<CR>
 
@@ -124,6 +124,7 @@ function! VimrcLoadPluginSettings()
           \ }
 
     let g:coc_global_extensions = [
+                \ 'coc-cmake',
                 \ 'coc-css',
                 \ 'coc-cssmodules',
                 \ 'coc-diagnostic',

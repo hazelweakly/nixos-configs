@@ -73,7 +73,7 @@
   "diagnostic-languageserver.formatFiletypes": {
     "sh": "shfmt",
     "nix": "nixfmt",
-    "haskell": "brittany"
+    "haskell": "ormolu"
   },
   "diagnostic-languageserver.formatters": {
     "shfmt": {
@@ -82,6 +82,10 @@
     },
     "nixfmt": {
       "command": "nixfmt",
+      "args": []
+    },
+    "ormolu": {
+      "command": "ormolu",
       "args": []
     }
   }
