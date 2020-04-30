@@ -1,4 +1,4 @@
-" Inspiration: https://gitlab.com/CraftedCart/dotfiles/-/tree/master/.config%2Fnvim
+" https://learnvimscriptthehardway.stevelosh.com/chapters/42.html
 function! VimrcLoadPlugins()
     " Install vim-plug if not available
     let plug_install = 0
@@ -21,14 +21,21 @@ function! VimrcLoadPlugins()
 
     " Linting + LSP
     Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+    Plug '~/src/personal/coc-haskell-language-server', {'do': 'yarn install --frozen-lockfile'}
+    Plug 'expipiplus1/vscode-hie-server', { 'do': 'yarn install --frozen-lockfile' }
+    " Plug '~/src/personal/coc-docker', {'do': 'yarn install --frozen-lockfile'}
     Plug 'direnv/direnv.vim'
     Plug 'sbdchd/neoformat', { 'for' : ['terraform'] }
-    Plug 'kizza/actionmenu.nvim'
     Plug 'editorconfig/editorconfig-vim'
     Plug 'tpope/vim-sleuth'
     Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+    Plug 'nvim-lua/lsp-status.nvim'
+    " https://github.com/nvim-treesitter/nvim-treesitter
+    Plug 'nvim-treesitter/nvim-treesitter'
+    " https://github.com/metakirby5/codi.vim
 
     Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey','WhichKey!'] }
+    Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
     Plug 'lambdalisue/suda.vim'
     Plug 'farmergreg/vim-lastplace'
     " Plug 'cohama/lexima.vim'
@@ -41,6 +48,9 @@ function! VimrcLoadPlugins()
     Plug 'blueyed/vim-diminactive'
     Plug 'camspiers/lens.vim'
     Plug 'wsdjeg/vim-fetch'
+    " Plug 'fiatjaf/neuron.vim'
+    Plug '~/src/personal/neuron.vim'
+    Plug 'antoinemadec/FixCursorHold.nvim'
 
     " filetype ]] [[
     Plug 'arp242/jumpy.vim'
@@ -50,9 +60,13 @@ function! VimrcLoadPlugins()
     " g>, g<, gs
     Plug 'machakann/vim-swap'
     Plug 'airblade/vim-rooter'
+    Plug 'svermeulen/vim-subversive'
 
     Plug 'liuchengxu/vista.vim'
     Plug 'rhysd/git-messenger.vim'
+    " x[ and x] to jump conflicts
+    " ct for top/them, co for bottom/us, cn for none, cb for both
+    Plug 'rhysd/conflict-marker.vim'
     Plug 'dhruvasagar/vim-zoom'
     Plug 'voldikss/vim-floaterm'
     Plug 'christoomey/vim-tmux-navigator'
@@ -62,6 +76,9 @@ function! VimrcLoadPlugins()
     Plug 'romainl/vim-cool'
     Plug 'andymass/vim-matchup'
     Plug 'ryanoasis/vim-devicons'
+    Plug 'adelarsq/vim-emoji-icon-theme'
+    Plug 'jceb/vim-orgmode'
+    Plug 'vmchale/dhall-vim'
 
     Plug 'https://gitlab.com/protesilaos/tempus-themes-vim.git'
 
@@ -87,13 +104,33 @@ function! VimrcLoadPluginSettings()
     let g:matchup_delim_stopline = 2500
 
     " lens.vim
-    let g:lens#disabled_filetypes = ['nerdtree', 'fzf', 'actionmenu']
+    let g:lens#disabled_filetypes = ['nerdtree', 'fzf']
+
+    " vimtex
+    let g:tex_flavor = 'latex'
+
+    " neuron.vim
+    " let g:path_jq
+
+    " nvim-treesitter
+    luafile ~/.config/nvim/lua/setup-treesitter.lua
 
     " fzf.vim
-    let $FZF_DEFAULT_OPTS="--color=light --reverse "
-    let $FZF_DEFAULT_COMMAND = 'fd -t f -L -H -E .git'
-    let $BAT_THEME="GitHub"
-    let &shell = "/usr/bin/env bash"
+    let s:env_dict = {
+                \ "FZF_PREVIEW_COMMAND": 'bat --style=numbers,changes --color always {}',
+                \ "FZF_DEFAULT_OPTS": "--color=light --reverse ",
+                \ "FZF_DEFAULT_COMMAND": 'fd -t f -L -H -E .git',
+                \ "BAT_THEME": "ansi-light",
+                \ }
+
+    for [l:e, l:d] in items(s:env_dict)
+        let l:_e = getenv(l:e)
+        if l:_e == "" || l:_e == v:null
+            call setenv(l:e, l:d)
+        endif
+    endfor
+
+    let &shell = "bash"
     let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9 } }
 
     " fzf-preview.vim
@@ -110,8 +147,14 @@ function! VimrcLoadPluginSettings()
     nmap <silent> gR <Plug>(coc-references)
     nmap <silent> K :call CocActionAsync('doHover')<CR>
     nmap <silent> gz <Plug>(coc-refactor)
+    nmap <silent> gl <Plug>(coc-codelens-action)
 
-    nnoremap <silent> ga :call ActionMenuCodeActions()<CR>
+    function! s:cocActionsOpenFromSelected(type) abort
+        execute 'CocCommand actions.open ' . a:type
+    endfunction
+    xmap <silent> ga :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
+    nmap <silent> ga :<C-u>set operatorfunc=<SID>cocActionsOpenFromSelected<CR>g@
+
     nmap <silent> gA <Plug>(coc-fix-current)
     nmap <silent> <C-n> <Plug>(coc-diagnostic-next)
     nmap <silent> <C-p> <Plug>(coc-diagnostic-prev)
@@ -123,41 +166,34 @@ function! VimrcLoadPluginSettings()
           \ 'yaml.ansible': 'yaml',
           \ }
 
+    " \ 'coc-docker',
     let g:coc_global_extensions = [
+                \ 'coc-actions',
+                \ 'coc-cfn-lint',
                 \ 'coc-cmake',
                 \ 'coc-css',
                 \ 'coc-cssmodules',
                 \ 'coc-diagnostic',
-                \ 'coc-docker',
+                \ 'coc-emmet',
                 \ 'coc-eslint',
                 \ 'coc-git',
                 \ 'coc-highlight',
                 \ 'coc-html',
                 \ 'coc-json',
+                \ 'coc-lua',
                 \ 'coc-pairs',
                 \ 'coc-prettier',
+                \ 'coc-pyright',
+                \ 'coc-python',
                 \ 'coc-rust-analyzer',
                 \ 'coc-sh',
                 \ 'coc-tslint-plugin',
                 \ 'coc-tsserver',
+                \ 'coc-vetur',
                 \ 'coc-vimlsp',
                 \ 'coc-vimtex',
-                \ 'coc-yaml',
-                \ 'coc-emmet',
-                \ 'coc-vetur'
+                \ 'coc-yaml'
                 \ ]
-
-    if executable('docker-langserver')
-        call coc#config('languageserver.docker.enable', v:true)
-    endif
-
-    if executable('hie-wrapper')
-        call coc#config('languageserver.haskell.enable', v:true)
-    endif
-
-    if executable('ghcide')
-        call coc#config('languageserver.ghcide.enable', v:true)
-    endif
 
     augroup coc
         au!
@@ -191,14 +227,13 @@ function! VimrcLoadPluginSettings()
     " vista.vim
     let g:vista#renderer#enable_icon = 1
     let g:vista_fzf_preview = ['right:40%']
-    let $FZF_PREVIEW_COMMAND='bat --theme="GitHub" --style=numbers,changes --color always {}'
 
     let g:vista_echo_cursor_strategy = 'floating_win'
     nnoremap <silent> <C-t> :Vista finder<CR>
 
     " vim-floaterm
     let g:floaterm_position = 'center'
-    let g:floaterm_winblend = '30'
+    let g:floaterm_winblend = 30
     let g:floaterm_keymap_toggle = '<F12>'
 
     " vim-tmux-navigation
@@ -207,26 +242,6 @@ function! VimrcLoadPluginSettings()
     nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
     nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
     nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
-
-    " actionmenu.vim
-    let s:code_actions = []
-
-    func! ActionMenuCodeActions() abort
-      if coc#util#has_float()
-        call coc#util#float_hide()
-      endif
-
-      let s:code_actions = CocAction('codeActions')
-      let l:menu_items = map(copy(s:code_actions), { index, item -> item['title'] })
-      call actionmenu#open(l:menu_items, 'ActionMenuCodeActionsCallback')
-    endfunc
-
-    func! ActionMenuCodeActionsCallback(index, item) abort
-      if a:index >= 0
-        let l:selected_code_action = s:code_actions[a:index]
-        let l:response = CocAction('doCodeAction', l:selected_code_action)
-      endif
-    endfunc
 
     " targets.vim
     autocmd User targets#mappings#user call targets#mappings#extend({
@@ -256,6 +271,10 @@ function! VimrcLoadPluginSettings()
 
     " vim-which-key
     nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
+
+    " chadtree
+    nnoremap <leader>v <cmd>CHADopen<cr>
+    lua vim.api.nvim_set_var("chadtree_settings", { use_icons = "emoji" })
 
     " suda.vim: Write file with sudo
     command! W :w suda://%
@@ -359,6 +378,7 @@ function! VimrcLoadMappings()
 endfunction
 
 function! VimrcLoadSettings()
+    set title
     set nojoinspaces
     set inccommand=nosplit
     set pumblend=30
@@ -408,6 +428,8 @@ function! VimrcLoadSettings()
     set ttimeoutlen=10
     set termguicolors
     set updatetime=100
+    " fixcursorhold.nvim
+    let g:cursorhold_updatetime = 100
     set splitright
     set splitbelow
     set nofixendofline
@@ -429,6 +451,7 @@ function! VimrcLoadSettings()
                     \|   PlugInstall --sync | q
                     \| endif
         au VimEnter * call vista#RunForNearestMethodOrFunction()
+        au VimEnter * set title
     augroup END
 
     augroup win_resize
@@ -437,6 +460,11 @@ function! VimrcLoadSettings()
     augroup END
 
     set statusline=%f\ %h%w%m%r%=%{NearestMethodOrFunction()}%-8.(%)\ %-14.(%l,%c%V%)\ %P
+
+    augroup LuaHighlight
+        au!
+        au TextYankPost * silent! lua require'vim.highlight'.on_yank()
+    augroup END
 endfunction
 
 function! VimrcLoadFiletypeSettings()
@@ -448,7 +476,12 @@ function! VimrcLoadFiletypeSettings()
 endfunction
 
 function! VimrcLoadColors()
-    colorscheme tempus_dawn
+    if filereadable(expand("~/.config/nvim_colors"))
+        source ~/.config/nvim_colors
+        call timer_start(60000, {-> execute('source ' . expand("~/.config/nvim_colors"))}, {'repeat': -1})
+    else
+        colorscheme tempus_dawn
+    endif
     hi! Comment gui=italic
     hi MatchParen guibg=none gui=italic
     hi SignColumn guibg=none

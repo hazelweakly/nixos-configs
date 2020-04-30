@@ -23,36 +23,31 @@
   "tslint.autoFixOnSave": true,
   "scss.lint.unknownProperties": "ignore",
   "css.lint.unknownProperties": "ignore",
+  "python.jediEnabled": false,
+  "python.autoUpdateLanguageServer": false,
+  "python.formatting.provider": "black",
+  "python.disableInstallationCheck": true,
+  "pyright.disableCompletion": true,
+  "python.analysis.diagnosticMode": "workspace",
+  "haskell.formattingProvider": "ormolu",
   "yaml.schemas": {
     "https://raw.githubusercontent.com/docker/cli/master/cli/compose/schema/data/config_schema_v3.9.json": "/docker-compose.*yml",
     "http://json.schemastore.org/ansible-stable-2.9": "/playbook.yml"
   },
+  "yaml.customTags": [
+    "!Equals sequence",
+    "!FindInMap sequence",
+    "!GetAtt",
+    "!GetAZs",
+    "!ImportValue",
+    "!Join sequence",
+    "!Ref",
+    "!Select sequence",
+    "!Split sequence",
+    "!Sub"
+  ],
   "yaml.format.enable": true,
   "languageserver": {
-    "docker": {
-      "enable": false,
-      "command": "docker-langserver",
-      "args": ["--stdio"],
-      "filetypes": ["Dockerfile"]
-    },
-    "ghcide": {
-      "enable": false,
-      "command": "ghcide",
-      "args": ["--lsp"],
-      "filetypes": ["hs", "lhs", "haskell"],
-      "rootPatterns": [".stack.yaml", "cabal.config", "package.yaml"]
-    },
-    "haskell": {
-      "enable": false,
-      "command": "hie-wrapper",
-      "rootPatterns": ["stack.yaml", "cabal.config", "package.yaml"],
-      "filetypes": ["hs", "lhs", "haskell"],
-      "initializationOptions": {
-        "languageServerHaskell": {
-          "hlintOn": true
-        }
-      }
-    },
     "clojure-lsp": {
       "command": "bash",
       "args": ["-c", "clojure-lsp"],
@@ -66,14 +61,36 @@
   "diagnostic-languageserver.filetypes": {
     "vim": "vint",
     "email": "languagetool",
-    "markdown": "write-good",
     "sh": "shellcheck",
+    "bzl": "buildifier",
+    "docker": "hadolint",
     "haskell": "hlint"
   },
   "diagnostic-languageserver.formatFiletypes": {
     "sh": "shfmt",
     "nix": "nixfmt",
-    "haskell": "ormolu"
+    "bzl": "buildifier"
+  },
+  "diagnostic-languageserver.linters": {
+    "buildifier": {
+      "command": "buildifier",
+      "debounce": 100,
+      "args": ["-lint", "warn", "-mode", "check", "-format", "json", "%file"],
+      "sourceName": "buildifier",
+      "parseJson": {
+        "errorsRoot": "files[0].warnings",
+        "line": "start.line",
+        "column": "start.column",
+        "endLine": "end.line",
+        "endColumn": "end.column",
+        "message": "[${category}] ${message} [${url}]",
+        "security": "security",
+        "securities": {
+          // This is abusing lodash's behavior with non existant object properties
+          "": "warning"
+        }
+      }
+    }
   },
   "diagnostic-languageserver.formatters": {
     "shfmt": {
@@ -84,8 +101,8 @@
       "command": "nixfmt",
       "args": []
     },
-    "ormolu": {
-      "command": "ormolu",
+    "buildifier": {
+      "command": "buildifier",
       "args": []
     }
   }

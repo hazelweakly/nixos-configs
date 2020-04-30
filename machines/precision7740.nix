@@ -1,7 +1,8 @@
-let pkgs = import ../nix { };
+{ pkgs, ... }:
+let sources = import ../nix/sources.nix;
 in {
   imports =
-    [ "${pkgs.sources.nixpkgs}/nixos/modules/installer/scan/not-detected.nix" ];
+    [ (sources.nixpkgs + "/nixos/modules/installer/scan/not-detected.nix") ];
 
   boot.initrd.availableKernelModules =
     [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
@@ -23,6 +24,12 @@ in {
   nix.maxJobs = pkgs.lib.mkDefault 16;
   powerManagement.cpuFreqGovernor = pkgs.lib.mkDefault "powersave";
 
+  services.interception-tools.enable = false;
+  services.plex = {
+    enable = true;
+    openFirewall = true;
+  };
+
   networking.interfaces.eno1.useDHCP = true;
   networking.interfaces.wlan0.useDHCP = true;
   services.openvpn.servers = {
@@ -32,6 +39,7 @@ in {
       updateResolvConf = true;
     };
     galois-offsite = {
+      autoStart = false;
       config = "config /root/vpn/hweakly_offsite.ovpn";
       updateResolvConf = true;
     };

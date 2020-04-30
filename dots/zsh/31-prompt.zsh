@@ -39,7 +39,7 @@
     jenv
     plenv
     phpenv
-    haskell_stack
+    # haskell_stack
     kubecontext
     terraform
     aws
@@ -53,6 +53,7 @@
     nnn
     vim_shell
     midnight_commander
+    vpn_id
     todo
     timewarrior
     taskwarrior
@@ -64,9 +65,9 @@
   typeset -g POWERLEVEL9K_NIX_SHELL_CONTENT_EXPANSION=
   typeset -g POWERLEVEL9K_PCHAR_{NIX,DIRENV}_VISUAL_IDENTIFIER_EXPANSION='Λ'
   function prompt_pchar() {
-    local c=010
+    local c='010'
     if (( _p9k__status )); then
-        local c=009
+        local c='009'
     fi
 
     local state=${DIRENV_DIR:+DIRENV}
@@ -77,15 +78,17 @@
   }
 
   function instant_prompt_pchar() {
-    p10k segment -s NORM -f 010 -i 'λ'
+    p10k segment -s NORM -f '010' -i 'λ'
   }
 
   function prompt_docker_version() {
     (( $+commands[docker] )) || return
     _p9k_upglob 'Dockerfile|docker-compose.yml' && return
     _p9k_cached_cmd 0 docker --version && [[ $_p9k__ret == D?* ]] || return
-    p10k segment -i $'\UF308' -f 014 -t "v${${${_p9k__ret//\%/%%}/Docker version /}%.*}"
+    p10k segment -i $'\UF308' -f '014' -t "${${${_p9k__ret//\%/%%}/**, build /}%.*}"
   }
+
+  typeset -g POWERLEVEL9K_CONFIG_FILE=@zsh-prompt@
 
   (( ! $+functions[p10k] )) || p10k reload
 }

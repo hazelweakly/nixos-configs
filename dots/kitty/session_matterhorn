@@ -1,0 +1,15 @@
+cd ~
+title matterhorn
+launch matterhorn
+
+new_tab matterhorn
+cd ~
+launch matterhorn
+
+new_tab matterhorn
+cd ~
+launch matterhorn
+
+new_tab matterhorn
+cd ~
+launch matterhorn

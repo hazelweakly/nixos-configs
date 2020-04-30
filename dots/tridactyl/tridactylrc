@@ -1,8 +1,4 @@
-sanitise tridactyllocal tridactylsync
-
-set newtab about:blank
 set smoothscroll true
-set theme shydactyl
 colorscheme googlelight
 " like set allowautofocus false but doesn't break CodeMirror
 autocmd TabEnter .* unfocus
@@ -38,7 +34,6 @@ bind gl tabmove +1
 bind yy clipboard yankshort
 
 " Handy multiwindow/multitasking binds
-bind gd tabdetach
 bind gD composite tabduplicate | tabdetach
 
 set hintfiltermode vimperator-reflow
@@ -50,11 +45,5 @@ set hintdelay 100
 autocmd DocStart mail.google.com mode ignore
 autocmd DocStart mattermost* mode ignore
 autocmd DocStart *spicehtml5-main.jsp* mode ignore
-
-command fixamo_quiet jsb tri.excmds.setpref("privacy.resistFingerprinting.block_mozAddonManager", "true").then(tri.excmds.setpref("extensions.webextensions.restrictedDomains", '""'))
-
-fixamo_quiet
-
-jsb browser.webRequest.onHeadersReceived.addListener(tri.request.clobberCSP,{urls:["<all_urls>"],types:["main_frame"]},["blocking","responseHeaders"])
 
 " vim: set filetype=vim:

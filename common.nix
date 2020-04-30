@@ -1,38 +1,44 @@
-with { pkgs = import ./nix { }; };
-let
-  papis = with pkgs.python3Packages;
-    (toPythonApplication (callPackage ./papis.nix { }));
+{ pkgs ? import ./nix { }, ... }:
+let sources = import ./nix/sources.nix;
 in {
   imports = [
-    "${pkgs.sources.nixos-hardware}/common/cpu/intel"
-    "${pkgs.sources.nixos-hardware}/common/pc/laptop"
-    "${pkgs.sources.nixos-hardware}/common/pc/laptop/ssd"
-    "${pkgs.sources.home-manager}/nixos"
+    (sources.nixos-hardware + "/common/cpu/intel")
+    (sources.nixos-hardware + "/common/pc/laptop")
+    (sources.nixos-hardware + "/common/pc/laptop/ssd")
+    (sources.home-manager + "/nixos")
     ./cachix.nix
+    ./env.nix
+    ./dyn-wp.nix
+    ./foldingathome.nix
   ];
 
-  nixpkgs.config = pkgs.config;
-  nixpkgs.overlays = pkgs.overlays;
+  nixpkgs.config = import ./nix/config.nix;
+  nixpkgs.overlays = import ./nix/overlays.nix { inherit sources; };
   nix.nixPath = [
-    "nixpkgs=${pkgs.sources.nixpkgs}"
+    ("nixpkgs=" + builtins.toString sources.nixpkgs)
     "nixos-config=/etc/nixos/configuration.nix"
     "nixpkgs-overlays=/etc/nixos/nix/overlays-compat/"
   ];
+  nix.extraOptions = ''
+    keep-outputs = true
+    keep-derivations = true
+  '';
 
-  # https://bugzilla.kernel.org/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=NEEDINFO&bug_status=REOPENED&field0-0-0=product&field0-0-1=component&field0-0-2=alias&field0-0-3=short_desc&field0-0-4=status_whiteboard&field0-0-5=content&no_redirect=1&order=changeddate%20DESC%2Cbug_status%2Cpriority%2Cassigned_to%2Cbug_id&query_format=advanced&type0-0-0=substring&type0-0-1=substring&type0-0-2=substring&type0-0-3=substring&type0-0-4=substring&type0-0-5=matches&value0-0-0=ax200&value0-0-1=ax200&value0-0-2=ax200&value0-0-3=ax200&value0-0-4=ax200&value0-0-5=%22ax200%22
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_5_8;
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 50;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 0;
   boot.tmpOnTmpfs = true;
   boot.plymouth.enable = true;
+  boot.supportedFilesystems = [ "ntfs" ];
 
   networking.useDHCP = false;
   networking.hostName = "hazelweaklyeakly";
   networking.firewall.enable = false;
   networking.networkmanager.enable = true;
   networking.networkmanager.wifi.backend = "iwd";
-  networking.networkmanager.wifi.powersave = false;
 
   console.font = "latarcyrheb-sun20";
   console.keyMap = "us";
@@ -60,29 +66,54 @@ in {
     };
   };
 
-  environment.systemPackages = with pkgs; [
-    # Actually global
-    lastpass-cli
-    google-chrome
-    calibre
-    kitty
-    cachix
-    tridactyl-native
-    file
-    timewarrior
-    mupdf
-    niv
-    (callPackage ./neovim.nix { })
-    zoom-us
-    neuron
-    papis
+  environment.systemPackages = with pkgs;
+    let
+      p = mach-nix.mkPython {
+        requirements =
+          builtins.concatStringsSep "\n" [ "papis-scihub" "papis-zotero" ];
+      };
+      papis-exts = stdenv.mkDerivation {
+        name = "papis-exts";
+        src = "";
+        phases = [ "buildPhase" ];
+        buildPhase = ''
+          sp=lib/${p.executable}/site-packages; mkdir -p $out/bin $out/$sp
+          for e in ${p.outPath}/bin/papis-*; do ln -s $e $out/bin; done
+          for l in ${p.outPath}/$sp/{papis_*,zotero}; do ln -s $l $out/$sp; done
+        '';
+      };
+    in [
+      # Actually global
+      lastpass-cli
+      google-chrome
+      kitty
+      cachix
+      tridactyl-native
+      file
+      timewarrior
+      taskwarrior
+      mupdf
+      niv
+      (callPackage ./neovim.nix { })
+      zoom-us
+      neuron
+      obelisk.command
+      (callPackage ./awscli2.nix { })
+      ssm-session-manager-plugin
+      alacritty
+      ranger
+      mach-nix.mach-nix
+      networkmanager-openvpn
+      papis
+      papis-exts
 
-    # Programs implicitly relied on in shell
-    lsd
-    bat
-    fd
-    ripgrep
-  ];
+      # Programs implicitly relied on in shell
+      exa
+      gitAndTools.delta
+      bat
+      fd
+      ripgrep
+    ];
 
   environment.variables = {
     _JAVA_AWT_WM_NONREPARENTING = "1";
@@ -103,7 +134,7 @@ in {
   programs.gnupg.agent.enable = true;
 
   services.thermald.enable = true;
-  services.interception-tools.enable = true;
+  services.interception-tools.enable = pkgs.lib.mkDefault true;
   services.system-config-printer.enable = true;
   services.printing.enable = true;
   services.printing.drivers = with pkgs; [
@@ -119,7 +150,7 @@ in {
 
   location.provider = "geoclue2";
   services.redshift = {
-    enable = true;
+    enable = false;
     temperature = {
       day = 6500;
       night = 2300;
@@ -132,10 +163,6 @@ in {
   services.tlp.enable = true;
   hardware.opengl.enable = true;
   services.chrony.enable = true;
-
-  services.foldingathome.enable = true;
-  services.foldingathome.team = 242964;
-  services.foldingathome.user = "Hazel Weakly";
 
   services.xserver = {
     enable = true;
@@ -151,10 +178,10 @@ in {
       calibrationMatrix = ".5 0 0 0 .5 0 0 0 1";
     };
 
+    displayManager.autoLogin.enable = false;
+    displayManager.autoLogin.user = "hazel";
     displayManager.gdm = {
       enable = true;
-      autoLogin.enable = false;
-      autoLogin.user = "hazel";
       autoSuspend = false;
     };
     displayManager.setupCommands = "stty -ixon";
@@ -179,28 +206,9 @@ in {
 
   virtualisation.libvirtd.enable = true;
   virtualisation.libvirtd.onBoot = "ignore";
+  virtualisation.virtualbox.host.enable = true;
+  virtualisation.virtualbox.host.enableExtensionPack = true;
   boot.extraModprobeConfig = "options kvm_intel nested=1";
-
-  users.users.hazel = {
-    isNormalUser = true;
-    home = "/home/hazel";
-    shell = pkgs.zsh;
-    extraGroups = [
-      "wheel"
-      "networkmanager"
-      "tty"
-      "video"
-      "audio"
-      "disk"
-      "docker"
-      "libvirtd"
-      "adbusers"
-    ];
-  };
-
-  home-manager.users.hazel = import ./home.nix;
-  systemd.services.home-manager-hazel.preStart =
-    "${pkgs.nix}/bin/nix-env -i -E";
 
   nix.optimise.automatic = true;
 }

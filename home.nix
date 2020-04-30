@@ -1,34 +1,39 @@
-{ config, ... }:
-with { pkgs = import ./nix { }; };
-with builtins;
+{ config, pkgs, ... }:
+let sources = import ./nix/sources.nix;
+in with builtins;
 with pkgs.lib; {
-  nixpkgs = { inherit (pkgs) config overlays; };
+  # nixpkgs = { inherit (pkgs) config overlays; };
 
   programs.firefox = {
     enable = true;
-    package = pkgs.latest.firefox-nightly-bin.override { pname = "firefox"; };
-    profiles.default = {
-      isDefault = true;
-      id = 0;
-      settings = {
-        "layers.acceleration.force-enabled" = true;
-        "layers.omtp.enabled" = true;
-        "layout.display-list.retain" = true;
-        "gfx.webrender.all" = true;
-        "gfx.canvas.azure.accelerated" = true;
-        "layout.css.devPixelsPerPx" = "1.25";
-        "pdfjs.enableWebGL" = true;
-        "browser.ctrlTab.recentlyUsedOrder" = false;
-        "browser.newtab.extensionControlled" = true;
-        "browser.newtab.privateAllowed" = true;
-        "accessibility.typeaheadfind.enablesound" = false;
-        "widget.wayland-dmabuf-webgl.enabled" = true;
-        "widget.wayland-dmabuf-textures.enabled" = true;
-        "widget.wayland-dmabuf-vaapi.enabled" = true;
-        "media.ffvpx.enabled" = false;
-        # security.sandbox.content.level = 0;
-      };
+    package = pkgs.latest.firefox-devedition-bin.override {
+      pname = "firefox";
+      extraNativeMessagingHosts = [ pkgs.gnomeExtensions.gsconnect ];
     };
+    # profiles.hazel-default = {
+    #   isDefault = true;
+    #   id = 0;
+    #   settings = {
+    #     "layers.acceleration.force-enabled" = true;
+    #      "ui.systemUsesDarkTheme" = 1;
+    #     "layers.omtp.enabled" = true;
+    #     "layout.display-list.retain" = true;
+    #     "gfx.webrender.all" = true;
+    #     "gfx.canvas.azure.accelerated" = true;
+    #     "layout.css.devPixelsPerPx" = "1.25";
+    #     "pdfjs.enableWebGL" = true;
+    #     "browser.ctrlTab.recentlyUsedOrder" = false;
+    #     "browser.newtab.extensionControlled" = true;
+    #     "browser.newtab.privateAllowed" = true;
+    #     "accessibility.typeaheadfind.enablesound" = false;
+    #     "widget.wayland-dmabuf-webgl.enabled" = true;
+    #     "widget.wayland-dmabuf-textures.enabled" = true;
+    #     "widget.wayland-dmabuf-vaapi.enabled" = true;
+    #     "media.ffvpx.enabled" = false;
+    #     "network.http.http3.enabled" = true;
+    #     "browser.preferences.experimental" = true;
+    #   };
+    # };
   };
 
   programs.fzf = let fd = "fd -HLE .git -c always";
@@ -36,14 +41,14 @@ with pkgs.lib; {
     enable = true;
     changeDirWidgetCommand = "${fd} -td .";
     changeDirWidgetOptions = [
-      "--preview 'lsd --group-dirs first --icon always -t --tree {} | head -200'"
+      "--preview 'exa --group-directories-first --icons --sort time --tree -C {} | head -200'"
     ];
     defaultCommand = "${fd} -tf 2> /dev/null";
-    defaultOptions = [ "--color=light --ansi --layout=reverse" ];
+    defaultOptions = [ "--color=$__sys_theme --ansi --layout=reverse" ];
     fileWidgetCommand = "${fd} .";
     fileWidgetOptions = let
       preview =
-        "(bat --style numbers,changes --color always --paging never --theme GitHub {} || tree -C {}) 2> /dev/null";
+        "(bat --style numbers,changes --color always --paging never {} || tree -C {}) 2> /dev/null";
     in [ "--preview '${preview} | head -200'" ];
     historyWidgetOptions = [''
       --preview 'echo {} | cut -d\" \" -f2- | fold -w $(($(tput cols)-4))' --preview-window down:4:hidden --bind '?:toggle-preview'
@@ -66,8 +71,9 @@ with pkgs.lib; {
       open
     ];
     extraConfig = ''
+      set -g default-terminal "tmux-256color"
       set -g mouse on
-      set -g -a terminal-overrides ',*:Ss=\E[%p1%d q:Se=\E[2 q'
+      set -as terminal-overrides ",*:Tc:RGB"
 
       unbind v
       unbind h
@@ -108,38 +114,72 @@ with pkgs.lib; {
   };
 
   home.file.".local/share/fonts/VictorMono".source = ./dots/VictorMono;
-  home.file.".timewarrior/extensions/totals.py" = {
-    source = pkgs.writeScript "totals" ''
-      #!${pkgs.stdenv.shell}
-      PATH=${pkgs.python.withPackages (p: [ p.dateutil ])}/bin:$PATH
+  home.file.".task/hooks/on-modify.timewarrior".source =
+    pkgs.writeShellScript "on-modify-timewarrior" ''
+      PATH=${pkgs.python3.withPackages (p: [ p.dateutil ])}/bin:$PATH
+      exec python ${pkgs.timewarrior}/share/doc/timew/ext/on-modify.timewarrior
+    '';
+  home.file.".timewarrior/extensions/totals.py".source =
+    pkgs.writeShellScript "totals" ''
+      PATH=${pkgs.python3.withPackages (p: [ p.dateutil ])}/bin:$PATH
       exec python ${pkgs.timewarrior}/share/doc/timew/ext/totals.py
     '';
-  };
 
+  # xdg.configFile."direnv/direnvrc".text = ''
+  #  source /run/current-system/sw/share/nix-direnv/direnvrc
+  # : ${XDG_CACHE_HOME:=$HOME/.cache}
+  # pwd_hash=$(echo -n $PWD | shasum | cut -d ' ' -f 1)
+  # direnv_layout_dir=$XDG_CACHE_HOME/direnv/layouts/$pwd_hash
+  # '';
   xdg.configFile."tridactyl".source = ./dots/tridactyl;
   xdg.configFile."kitty".source = ./dots/kitty;
   xdg.configFile."nvim".source = ./dots/nvim;
   xdg.configFile."glirc".source = ./dots/glirc;
-  xdg.configFile."nixpkgs/config.nix".text = "{ allowUnfree = true; }";
+  xdg.configFile."nixpkgs/config.nix".text =
+    "{ allowUnfree = true; allowUnsupportedSystem = true; }";
   xdg.enable = true;
+  xdg.configFile."coc/extensions/coc-python-data/languageServer".source =
+    pkgs.python-language-server + "/lib";
 
   services.lorri.enable = true;
   programs.direnv.enable = true;
+  programs.direnv.enableNixDirenvIntegration = true;
 
-  xdg.configFile."fsh/q-jmnemonic.ini".source = ./dots/zsh/q-jmnemonic.ini;
+  xdg.configFile."fsh/theme.ini".source = ./dots/zsh/theme.ini;
   xdg.configFile."zsh/completions/_src".text = ''
     #compdef src
     compdef '_path_files -/ -W ~/src' src
   '';
   programs.zsh = let
-    zshrc = concatMapStringsSep "\n" (n: readFile (./dots/zsh + "/${n}"))
+    zshrc' = concatMapStringsSep "\n" (n: readFile (./dots/zsh + "/${n}"))
       (filter (hasSuffix ".zsh") (attrNames (readDir ./dots/zsh)));
+    update = ''
+      echo "Downloading sources"
+      nix eval --raw '(builtins.toJSON (builtins.removeAttrs (import /etc/nixos/nix {}).sources ["__functor"]))' >/dev/null 2>&1
+      echo "Rebuilding"
+      build(){
+        sudo nixos-rebuild -k \
+          -I "nixpkgs=${sources.nixpkgs.outPath}" \
+          -I "nixos-config=/etc/nixos/configuration.nix" \
+          -I "nixpkgs-overlays=/etc/nixos/nix/overlays-compat/" \
+          "$@" \
+          switch
+      }
+      build && build
+    '';
+    zshrc = builtins.replaceStrings [ "@update@" "@zsh-prompt@" ] [
+      update
+      "${builtins.toString ./dots/zsh/30-prompt.zsh}"
+    ] zshrc';
   in {
     enable = true;
     dotDir = ".config/zsh";
     enableCompletion = true;
     defaultKeymap = "emacs";
     initExtraBeforeCompInit = ''
+      if [[ -r "${config.xdg.dataHome}/theme" ]]; then
+        export __sys_theme="$(<${config.xdg.dataHome}/theme)"
+      fi
       if [[ -r "${config.xdg.cacheHome}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
         source "${config.xdg.cacheHome}/p10k-instant-prompt-''${(%):-%n}.zsh"
       fi
@@ -149,10 +189,17 @@ with pkgs.lib; {
         COMPINIT_OPTS   -C
       )
       if ! [[ -d ${config.xdg.dataHome}/zsh/zinit/bin ]]; then
-        mkdir -p ${config.xdg.dataHome}/zsh/zinit
-        git clone --depth=1 https://github.com/zdharma/zinit.git ${config.xdg.dataHome}/zsh/zinit/bin
+        command mkdir -p ${config.xdg.dataHome}/zsh/zinit
+        command git clone --depth=1 https://github.com/zdharma/zinit.git ${config.xdg.dataHome}/zsh/zinit/bin
       fi
       source ${config.xdg.dataHome}/zsh/zinit/bin/zinit.zsh
+      if ! [[ -f ${config.xdg.dataHome}/zsh/zinit/bin/zmodules/COMPILED_AT ]]; then
+        nix-shell -p clang ncurses autoconf --run 'zsh -ilc "zinit module build"'
+      fi
+      module_path+=("${config.xdg.dataHome}/zsh/zinit/bin/zmodules/Src")
+      zmodload zdharma/zplugin &>/dev/null
+      autoload -Uz _zinit
+      (( ''${+_comps} )) && _comps[zinit]=_zinit
     '';
     initExtra = zshrc;
   };
@@ -163,11 +210,25 @@ with pkgs.lib; {
     userEmail = "hazel@theweaklys.com";
     package = pkgs.gitAndTools.gitFull;
     extraConfig = {
-      core = {
-        pager =
-          "${pkgs.gitAndTools.delta}/bin/delta --commit-style=box --highlight-removed --light";
-      };
+      core.pager = "${pkgs.gitAndTools.delta}/bin/delta";
+      interactive.diffFilter =
+        "${pkgs.gitAndTools.delta}/bin/delta --color-only";
       color.ui = true;
+      diff.colorMoved = "default";
+      delta = {
+        line-numbers = true;
+        side-by-side = true;
+        features = "side-by-side line-numbers decorations";
+        commit-decoration-style = "box";
+        file-decoration-style = "box";
+        hunk-header-decoration-style = "box";
+      };
     };
+  };
+
+  systemd.user.services.neuron = {
+    Install.WantedBy = [ "graphical-session.target" ];
+    Service.ExecStart =
+      "${pkgs.neuron}/bin/neuron -d ${config.home.homeDirectory}/zettelkasten rib -wS";
   };
 }

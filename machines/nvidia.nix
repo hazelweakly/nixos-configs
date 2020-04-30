@@ -1,6 +1,5 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 let
-  pkgs = import ../nix { };
   nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
     export __NV_PRIME_RENDER_OFFLOAD=1
     export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
@@ -15,6 +14,7 @@ in with pkgs.lib; {
   hardware.nvidia.prime.offload.enable = true;
   hardware.nvidia.prime.intelBusId = "PCI:0:2:0";
   hardware.nvidia.prime.nvidiaBusId = "PCI:1:0:0";
+  hardware.nvidia.nvidiaPersistenced = false;
   services.xserver.displayManager.gdm.nvidiaWayland = true;
 
   # https://github.com/NixOS/nixpkgs/pull/73530
@@ -26,18 +26,4 @@ in with pkgs.lib; {
     serviceConfig.ExecStart =
       "${config.boot.kernelPackages.nvidia_x11.bin}/bin/nvidia-smi";
   };
-
-  # systemd.services."nvidia-persistenced" = {
-  #   description = "NVIDIA Persistence Daemon";
-  #   wantedBy = [ "multi-user.target" ];
-  #   serviceConfig = {
-  #     Type = "forking";
-  #     Restart = "always";
-  #     PIDFile = "/var/run/nvidia-persistenced/nvidia-persistenced.pid";
-  #     ExecStart =
-  #       "${config.boot.kernelPackages.nvidia_x11.persistenced}/bin/nvidia-persistenced --verbose";
-  #     ExecStopPost =
-  #       "${pkgs.coreutils}/bin/rm -rf /var/run/nvidia-persistenced";
-  #   };
-  # };
 }

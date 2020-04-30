@@ -1,35 +1,25 @@
 { pkgs ? import ./nix { } }:
 with pkgs;
 let
-  linters =
-    [ shellcheck languagetool vim-vint nodePackages.write-good hlint ormolu ];
-  formatters = [ shfmt nixfmt python37Packages.black ];
-  bins = [ perl yarn universal-ctags tmux bat exa clojure-lsp ];
-
-  nvim = (neovim-unwrapped.overrideAttrs (o: {
-    version = "master";
+  path = lib.makeBinPath (builtins.sort (a: b: a.name < b.name)
+    ([ shellcheck languagetool vim-vint hlint ormolu haskellPackages.hadolint ]
+      ++ [ python-language-server clojure-lsp universal-ctags neuron ]
+      ++ [ perl binutils libcxx gcc ]
+      ++ [ yarn bat exa direnv git jq tmux watchman neovim-remote ]
+      ++ [ buildifier shfmt nixfmt ]
+      ++ [ python3Packages.black haskellPackages.cabal-fmt ]));
+  v = neovim-unwrapped.overrideAttrs (o: {
     src = sources.neovim;
-    buildInputs = o.buildInputs ++ [ utf8proc ];
-  }));
-  nvimWrapper = callPackage
-    (sources.nixpkgs + "/pkgs/applications/editors/neovim/wrapper.nix") {
-      nodejs = nodejs_latest;
-    };
-  myNvim = nvimWrapper nvim {
+    buildInputs = o.buildInputs ++ [ pkgs.tree-sitter ];
+  });
+  c = (neovimUtils.override { nodejs = nodejs_latest; }).makeNeovimConfig {
+    withPython2 = true;
+    withNodeJs = true;
+    extraPython3Packages = p: [ p.black ];
+  };
+  nvim = (wrapNeovimUnstable.override { nodejs = nodejs_latest; }) v (c // {
+    wrapperArgs = c.wrapperArgs ++ [ "--suffix" "PATH" ":" path ];
     vimAlias = true;
     viAlias = true;
-    withNodeJs = true;
-  };
-
-  binPath = lib.makeBinPath (linters ++ formatters ++ bins);
-
-in stdenv.mkDerivation {
-  name = "nvim";
-  buildInputs = [ makeWrapper ];
-  buildCommand = ''
-    makeWrapper "${myNvim}/bin/nvim" "$out/bin/nvim" --suffix PATH : ${binPath}
-    ln -sfn "$out/bin/nvim" "$out/bin/vim"
-    ln -sfn "$out/bin/nvim" "$out/bin/vi"
-  '';
-  preferLocalBuild = true;
-}
+  });
+in nvim
