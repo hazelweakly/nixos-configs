@@ -13,12 +13,12 @@ let
     buildInputs = o.buildInputs ++ [ pkgs.tree-sitter ];
   });
   c = (neovimUtils.override { nodejs = nodejs_latest; }).makeNeovimConfig {
-    withPython2 = true;
     withNodeJs = true;
     extraPython3Packages = p: [ p.black ];
   };
   nvim = (wrapNeovimUnstable.override { nodejs = nodejs_latest; }) v (c // {
-    wrapperArgs = c.wrapperArgs ++ [ "--suffix" "PATH" ":" path ];
+    wrapperArgs =
+      lib.escapeShellArgs (c.wrapperArgs ++ [ "--suffix" "PATH" ":" path ]);
     vimAlias = true;
     viAlias = true;
   });

@@ -162,7 +162,6 @@ in {
   hardware.enableAllFirmware = true;
   services.tlp.enable = true;
   hardware.opengl.enable = true;
-  services.chrony.enable = true;
 
   services.xserver = {
     enable = true;
