@@ -39,6 +39,7 @@
     jenv
     plenv
     phpenv
+    scalaenv
     # haskell_stack
     kubecontext
     terraform
@@ -57,6 +58,7 @@
     todo
     timewarrior
     taskwarrior
+    time
     newline
   )
 

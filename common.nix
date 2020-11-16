@@ -68,10 +68,7 @@ in {
 
   environment.systemPackages = with pkgs;
     let
-      p = mach-nix.mkPython {
-        requirements =
-          builtins.concatStringsSep "\n" [ "papis-scihub" "papis-zotero" ];
-      };
+      p = mach-nix.mkPython { requirements = "papis-zotero"; };
       papis-exts = stdenv.mkDerivation {
         name = "papis-exts";
         src = "";
@@ -145,7 +142,7 @@ in {
   ];
   services.openssh.enable = true;
   services.openssh.permitRootLogin = "yes";
-  services.fwupd.enable = true;
+  # services.fwupd.enable = true;
   services.throttled.enable = true;
 
   location.provider = "geoclue2";
@@ -202,6 +199,13 @@ in {
   virtualisation.docker.enableOnBoot = false;
   environment.etc."docker/daemon.json".text =
     ''{ "features": { "buildkit": true } }'';
+
+  environment.etc.zoneinfo.source = pkgs.lib.mkForce "${
+      pkgs.tzdata.overrideAttrs (old: {
+        makeFlags = old.makeFlags
+          ++ [ ''CFLAGS+=-DZIC_BLOAT_DEFAULT=\"fat\"'' ];
+      })
+    }/share/zoneinfo";
 
   virtualisation.libvirtd.enable = true;
   virtualisation.libvirtd.onBoot = "ignore";

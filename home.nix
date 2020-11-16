@@ -41,7 +41,7 @@ with pkgs.lib; {
     enable = true;
     changeDirWidgetCommand = "${fd} -td .";
     changeDirWidgetOptions = [
-      "--preview 'exa --group-directories-first --icons --sort time --tree -C {} | head -200'"
+      "--preview 'exa --group-directories-first --icons --sort time --tree --color always {} | head -200'"
     ];
     defaultCommand = "${fd} -tf 2> /dev/null";
     defaultOptions = [ "--color=$__sys_theme --ansi --layout=reverse" ];
@@ -117,13 +117,35 @@ with pkgs.lib; {
   home.file.".task/hooks/on-modify.timewarrior".source =
     pkgs.writeShellScript "on-modify-timewarrior" ''
       PATH=${pkgs.python3.withPackages (p: [ p.dateutil ])}/bin:$PATH
-      exec python ${pkgs.timewarrior}/share/doc/timew/ext/on-modify.timewarrior
+      exec python ${pkgs.timewarrior.outPath}/share/doc/timew/ext/on-modify.timewarrior
     '';
   home.file.".timewarrior/extensions/totals.py".source =
     pkgs.writeShellScript "totals" ''
       PATH=${pkgs.python3.withPackages (p: [ p.dateutil ])}/bin:$PATH
-      exec python ${pkgs.timewarrior}/share/doc/timew/ext/totals.py
+      exec python ${pkgs.timewarrior.outPath}/share/doc/timew/ext/totals.py
     '';
+  home.file.".taskrc".text = ''
+    data.location=~/.task
+
+    include ${pkgs.taskwarrior.outPath}/share/doc/task/rc/no-color.theme
+    include ~/.task/current.theme
+
+    journal.time=on
+
+    # Shortcuts
+    alias.dailystatus=status:completed end.after:today all
+    alias.punt=modify wait:1d
+    alias.meh=modify due:tomorrow
+    alias.someday=mod +someday wait:someday
+
+    search.case.sensitive=no
+    alias.burndown=burndown.daily
+
+    # task ready report default with custom columns
+    default.command=ready
+    report.ready.columns=id,start.active,depends.indicator,project,due.relative,description.desc
+    report.ready.labels= ,,Depends, Project, Due, Description
+  '';
 
   # xdg.configFile."direnv/direnvrc".text = ''
   #  source /run/current-system/sw/share/nix-direnv/direnvrc
@@ -173,10 +195,12 @@ with pkgs.lib; {
     ] zshrc';
   in {
     enable = true;
+    envExtra = "setopt no_global_rcs";
     dotDir = ".config/zsh";
     enableCompletion = true;
     defaultKeymap = "emacs";
     initExtraBeforeCompInit = ''
+      DISABLE_MAGIC_FUNCTIONS="true"
       if [[ -r "${config.xdg.dataHome}/theme" ]]; then
         export __sys_theme="$(<${config.xdg.dataHome}/theme)"
       fi

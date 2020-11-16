@@ -24,5 +24,20 @@ let
     tree-sitter = super.tree-sitter.overrideAttrs
       (oldAttrs: { postInstall = "PREFIX=$out make install"; });
   };
+  nts = _: super: {
+    gnomeExtensions = super.gnomeExtensions // {
+      night-theme-switcher =
+        super.gnomeExtensions.night-theme-switcher.overrideAttrs (o: rec {
+          version = "40";
+          src = super.fetchFromGitLab {
+            owner = "rmnvgr";
+            repo = "nightthemeswitcher-gnome-shell-extension";
+            rev = "v${version}";
+            sha256 = "0z11y18bgdc0y41hrrzzgi4lagm2cg06x12jgdnary1ycng7xja0";
+          };
+        });
+    };
+  };
+
   overlays = [ moz srcs search neuron machNix obelisk nvidia tree-sitter ];
 in overlays
