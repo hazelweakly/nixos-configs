@@ -95,8 +95,9 @@ in {
       zoom-us
       neuron
       obelisk.command
-      (callPackage ./awscli2.nix { })
-      ssm-session-manager-plugin
+      # (callPackage ./awscli2.nix { })
+      # awscli2
+      # ssm-session-manager-plugin
       alacritty
       ranger
       mach-nix.mach-nix

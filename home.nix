@@ -154,8 +154,14 @@ with pkgs.lib; {
   # direnv_layout_dir=$XDG_CACHE_HOME/direnv/layouts/$pwd_hash
   # '';
   xdg.configFile."tridactyl".source = ./dots/tridactyl;
-  xdg.configFile."kitty".source = ./dots/kitty;
-  xdg.configFile."nvim".source = ./dots/nvim;
+  xdg.configFile."kitty" = {
+    source = ./dots/kitty;
+    recursive = true;
+  };
+  xdg.configFile."nvim" = {
+    source = ./dots/nvim;
+    recursive = true;
+  };
   xdg.configFile."glirc".source = ./dots/glirc;
   xdg.configFile."nixpkgs/config.nix".text =
     "{ allowUnfree = true; allowUnsupportedSystem = true; }";
@@ -175,24 +181,8 @@ with pkgs.lib; {
   programs.zsh = let
     zshrc' = concatMapStringsSep "\n" (n: readFile (./dots/zsh + "/${n}"))
       (filter (hasSuffix ".zsh") (attrNames (readDir ./dots/zsh)));
-    update = ''
-      echo "Downloading sources"
-      nix eval --raw '(builtins.toJSON (builtins.removeAttrs (import /etc/nixos/nix {}).sources ["__functor"]))' >/dev/null 2>&1
-      echo "Rebuilding"
-      build(){
-        sudo nixos-rebuild -k \
-          -I "nixpkgs=${sources.nixpkgs.outPath}" \
-          -I "nixos-config=/etc/nixos/configuration.nix" \
-          -I "nixpkgs-overlays=/etc/nixos/nix/overlays-compat/" \
-          "$@" \
-          switch
-      }
-      build && build
-    '';
-    zshrc = builtins.replaceStrings [ "@update@" "@zsh-prompt@" ] [
-      update
-      "${builtins.toString ./dots/zsh/30-prompt.zsh}"
-    ] zshrc';
+    zshrc = builtins.replaceStrings [ "@zsh-prompt@" ]
+      [ "${builtins.toString ./dots/zsh/30-prompt.zsh}" ] zshrc';
   in {
     enable = true;
     envExtra = "setopt no_global_rcs";

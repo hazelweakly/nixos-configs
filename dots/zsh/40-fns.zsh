@@ -87,7 +87,19 @@ zup() {
 }
 
 update() {
-    @update@
+    echo "Downloading sources"
+    nix eval --raw '(builtins.toJSON (builtins.removeAttrs (import /etc/nixos/nix {}).sources ["__functor"]))' >/dev/null 2>&1
+    nixpkgs="$(nix eval --raw '(import /etc/nixos/nix {}).sources.nixpkgs.outPath')"
+    echo "Rebuilding"
+    build(){
+      sudo nixos-rebuild -k \
+        -I "nixpkgs=$nixpkgs" \
+        -I "nixos-config=/etc/nixos/configuration.nix" \
+        -I "nixpkgs-overlays=/etc/nixos/nix/overlays-compat/" \
+        "$@" \
+        switch
+    }
+    build && build
 }
 
 vup() {

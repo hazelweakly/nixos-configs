@@ -21,9 +21,9 @@ function! VimrcLoadPlugins()
 
     " Linting + LSP
     Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+    Plug 'antoinemadec/coc-fzf'
     Plug '~/src/personal/coc-haskell-language-server', {'do': 'yarn install --frozen-lockfile'}
     Plug 'expipiplus1/vscode-hie-server', { 'do': 'yarn install --frozen-lockfile' }
-    " Plug '~/src/personal/coc-docker', {'do': 'yarn install --frozen-lockfile'}
     Plug 'direnv/direnv.vim'
     Plug 'sbdchd/neoformat', { 'for' : ['terraform'] }
     Plug 'editorconfig/editorconfig-vim'
@@ -195,12 +195,15 @@ function! VimrcLoadPluginSettings()
                 \ 'coc-yaml'
                 \ ]
 
+    let g:coc_fzf_preview = ''
+    let g:coc_fzf_opts = []
+
     augroup coc
         au!
         au CompleteDone * if pumvisible() == 0 | pclose | endif
         au User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
         au CursorHold * silent! call CocActionAsync('highlight')
-        au User CocQuickfixChange :CocList --normal quickfix
+        au User CocQuickfixChange :CocFzfList --normal quickfix
     augroup END
 
     inoremap <expr> <Tab> pumvisible() ? coc#_select_confirm() : "\<Tab>"
@@ -212,9 +215,9 @@ function! VimrcLoadPluginSettings()
     xmap <silent> <S-TAB> <Plug>(coc-range-select-backword)
 
     nmap <silent> <leader>c :CocCommand<CR>
-    nmap <silent> <leader>lo :<C-u>CocList outline<CR>
-    nmap <silent> <leader>ls :<C-u>CocList -I symbols<CR>
-    nmap <silent> <leader>ld :<C-u>CocList diagnostics<CR>
+    nmap <silent> <leader>lo :<C-u>CocFzfList outline<CR>
+    nmap <silent> <leader>ls :<C-u>CocFzfList -I symbols<CR>
+    nmap <silent> <leader>ld :<C-u>CocFzfList diagnostics<CR>
 
     nmap gp <Plug>(coc-git-prevchunk)
     nmap gn <Plug>(coc-git-nextchunk)
@@ -385,6 +388,7 @@ function! VimrcLoadSettings()
     set winblend=30
     set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
     set hidden " Required for coc.nvim
+    set mouse=a " coc.nvim scrolling
     set complete+=k
     set completeopt=menu,menuone,noinsert
     set nrformats=bin,hex,octal,alpha
