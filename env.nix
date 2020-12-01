@@ -91,8 +91,6 @@ let
     name='Nordic-Polar-standard-buttons'
 
     [org/gnome/shell/extensions/nightthemeswitcher]
-    command-sunrise='${themeSwitch}/bin/theme-switch "light"'
-    command-sunset='${themeSwitch}/bin/theme-switch "dark"'
     commands-enabled=true
     cursor-variant-original='Paper'
     gtk-variants-enabled=false
@@ -103,6 +101,12 @@ let
     ondemand-time='day'
     shell-variants-enabled=false
     time-source='nightlight'
+    settings-version=1
+
+    [org/gnome/shell/extensions/nightthemeswitcher/commands]
+    enabled=true
+    sunrise='/nix/store/3a5hhw6kfcrdxmlrzm375613765ki3a6-switch-theme/bin/switch-theme "light"'
+    sunset='/nix/store/3a5hhw6kfcrdxmlrzm375613765ki3a6-switch-theme/bin/switch-theme "dark"'
 
     [org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0]
     binding='<Primary>F12'

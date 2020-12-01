@@ -17,10 +17,10 @@
         "homepage": "",
         "owner": "rycee",
         "repo": "home-manager",
-        "rev": "7b6ebf2785cfc9dd6fc2b101cbbb2152eb68d45c",
-        "sha256": "1j94sam96q005a7fiypmmwvxqw3s7psj2p519lz1kcjz3lk4xd7i",
+        "rev": "c1faa848c5224452660cd6d2e0f4bd3e8d206419",
+        "sha256": "1f5dhrj1aqndyf7gh4b6a2i8cafzlx3xdw2cxh4bjhv232cc0hls",
         "type": "tarball",
-        "url": "https://github.com/rycee/home-manager/archive/7b6ebf2785cfc9dd6fc2b101cbbb2152eb68d45c.tar.gz",
+        "url": "https://github.com/rycee/home-manager/archive/c1faa848c5224452660cd6d2e0f4bd3e8d206419.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "mach-nix": {
@@ -29,10 +29,10 @@
         "homepage": null,
         "owner": "DavHau",
         "repo": "mach-nix",
-        "rev": "9f30dc7fdb0d825de93887a5acdd05c0af24ee37",
-        "sha256": "1nmvlj1hy9qh33jlh91546jn69dlqpncqmxgx6vblilm05zy169p",
+        "rev": "e6df0f743710b0e71ce1fe33203262471a6d552f",
+        "sha256": "1cp7wlndmk576gbs2v42g1p6pir91zhdw10qnpfw5cmi1x744dq6",
         "type": "tarball",
-        "url": "https://github.com/DavHau/mach-nix/archive/9f30dc7fdb0d825de93887a5acdd05c0af24ee37.tar.gz",
+        "url": "https://github.com/DavHau/mach-nix/archive/e6df0f743710b0e71ce1fe33203262471a6d552f.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "matterhorn": {
@@ -65,10 +65,10 @@
         "homepage": "https://neovim.io",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "97ffa158aa9ae6c80a48b3ceea91270f0a179743",
-        "sha256": "10qplh8a7pndr5wv5irkill569af2hka7cwrlrm2cbn0ix6bz65z",
+        "rev": "aec61074a97bac3290f1afef309429b35a71d1a2",
+        "sha256": "1n96qi8apac6b6s4bkrw72gpgkfbx6x86by65x5afpwa2c2q53jl",
         "type": "tarball",
-        "url": "https://github.com/neovim/neovim/archive/97ffa158aa9ae6c80a48b3ceea91270f0a179743.tar.gz",
+        "url": "https://github.com/neovim/neovim/archive/aec61074a97bac3290f1afef309429b35a71d1a2.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "neuron": {
@@ -77,10 +77,10 @@
         "homepage": "https://neuron.zettel.page",
         "owner": "srid",
         "repo": "neuron",
-        "rev": "99154121591ad419569fd6d506e84cf52641b057",
-        "sha256": "0hksag0k7r5znpi2s7fxb5zlvz5hha1p9f9pv91cgsldpqyjvxay",
+        "rev": "5fe6e2dd59eca3e64820f55975bfed7f1a593a36",
+        "sha256": "1kvcqs9f0y86gzz9kpkkz1gyplx6vxgn88ss8f7nsh6jyamlrz36",
         "type": "tarball",
-        "url": "https://github.com/srid/neuron/archive/99154121591ad419569fd6d506e84cf52641b057.tar.gz",
+        "url": "https://github.com/srid/neuron/archive/5fe6e2dd59eca3e64820f55975bfed7f1a593a36.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixos-hardware": {
@@ -89,13 +89,25 @@
         "homepage": "",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "40ade7c0349d31e9f9722c7331de3c473f65dce0",
-        "sha256": "07mp73a5gyppv0cd08l1wdr8m5phfmbphsn6v7w7x54fa8p2ci6y",
+        "rev": "abfae8841bcf6368c89366a100232e05d676e114",
+        "sha256": "06qrbb5ncrcx8a4q1wcicwdy75bn8rbz97hv3hwfzgg1k6liyvra",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixos-hardware/archive/40ade7c0349d31e9f9722c7331de3c473f65dce0.tar.gz",
+        "url": "https://github.com/NixOS/nixos-hardware/archive/abfae8841bcf6368c89366a100232e05d676e114.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs": {
+        "branch": "nixos-unstable-small",
+        "description": "Nix Packages collection",
+        "homepage": null,
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "24eb3f87fc610f18de7076aee7c5a84ac5591e3e",
+        "sha256": "1ca14hhbinnz1ylbqnhwinjdbm6nn859j4gmyamg2kr7jl6611s0",
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/24eb3f87fc610f18de7076aee7c5a84ac5591e3e.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "nixpkgs-matterhorn": {
         "branch": "nixos-unstable-small",
         "description": "Nix Packages collection",
         "homepage": null,
