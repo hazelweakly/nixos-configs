@@ -22,8 +22,7 @@ function! VimrcLoadPlugins()
     " Linting + LSP
     Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
     Plug 'antoinemadec/coc-fzf'
-    Plug '~/src/personal/coc-haskell-language-server', {'do': 'yarn install --frozen-lockfile'}
-    Plug 'expipiplus1/vscode-hie-server', { 'do': 'yarn install --frozen-lockfile' }
+    Plug '~/src/personal/vscode-hie-server', { 'do': 'yarn install --frozen-lockfile' }
     Plug 'direnv/direnv.vim'
     Plug 'sbdchd/neoformat', { 'for' : ['terraform'] }
     Plug 'editorconfig/editorconfig-vim'
@@ -31,7 +30,7 @@ function! VimrcLoadPlugins()
     Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
     Plug 'nvim-lua/lsp-status.nvim'
     " https://github.com/nvim-treesitter/nvim-treesitter
-    Plug 'nvim-treesitter/nvim-treesitter'
+    Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
     " https://github.com/metakirby5/codi.vim
 
     Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey','WhichKey!'] }
@@ -42,14 +41,12 @@ function! VimrcLoadPlugins()
     Plug 'junegunn/fzf'
     Plug 'junegunn/fzf.vim'
     Plug 'chengzeyi/fzf-preview.vim'
-    Plug 'Shougo/neomru.vim'
     Plug 'junegunn/vim-easy-align'
     Plug '907th/vim-auto-save'
     Plug 'blueyed/vim-diminactive'
     Plug 'camspiers/lens.vim'
     Plug 'wsdjeg/vim-fetch'
-    " Plug 'fiatjaf/neuron.vim'
-    Plug '~/src/personal/neuron.vim'
+    Plug 'fiatjaf/neuron.vim', { 'for': ['markdown'] }
     Plug 'antoinemadec/FixCursorHold.nvim'
 
     " filetype ]] [[
@@ -76,7 +73,7 @@ function! VimrcLoadPlugins()
     Plug 'romainl/vim-cool'
     Plug 'andymass/vim-matchup'
     Plug 'ryanoasis/vim-devicons'
-    Plug 'adelarsq/vim-emoji-icon-theme'
+    Plug 'adelarsq/vim-devicons-emoji'
     Plug 'jceb/vim-orgmode'
     Plug 'vmchale/dhall-vim'
 
@@ -495,6 +492,12 @@ function! VimrcLoadColors()
 endfunction
 
 let g:mapleader = "\<Space>"
+setlocal shiftwidth=8 " set to defaults to prevent slowdown in vim-polyglot
+setlocal tabstop=8
+let g:polyglot_disabled = ['sensible']
+let g:python_host_skip_check=1 " disable python2
+let g:loaded_python_provider=1 " disable python2
+
 call VimrcLoadPlugins()
 call VimrcLoadPluginSettings()
 call VimrcLoadMappings()

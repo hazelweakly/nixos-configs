@@ -103,7 +103,7 @@ update() {
 }
 
 vup() {
-  nvim --headless +PlugUpgrade +PlugDiff +PlugUpdate +PlugClean! +CocUpdateSync '+TSUninstall all' '+TSInstallSync all' +qall
+  nvim --headless +PlugUpgrade +PlugDiff +PlugUpdate +PlugClean! +CocUpdateSync +qall
 }
 
 # # zsh-abbr
