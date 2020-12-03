@@ -24,7 +24,7 @@ in {
   nix.maxJobs = pkgs.lib.mkDefault 16;
   powerManagement.cpuFreqGovernor = pkgs.lib.mkDefault "powersave";
 
-  # services.interception-tools.enable = false;
+  services.interception-tools.enable = false;
   services.plex = {
     enable = true;
     openFirewall = true;

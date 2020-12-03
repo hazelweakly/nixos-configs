@@ -17,10 +17,10 @@
         "homepage": "",
         "owner": "rycee",
         "repo": "home-manager",
-        "rev": "44f9d68d8c21aecda1cde153b72af5e99d367afe",
-        "sha256": "04phljyg2ac3phllfjip3ws9msgqafiy5sc0dh7sp4pyx71jsis5",
+        "rev": "06543644266edcf845ac912002868246b58d19e6",
+        "sha256": "199cw1z1n12bnb9x6db83lmxkzni6xl9hnxkrdjcqm73c95fswv3",
         "type": "tarball",
-        "url": "https://github.com/rycee/home-manager/archive/44f9d68d8c21aecda1cde153b72af5e99d367afe.tar.gz",
+        "url": "https://github.com/rycee/home-manager/archive/06543644266edcf845ac912002868246b58d19e6.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "mach-nix": {
@@ -65,10 +65,10 @@
         "homepage": "https://neovim.io",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "72c22862dc2199462aef0d450a49d29a9d0680b9",
-        "sha256": "0sp8gid2i64cr7ps26bfwivwyvxq3w378r940mba0afsl9gfacn0",
+        "rev": "8fb786e415d1c3538452885455b2268d13f640a6",
+        "sha256": "1smq0y7r3s2qqsi11vr9jb5xmch8p9krfxmx9rrmfg7qn38awzkg",
         "type": "tarball",
-        "url": "https://github.com/neovim/neovim/archive/72c22862dc2199462aef0d450a49d29a9d0680b9.tar.gz",
+        "url": "https://github.com/neovim/neovim/archive/8fb786e415d1c3538452885455b2268d13f640a6.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "neuron": {
@@ -77,10 +77,10 @@
         "homepage": "https://neuron.zettel.page",
         "owner": "srid",
         "repo": "neuron",
-        "rev": "5fe6e2dd59eca3e64820f55975bfed7f1a593a36",
-        "sha256": "1kvcqs9f0y86gzz9kpkkz1gyplx6vxgn88ss8f7nsh6jyamlrz36",
+        "rev": "9dc3bbd2ce7d91caf633c9ba71c54f51e30ac79b",
+        "sha256": "05vv7azxf4qahqc0py15cvk99iwlza7fjidd5ivf5gdm6l0w86nk",
         "type": "tarball",
-        "url": "https://github.com/srid/neuron/archive/5fe6e2dd59eca3e64820f55975bfed7f1a593a36.tar.gz",
+        "url": "https://github.com/srid/neuron/archive/9dc3bbd2ce7d91caf633c9ba71c54f51e30ac79b.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixos-hardware": {
@@ -101,10 +101,10 @@
         "homepage": null,
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "d7a5482a9d99b6dfb57465e6703b700c6a459c4b",
-        "sha256": "070g6fwxb4l5hbg7hryr4h1apdkg34rlhihq2jw6jj3c3x9mkmz8",
+        "rev": "6710213c42320feb8416467d5c9b0bc2bd6f2fd2",
+        "sha256": "0i5r8lf01y09kp0xcby07rihh04h2k75cmna7x072zxlx2bgg8vi",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/d7a5482a9d99b6dfb57465e6703b700c6a459c4b.tar.gz",
+        "url": "https://github.com/NixOS/nixpkgs/archive/6710213c42320feb8416467d5c9b0bc2bd6f2fd2.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs-matterhorn": {
@@ -113,10 +113,10 @@
         "homepage": null,
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "d7a5482a9d99b6dfb57465e6703b700c6a459c4b",
-        "sha256": "070g6fwxb4l5hbg7hryr4h1apdkg34rlhihq2jw6jj3c3x9mkmz8",
+        "rev": "6710213c42320feb8416467d5c9b0bc2bd6f2fd2",
+        "sha256": "0i5r8lf01y09kp0xcby07rihh04h2k75cmna7x072zxlx2bgg8vi",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/d7a5482a9d99b6dfb57465e6703b700c6a459c4b.tar.gz",
+        "url": "https://github.com/NixOS/nixpkgs/archive/6710213c42320feb8416467d5c9b0bc2bd6f2fd2.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs-mozilla": {
