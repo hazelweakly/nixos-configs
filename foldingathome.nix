@@ -4,7 +4,7 @@ with pkgs.lib;
 let
   fahService = c: s: {
     serviceConfig.Type = "oneshot";
-    wantedBy = [ "default.target" ];
+    wantedBy = [ "default.target" "foldingathome.service" ];
     path = [ pkgs.foldingathome ];
     script = "FAHClient --send-${c}";
     startAt = "*-*-* ${s}";

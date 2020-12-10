@@ -69,7 +69,8 @@
   "diagnostic-languageserver.formatFiletypes": {
     "sh": "shfmt",
     "nix": "nixfmt",
-    "bzl": "buildifier"
+    "bzl": "buildifier",
+    "cabal": "cabal-fmt"
   },
   "diagnostic-languageserver.linters": {
     "buildifier": {
@@ -93,6 +94,10 @@
     }
   },
   "diagnostic-languageserver.formatters": {
+    "cabal-fmt": {
+      "command": "cabal-fmt",
+      "args": ["-i"]
+    },
     "shfmt": {
       "command": "shfmt",
       "args": ["-i", "2", "-bn", "-ci", "-sr"]

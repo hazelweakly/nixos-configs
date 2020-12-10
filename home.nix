@@ -4,37 +4,45 @@ in with builtins;
 with pkgs.lib; {
   # nixpkgs = { inherit (pkgs) config overlays; };
 
-  programs.firefox = {
-    enable = true;
-    package = pkgs.latest.firefox-devedition-bin.override {
-      pname = "firefox";
-      extraNativeMessagingHosts = [ pkgs.gnomeExtensions.gsconnect ];
-    };
-    # profiles.hazel-default = {
-    #   isDefault = true;
-    #   id = 0;
-    #   settings = {
-    #     "layers.acceleration.force-enabled" = true;
-    #      "ui.systemUsesDarkTheme" = 1;
-    #     "layers.omtp.enabled" = true;
-    #     "layout.display-list.retain" = true;
-    #     "gfx.webrender.all" = true;
-    #     "gfx.canvas.azure.accelerated" = true;
-    #     "layout.css.devPixelsPerPx" = "1.25";
-    #     "pdfjs.enableWebGL" = true;
-    #     "browser.ctrlTab.recentlyUsedOrder" = false;
-    #     "browser.newtab.extensionControlled" = true;
-    #     "browser.newtab.privateAllowed" = true;
-    #     "accessibility.typeaheadfind.enablesound" = false;
-    #     "widget.wayland-dmabuf-webgl.enabled" = true;
-    #     "widget.wayland-dmabuf-textures.enabled" = true;
-    #     "widget.wayland-dmabuf-vaapi.enabled" = true;
-    #     "media.ffvpx.enabled" = false;
-    #     "network.http.http3.enabled" = true;
-    #     "browser.preferences.experimental" = true;
-    #   };
-    # };
-  };
+  # programs.firefox = {
+  #   enable = true;
+  #   package = pkgs.latest.firefox-devedition-bin.override {
+  #     pname = "firefox";
+  #     browserName = "firefox";
+  #     desktopName = "Firefox";
+  #     forceWayland = true;
+  #     icon = "firefox";
+  #     cfg = {
+  #       enableTridactylNative = true;
+  #       enableGnomeExtensions = true;
+  #     };
+  #     extraNativeMessagingHosts = [ pkgs.gnomeExtensions.gsconnect ];
+  #   };
+  #   # profiles.hazel-default = {
+  #   #   isDefault = true;
+  #   #   id = 0;
+  #   #   settings = {
+  #   #     "layers.acceleration.force-enabled" = true;
+  #   #      "ui.systemUsesDarkTheme" = 1;
+  #   #     "layers.omtp.enabled" = true;
+  #   #     "layout.display-list.retain" = true;
+  #   #     "gfx.webrender.all" = true;
+  #   #     "gfx.canvas.azure.accelerated" = true;
+  #   #     "layout.css.devPixelsPerPx" = "1.25";
+  #   #     "pdfjs.enableWebGL" = true;
+  #   #     "browser.ctrlTab.recentlyUsedOrder" = false;
+  #   #     "browser.newtab.extensionControlled" = true;
+  #   #     "browser.newtab.privateAllowed" = true;
+  #   #     "accessibility.typeaheadfind.enablesound" = false;
+  #   #     "widget.wayland-dmabuf-webgl.enabled" = true;
+  #   #     "widget.wayland-dmabuf-textures.enabled" = true;
+  #   #     "widget.wayland-dmabuf-vaapi.enabled" = true;
+  #   #     "media.ffvpx.enabled" = false;
+  #   #     "network.http.http3.enabled" = true;
+  #   #     "browser.preferences.experimental" = true;
+  #   #   };
+  #   # };
+  # };
 
   programs.fzf = let fd = "fd -HLE .git -c always";
   in {
@@ -145,6 +153,12 @@ with pkgs.lib; {
     default.command=ready
     report.ready.columns=id,start.active,depends.indicator,project,due.relative,description.desc
     report.ready.labels= ,,Depends, Project, Due, Description
+    uda.reviewed.type=date
+    uda.reviewed.label=Reviewed
+    report._reviewed.description=Tasksh review report.  Adjust the filter to your needs.
+    report._reviewed.columns=uuid
+    report._reviewed.sort=reviewed+,modified+
+    report._reviewed.filter=( reviewed.none: or reviewed.before:now-6days ) and ( +PENDING or +WAITING )
   '';
 
   # xdg.configFile."direnv/direnvrc".text = ''

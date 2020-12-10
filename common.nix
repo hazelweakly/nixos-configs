@@ -86,9 +86,23 @@ in {
       kitty
       cachix
       tridactyl-native
+      (pkgs.latest.firefox-devedition-bin.override {
+        pname = "firefox";
+        browserName = "firefox";
+        desktopName = "Firefox";
+        forceWayland = true;
+        icon = "firefox";
+        cfg = {
+          enableTridactylNative = true;
+          enableGnomeExtensions = true;
+        };
+        extraNativeMessagingHosts = [ pkgs.gnomeExtensions.gsconnect ];
+      })
       file
       timewarrior
       taskwarrior
+      tasksh
+      taskopen
       mupdf
       niv
       (callPackage ./neovim.nix { })
