@@ -1,6 +1,6 @@
 if [[ -z "$__SOURCED_PERSONAL_PATH" && -d $HOME/.local/bin ]]; then
-    typeset -U path
     path+=($HOME/.local/bin)
-    export PATH
+    fpath+=($HOME/.zsh/completions)
+    export PATH FPATH
 fi
 __SOURCED_PERSONAL_PATH=1

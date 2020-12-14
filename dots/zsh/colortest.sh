@@ -24,3 +24,21 @@ row() {
     for a ({2..41}) row $ss $((6*a + 4)) $((6*a + 9))
     endl
 } "$@"
+
+zsh -i -c "$(cat <<'EOF'
+() {
+  emulate -L zsh -o prompt_percent -o ksh_arrays
+  autoload -Uz zmathfunc && zmathfunc
+  local bg fg
+  local -i i r g b
+  for i in {0..$((COLUMNS-1))}; do
+    b='i * 255 / COLUMNS'
+    r='255 - b'
+    g='255 - abs(r - b)'
+    printf -v bg '%02x' $r $g $b
+    print -nP "%K{#$bg} "
+  done
+  print
+}
+EOF
+)"

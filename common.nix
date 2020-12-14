@@ -119,6 +119,7 @@ in {
       papis-exts
 
       # Programs implicitly relied on in shell
+      pistol
       exa
       gitAndTools.delta
       bat

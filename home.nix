@@ -52,7 +52,8 @@ with pkgs.lib; {
       "--preview 'exa --group-directories-first --icons --sort time --tree --color always {} | head -200'"
     ];
     defaultCommand = "${fd} -tf 2> /dev/null";
-    defaultOptions = [ "--color=$__sys_theme --ansi --layout=reverse" ];
+    defaultOptions =
+      [ "--color=$__sys_theme --ansi --layout=reverse --inline-info" ];
     fileWidgetCommand = "${fd} .";
     fileWidgetOptions = let
       preview =
@@ -159,6 +160,9 @@ with pkgs.lib; {
     report._reviewed.columns=uuid
     report._reviewed.sort=reviewed+,modified+
     report._reviewed.filter=( reviewed.none: or reviewed.before:now-6days ) and ( +PENDING or +WAITING )
+
+    include ~/.task/contexts.txt
+    context=no
   '';
 
   # xdg.configFile."direnv/direnvrc".text = ''
@@ -190,11 +194,13 @@ with pkgs.lib; {
   xdg.configFile."fsh/theme.ini".source = ./dots/zsh/theme.ini;
   xdg.configFile."zsh/completions/_src".text = ''
     #compdef src
-    compdef '_path_files -/ -W ~/src' src
+    _path_files -/ -W ~/src
   '';
   programs.zsh = let
     zshrc' = concatMapStringsSep "\n" (n: readFile (./dots/zsh + "/${n}"))
-      (filter (hasSuffix ".zsh") (attrNames (readDir ./dots/zsh)));
+      (filter (hasSuffix ".zsh") (attrNames (readDir ./dots/zsh))) + ''
+        [ -f ~/.config/zsh/impure.zsh ] && source ~/.config/zsh/impure.zsh
+      '';
     zshrc = builtins.replaceStrings [ "@zsh-prompt@" ]
       [ "${builtins.toString ./dots/zsh/30-prompt.zsh}" ] zshrc';
   in {

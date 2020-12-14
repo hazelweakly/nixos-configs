@@ -70,3 +70,13 @@ bind-git-helper() {
 }
 bind-git-helper f b t r h s a i
 unset -f bind-git-helper
+
+# bindkey "^F" fzf-complete-generic
+# bindkey "^D" fzf-complete-directories
+# bindkey "^G" fzf-complete-files
+# bindkey "^ " fzf-complete-macro
+# bindkey "^Z" fzf-complete-history-commands
+# bindkey "^A" fzf-complete-history-words
+# bindkey "^T" fzf-complete-history-paths
+# bindkey "^P" fzf-complete-git-all-files
+# bindkey "^Y" fzf-complete-git-changed-files
