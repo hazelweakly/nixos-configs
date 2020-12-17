@@ -24,8 +24,7 @@ in {
     keep-derivations = true
   '';
 
-  # boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelPackages = pkgs.linuxPackages_5_8;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 50;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -224,8 +223,8 @@ in {
 
   virtualisation.libvirtd.enable = true;
   virtualisation.libvirtd.onBoot = "ignore";
-  virtualisation.virtualbox.host.enable = true;
-  virtualisation.virtualbox.host.enableExtensionPack = true;
+  virtualisation.virtualbox.host.enable = false;
+  # virtualisation.virtualbox.host.enableExtensionPack = true;
   boot.extraModprobeConfig = "options kvm_intel nested=1";
 
   nix.optimise.automatic = true;
