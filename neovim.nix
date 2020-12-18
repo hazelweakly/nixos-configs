@@ -2,9 +2,13 @@
 with pkgs;
 let
   path = lib.makeBinPath (builtins.sort (a: b: a.name < b.name)
-    ([ shellcheck languagetool vim-vint hlint ormolu haskellPackages.hadolint ]
-      ++ [ python-language-server clojure-lsp universal-ctags neuron ]
-      ++ [ perl binutils libcxx gcc ]
+    ([ shellcheck languagetool vim-vint haskellPackages.hadolint ] ++ [
+      python-language-server
+      clojure-lsp
+      universal-ctags
+      neuron
+      dhall-lsp-server
+    ] ++ [ perl binutils libcxx gcc ]
       ++ [ yarn bat exa direnv git jq tmux watchman neovim-remote ]
       ++ [ buildifier shfmt nixfmt ]
       ++ [ python3Packages.black haskellPackages.cabal-fmt ]));

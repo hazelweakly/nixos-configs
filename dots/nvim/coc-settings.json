@@ -56,6 +56,13 @@
       "additionalSchemes": ["jar", "zipfile"],
       "trace.server": "verbose",
       "initializationOptions": {}
+    },
+    "dhall-lsp": {
+      "command": "dhall-lsp-server",
+      "args": [],
+      "filetypes": ["dhall"],
+      "rootPatterns": [".git", "package.dhall"],
+      "initializationOptions": {}
     }
   },
   "diagnostic-languageserver.filetypes": {

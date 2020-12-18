@@ -106,9 +106,6 @@ function! VimrcLoadPluginSettings()
     " vimtex
     let g:tex_flavor = 'latex'
 
-    " neuron.vim
-    " let g:path_jq
-
     " nvim-treesitter
     luafile ~/.config/nvim/lua/setup-treesitter.lua
 
@@ -161,6 +158,7 @@ function! VimrcLoadPluginSettings()
 
     let g:coc_filetype_map = {
           \ 'yaml.ansible': 'yaml',
+          \ 'markdown.neuron':'markdown'
           \ }
 
     " \ 'coc-docker',
