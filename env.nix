@@ -147,6 +147,7 @@ in {
     gnomeExtensions.dash-to-dock
     gnomeExtensions.gsconnect
     gnomeExtensions.night-theme-switcher
+    gnomeExtensions.pop-os
     # gnomeExtensions.paperwm
     nordic
     nordic-polar
