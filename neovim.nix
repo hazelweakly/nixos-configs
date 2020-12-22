@@ -8,7 +8,7 @@ let
       universal-ctags
       neuron
       dhall-lsp-server
-    ] ++ [ perl binutils libcxx gcc ]
+    ] ++ [ python3 perl binutils libcxx gcc ]
       ++ [ yarn bat exa direnv git jq tmux watchman neovim-remote ]
       ++ [ buildifier shfmt nixfmt ]
       ++ [ python3Packages.black haskellPackages.cabal-fmt ]));

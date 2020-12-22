@@ -1,4 +1,6 @@
 " https://learnvimscriptthehardway.stevelosh.com/chapters/42.html
+" https://github.com/22mahmoud/neovim
+" https://github.com/nanotee/nvim-lua-guide/
 function! VimrcLoadPlugins()
     " Install vim-plug if not available
     let plug_install = 0
@@ -40,7 +42,6 @@ function! VimrcLoadPlugins()
     " Plug 'cohama/lexima.vim'
     Plug 'junegunn/fzf'
     Plug 'junegunn/fzf.vim'
-    Plug 'chengzeyi/fzf-preview.vim'
     Plug 'junegunn/vim-easy-align'
     Plug '907th/vim-auto-save'
     Plug 'blueyed/vim-diminactive'
@@ -128,12 +129,17 @@ function! VimrcLoadPluginSettings()
     let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9 } }
 
     " fzf-preview.vim
-    nnoremap <silent> <leader>f :Files<CR>
-    nnoremap <silent> <leader>h :History<CR>
-    nnoremap <silent> <leader>b :Buffers<CR>
-    nnoremap          <leader><space> :<C-u>Rg<Space><CR>
+    nnoremap <silent> <leader>f :<C-u>CocCommand fzf-preview.FromResources buffer project_mru git<CR>
+    nnoremap <silent> <leader>h :<C-u>CocCommand fzf-preview.History<CR>
+    nnoremap <silent> <leader>b :<C-u>CocCommand fzf-preview.Buffers<CR>
+    nnoremap <silent> <leader><space> :<C-u>CocCommand fzf-preview.ProjectGrep .<CR>
     xnoremap <silent> <leader><space> y:Rg <C-R>"<CR>
-    nnoremap <silent> <leader>/ :<C-u>FZFBLines<CR>
+    nnoremap <silent> <leader>/ :<C-u>CocCommand fzf-preview.Lines<CR>
+    nnoremap <silent> <Leader>gs :<C-u>CocCommand fzf-preview.GitStatus<CR>
+    let g:fzf_preview_use_dev_icons = 1
+    let g:fzf_preview_git_status_preview_command =  "[[ $(git diff --cached -- {-1}) != \"\" ]] && git diff --cached --color=always -- {-1} || " .
+                \ "[[ $(git diff -- {-1}) != \"\" ]] && git diff --color=always -- {-1} || " .
+                \ 'bat --color=always --plain {-1}'
 
     " coc.nvim
     nmap <silent> gd <Plug>(coc-definition)
@@ -171,6 +177,7 @@ function! VimrcLoadPluginSettings()
                 \ 'coc-diagnostic',
                 \ 'coc-emmet',
                 \ 'coc-eslint',
+                \ 'coc-fzf-preview',
                 \ 'coc-git',
                 \ 'coc-highlight',
                 \ 'coc-html',
