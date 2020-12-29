@@ -64,7 +64,7 @@ nixcd() {
 with-ghc() {
   v="$1"
   shift
-  nix-shell -p "haskell.packages.ghc$v.ghcWithPackages (p: [p.zlib])" cabal-install zlib.all "$@"
+  nix-shell -p "haskell.packages.ghc$v.ghcWithPackages (p: [p.zlib])" cabal-install zlib.all xz.all "$@"
 }
 
 ghc-shell() {
@@ -105,21 +105,3 @@ update() {
 vup() {
   nvim --headless +PlugUpgrade +PlugDiff +PlugUpdate +PlugClean! +CocUpdateSync +qall
 }
-
-# # zsh-abbr
-# abbr-fns() {
-#   {
-#     abbr add --force --quiet gco='git checkout' || true
-#     abbr add --force --quiet gsu='git submodule update --init --recursive' || true
-#     abbr add --force --quiet gu='git push' || true
-#     abbr add --force --quiet guo='git push -u origin' || true
-#     abbr add --force --quiet ns='nix-shell' || true
-#     abbr add --force --quiet gd='git diff' || true
-#     abbr add --force --quiet gm='git commit -m ' || true
-#     abbr add --force --quiet gj='git status' || true
-#     abbr add --force --quiet ts='timew start' || true
-#     abbr add --force --quiet tu='timew summary' || true
-#     abbr add --force --quiet td='timew stop' || true
-#     abbr add --force --quiet cz='cd ~/zettelkasten' || true
-#   } &|
-# }
