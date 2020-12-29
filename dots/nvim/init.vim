@@ -33,6 +33,7 @@ function! VimrcLoadPlugins()
     Plug 'nvim-lua/lsp-status.nvim'
     " https://github.com/nvim-treesitter/nvim-treesitter
     Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+    Plug 'jackguo380/vim-lsp-cxx-highlight'
     " https://github.com/metakirby5/codi.vim
 
     Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey','WhichKey!'] }
@@ -171,6 +172,7 @@ function! VimrcLoadPluginSettings()
     let g:coc_global_extensions = [
                 \ 'coc-actions',
                 \ 'coc-cfn-lint',
+                \ 'coc-clangd',
                 \ 'coc-cmake',
                 \ 'coc-css',
                 \ 'coc-cssmodules',
