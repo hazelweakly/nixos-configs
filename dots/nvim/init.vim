@@ -168,7 +168,6 @@ function! VimrcLoadPluginSettings()
           \ 'markdown.neuron':'markdown'
           \ }
 
-    " \ 'coc-docker',
     let g:coc_global_extensions = [
                 \ 'coc-actions',
                 \ 'coc-cfn-lint',
@@ -177,6 +176,7 @@ function! VimrcLoadPluginSettings()
                 \ 'coc-css',
                 \ 'coc-cssmodules',
                 \ 'coc-diagnostic',
+                \ 'coc-docker',
                 \ 'coc-emmet',
                 \ 'coc-eslint',
                 \ 'coc-fzf-preview',
