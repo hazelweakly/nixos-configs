@@ -214,6 +214,11 @@ in {
   environment.etc."docker/daemon.json".text =
     ''{ "features": { "buildkit": true } }'';
 
+  virtualisation.oci-containers.containers."explainshell" = {
+    image = "spaceinvaderone/explainshell";
+    ports = [ "5000:5000" ];
+  };
+
   environment.etc.zoneinfo.source = pkgs.lib.mkForce "${
       pkgs.tzdata.overrideAttrs (old: {
         makeFlags = old.makeFlags

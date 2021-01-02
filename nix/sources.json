@@ -17,10 +17,10 @@
         "homepage": "",
         "owner": "rycee",
         "repo": "home-manager",
-        "rev": "f6fd7e3fa4fac876f02309b780492f9f2d58093a",
-        "sha256": "0d6ihvnbhjyas0ng4k7njj3zl7mij612zsq9s1my7kk0xk9czb94",
+        "rev": "6acc6bc651ae2a097ba115b5855fc7820d104aba",
+        "sha256": "10hlsyks1rhjbbd3dk85nk9mvdkvxy3pk9lbs64sx0n1jcfndrwc",
         "type": "tarball",
-        "url": "https://github.com/rycee/home-manager/archive/f6fd7e3fa4fac876f02309b780492f9f2d58093a.tar.gz",
+        "url": "https://github.com/rycee/home-manager/archive/6acc6bc651ae2a097ba115b5855fc7820d104aba.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "mach-nix": {
@@ -65,10 +65,10 @@
         "homepage": "https://neovim.io",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "f3a8c930a4b901c5313701849e7010f098bf22e6",
-        "sha256": "19hw9k1mcj4qaqjialq9wvs2cgf2f7yvl9n9dnxvbwb0gkscpby6",
+        "rev": "7718826edf0a4af175d230a691d9d9559f9d8acc",
+        "sha256": "0jknjhncjrmd4vcqd14pi9adj5cabxxh9hc4rp4g5pm72bpjrpm7",
         "type": "tarball",
-        "url": "https://github.com/neovim/neovim/archive/f3a8c930a4b901c5313701849e7010f098bf22e6.tar.gz",
+        "url": "https://github.com/neovim/neovim/archive/7718826edf0a4af175d230a691d9d9559f9d8acc.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "neuron": {
@@ -77,10 +77,10 @@
         "homepage": "https://neuron.zettel.page",
         "owner": "srid",
         "repo": "neuron",
-        "rev": "aabae6a0df7b4be2a9ed1192aac206fdfea1cec8",
-        "sha256": "1j88394jzldyr63rnga2sf8yppawsprppwrcrwx5c398nykrkxhr",
+        "rev": "ae2bd2e1ab912147348394548b9455a5ea9a1e5f",
+        "sha256": "069i15jnqag0kcyk7fhr4prp08afgma6psmf1dysxhwz29ck909j",
         "type": "tarball",
-        "url": "https://github.com/srid/neuron/archive/aabae6a0df7b4be2a9ed1192aac206fdfea1cec8.tar.gz",
+        "url": "https://github.com/srid/neuron/archive/ae2bd2e1ab912147348394548b9455a5ea9a1e5f.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixos-hardware": {

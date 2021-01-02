@@ -3,14 +3,18 @@ let sources = import ./nix/sources.nix;
 in let
   dynamic-wallpaper = pkgs.stdenv.mkDerivation {
     name = "dynamic-wallpaper";
-    nativeBuildInputs = [ pkgs.wrapGAppsHook pkgs.glib ];
+    nativeBuildInputs = [ pkgs.ncurses pkgs.wrapGAppsHook pkgs.glib ];
     buildInputs = with pkgs; [
       glib
-      ncurses
+      gawk
+      feh
+      cron
       xorg.xrandr
       gsettings-desktop-schemas
       dbus
       gnome3.dconf
+      coreutils
+      ncurses
     ];
     src = sources.dynamic-wallpaper;
     installPhase = ''
@@ -24,8 +28,18 @@ in let
 in {
   home-manager.users.hazel.systemd.user.services.dynamic-wallpaper = {
     Service.Type = "oneshot";
-    Service.Environment = "DISPLAY=:0";
-    Service.ExecStart = "${dynamic-wallpaper}/bin/dwall -o firewatch ";
+    Service.Environment = [
+      "DISPLAY=:0"
+      "PATH=${
+        pkgs.lib.makeBinPath
+        (dynamic-wallpaper.buildInputs ++ pkgs.ncurses.all ++ pkgs.glib.all)
+      }"
+      "DESKTOP_SESSION=gnome"
+      "DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus"
+      "XDG_RUNTIME_DIR=/run/user/1000"
+      "TERM=xterm-256color"
+    ];
+    Service.ExecStart = "${dynamic-wallpaper}/bin/dwall -s firewatch";
     Install.WantedBy = [ "graphical-session.target" ];
   };
   home-manager.users.hazel.systemd.user.timers.dynamic-wallpaper = {
@@ -34,25 +48,4 @@ in {
     Timer.Unit = "dynamic-wallpaper.service";
     Install.WantedBy = [ "dynamic-wallpaper.service" ];
   };
-  # systemd.user.services.dynamic-wallpaper = {
-  #   environment.DISPLAY = ":0";
-  #   environment.DESKTOP_SESSION = "gnome";
-  #   environment.TERM = "xterm-256color";
-  #   path = with pkgs; [
-  #     glib
-  #     ncurses
-  #     xorg.xrandr
-  #     gsettings-desktop-schemas
-  #     dbus
-  #     gnome3.dconf
-  #     gawk
-  #   ];
-  #   script = ''
-  #     source ${config.system.build.setEnvironment}
-  #     ${dynamic-wallpaper}/bin/dwall -o firewatch
-  #   '';
-  #   serviceConfig.Type = "oneshot";
-  #   startAt = "hourly";
-  #   wantedBy = [ "graphical-session.target" ];
-  # };
 }
