@@ -21,8 +21,15 @@ let
     extraPython3Packages = p: [ p.black ];
   };
   nvim = (wrapNeovimUnstable.override { nodejs = nodejs_latest; }) v (c // {
-    wrapperArgs =
-      lib.escapeShellArgs (c.wrapperArgs ++ [ "--suffix" "PATH" ":" path ]);
+    wrapperArgs = lib.escapeShellArgs (c.wrapperArgs ++ [
+      "--suffix"
+      "PATH"
+      ":"
+      path
+      "--set"
+      "EXPLAINSHELL_ENDPOINT"
+      "http://localhost:5000"
+    ]);
     vimAlias = true;
     viAlias = true;
   });

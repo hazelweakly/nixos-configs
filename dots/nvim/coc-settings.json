@@ -30,6 +30,7 @@
   "pyright.disableCompletion": true,
   "python.analysis.diagnosticMode": "workspace",
   "haskell.formattingProvider": "fourmolu",
+  "sh.explainshellEndpoint": "http://localhost:5000",
   "clangd.semanticHighlighting": true,
   "yaml.schemas": {
     "https://raw.githubusercontent.com/docker/cli/master/cli/compose/schema/data/config_schema_v3.9.json": "/docker-compose.*yml",
