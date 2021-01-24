@@ -13,11 +13,9 @@ function! VimrcLoadPlugins()
     endif
     unlet autoload_plug_path
 
-    if !isdirectory($HOME . '/.local/share/nvim/backup')
-        call mkdir($HOME . '/.local/share/nvim/swap', "p", 0700)
-        call mkdir($HOME . '/.local/share/nvim/undo', "p", 0700)
-        call mkdir($HOME . '/.local/share/nvim/backup', "p", 0700)
-    endif
+    for p in ['backup', 'swap', 'undo']
+        if !isdirectory(stdpath('data') . p) | call mkdir(stdpath('data') . p, "p", 0755) | endif
+    endfor
 
     call plug#begin('~/.local/share/nvim/plugged')
 
@@ -75,7 +73,7 @@ function! VimrcLoadPlugins()
     Plug 'romainl/vim-cool'
     Plug 'andymass/vim-matchup'
     Plug 'ryanoasis/vim-devicons'
-    Plug 'adelarsq/vim-devicons-emoji'
+    " Plug 'adelarsq/vim-devicons-emoji'
     Plug 'jceb/vim-orgmode'
     Plug 'vmchale/dhall-vim'
 
@@ -130,7 +128,7 @@ function! VimrcLoadPluginSettings()
     let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9 } }
 
     " fzf-preview.vim
-    nnoremap <silent> <leader>f :<C-u>CocCommand fzf-preview.FromResources buffer project_mru git<CR>
+    nnoremap <silent> <leader>f :<C-u>CocCommand fzf-preview.DirectoryFiles<CR>
     nnoremap <silent> <leader>h :<C-u>CocCommand fzf-preview.History<CR>
     nnoremap <silent> <leader>b :<C-u>CocCommand fzf-preview.Buffers<CR>
     nnoremap <silent> <leader><space> :<C-u>CocCommand fzf-preview.ProjectGrep .<CR>
@@ -499,8 +497,9 @@ function! VimrcLoadColors()
 endfunction
 
 let g:mapleader = "\<Space>"
-setlocal shiftwidth=8 " set to defaults to prevent slowdown in vim-polyglot
-setlocal tabstop=8
+setlocal shiftwidth=4 " set to defaults to prevent slowdown in vim-polyglot
+setlocal tabstop=4
+setlocal expandtab
 let g:polyglot_disabled = ['sensible']
 let g:python_host_skip_check=1 " disable python2
 let g:loaded_python_provider=1 " disable python2

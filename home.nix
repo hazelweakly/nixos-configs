@@ -123,9 +123,16 @@ with pkgs.lib; {
   };
 
   home.file.".local/share/fonts/VictorMono".source = ./dots/VictorMono;
+  home.file.".task/hooks/on-modify.timetracking".source =
+    pkgs.writeShellScript "on-modify-timewarrior" ''
+      PATH=${
+        pkgs.python3.withPackages (p: [ p.humanfriendly p.isodate ])
+      }/bin:$PATH
+      exec python ${./dots/task/time-tracking.py}
+    '';
   home.file.".task/hooks/on-modify.timewarrior".source =
     pkgs.writeShellScript "on-modify-timewarrior" ''
-      PATH=${pkgs.python3.withPackages (p: [ p.dateutil ])}/bin:$PATH
+      PATH=${pkgs.python3}/bin:$PATH
       exec python ${pkgs.timewarrior.outPath}/share/doc/timew/ext/on-modify.timewarrior
     '';
   home.file.".timewarrior/extensions/totals.py".source =
@@ -152,8 +159,8 @@ with pkgs.lib; {
 
     # task ready report default with custom columns
     default.command=ready
-    report.ready.columns=id,start.active,depends.indicator,project,due.relative,description.desc
-    report.ready.labels= ,,Depends, Project, Due, Description
+    report.ready.columns=id,start.active,depends.indicator,project,due.relative,budget,elapsed,description.desc
+    report.ready.labels=,,,Project,Due,Left,Spent,Description
     uda.reviewed.type=date
     uda.reviewed.label=Reviewed
     report._reviewed.description=Tasksh review report.  Adjust the filter to your needs.
@@ -163,8 +170,20 @@ with pkgs.lib; {
 
     include ~/.task/contexts.txt
     context=no
+
+    # This should be duration but duration doesn't have sane formatting in reports.
+    uda.elapsed.label=Time Spent
+    uda.elapsed.type=string
+    uda.budget.label=Time Left
+    uda.budget.type=string
+
+    uda.pl.label=PL
+    uda.pl.type=string
+    uda.customer.label=Customer
+    uda.customer.type=string
   '';
 
+  xdg.enable = true;
   # xdg.configFile."direnv/direnvrc".text = ''
   #  source /run/current-system/sw/share/nix-direnv/direnvrc
   # : ${XDG_CACHE_HOME:=$HOME/.cache}
@@ -183,7 +202,6 @@ with pkgs.lib; {
   xdg.configFile."glirc".source = ./dots/glirc;
   xdg.configFile."nixpkgs/config.nix".text =
     "{ allowUnfree = true; allowUnsupportedSystem = true; }";
-  xdg.enable = true;
   xdg.configFile."coc/extensions/coc-python-data/languageServer".source =
     pkgs.python-language-server + "/lib";
 
@@ -191,6 +209,11 @@ with pkgs.lib; {
   programs.direnv.enable = true;
   programs.direnv.enableNixDirenvIntegration = true;
 
+  xdg.configFile."mpv/mpv.conf".text = ''
+    hwdec=auto-safe
+    vo=gpu
+    profile=gpu-hq
+  '';
   xdg.configFile."fsh/theme.ini".source = ./dots/zsh/theme.ini;
   xdg.configFile."zsh/completions/_src".text = ''
     #compdef src
@@ -205,7 +228,10 @@ with pkgs.lib; {
       [ "${builtins.toString ./dots/zsh/30-prompt.zsh}" ] zshrc';
   in {
     enable = true;
-    envExtra = "setopt no_global_rcs";
+    envExtra = ''
+      setopt no_global_rcs
+      skip_global_compinit=1
+    '';
     dotDir = ".config/zsh";
     enableCompletion = true;
     defaultKeymap = "emacs";
@@ -228,7 +254,7 @@ with pkgs.lib; {
       fi
       source ${config.xdg.dataHome}/zsh/zinit/bin/zinit.zsh
       if ! [[ -f ${config.xdg.dataHome}/zsh/zinit/bin/zmodules/COMPILED_AT ]]; then
-        nix-shell -p clang ncurses autoconf --run 'zsh -ilc "zinit module build"'
+        nix-shell -p clang_11 ncurses autoconf --run 'zsh -ilc "zinit module build"'
       fi
       module_path+=("${config.xdg.dataHome}/zsh/zinit/bin/zmodules/Src")
       zmodload zdharma/zplugin &>/dev/null
@@ -263,6 +289,11 @@ with pkgs.lib; {
   systemd.user.services.neuron = {
     Install.WantedBy = [ "graphical-session.target" ];
     Service.ExecStart =
-      "${pkgs.neuron}/bin/neuron -d ${config.home.homeDirectory}/zettelkasten rib -wS";
+      "${pkgs.neuron}/bin/neuron -d ${config.home.homeDirectory}/zettelkasten rib -ws 127.53.54.1:50000";
+  };
+  systemd.user.services.neuron-notes = {
+    Install.WantedBy = [ "graphical-session.target" ];
+    Service.ExecStart =
+      "${pkgs.neuron}/bin/neuron -d ${config.home.homeDirectory}/Documents/notes rib -ws 127.53.54.2:50001";
   };
 }

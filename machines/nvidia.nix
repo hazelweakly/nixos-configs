@@ -14,9 +14,9 @@ in with pkgs.lib; {
   hardware.nvidia.prime.offload.enable = true;
   hardware.nvidia.prime.intelBusId = "PCI:0:2:0";
   hardware.nvidia.prime.nvidiaBusId = "PCI:1:0:0";
-  hardware.nvidia.nvidiaPersistenced = false;
+  hardware.nvidia.nvidiaPersistenced = true;
   hardware.nvidia.powerManagement.enable = true;
-  services.xserver.displayManager.gdm.nvidiaWayland = true;
+  services.xserver.displayManager.gdm.nvidiaWayland = false;
 
   # https://github.com/NixOS/nixpkgs/pull/73530
 

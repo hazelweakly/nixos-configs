@@ -5,10 +5,10 @@
         "homepage": null,
         "owner": "adi1090x",
         "repo": "dynamic-wallpaper",
-        "rev": "6e049cdbb21855bbf5dc40c7eb0821a7dc68a3ac",
-        "sha256": "1f83shaq6zb9pxlvj4ly2g4p3hpsycz7nq2l4ziynfg0000m28bw",
+        "rev": "0d212e581b17f8330dca830f56475bf99f675897",
+        "sha256": "11mv0bsd6i1cs06ka4hlmlg0mrhimn9y8xg2nw3hdzlrd5qy2nq9",
         "type": "tarball",
-        "url": "https://github.com/adi1090x/dynamic-wallpaper/archive/6e049cdbb21855bbf5dc40c7eb0821a7dc68a3ac.tar.gz",
+        "url": "https://github.com/adi1090x/dynamic-wallpaper/archive/0d212e581b17f8330dca830f56475bf99f675897.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "home-manager": {
@@ -17,10 +17,10 @@
         "homepage": "",
         "owner": "rycee",
         "repo": "home-manager",
-        "rev": "6acc6bc651ae2a097ba115b5855fc7820d104aba",
-        "sha256": "10hlsyks1rhjbbd3dk85nk9mvdkvxy3pk9lbs64sx0n1jcfndrwc",
+        "rev": "2c0e3f61da903613cc316cb992c8c07d92e1d186",
+        "sha256": "1p60phfyx1gfmwlz7dsls9hdxkr4bxp6mdd9jbdi9bd7l86idd5l",
         "type": "tarball",
-        "url": "https://github.com/rycee/home-manager/archive/6acc6bc651ae2a097ba115b5855fc7820d104aba.tar.gz",
+        "url": "https://github.com/rycee/home-manager/archive/2c0e3f61da903613cc316cb992c8c07d92e1d186.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "mach-nix": {
@@ -29,10 +29,10 @@
         "homepage": null,
         "owner": "DavHau",
         "repo": "mach-nix",
-        "rev": "c4ef8f4a01f8ca8df857f6318fecb6cdbee37d58",
-        "sha256": "0kwbs2b219qrpszzdm514dfcyl5x9f7w6rw2wbbxn5q2jffp2q71",
+        "rev": "a81b0b5fe070c4bcd0b67eb6bebcb9816f452ca5",
+        "sha256": "0qg02f5vprd6cacw5wra21byxgn9cw9wibrn5c8bhq9hfpkczmmb",
         "type": "tarball",
-        "url": "https://github.com/DavHau/mach-nix/archive/c4ef8f4a01f8ca8df857f6318fecb6cdbee37d58.tar.gz",
+        "url": "https://github.com/DavHau/mach-nix/archive/a81b0b5fe070c4bcd0b67eb6bebcb9816f452ca5.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "matterhorn": {
@@ -41,10 +41,10 @@
         "homepage": "",
         "owner": "matterhorn-chat",
         "repo": "matterhorn",
-        "rev": "2afbd025d65a05455fea6f65ac74e24dd7a00f06",
-        "sha256": "0hhjvfrbmd1fbvxqbxqhx82f112pzsq8a28hzcnf4zgs6511xjis",
+        "rev": "67ab1d5b063c2c72847f96df4c190f0b67c2d90f",
+        "sha256": "153dl3brs7q4jddwnrsgs3brr08lr8awxw808dzlvcw9w9mbd1l7",
         "type": "tarball",
-        "url": "https://github.com/matterhorn-chat/matterhorn/archive/2afbd025d65a05455fea6f65ac74e24dd7a00f06.tar.gz",
+        "url": "https://github.com/matterhorn-chat/matterhorn/archive/67ab1d5b063c2c72847f96df4c190f0b67c2d90f.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "mhnix": {
@@ -65,22 +65,22 @@
         "homepage": "https://neovim.io",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "7718826edf0a4af175d230a691d9d9559f9d8acc",
-        "sha256": "0jknjhncjrmd4vcqd14pi9adj5cabxxh9hc4rp4g5pm72bpjrpm7",
+        "rev": "93402606fa46a80dff2362920c85f4497ed2a216",
+        "sha256": "1as9pv1k4jwwykza9qdvvgv5fdqg0rygrqas0q9sw2fs4vdyv30b",
         "type": "tarball",
-        "url": "https://github.com/neovim/neovim/archive/7718826edf0a4af175d230a691d9d9559f9d8acc.tar.gz",
+        "url": "https://github.com/neovim/neovim/archive/93402606fa46a80dff2362920c85f4497ed2a216.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "neuron": {
-        "branch": "master",
+        "branch": "v1",
         "description": "Haskell meets Zettelkasten, for your plain-text delight.",
         "homepage": "https://neuron.zettel.page",
         "owner": "srid",
         "repo": "neuron",
-        "rev": "ae2bd2e1ab912147348394548b9455a5ea9a1e5f",
-        "sha256": "069i15jnqag0kcyk7fhr4prp08afgma6psmf1dysxhwz29ck909j",
+        "rev": "44855fb8674e74a6b9a6688a8dff0298e9c78124",
+        "sha256": "169k6mkg30gh5fc8jwljq66l3i4bxlr3bivcsx07cr2kyizv9bwc",
         "type": "tarball",
-        "url": "https://github.com/srid/neuron/archive/ae2bd2e1ab912147348394548b9455a5ea9a1e5f.tar.gz",
+        "url": "https://github.com/srid/neuron/archive/44855fb8674e74a6b9a6688a8dff0298e9c78124.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixos-hardware": {
@@ -89,10 +89,10 @@
         "homepage": "",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "c242378e63b0ec334e964ac0c0fbbdd2b3e89ebf",
-        "sha256": "1z4cr5gsyfdpcy31vqg4ikalbxmnnac6jjk1nl8mxj0h0ix7pp36",
+        "rev": "874830945a65ad1134aff3a5aea0cdd2e1d914ab",
+        "sha256": "132qal4d1xrb0ni4hizdwwxb3qdl15r31aixaivl1kvld64c3i6s",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixos-hardware/archive/c242378e63b0ec334e964ac0c0fbbdd2b3e89ebf.tar.gz",
+        "url": "https://github.com/NixOS/nixos-hardware/archive/874830945a65ad1134aff3a5aea0cdd2e1d914ab.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs": {
@@ -101,10 +101,10 @@
         "homepage": null,
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "ac02f26980ffc6a84844943cb2c303662225543a",
-        "sha256": "1q3fnxnqqp910zi1v3ylw7cyv5ij2411m6h6xc4y6ahrach3cfj7",
+        "rev": "046d24424ef32cca1227519f93f41b5ec8133f31",
+        "sha256": "171qhys7z16kaw09rmy8hi5xphi1yq335na0d9bf9w54ism60m6h",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/ac02f26980ffc6a84844943cb2c303662225543a.tar.gz",
+        "url": "https://github.com/NixOS/nixpkgs/archive/046d24424ef32cca1227519f93f41b5ec8133f31.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs-matterhorn": {
@@ -113,10 +113,10 @@
         "homepage": null,
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "ac02f26980ffc6a84844943cb2c303662225543a",
-        "sha256": "1q3fnxnqqp910zi1v3ylw7cyv5ij2411m6h6xc4y6ahrach3cfj7",
+        "rev": "046d24424ef32cca1227519f93f41b5ec8133f31",
+        "sha256": "171qhys7z16kaw09rmy8hi5xphi1yq335na0d9bf9w54ism60m6h",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/ac02f26980ffc6a84844943cb2c303662225543a.tar.gz",
+        "url": "https://github.com/NixOS/nixpkgs/archive/046d24424ef32cca1227519f93f41b5ec8133f31.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs-mozilla": {
@@ -153,6 +153,18 @@
         "sha256": "0dlk8y6rxc87crw7764zq2py7nqn38lw496ca1y893m9gdq8qdkz",
         "type": "tarball",
         "url": "https://github.com/obsidiansystems/obelisk/archive/7ad33cbe3e84b209e83c505ce25486445bbd602e.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "taskwarrior": {
+        "branch": "2.6.0",
+        "description": "Taskwarrior - Commandline Task Management",
+        "homepage": "https://taskwarrior.org",
+        "owner": "GothenburgBitFactory",
+        "repo": "taskwarrior",
+        "rev": "368e323d80b7cbcf4761a90c5b7b8a2876aad043",
+        "sha256": "0bdcpabq3nkj5q0scdya470s51lrgf68nx0rz5lgdmqxydb15mbm",
+        "type": "tarball",
+        "url": "https://github.com/GothenburgBitFactory/taskwarrior/archive/368e323d80b7cbcf4761a90c5b7b8a2876aad043.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }

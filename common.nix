@@ -9,7 +9,9 @@ in {
     ./cachix.nix
     ./env.nix
     ./dyn-wp.nix
-    ./foldingathome.nix
+    ./proxy.nix
+    # ./foldingathome.nix
+    ./machines/nvidia.nix
   ];
 
   nixpkgs.config = import ./nix/config.nix;
@@ -30,6 +32,8 @@ in {
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 0;
   boot.tmpOnTmpfs = true;
+  # https://github.com/NixOS/nixpkgs/pull/108860
+  systemd.additionalUpstreamSystemUnits = [ "tmp.mount" ];
   boot.plymouth.enable = true;
   boot.supportedFilesystems = [ "ntfs" ];
 
@@ -84,19 +88,7 @@ in {
       google-chrome
       kitty
       cachix
-      tridactyl-native
-      (pkgs.latest.firefox-devedition-bin.override {
-        pname = "firefox";
-        browserName = "firefox";
-        desktopName = "Firefox";
-        forceWayland = true;
-        icon = "firefox";
-        cfg = {
-          enableTridactylNative = true;
-          enableGnomeExtensions = true;
-        };
-        extraNativeMessagingHosts = [ pkgs.gnomeExtensions.gsconnect ];
-      })
+      firefox-devedition-bin
       file
       timewarrior
       taskwarrior
@@ -131,7 +123,6 @@ in {
     VISUAL = "nvim";
     EDITOR = "nvim";
     MOZ_USE_XINPUT2 = "1";
-    MOZ_ENABLE_WAYLAND = "1";
     LPASS_AGENT_TIMEOUT = "0";
   };
 
@@ -173,6 +164,12 @@ in {
   hardware.enableAllFirmware = true;
   services.tlp.enable = true;
   hardware.opengl.enable = true;
+  hardware.opengl.extraPackages = with pkgs; [
+    intel-media-driver
+    vaapiIntel
+    vaapiVdpau
+    libvdpau-va-gl
+  ];
 
   services.xserver = {
     enable = true;
@@ -181,7 +178,7 @@ in {
     autoRepeatDelay = 190;
     autoRepeatInterval = 35;
 
-    libinput = {
+    libinput.touchpad = {
       naturalScrolling = true;
       disableWhileTyping = true;
       accelSpeed = "0.5";
@@ -193,6 +190,7 @@ in {
     displayManager.gdm = {
       enable = true;
       autoSuspend = false;
+      wayland = false;
     };
     displayManager.setupCommands = "stty -ixon";
 

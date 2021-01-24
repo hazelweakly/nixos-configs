@@ -146,6 +146,7 @@ in {
     gnome3.gnome-tweaks
     gnomeExtensions.dash-to-dock
     gnomeExtensions.gsconnect
+    gnomeExtensions.taskwhisperer
     gnomeExtensions.night-theme-switcher
     gnomeExtensions.pop-os
     # gnomeExtensions.paperwm

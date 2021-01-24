@@ -7,7 +7,7 @@ let
       clojure-lsp
       universal-ctags
       neuron
-      dhall-lsp-server
+      # dhall-lsp-server
     ] ++ [ python3 perl binutils libcxx gcc ]
       ++ [ yarn bat exa direnv git jq tmux watchman neovim-remote ]
       ++ [ buildifier shfmt nixfmt ]
@@ -15,6 +15,7 @@ let
   v = neovim-unwrapped.overrideAttrs (o: {
     src = sources.neovim;
     buildInputs = o.buildInputs ++ [ pkgs.tree-sitter ];
+    preBuild = "export HOME=$TMP";
   });
   c = (neovimUtils.override { nodejs = nodejs_latest; }).makeNeovimConfig {
     withNodeJs = true;
