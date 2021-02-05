@@ -34,6 +34,9 @@ function! VimrcLoadPlugins()
     Plug 'jackguo380/vim-lsp-cxx-highlight'
     " https://github.com/metakirby5/codi.vim
 
+    " https://github.com/nvim-telescope/telescope.nvim
+    " https://github.com/glepnir/lspsaga.nvim
+
     Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey','WhichKey!'] }
     Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
     Plug 'lambdalisue/suda.vim'
@@ -498,8 +501,6 @@ endfunction
 
 let g:mapleader = "\<Space>"
 setlocal shiftwidth=4 " set to defaults to prevent slowdown in vim-polyglot
-setlocal tabstop=4
-setlocal expandtab
 let g:polyglot_disabled = ['sensible']
 let g:python_host_skip_check=1 " disable python2
 let g:loaded_python_provider=1 " disable python2

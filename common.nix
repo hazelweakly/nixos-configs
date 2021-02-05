@@ -195,13 +195,13 @@ in {
     displayManager.setupCommands = "stty -ixon";
 
     desktopManager.gnome3.enable = true;
-    windowManager.xmonad = {
-      enable = true;
-      enableContribAndExtras = true;
-      haskellPackages = pkgs.haskellPackages;
-      # This breaks mod+Q to reload config
-      config = ./dots/xmonad/xmonad.hs;
-    };
+    # windowManager.xmonad = {
+    #   enable = true;
+    #   enableContribAndExtras = true;
+    #   haskellPackages = pkgs.haskellPackages;
+    #   # This breaks mod+Q to reload config
+    #   config = ./dots/xmonad/xmonad.hs;
+    # };
   };
 
   # Need to set keyring password to blank?
