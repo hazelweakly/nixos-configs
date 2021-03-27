@@ -34,35 +34,31 @@ def duration_str_to_time_delta(duration_str):
 
 
 def human_iso(date):
-    d = isodate.duration_isoformat(date).lower().lstrip("tp")
-    if d == "%p":
+    f = isodate.duration_isoformat(date).lower()
+    # print("date is %s, f is %s" % (date, f))
+    if f.find("%p") != -1:
         return date
-    if d.find("d") == -1:
-        return d
-    if d.find("t"):
-        days, rest = d.split("t")
-        hours = int(days.rstrip("d")) * 24
+
+    if f.startswith("p"):
+        f = f.lstrip("p")
+        if f.find("d") != -1:
+            days, f = f.split("d")
+        else:
+            days = 0
     else:
-        rest = d
+        days = 0
+    if f.startswith("t"):
+        f = f.lstrip("t")
+        if f.find("h") != -1:
+            hours, f = f.split("h")
+        else:
+            hours = 0
+    else:
         hours = 0
-    h, r = rest.split("h")
-    return "%sh%s" % (hours + int(h), r)
 
-
-# def human_iso(date):
-#     d = isodate.duration_isoformat(date).lower().lstrip("tp")
-#     if d == "%p":
-#         return date
-#     if d.find("d") == -1:
-#         return d
-#     days, _, rest = d.partition("t")
-#     # days, rest = d.split("t") if d.find("t") else ("0d",d)
-#     hours = int(days.rstrip("d")) * 24 if days.find("")
-#     else:
-#         rest = d
-#         hours = 0
-#     h, r = rest.split("h")
-#     return "%sh%s" % (hours + int(h), r)
+    days = int(days) * 24
+    hours = int(hours) + days
+    return "%sh%s" % (hours, f)
 
 
 def main():

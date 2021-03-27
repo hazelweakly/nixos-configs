@@ -8,11 +8,10 @@
   emulate -L zsh
   setopt no_unset extended_glob
 
-  typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon dir vcs newline nix_shell pchar)
+  typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon dir vcs command_execution_time newline nix_shell pchar)
 
   typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
     status
-    command_execution_time
     background_jobs
     direnv
     asdf
@@ -40,7 +39,6 @@
     plenv
     phpenv
     scalaenv
-    # haskell_stack
     kubecontext
     terraform
     aws
@@ -56,10 +54,10 @@
     midnight_commander
     vpn_id
     todo
-    timewarrior
-    taskwarrior
     time
+    taskwarrior
     newline
+    timewarrior
   )
 
   typeset -g POWERLEVEL9K_DIR_ANCHOR_BOLD=false
@@ -89,8 +87,6 @@
     _p9k_cached_cmd 0 docker --version && [[ $_p9k__ret == D?* ]] || return
     p10k segment -i $'\UF308' -f '014' -t "${${${_p9k__ret//\%/%%}/**, build /}%.*}"
   }
-
-  typeset -g POWERLEVEL9K_CONFIG_FILE=@zsh-prompt@
 
   (( ! $+functions[p10k] )) || p10k reload
 }

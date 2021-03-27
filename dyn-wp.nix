@@ -1,6 +1,5 @@
-{ config, pkgs, ... }:
-let sources = import ./nix/sources.nix;
-in let
+{ config, pkgs, inputs, ... }:
+let
   dynamic-wallpaper = pkgs.stdenv.mkDerivation {
     name = "dynamic-wallpaper";
     nativeBuildInputs = [ pkgs.ncurses pkgs.wrapGAppsHook pkgs.glib ];
@@ -16,12 +15,13 @@ in let
       coreutils
       ncurses
     ];
-    src = sources.dynamic-wallpaper;
+    src = inputs.dynamic-wallpaper;
     installPhase = ''
       mkdir -p $out/bin $out/share/dynamic-wallpaper
       cp -r ./dwall.sh ./images $out/share/dynamic-wallpaper
+      patchShebangs $out/share/dynamic-wallpaper/dwall.sh
       sed -i -e "s!/usr/share/!/share/!g" -e "s!DIR=\"!DIR=\"$out!g" \
-          $out/share/dynamic-wallpaper/dwall.sh
+        $out/share/dynamic-wallpaper/dwall.sh
       ln -s $out/share/dynamic-wallpaper/dwall.sh $out/bin/dwall
     '';
   };
@@ -31,15 +31,16 @@ in {
     Service.Environment = [
       "DISPLAY=:0"
       "PATH=${
-        pkgs.lib.makeBinPath
-        (dynamic-wallpaper.buildInputs ++ pkgs.ncurses.all ++ pkgs.glib.all)
+        pkgs.lib.makeBinPath (dynamic-wallpaper.buildInputs ++ pkgs.ncurses.all
+          ++ pkgs.glib.all ++ [ dynamic-wallpaper "/run/current-system/sw/" ])
       }"
       "DESKTOP_SESSION=gnome"
       "DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus"
       "XDG_RUNTIME_DIR=/run/user/1000"
       "TERM=xterm-256color"
     ];
-    Service.ExecStart = "${dynamic-wallpaper}/bin/dwall -s firewatch";
+    Service.ExecStart =
+      "${pkgs.bash}/bin/bash -c '${dynamic-wallpaper}/bin/dwall -s firewatch &'";
     Install.WantedBy = [ "graphical-session.target" ];
   };
   home-manager.users.hazel.systemd.user.timers.dynamic-wallpaper = {

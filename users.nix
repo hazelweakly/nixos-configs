@@ -16,9 +16,4 @@
       "dialout"
     ];
   };
-
-  home-manager.users.hazel = import ./home.nix;
-  home-manager.useGlobalPkgs = true;
-  systemd.services.home-manager-hazel.preStart =
-    "${pkgs.nix}/bin/nix-env -i -E";
 }

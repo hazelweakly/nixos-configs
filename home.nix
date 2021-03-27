@@ -1,49 +1,7 @@
 { config, pkgs, ... }:
-let sources = import ./nix/sources.nix;
+let dir = config.home.homeDirectory + "/src/personal/nixos-configs";
 in with builtins;
 with pkgs.lib; {
-  # nixpkgs = { inherit (pkgs) config overlays; };
-
-  # programs.firefox = {
-  #   enable = true;
-  #   package = pkgs.latest.firefox-devedition-bin.override {
-  #     pname = "firefox";
-  #     browserName = "firefox";
-  #     desktopName = "Firefox";
-  #     forceWayland = true;
-  #     icon = "firefox";
-  #     cfg = {
-  #       enableTridactylNative = true;
-  #       enableGnomeExtensions = true;
-  #     };
-  #     extraNativeMessagingHosts = [ pkgs.gnomeExtensions.gsconnect ];
-  #   };
-  #   # profiles.hazel-default = {
-  #   #   isDefault = true;
-  #   #   id = 0;
-  #   #   settings = {
-  #   #     "layers.acceleration.force-enabled" = true;
-  #   #      "ui.systemUsesDarkTheme" = 1;
-  #   #     "layers.omtp.enabled" = true;
-  #   #     "layout.display-list.retain" = true;
-  #   #     "gfx.webrender.all" = true;
-  #   #     "gfx.canvas.azure.accelerated" = true;
-  #   #     "layout.css.devPixelsPerPx" = "1.25";
-  #   #     "pdfjs.enableWebGL" = true;
-  #   #     "browser.ctrlTab.recentlyUsedOrder" = false;
-  #   #     "browser.newtab.extensionControlled" = true;
-  #   #     "browser.newtab.privateAllowed" = true;
-  #   #     "accessibility.typeaheadfind.enablesound" = false;
-  #   #     "widget.wayland-dmabuf-webgl.enabled" = true;
-  #   #     "widget.wayland-dmabuf-textures.enabled" = true;
-  #   #     "widget.wayland-dmabuf-vaapi.enabled" = true;
-  #   #     "media.ffvpx.enabled" = false;
-  #   #     "network.http.http3.enabled" = true;
-  #   #     "browser.preferences.experimental" = true;
-  #   #   };
-  #   # };
-  # };
-
   programs.fzf = let fd = "fd -HLE .git -c always";
   in {
     enable = true;
@@ -122,18 +80,24 @@ with pkgs.lib; {
     '';
   };
 
-  home.file.".local/share/fonts/VictorMono".source = ./dots/VictorMono;
+  home.file.".local/share/fonts/VictorMono".source =
+    config.lib.file.mkOutOfStoreSymlink "${dir}/dots/VictorMono";
   home.file.".task/hooks/on-modify.timetracking".source =
     pkgs.writeShellScript "on-modify-timewarrior" ''
       PATH=${
         pkgs.python3.withPackages (p: [ p.humanfriendly p.isodate ])
       }/bin:$PATH
-      exec python ${./dots/task/time-tracking.py}
+      exec python ${dir}/dots/task/time-tracking.py
     '';
   home.file.".task/hooks/on-modify.timewarrior".source =
     pkgs.writeShellScript "on-modify-timewarrior" ''
       PATH=${pkgs.python3}/bin:$PATH
       exec python ${pkgs.timewarrior.outPath}/share/doc/timew/ext/on-modify.timewarrior
+    '';
+  home.file.".timewarrior/extensions/tt".source =
+    pkgs.writeShellScript "totals" ''
+      PATH=${pkgs.python3.withPackages (p: [ p.dateutil ])}/bin:$PATH
+      exec python ${dir}/dots/task/tt.py
     '';
   home.file.".timewarrior/extensions/totals.py".source =
     pkgs.writeShellScript "totals" ''
@@ -184,22 +148,14 @@ with pkgs.lib; {
   '';
 
   xdg.enable = true;
-  # xdg.configFile."direnv/direnvrc".text = ''
-  #  source /run/current-system/sw/share/nix-direnv/direnvrc
-  # : ${XDG_CACHE_HOME:=$HOME/.cache}
-  # pwd_hash=$(echo -n $PWD | shasum | cut -d ' ' -f 1)
-  # direnv_layout_dir=$XDG_CACHE_HOME/direnv/layouts/$pwd_hash
-  # '';
-  xdg.configFile."tridactyl".source = ./dots/tridactyl;
-  xdg.configFile."kitty" = {
-    source = ./dots/kitty;
-    recursive = true;
-  };
-  xdg.configFile."nvim" = {
-    source = ./dots/nvim;
-    recursive = true;
-  };
-  xdg.configFile."glirc".source = ./dots/glirc;
+  xdg.configFile."tridactyl".source =
+    config.lib.file.mkOutOfStoreSymlink "${dir}/dots/tridactyl";
+  xdg.configFile."kitty".source =
+    config.lib.file.mkOutOfStoreSymlink "${dir}/dots/kitty";
+  xdg.configFile."nvim".source =
+    config.lib.file.mkOutOfStoreSymlink "${dir}/dots/nvim";
+  xdg.configFile."glirc".source =
+    config.lib.file.mkOutOfStoreSymlink "${dir}/dots/glirc";
   xdg.configFile."nixpkgs/config.nix".text =
     "{ allowUnfree = true; allowUnsupportedSystem = true; }";
   xdg.configFile."coc/extensions/coc-python-data/languageServer".source =
@@ -208,25 +164,31 @@ with pkgs.lib; {
   services.lorri.enable = true;
   programs.direnv.enable = true;
   programs.direnv.enableNixDirenvIntegration = true;
+  programs.direnv.stdlib = ''
+    : ''${XDG_CACHE_HOME:=$HOME/.cache}
+    declare -A direnv_layout_dirs
+    direnv_layout_dir() {
+      echo "''${direnv_layout_dirs[$PWD]:=$(
+        echo -n "$XDG_CACHE_HOME"/direnv/layouts/
+        echo -n "$PWD" | shasum | cut -d ' ' -f 1
+        )}"
+    }
+  '';
 
   xdg.configFile."mpv/mpv.conf".text = ''
     hwdec=auto-safe
     vo=gpu
     profile=gpu-hq
   '';
-  xdg.configFile."fsh/theme.ini".source = ./dots/zsh/theme.ini;
+  xdg.configFile."fsh/theme.ini".source =
+    config.lib.file.mkOutOfStoreSymlink "${dir}/dots/zsh/theme.ini";
   xdg.configFile."zsh/completions/_src".text = ''
     #compdef src
     _path_files -/ -W ~/src
   '';
-  programs.zsh = let
-    zshrc' = concatMapStringsSep "\n" (n: readFile (./dots/zsh + "/${n}"))
-      (filter (hasSuffix ".zsh") (attrNames (readDir ./dots/zsh))) + ''
-        [ -f ~/.config/zsh/impure.zsh ] && source ~/.config/zsh/impure.zsh
-      '';
-    zshrc = builtins.replaceStrings [ "@zsh-prompt@" ]
-      [ "${builtins.toString ./dots/zsh/30-prompt.zsh}" ] zshrc';
-  in {
+  xdg.configFile."zsh/config".source =
+    config.lib.file.mkOutOfStoreSymlink "${dir}/dots/zsh";
+  programs.zsh = {
     enable = true;
     envExtra = ''
       setopt no_global_rcs
@@ -236,32 +198,16 @@ with pkgs.lib; {
     enableCompletion = true;
     defaultKeymap = "emacs";
     initExtraBeforeCompInit = ''
-      DISABLE_MAGIC_FUNCTIONS="true"
-      if [[ -r "${config.xdg.dataHome}/theme" ]]; then
-        export __sys_theme="$(<${config.xdg.dataHome}/theme)"
-      fi
-      if [[ -r "${config.xdg.cacheHome}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
-        source "${config.xdg.cacheHome}/p10k-instant-prompt-''${(%):-%n}.zsh"
-      fi
-      typeset -A ZPLGM=(
-        BIN_DIR         ${config.xdg.dataHome}/zsh/zinit/bin
-        HOME_DIR        ${config.xdg.dataHome}/zsh/zinit
-        COMPINIT_OPTS   -C
-      )
-      if ! [[ -d ${config.xdg.dataHome}/zsh/zinit/bin ]]; then
-        command mkdir -p ${config.xdg.dataHome}/zsh/zinit
-        command git clone --depth=1 https://github.com/zdharma/zinit.git ${config.xdg.dataHome}/zsh/zinit/bin
-      fi
-      source ${config.xdg.dataHome}/zsh/zinit/bin/zinit.zsh
-      if ! [[ -f ${config.xdg.dataHome}/zsh/zinit/bin/zmodules/COMPILED_AT ]]; then
-        nix-shell -p clang_11 ncurses autoconf --run 'zsh -ilc "zinit module build"'
-      fi
-      module_path+=("${config.xdg.dataHome}/zsh/zinit/bin/zmodules/Src")
-      zmodload zdharma/zplugin &>/dev/null
-      autoload -Uz _zinit
-      (( ''${+_comps} )) && _comps[zinit]=_zinit
+      XDG_CACHE_HOME=${config.xdg.cacheHome}
+      XDG_DATA_HOME=${config.xdg.dataHome}
+      XDG_CONFIG_HOME=${config.xdg.configHome}
+      . $XDG_CONFIG_HOME/zsh/config/.zsh-init
     '';
-    initExtra = zshrc;
+    initExtra = ''
+      for f in $XDG_CONFIG_HOME/zsh/config/[0-9][0-9]-*.zsh; do
+      . "$f"
+      done
+    '';
   };
 
   programs.git = {
@@ -289,11 +235,11 @@ with pkgs.lib; {
   systemd.user.services.neuron = {
     Install.WantedBy = [ "graphical-session.target" ];
     Service.ExecStart =
-      "${pkgs.neuron}/bin/neuron -d ${config.home.homeDirectory}/zettelkasten rib -ws 127.53.54.1:50000";
+      "${pkgs.neuron-notes}/bin/neuron -d ${config.home.homeDirectory}/zettelkasten rib -ws 127.53.54.1:50000";
   };
   systemd.user.services.neuron-notes = {
     Install.WantedBy = [ "graphical-session.target" ];
     Service.ExecStart =
-      "${pkgs.neuron}/bin/neuron -d ${config.home.homeDirectory}/Documents/notes rib -ws 127.53.54.2:50001";
+      "${pkgs.neuron-notes}/bin/neuron -d ${config.home.homeDirectory}/Documents/notes rib -ws 127.53.54.2:50001";
   };
 }

@@ -40,13 +40,13 @@ with() {
 nr() {
     init="$1"
     shift
-    nix run "nixpkgs.$init" -c ${@:-$init}
+    nix shell "nixpkgs#$init" -c ${@:-$init}
 }
 
 nrr() {
   init="$1"
   shift
-  nix run "nixpkgs.$init" -c $init $@
+  nix run "nixpkgs#$init" -- "$@"
 }
 
 ncp() {
@@ -54,11 +54,21 @@ ncp() {
 }
 
 nixpkgs() {
-  nix eval --raw '(with (import <nixpkgs> {}); pkgs.sources.nixpkgs.outPath)'
+  nix eval --impure --expr '<nixpkgs>'
 }
 
 nixcd() {
   cd $(nixpkgs)
+}
+
+nixos-option() {
+  command nixos-option -I nixpkgs=/etc/nixos/compat "$@"
+}
+
+dev-ghc() {
+  v="$1"
+  shift
+  nix-shell -p "haskell.packages.ghc$v.ghcWithPackages (p: [p.zlib p.haskell-language-server p.cabal-fmt])" cabal-install zlib.all xz.all "$@"
 }
 
 with-ghc() {
@@ -78,30 +88,39 @@ ghci-with() {
 }
 
 zup() {
-    zini self-update && \
-        zini update -r -q --all --parallel && \
-        zini creinstall %HOME/.config/zsh/completions && \
+    zinit self-update && \
+        zinit update -r -q --all --parallel && \
+        zinit creinstall %HOME/.config/zsh/completions && \
         fd -uu -e zwc . $HOME -x rm -f 2>/dev/null && \
         rm -rf ~/.config/zsh/.zcompdump* && \
-        zini compile --all
+        zinit compile --all
 }
 
-update() {
-    echo "Downloading sources"
-    nix eval --raw '(builtins.toJSON (builtins.removeAttrs (import /etc/nixos/nix {}).sources ["__functor"]))' >/dev/null 2>&1
-    nixpkgs="$(nix eval --raw '(import /etc/nixos/nix {}).sources.nixpkgs.outPath')"
-    echo "Rebuilding"
-    build(){
-      sudo nixos-rebuild -k \
-        -I "nixpkgs=$nixpkgs" \
-        -I "nixos-config=/etc/nixos/configuration.nix" \
-        -I "nixpkgs-overlays=/etc/nixos/nix/overlays-compat/" \
-        "$@" \
-        switch
-    }
-    build && build
-}
+# update() {
+#     echo "Rebuilding"
+#     build(){
+#       set -x
+#       sudo \
+#         NIX_PATH="$(tr ':' '\n' <<<"$NIX_PATH" | grep -v nixpkgs-overlays | paste -s -d':')" \
+#         nixos-rebuild \
+#           -I $(tr ':' '\n' <<<"$NIX_PATH" | grep -v nixpkgs-overlays | paste -s -d '%' | sed 's/%/ -I /g') \
+#           --flake \
+#           '/etc/nixos#'"$(hostname)" \
+#           --impure \
+#           "$@" \
+#           switch
+#       set +x
+#     }
+#     build "$@" && build "$@"
+# }
+
+update () {
+  echo "Rebuilding"
+  sudo nixos-rebuild \
+    --flake '/etc/nixos#'"$(hostname)" \
+    ${1+"$@"} switch
+  }
 
 vup() {
-  nvim --headless +PlugUpgrade +PlugDiff +PlugUpdate +PlugClean! +CocUpdateSync +qall
+  nvim --headless '+PlugUpgrade' '+PlugUpdate ''+PlugClean!' '+CocUpdateSync' '+qall' ; echo
 }

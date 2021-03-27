@@ -1,14 +1,49 @@
-{ pkgs, ... }:
-let sources = import ../nix/sources.nix;
-in {
-  imports =
-    [ (sources.nixpkgs + "/nixos/modules/installer/scan/not-detected.nix") ];
-
+{ pkgs, config, ... }: {
   boot.initrd.availableKernelModules =
     [ "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.kernelModules = [ "kvm-intel" "acpi_call" ];
 
-  # services.xserver.videoDrivers = [ "modesetting" ];
+  environment.etc."libinput/local-overrides.quirks".text = ''
+    [Pointer disable physical button of pointer]
+    MatchName=DELL0927:00 044E:1220 Mouse
+    AttrEventCodeDisable=BTN_LEFT;BTN_MIDDLE;BTN_RIGHT
+
+    [Touchpad disable physical button of touchpad]
+    MatchUdevType=touchpad
+    MatchName=DELL0927:00 044E:1220 Touchpad
+    AttrEventCodeDisable=BTN_LEFT;BTN_MIDDLE;BTN_RIGHT
+  '';
+
+  # https://unix.stackexchange.com/questions/228988/how-to-automatically-disable-laptop-keyboard-mouse-with-xinput-when-external-key
+  # The true solution is eventually: https://bbs.archlinux.org/viewtopic.php?pid=1626055#p1626055
+  services.udev.extraRules = let
+    run = pkgs.writeShellScript "run" ''
+      set +e
+      set -x
+      sleep 1
+      export PATH=${pkgs.lib.makeBinPath [ pkgs.xorg.xinput ]}:$PATH
+      echo "hi there" > /tmp/debug-udev
+      date >> /tmp/debug-udev
+      env >> /tmp/debug-udev
+      if [[ "$ACTION" == "add" ]]; then cmd="--disable"; else cmd="--enable"; fi
+      devices="$(xinput list)"
+      echo "doing the thing" >> /tmp/debug-udev
+      echo "$devices" >> /tmp/debug-udev
+      get_id() { grep "$1" <<< "$devices" | cut -d= -f2 | cut -f1; }
+      for device in 'DELL0927:00 044E:1220 Mouse' 'AT Translated Set 2 keyboard' 'Virtual core XTEST pointer'; do
+        echo xinput "$cmd" "$(get_id "$device")" >> /tmp/debug-udev
+        xinput "$cmd" "$(get_id "$device")" || true
+      done
+      echo "done" >> /tmp/debug-udev
+    '';
+  in ''
+    # ATTRS{idProduct}=="6060", SYMLINK+="chimera"
+    # ATTRS{idProduct}=="6060", RUN+="${pkgs.bash}/bin/bash -c 'touch /tmp/y-tho ; env >> /tmp/y-tho'"
+    ACTION=="add|remove", ENV{ID_MODEL_ID}=="6060", ENV{ID_VENDOR_ID}="feed", SYMLINK+="chimera"
+    ACTION=="add|remove", ENV{ID_MODEL_ID}=="6060", ENV{ID_VENDOR_ID}="feed", RUN+="${pkgs.bash}/bin/bash -c 'touch /tmp/y-tho ; env >> /tmp/y-tho; ${run} &'"
+  '';
+
+  services.xserver.videoDrivers = [ "nvidia" ];
   # boot.kernelParams = [ "i915.modeset=1" "i915.fastboot=1" ];
   # boot.blacklistedKernelModules = [ "nouveau" ];
   # services.udev.extraRules = ''
@@ -51,39 +86,8 @@ in {
 
   services.interception-tools.enable = false;
   services.plex = {
-    enable = true;
+    enable = false;
     openFirewall = true;
   };
-
-  networking.interfaces.eno1.useDHCP = true;
-  networking.interfaces.wlan0.useDHCP = true;
-  services.openvpn.servers = {
-    galois-onsite = {
-      autoStart = false;
-      config = "config /root/vpn/hweakly_onsite.ovpn";
-      down = ''
-        ${pkgs.update-systemd-resolved}/libexec/openvpn/update-systemd-resolved
-        ${pkgs.procps}/bin/pkill --signal SIGUSR1 coredns
-      '';
-      up = ''
-        ${pkgs.update-systemd-resolved}/libexec/openvpn/update-systemd-resolved
-        ${pkgs.procps}/bin/pkill --signal SIGUSR1 coredns
-      '';
-    };
-    galois-offsite = {
-      autoStart = false;
-      config = "config /root/vpn/hweakly_offsite.ovpn";
-      down = ''
-        ${pkgs.update-systemd-resolved}/libexec/openvpn/update-systemd-resolved
-        ${pkgs.procps}/bin/pkill --signal SIGUSR1 coredns
-      '';
-      up = ''
-        ${pkgs.update-systemd-resolved}/libexec/openvpn/update-systemd-resolved
-        ${pkgs.procps}/bin/pkill --signal SIGUSR1 coredns
-      '';
-    };
-  };
-  systemd.services.openvpn-galois-offsite.after = [ "network-online.target" ];
-  systemd.services.openvpn-galois-onsite.after = [ "network-online.target" ];
   system.stateVersion = "20.09";
 }

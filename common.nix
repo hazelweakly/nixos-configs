@@ -1,29 +1,8 @@
-{ pkgs ? import ./nix { }, ... }:
-let sources = import ./nix/sources.nix;
-in {
-  imports = [
-    (sources.nixos-hardware + "/common/cpu/intel")
-    (sources.nixos-hardware + "/common/pc/laptop")
-    (sources.nixos-hardware + "/common/pc/laptop/ssd")
-    (sources.home-manager + "/nixos")
-    ./cachix.nix
-    ./env.nix
-    ./dyn-wp.nix
-    ./proxy.nix
-    # ./foldingathome.nix
-    ./machines/nvidia.nix
-  ];
-
-  nixpkgs.config = import ./nix/config.nix;
-  nixpkgs.overlays = import ./nix/overlays.nix { inherit sources; };
-  nix.nixPath = [
-    ("nixpkgs=" + builtins.toString sources.nixpkgs)
-    "nixos-config=/etc/nixos/configuration.nix"
-    "nixpkgs-overlays=/etc/nixos/nix/overlays-compat/"
-  ];
+{ pkgs, inputs, ... }: {
   nix.extraOptions = ''
     keep-outputs = true
     keep-derivations = true
+    experimental-features = nix-command flakes ca-references
   '';
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -32,18 +11,10 @@ in {
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 0;
   boot.tmpOnTmpfs = true;
-  # https://github.com/NixOS/nixpkgs/pull/108860
-  systemd.additionalUpstreamSystemUnits = [ "tmp.mount" ];
   boot.plymouth.enable = true;
   boot.supportedFilesystems = [ "ntfs" ];
 
-  networking.useDHCP = false;
-  networking.hostName = "hazelweaklyeakly";
-  networking.firewall.enable = false;
-  networking.networkmanager.enable = true;
-  networking.networkmanager.wifi.backend = "iwd";
-
-  console.font = "latarcyrheb-sun20";
+  console.font = "latarcyrheb-sun32";
   console.keyMap = "us";
   i18n.extraLocaleSettings.LC_ALL = "en_US.UTF-8";
 
@@ -82,13 +53,51 @@ in {
           for l in ${p.outPath}/$sp/{papis_*,zotero}; do ln -s $l $out/$sp; done
         '';
       };
+      nxr = pkgs.writeScriptBin "nxr" ''
+        #!${pkgs.runtimeShell}
+        exec ${pkgs.nixUnstable}/bin/nix repl ${inputs.utils.lib.repl}
+      '';
+
+      bitwarden-wrapper = let
+        path = pkgs.lib.makeBinPath
+          (with pkgs; [ coreutils utillinux bitwarden-cli systemd gnused ]);
+      in pkgs.writeScriptBin "bw" ''
+        #!${pkgs.runtimeShell}
+        export PATH=${path};
+        token_file=/run/user/$(id -u)/bw-token
+        lock_file=/run/user/$(id -u)/bw-token.lock
+
+        export DISPLAY="$(systemctl --user show-environment | sed 's/^DISPLAY=\(.*\)/\1/; t; d')"
+
+        if [[ -e "$token_file" ]]; then
+          export BW_SESSION=$(<"$token_file")
+        else
+          exec 9>"$lock_file"
+          while ! flock -n 9; do
+            sleep 1
+          done
+          if [[ -e "$token_file" ]]; then
+            export BW_SESSION=$(<"$token_file")
+          else
+            for i in $(seq 1 4); do
+              export BW_SESSION=$(bw unlock --raw)
+              if [[ "$BW_SESSION" != "" ]]; then
+                echo "$BW_SESSION" > "$token_file"
+                break
+              fi
+            done
+          fi
+        fi
+
+        exec bw "$@"
+      '';
     in [
       # Actually global
-      lastpass-cli
+      bitwarden-wrapper
       google-chrome
       kitty
       cachix
-      firefox-devedition-bin
+      firefox-nightly-bin
       file
       timewarrior
       taskwarrior
@@ -98,16 +107,17 @@ in {
       niv
       (callPackage ./neovim.nix { })
       zoom-us
-      neuron
+      neuron-notes
       obelisk.command
       awscli2
       ssm-session-manager-plugin
       alacritty
       ranger
       mach-nix.mach-nix
-      networkmanager-openvpn
       papis
       papis-exts
+      manix
+      nxr
 
       # Programs implicitly relied on in shell
       pistol
@@ -123,7 +133,7 @@ in {
     VISUAL = "nvim";
     EDITOR = "nvim";
     MOZ_USE_XINPUT2 = "1";
-    LPASS_AGENT_TIMEOUT = "0";
+    MOZ_X11_EGL = "1";
   };
 
   programs.ssh.startAgent = true;
@@ -147,8 +157,7 @@ in {
   ];
   services.openssh.enable = true;
   services.openssh.permitRootLogin = "yes";
-  # services.fwupd.enable = true;
-  services.throttled.enable = true;
+  services.fwupd.enable = true;
 
   location.provider = "geoclue2";
   services.redshift = {
@@ -161,6 +170,7 @@ in {
 
   sound.enable = true;
   hardware.pulseaudio.enable = true;
+  hardware.enableRedistributableFirmware = pkgs.lib.mkDefault true;
   hardware.enableAllFirmware = true;
   services.tlp.enable = true;
   hardware.opengl.enable = true;
@@ -184,15 +194,30 @@ in {
       accelSpeed = "0.5";
       calibrationMatrix = ".5 0 0 0 .5 0 0 0 1";
     };
+    inputClassSections = [
+      ''
+        Identifier "Enable libinput for touchpad"
+        MatchIsTouchpad "on"
+        Driver "libinput"
+      ''
+      ''
+        Identifier "Enable libinput for pointer"
+        MatchIsPointer "on"
+        Driver "libinput"
+      ''
+    ];
 
-    displayManager.autoLogin.enable = false;
+    displayManager.autoLogin.enable = true;
     displayManager.autoLogin.user = "hazel";
     displayManager.gdm = {
       enable = true;
-      autoSuspend = false;
+      autoSuspend = true;
       wayland = false;
     };
-    displayManager.setupCommands = "stty -ixon";
+    displayManager.setupCommands = ''
+      stty -ixon
+      unset __NIXOS_SET_ENVIRONMENT_DONE
+    '';
 
     desktopManager.gnome3.enable = true;
     # windowManager.xmonad = {
@@ -224,10 +249,9 @@ in {
       })
     }/share/zoneinfo";
 
-  virtualisation.libvirtd.enable = true;
+  virtualisation.libvirtd.enable = false;
   virtualisation.libvirtd.onBoot = "ignore";
   virtualisation.virtualbox.host.enable = false;
-  # virtualisation.virtualbox.host.enableExtensionPack = true;
   boot.extraModprobeConfig = "options kvm_intel nested=1";
 
   nix.optimise.automatic = true;

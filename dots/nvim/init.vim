@@ -20,16 +20,14 @@ function! VimrcLoadPlugins()
     call plug#begin('~/.local/share/nvim/plugged')
 
     " Linting + LSP
-    Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+    Plug 'neoclide/coc.nvim', {'branch': 'feat/lsp-316', 'do': 'yarn install --frozen-lockfile'}
     Plug 'antoinemadec/coc-fzf'
     Plug '~/src/personal/vscode-hie-server', { 'do': 'yarn install --frozen-lockfile' }
     Plug 'direnv/direnv.vim'
     Plug 'sbdchd/neoformat', { 'for' : ['terraform'] }
     Plug 'editorconfig/editorconfig-vim'
-    Plug 'tpope/vim-sleuth'
-    Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+    " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
     Plug 'nvim-lua/lsp-status.nvim'
-    " https://github.com/nvim-treesitter/nvim-treesitter
     Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
     Plug 'jackguo380/vim-lsp-cxx-highlight'
     " https://github.com/metakirby5/codi.vim
@@ -37,8 +35,9 @@ function! VimrcLoadPlugins()
     " https://github.com/nvim-telescope/telescope.nvim
     " https://github.com/glepnir/lspsaga.nvim
 
+    Plug 'honza/vim-snippets'
     Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey','WhichKey!'] }
-    Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
+    " Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
     Plug 'lambdalisue/suda.vim'
     Plug 'farmergreg/vim-lastplace'
     " Plug 'cohama/lexima.vim'
@@ -60,16 +59,17 @@ function! VimrcLoadPlugins()
     " g>, g<, gs
     Plug 'machakann/vim-swap'
     Plug 'airblade/vim-rooter'
-    Plug 'svermeulen/vim-subversive'
+    " Plug 'svermeulen/vim-subversive'
 
-    Plug 'liuchengxu/vista.vim'
+    " Plug 'liuchengxu/vista.vim'
     Plug 'rhysd/git-messenger.vim'
     " x[ and x] to jump conflicts
     " ct for top/them, co for bottom/us, cn for none, cb for both
     Plug 'rhysd/conflict-marker.vim'
-    Plug 'dhruvasagar/vim-zoom'
-    Plug 'voldikss/vim-floaterm'
-    Plug 'christoomey/vim-tmux-navigator'
+    " Plug 'dhruvasagar/vim-zoom'
+    " Plug 'voldikss/vim-floaterm'
+    " Plug 'christoomey/vim-tmux-navigator'
+    Plug 'tyru/open-browser.vim'
 
     Plug 'machakann/vim-sandwich'
     Plug 'wellle/targets.vim'
@@ -78,12 +78,12 @@ function! VimrcLoadPlugins()
     Plug 'ryanoasis/vim-devicons'
     " Plug 'adelarsq/vim-devicons-emoji'
     Plug 'jceb/vim-orgmode'
-    Plug 'vmchale/dhall-vim'
 
     Plug 'https://gitlab.com/protesilaos/tempus-themes-vim.git'
 
     " Languages
     Plug 'lervag/vimtex'
+    Plug 'dkarter/bullets.vim'
     Plug 'sheerun/vim-polyglot'
     call plug#end()
 
@@ -117,7 +117,7 @@ function! VimrcLoadPluginSettings()
                 \ "FZF_PREVIEW_COMMAND": 'bat --style=numbers,changes --color always {}',
                 \ "FZF_DEFAULT_OPTS": "--color=light --reverse ",
                 \ "FZF_DEFAULT_COMMAND": 'fd -t f -L -H -E .git',
-                \ "BAT_THEME": "ansi-light",
+                \ "BAT_THEME": "ansi",
                 \ }
 
     for [l:e, l:d] in items(s:env_dict)
@@ -151,6 +151,15 @@ function! VimrcLoadPluginSettings()
     nmap <silent> gz <Plug>(coc-refactor)
     nmap <silent> gl <Plug>(coc-codelens-action)
 
+    if has('nvim-0.4.0') || has('patch-8.2.0750')
+        nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+        nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+        inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+        inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+        vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+        vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+    endif
+
     function! s:cocActionsOpenFromSelected(type) abort
         execute 'CocCommand actions.open ' . a:type
     endfunction
@@ -160,9 +169,6 @@ function! VimrcLoadPluginSettings()
     nmap <silent> gA <Plug>(coc-fix-current)
     nmap <silent> <C-n> <Plug>(coc-diagnostic-next)
     nmap <silent> <C-p> <Plug>(coc-diagnostic-prev)
-
-    let g:coc_snippet_next = '<M-n>'
-    let g:coc_snippet_prev = '<M-p>'
 
     let g:coc_filetype_map = {
           \ 'yaml.ansible': 'yaml',
@@ -177,8 +183,10 @@ function! VimrcLoadPluginSettings()
                 \ 'coc-css',
                 \ 'coc-cssmodules',
                 \ 'coc-diagnostic',
+                \ 'coc-dictionary',
                 \ 'coc-docker',
                 \ 'coc-emmet',
+                \ 'coc-emoji',
                 \ 'coc-eslint',
                 \ 'coc-fzf-preview',
                 \ 'coc-git',
@@ -192,12 +200,14 @@ function! VimrcLoadPluginSettings()
                 \ 'coc-python',
                 \ 'coc-rust-analyzer',
                 \ 'coc-sh',
+                \ 'coc-snippets',
                 \ 'coc-tslint-plugin',
                 \ 'coc-tsserver',
                 \ 'coc-vetur',
                 \ 'coc-vimlsp',
                 \ 'coc-vimtex',
-                \ 'coc-yaml'
+                \ 'coc-word',
+                \ 'coc-yaml',
                 \ ]
 
     let g:coc_fzf_preview = ''
@@ -211,10 +221,24 @@ function! VimrcLoadPluginSettings()
         au User CocQuickfixChange :CocFzfList --normal quickfix
     augroup END
 
-    inoremap <expr> <Tab> pumvisible() ? coc#_select_confirm() : "\<Tab>"
+    " inoremap <expr> <Tab> pumvisible() ? coc#_select_confirm() : "\<Tab>"
     inoremap <expr> <CR> complete_info()["selected"] != "-1" ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-    inoremap <expr> <S-Tab> "\<C-h>"
+    " inoremap <expr> <S-Tab> "\<C-h>"
     inoremap <silent><expr> <c-space> coc#refresh()
+
+    inoremap <silent><expr> <TAB>
+                \ pumvisible() ? coc#_select_confirm() :
+                \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+                \ <SID>check_back_space() ? "\<TAB>" :
+                \ coc#refresh()
+
+    function! s:check_back_space() abort
+        let col = col('.') - 1
+        return !col || getline('.')[col - 1]  =~# '\s'
+    endfunction
+
+    let g:coc_snippet_next = '<Tab>'
+    let g:coc_snippet_prev = '<S-Tab>'
 
     xmap <silent> <TAB> <Plug>(coc-range-select)
     xmap <silent> <S-TAB> <Plug>(coc-range-select-backword)
@@ -232,29 +256,33 @@ function! VimrcLoadPluginSettings()
     let g:neoformat_only_msg_on_error = 1
     command! NeoformatDisable au! neoformat
 
-    " vista.vim
-    let g:vista#renderer#enable_icon = 1
-    let g:vista_fzf_preview = ['right:40%']
+    " " vista.vim
+    " let g:vista#renderer#enable_icon = 1
+    " let g:vista_fzf_preview = ['right:40%']
+    "
+    " let g:vista_echo_cursor_strategy = 'floating_win'
+    " nnoremap <silent> <C-t> :Vista finder<CR>
 
-    let g:vista_echo_cursor_strategy = 'floating_win'
-    nnoremap <silent> <C-t> :Vista finder<CR>
+    " " vim-floaterm
+    " let g:floaterm_position = 'center'
+    " let g:floaterm_winblend = 30
+    " let g:floaterm_keymap_toggle = '<F12>'
 
-    " vim-floaterm
-    let g:floaterm_position = 'center'
-    let g:floaterm_winblend = 30
-    let g:floaterm_keymap_toggle = '<F12>'
-
-    " vim-tmux-navigation
-    let g:tmux_navigator_no_mappings = 1
-    nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
-    nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
-    nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
-    nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
+    " " vim-tmux-navigation
+    " let g:tmux_navigator_no_mappings = 1
+    " nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
+    " nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
+    " nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
+    " nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
 
     " targets.vim
     autocmd User targets#mappings#user call targets#mappings#extend({
                 \ 'a': {'argument': [{'o': '[({[]', 'c': '[]})]', 's': ','}]}
                 \ })
+
+    " bullets.vim
+    let g:bullets_enabled_file_types = ['markdown', 'markdown.neuron', 'text', 'gitcommit']
+    let g:bullets_outline_levels = ['num', 'std-']
 
     " vim-polyglot
     let g:haskell_enable_quantification = 1
@@ -263,6 +291,13 @@ function! VimrcLoadPluginSettings()
     let g:php_html_load = 1
     let g:vim_jsx_pretty_colorful_config = 1
     let g:vim_jsx_pretty_template_tags = []
+    let g:vim_markdown_new_list_item_indent = 0
+    let g:vim_markdown_auto_insert_bullets = 0
+    let g:vim_markdown_math = 1
+    let g:vim_markdown_frontmatter = 1
+    let g:vim_markdown_toml_frontmatter = 1
+    let g:vim_markdown_json_frontmatter = 1
+    let g:vim_markdown_strikethrough = 1
 
     " vim-easy-align
     xmap <CR> <Plug>(EasyAlign)
@@ -280,73 +315,72 @@ function! VimrcLoadPluginSettings()
     " vim-which-key
     nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
 
-    " chadtree
-    nnoremap <leader>v <cmd>CHADopen<cr>
-    lua vim.api.nvim_set_var("chadtree_settings", { use_icons = "emoji" })
+    " " chadtree
+    " nnoremap <leader>v <cmd>CHADopen<cr>
 
     " suda.vim: Write file with sudo
     command! W :w suda://%
 
-    " firenvim
-    let g:firenvim_config = { 'localSettings': {}, 'globalSettings': {} }
-    let ls = g:firenvim_config['localSettings']
-    let ls['.*'] = {'takeover':'never', 'cmdline': 'firenvim' }
-    function! s:IsFirenvimActive(event) abort
-      if !exists('*nvim_get_chan_info')
-        return 0
-      endif
-      let l:ui = nvim_get_chan_info(a:event.chan)
-      return has_key(l:ui, 'client') && has_key(l:ui.client, "name") &&
-            \ l:ui.client.name is# "Firenvim"
-    endfunction
-    let g:dont_write = v:false
-    function! My_Write(timer) abort
-      let g:dont_write = v:false
-      write
-    endfunction
-
-    function! Delay_My_Write() abort
-      if g:dont_write
-        return
-      end
-      let g:dont_write = v:true
-      call timer_start(1000, 'My_Write')
-    endfunction
-
-    function! OnUIEnter(event) abort
-      if s:IsFirenvimActive(a:event)
-        setl noconfirm noshowmode noshowcmd noruler nonumber
-        setl laststatus=0 shortmess+=F cmdheight=1
-
-        let l:bufname=expand('%:t')
-        if l:bufname =~? 'github.com'
-          set ft=markdown
-        elseif l:bufname =~? 'cocalc.com' || l:bufname =~? 'kaggleusercontent.com'
-          set ft=python
-        elseif l:bufname =~? 'localhost'
-          " Jupyter notebooks don't have any more specific buffer information.
-          " If you use some other locally hosted app you want editing function
-          " in, set it here.
-          set ft=python
-        elseif l:bufname =~? 'reddit.com'
-          set ft=markdown
-        elseif l:bufname =~? 'stackexchange.com' || l:bufname =~? 'stackoverflow.com'
-          set ft=markdown
-        elseif l:bufname =~? 'slack.com' || l:bufname =~? 'gitter.com' || l:bufname =~? 'mattermost\..\+.com'
-          set ft=markdown
-          normal! i
-          inoremap <CR> <Esc>:w<CR>:call firenvim#press_keys("<LT>CR>")<CR>ggdGa
-          inoremap <s-CR> <CR>
-        endif
-
-        nnoremap <Esc><Esc> :call firenvim#focus_page()<CR>
-        nnoremap <C-z> :call firenvim#hide_frame()<CR>
-        au TextChanged * ++nested call Delay_My_Write()
-        au TextChangedI * ++nested call Delay_My_Write()
-        startinsert
-      endif
-    endfunction
-    autocmd UIEnter * call OnUIEnter(deepcopy(v:event))
+    " " firenvim
+    " let g:firenvim_config = { 'localSettings': {}, 'globalSettings': {} }
+    " let ls = g:firenvim_config['localSettings']
+    " let ls['.*'] = {'takeover':'never', 'cmdline': 'firenvim' }
+    " function! s:IsFirenvimActive(event) abort
+    "   if !exists('*nvim_get_chan_info')
+    "     return 0
+    "   endif
+    "   let l:ui = nvim_get_chan_info(a:event.chan)
+    "   return has_key(l:ui, 'client') && has_key(l:ui.client, "name") &&
+    "         \ l:ui.client.name is# "Firenvim"
+    " endfunction
+    " let g:dont_write = v:false
+    " function! My_Write(timer) abort
+    "   let g:dont_write = v:false
+    "   write
+    " endfunction
+    "
+    " function! Delay_My_Write() abort
+    "   if g:dont_write
+    "     return
+    "   end
+    "   let g:dont_write = v:true
+    "   call timer_start(1000, 'My_Write')
+    " endfunction
+    "
+    " function! OnUIEnter(event) abort
+    "   if s:IsFirenvimActive(a:event)
+    "     setl noconfirm noshowmode noshowcmd noruler nonumber
+    "     setl laststatus=0 shortmess+=F cmdheight=1
+    "
+    "     let l:bufname=expand('%:t')
+    "     if l:bufname =~? 'github.com'
+    "       set ft=markdown
+    "     elseif l:bufname =~? 'cocalc.com' || l:bufname =~? 'kaggleusercontent.com'
+    "       set ft=python
+    "     elseif l:bufname =~? 'localhost'
+    "       " Jupyter notebooks don't have any more specific buffer information.
+    "       " If you use some other locally hosted app you want editing function
+    "       " in, set it here.
+    "       set ft=python
+    "     elseif l:bufname =~? 'reddit.com'
+    "       set ft=markdown
+    "     elseif l:bufname =~? 'stackexchange.com' || l:bufname =~? 'stackoverflow.com'
+    "       set ft=markdown
+    "     elseif l:bufname =~? 'slack.com' || l:bufname =~? 'gitter.com' || l:bufname =~? 'mattermost\..\+.com'
+    "       set ft=markdown
+    "       normal! i
+    "       inoremap <CR> <Esc>:w<CR>:call firenvim#press_keys("<LT>CR>")<CR>ggdGa
+    "       inoremap <s-CR> <CR>
+    "     endif
+    "
+    "     nnoremap <Esc><Esc> :call firenvim#focus_page()<CR>
+    "     nnoremap <C-z> :call firenvim#hide_frame()<CR>
+    "     au TextChanged * ++nested call Delay_My_Write()
+    "     au TextChangedI * ++nested call Delay_My_Write()
+    "     startinsert
+    "   endif
+    " endfunction
+    " autocmd UIEnter * call OnUIEnter(deepcopy(v:event))
 endfunction
 
 function! VimrcLoadMappings()
@@ -420,7 +454,7 @@ function! VimrcLoadSettings()
     " set winwidth=79
     " set winheight=50
 
-    " not needed with vim-sleuth
+    " not needed with vim-sleuth (implemented by polyglot)
     " set expandtab
     " set softtabstop=2
     " set shiftwidth=2
@@ -432,12 +466,11 @@ function! VimrcLoadSettings()
     set nofoldenable
 
     set redrawtime=10000
-    set synmaxcol=200
-    set timeoutlen=350
-    set ttimeoutlen=10
+    set synmaxcol=500
     set termguicolors
-    set updatetime=100
     " fixcursorhold.nvim
+    " set updatetime=100
+    set updatetime=4001 " don't get overridden by sensible
     let g:cursorhold_updatetime = 100
     set splitright
     set splitbelow
@@ -445,6 +478,8 @@ function! VimrcLoadSettings()
     set pyx=3
 
     let g:netrw_dirhistmax=0
+    let g:netrw_nogx = 1 " disable netrw's gx mapping.
+    nmap gx <Plug>(openbrowser-smart-search)
 
     if has('nvim-0.3.2') || has("patch-8.1.0360")
         set diffopt=filler,internal,algorithm:histogram,indent-heuristic
@@ -453,13 +488,12 @@ function! VimrcLoadSettings()
 
     augroup vimrc_settings
         au!
-        au FocusGained * :checktime
         au BufWritePost $MYVIMRC nested source $MYVIMRC
         au BufWritePost $MYVIMRC
                     \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
                     \|   PlugInstall --sync | q
                     \| endif
-        au VimEnter * call vista#RunForNearestMethodOrFunction()
+        " au VimEnter * call vista#RunForNearestMethodOrFunction()
         au VimEnter * set title
     augroup END
 
@@ -500,8 +534,8 @@ function! VimrcLoadColors()
 endfunction
 
 let g:mapleader = "\<Space>"
-setlocal shiftwidth=4 " set to defaults to prevent slowdown in vim-polyglot
-let g:polyglot_disabled = ['sensible']
+" let g:polyglot_disabled = ['sensible']
+" let g:polyglot_disabled = ['autoindent']
 let g:python_host_skip_check=1 " disable python2
 let g:loaded_python_provider=1 " disable python2
 

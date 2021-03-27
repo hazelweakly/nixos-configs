@@ -1,3 +1,7 @@
+- https://github.com/bbigras/nix-config/
+- https://github.com/nix-community/impermanence
+- https://github.com/lovesegfault/nix-config
+
 # nixos-configs
 
 Configurations for my NixOS systems (work/home laptops)
