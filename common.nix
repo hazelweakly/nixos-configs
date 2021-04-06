@@ -14,6 +14,18 @@
   boot.plymouth.enable = true;
   boot.supportedFilesystems = [ "ntfs" ];
 
+  # recommended settings from lxd nixos module
+  boot.kernel.sysctl = {
+    "fs.inotify.max_queued_events" = 1048576;
+    "fs.inotify.max_user_instances" = 1048576;
+    "fs.inotify.max_user_watches" = 1048576;
+    "vm.max_map_count" = 262144;
+    "kernel.dmesg_restrict" = 1;
+    "net.ipv4.neigh.default.gc_thresh3" = 8192;
+    "net.ipv6.neigh.default.gc_thresh3" = 8192;
+    "kernel.keys.maxkeys" = 2000;
+  };
+
   console.font = "latarcyrheb-sun32";
   console.keyMap = "us";
   i18n.extraLocaleSettings.LC_ALL = "en_US.UTF-8";
