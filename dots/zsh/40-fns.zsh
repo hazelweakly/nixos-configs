@@ -122,5 +122,5 @@ update () {
   }
 
 vup() {
-  nvim --headless '+PlugUpgrade' '+PlugUpdate ''+PlugClean!' '+CocUpdateSync' '+qall' ; echo
+  nvim --headless '+PlugUpgrade' '+PlugUpdate' '+PlugClean!' '+CocUpdateSync' '+qall' ; echo
 }

@@ -217,7 +217,7 @@
         '';
       in flake-utils.lib.mkApp { inherit drv; };
 
-      nixosProfiles.hazelweakly.modules = [
+      hosts.hazelweakly.modules = [
         ./machines/nvidia.nix
         ./machines/precision7740.nix
         agenix.nixosModules.age
@@ -233,7 +233,7 @@
       sharedOverlays = overlays;
       overlay = overlays;
 
-      nixosModules = utils.lib.modulesFromList [
+      hostDefaults.modules = [
         ./network.nix
         ./cachix.nix
         ./env.nix
@@ -241,9 +241,7 @@
         ./common.nix
         ./proxy.nix
         ./users.nix
-      ];
 
-      sharedModules = [
         nixos-hardware.nixosModules.common-cpu-intel
         nixos-hardware.nixosModules.common-pc-laptop
         nixos-hardware.nixosModules.common-pc-ssd
@@ -283,6 +281,6 @@
                 ];
           })
         utils.nixosModules.saneFlakeDefaults
-      ] ++ (builtins.attrValues self.nixosModules);
+      ];
     };
 }

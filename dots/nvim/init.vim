@@ -23,6 +23,7 @@ function! VimrcLoadPlugins()
     Plug 'neoclide/coc.nvim', {'branch': 'feat/lsp-316', 'do': 'yarn install --frozen-lockfile'}
     Plug 'antoinemadec/coc-fzf'
     Plug '~/src/personal/vscode-hie-server', { 'do': 'yarn install --frozen-lockfile' }
+    " Plug 'chitoku-k/coc-yaml', { 'branch': 'dependency-update',  'do': 'yarn install --frozen-lockfile' }
     Plug 'direnv/direnv.vim'
     Plug 'sbdchd/neoformat', { 'for' : ['terraform'] }
     Plug 'editorconfig/editorconfig-vim'
@@ -207,7 +208,7 @@ function! VimrcLoadPluginSettings()
                 \ 'coc-vimlsp',
                 \ 'coc-vimtex',
                 \ 'coc-word',
-                \ 'coc-yaml',
+                \ 'coc-yaml'
                 \ ]
 
     let g:coc_fzf_preview = ''
