@@ -196,7 +196,7 @@
   hardware.pulseaudio.enable = true;
   hardware.enableRedistributableFirmware = pkgs.lib.mkDefault true;
   hardware.enableAllFirmware = true;
-  services.tlp.enable = true;
+  services.tlp.enable = false;
   hardware.opengl.enable = true;
   hardware.opengl.extraPackages = with pkgs; [
     intel-media-driver
