@@ -23,7 +23,7 @@ function! VimrcLoadPlugins()
     " Plug 'neoclide/coc.nvim', {'branch': 'feat/lsp-316', 'do': 'yarn install --frozen-lockfile'}
     Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
     Plug 'antoinemadec/coc-fzf'
-    " Plug '~/src/personal/vscode-hie-server', { 'do': 'yarn install --frozen-lockfile' }
+    Plug '~/src/personal/vscode-hie-server', { 'do': 'yarn install --frozen-lockfile' }
     " Plug 'chitoku-k/coc-yaml', { 'branch': 'dependency-update',  'do': 'yarn install --frozen-lockfile' }
     Plug 'direnv/direnv.vim'
     Plug 'sbdchd/neoformat', { 'for' : ['terraform'] }
@@ -50,7 +50,8 @@ function! VimrcLoadPlugins()
     Plug 'blueyed/vim-diminactive'
     Plug 'camspiers/lens.vim'
     Plug 'wsdjeg/vim-fetch'
-    " Plug '~/src/personal/neuron.vim', { 'for': ['markdown'] }
+    Plug '~/src/personal/neuron.vim', { 'for': ['markdown'] }
+    " Plug 'chiefnoah/neuron-v2.vim', { 'for': ['markdown'] }
     Plug 'antoinemadec/FixCursorHold.nvim'
 
     " filetype ]] [[

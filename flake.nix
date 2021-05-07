@@ -36,15 +36,12 @@
       url = "github:colemickens/flake-firefox-nightly";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    neuron.url = "github:srid/neuron";
     taskwarrior = {
       url = "https://github.com/GothenburgBitFactory/taskwarrior.git";
       type = "git";
       ref = "2.6.0";
       submodules = true;
-      flake = false;
-    };
-    neuron = {
-      url = "github:srid/neuron/v1";
       flake = false;
     };
     obelisk = {
@@ -88,11 +85,7 @@
           };
         };
       neuron-notes = _: _: {
-        neuron-notes = let
-          pkgs = import (inputs.neuron + "/dep/nixpkgs") {
-            system = "x86_64-linux";
-          };
-        in (import (inputs.neuron + "/project.nix") { pkgs = pkgs; }).neuron;
+        neuron-notes = neuron.defaultPackage.x86_64-linux;
       };
       obelisk = _: _: {
         obelisk = import inputs.obelisk { system = "x86_64-linux"; };
