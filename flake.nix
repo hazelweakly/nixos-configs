@@ -222,12 +222,18 @@
         ./machines/precision7740.nix
         agenix.nixosModules.age
         ({ config, ... }: {
+          networking.hostName = "hazelweakly";
           age.sshKeyPaths =
             [ "${config.users.users.hazel.home}/.ssh/id_ed25519" ]
             ++ map (e: e.path) config.services.openssh.hostKeys;
         })
         ./work.nix
+        ./wireguard.nix
         nixos-hardware.nixosModules.common-gpu-nvidia
+      ];
+      hosts.hazelxps.modules = [
+        ./machines/xps9350.nix
+        ({ config, ... }: { networking.hostName = "hazelxps"; })
       ];
 
       sharedOverlays = overlays;

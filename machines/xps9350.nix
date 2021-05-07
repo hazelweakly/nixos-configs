@@ -1,9 +1,4 @@
-{ pkgs ? import ../nix { }, ... }:
-let sources = import ../nix/sources.nix;
-in {
-  imports =
-    [ (sources.nixpkgs + "/nixos/modules/installer/scan/not-detected.nix") ];
-
+{ pkgs, config, ... }: {
   boot.initrd.availableKernelModules =
     [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ ];
@@ -26,6 +21,5 @@ in {
   nix.maxJobs = pkgs.lib.mkDefault 4;
   powerManagement.cpuFreqGovernor = pkgs.lib.mkDefault "powersave";
 
-  networking.interfaces.wlan0.useDHCP = true;
   system.stateVersion = "19.09";
 }

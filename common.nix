@@ -44,6 +44,7 @@
       powerline-fonts
       corefonts
       luxi
+      eb-garamond
     ];
     fontconfig.defaultFonts = {
       monospace = [ "VictorMono Nerd Font" ];
