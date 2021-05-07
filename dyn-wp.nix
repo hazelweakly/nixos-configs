@@ -20,7 +20,7 @@ let
       mkdir -p $out/bin $out/share/dynamic-wallpaper
       cp -r ./dwall.sh ./images $out/share/dynamic-wallpaper
       patchShebangs $out/share/dynamic-wallpaper/dwall.sh
-      sed -i -e "s!/usr/share/!/share/!g" -e "s!DIR=\"!DIR=\"$out!g" \
+      sed -i -e "s!/usr/share/!/share/!g" -e "s!DIR=\"!DIR=\"$out!g" -e "110,113d" \
         $out/share/dynamic-wallpaper/dwall.sh
       ln -s $out/share/dynamic-wallpaper/dwall.sh $out/bin/dwall
     '';
