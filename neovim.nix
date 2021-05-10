@@ -8,6 +8,7 @@ let
       clojure-lsp
       universal-ctags
       neuron-notes
+      sumneko-lua-language-server
       # dhall-lsp-server
     ] ++ [ python3 perl binutils libcxx gcc tree-sitter ]
       ++ [ yarn bat exa direnv git jq tmux watchman neovim-remote ]

@@ -42,6 +42,8 @@
   "clangd.semanticHighlighting": true,
   "yaml.schemaStore.enable": true,
   "yaml.format.enable": true,
+  "lua.checkForUpdates": "disabled",
+  "Lua.diagnostics.disable": ["lowercase-global"],
   "suggest.completionItemKindLabels": {
     "function": "\uf794",
     "method": "\uf6a6",

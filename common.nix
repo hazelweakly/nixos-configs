@@ -243,7 +243,7 @@
       unset __NIXOS_SET_ENVIRONMENT_DONE
     '';
 
-    desktopManager.gnome3.enable = true;
+    desktopManager.gnome.enable = true;
     # windowManager.xmonad = {
     #   enable = true;
     #   enableContribAndExtras = true;

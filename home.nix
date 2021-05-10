@@ -158,6 +158,8 @@ with pkgs.lib; {
     config.lib.file.mkOutOfStoreSymlink "${dir}/dots/glirc";
   xdg.configFile."nixpkgs/config.nix".text =
     "{ allowUnfree = true; allowUnsupportedSystem = true; }";
+  xdg.configFile."coc/extensions/coc-lua-data/sumneko-lua-ls/bin/Linux/lua-language-server".source =
+    pkgs.sumneko-lua-language-server + "/bin/lua-language-server";
   xdg.configFile."coc/extensions/coc-python-data/languageServer".source =
     pkgs.python-language-server + "/lib";
 
