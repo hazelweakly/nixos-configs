@@ -186,8 +186,12 @@
         neuron-notes
         neovim-nightly-overlay.overlay
         (_: _: {
-          mach-nix = mach-nix.packages.x86_64-linux
-            // mach-nix.lib.x86_64-linux;
+          mach-nix = let
+            mn = mach-nix.packages.x86_64-linux.mach-nix.overrideAttrs
+              (o: { name = builtins.elemAt (builtins.split "\n" o.name) 0; });
+          in mach-nix.packages.x86_64-linux.mach-nix // {
+            mach-nix = mn;
+          } // mach-nix.lib.x86_64-linux;
         })
         moz'
         gnomeExts

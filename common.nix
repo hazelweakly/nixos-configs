@@ -55,17 +55,17 @@
 
   environment.systemPackages = with pkgs;
     let
-      p = mach-nix.mkPython { requirements = "papis-zotero"; };
-      papis-exts = stdenv.mkDerivation {
-        name = "papis-exts";
-        src = "";
-        phases = [ "buildPhase" ];
-        buildPhase = ''
-          sp=lib/${p.executable}/site-packages; mkdir -p $out/bin $out/$sp
-          for e in ${p.outPath}/bin/papis-*; do ln -s $e $out/bin; done
-          for l in ${p.outPath}/$sp/{papis_*,zotero}; do ln -s $l $out/$sp; done
-        '';
-      };
+      # p = mach-nix.mkPython { requirements = "papis-zotero"; };
+      # papis-exts = stdenv.mkDerivation {
+      #   name = "papis-exts";
+      #   src = "";
+      #   phases = [ "buildPhase" ];
+      #   buildPhase = ''
+      #     sp=lib/${p.executable}/site-packages; mkdir -p $out/bin $out/$sp
+      #     for e in ${p.outPath}/bin/papis-*; do ln -s $e $out/bin; done
+      #     for l in ${p.outPath}/$sp/{papis_*,zotero}; do ln -s $l $out/$sp; done
+      #   '';
+      # };
       nxr = pkgs.writeScriptBin "nxr" ''
         #!${pkgs.runtimeShell}
         exec ${pkgs.nixUnstable}/bin/nix repl ${inputs.utils.lib.repl}
@@ -138,8 +138,8 @@
       alacritty
       ranger
       mach-nix.mach-nix
-      papis
-      papis-exts
+      # papis
+      # papis-exts
       manix
       nxr
 
