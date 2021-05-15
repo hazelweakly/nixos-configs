@@ -56,6 +56,14 @@
       url = "github:pop-os/shell";
       flake = false;
     };
+    pop-os-shell-shortcuts = {
+      url = "github:pop-os/shell-shortcuts";
+      flake = false;
+    };
+    night-theme-switcher = {
+      url = "gitlab:/rmnvgr/nightthemeswitcher-gnome-shell-extension/v50";
+      flake = false;
+    };
     matterhorn = {
       url = "github:matterhorn-chat/matterhorn";
       flake = false;
@@ -69,8 +77,8 @@
 
   outputs = inputs@{ self, nixpkgs, utils, home-manager, nixos-hardware
     , neovim-nightly-overlay, mach-nix, taskwarrior, neuron, obelisk
-    , pop-os-shell, flake-utils, flake-firefox-nightly, rust-overlay, agenix
-    , ... }:
+    , pop-os-shell, pop-os-shell-shortcuts, night-theme-switcher, flake-utils
+    , flake-firefox-nightly, rust-overlay, agenix, ... }:
     let
       moz' = self: super:
         let
@@ -91,19 +99,54 @@
         obelisk = import inputs.obelisk { system = "x86_64-linux"; };
       };
       gnomeExts = _: super: {
-        gnome3 = super.gnome3 // {
-          geary = super.gnome3.geary.overrideAttrs (o: { doCheck = false; });
+        pop-shell-shortcuts = super.rustPlatform.buildRustPackage rec {
+          pname = "pop-shell-shortcuts";
+          version = "2020-09-28";
+          src = pop-os-shell-shortcuts;
+          cargoSha256 = "sha256-kuaepwKsNHRH4SFLNrQhy1CTPR/HcpVuTyzuTPDaKQI=";
+          nativeBuildInputs = [ super.pkg-config ];
+          buildInputs = [ super.gtk3 super.glib ];
         };
+
         gnomeExtensions = super.gnomeExtensions // {
           pop-os = super.stdenv.mkDerivation rec {
-            pname = "pop-os-shell";
+            pname = "gnome-shell-extension-pop-os-shell";
             version = "master";
             src = pop-os-shell;
-            nativeBuildInputs = [ super.glib super.nodePackages.typescript ];
+            uuid = "pop-shell@system76.com";
+            nativeBuildInputs = [
+              super.glib
+              super.nodePackages.typescript
+              super.gjs
+
+              super.wrapGAppsHook
+              super.gobject-introspection
+            ];
+            patches = [ ./fix-gjs.patch ];
+            buildInputs = [ super.gobject-introspection super.gjs ];
             makeFlags = [
               "INSTALLBASE=$(out)/share/gnome-shell/extensions PLUGIN_BASE=$(out)/share/pop-shell/launcher SCRIPTS_BASE=$(out)/share/pop-shell/scripts"
             ];
+            postInstall = ''
+              chmod +x $out/share/gnome-shell/extensions/pop-shell@system76.com/floating_exceptions/main.js
+              chmod +x $out/share/gnome-shell/extensions/pop-shell@system76.com/color_dialog/main.js
+
+              mkdir -p $out/share/gnome-control-center/keybindings
+              cp -r keybindings/*.xml $out/share/gnome-control-center/keybindings
+
+              mkdir -p $out/share/gsettings-schemas/pop-shell-${version}/glib-2.0
+              schemadir=${
+                super.glib.makeSchemaPath "$out" "${pname}-${version}"
+              }
+              mkdir -p $schemadir
+              cp -r $out/share/gnome-shell/extensions/$uuid/schemas/* $schemadir
+            '';
           };
+          night-theme-switcher =
+            super.gnomeExtensions.night-theme-switcher.overrideAttrs (o: {
+              version = "50";
+              src = night-theme-switcher;
+            });
         };
       };
       intel = _: super: {
@@ -177,8 +220,9 @@
             mkdir -p "$out/share/bash-completion/completions"
             ln -s "../../doc/task/scripts/bash/task.sh" "$out/share/bash-completion/completions/task.bash"
             mkdir -p "$out/share/fish/vendor_completions.d"
-            ln -s "../../../share/doc/task/scripts/fish/task.fish" "$out/share/fish/vendor_completions.d/"
+            ln -s "../../../share/doc/task/scripts/fish/task.fish" "$out/share/fish/vendor_completions.d/task.fish"
             mkdir -p "$out/share/zsh/site-functions"
+            ln -s "../../../share/doc/task/scripts/zsh/_task" "$out/share/zsh/site-functions/_task"
           '';
         });
       };

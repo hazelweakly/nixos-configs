@@ -53,12 +53,8 @@ ncp() {
   nix eval "(with (import <nixpkgs> {}); callPackage $1 {})"
 }
 
-nixpkgs() {
-  nix eval --impure --expr '<nixpkgs>'
-}
-
 nixcd() {
-  cd $(nixpkgs)
+  \cd /etc/channels/nixpkgs
 }
 
 nixos-option() {
@@ -74,7 +70,7 @@ dev-ghc() {
 with-ghc() {
   v="$1"
   shift
-  nix-shell -p "haskell.packages.ghc$v.ghcWithPackages (p: [p.zlib])" cabal-install zlib.all xz.all "$@"
+  nix-shell -p "haskell.packages.ghc$v.ghcWithPackages (p: [p.zlib])" cabal-install zlib xz "$@"
 }
 
 ghc-shell() {

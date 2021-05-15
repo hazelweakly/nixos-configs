@@ -244,6 +244,7 @@
     '';
 
     desktopManager.gnome.enable = true;
+    desktopManager.gnome.sessionPath = [ pkgs.gnomeExtensions.pop-os ];
     # windowManager.xmonad = {
     #   enable = true;
     #   enableContribAndExtras = true;

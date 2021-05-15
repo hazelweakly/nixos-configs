@@ -14,7 +14,6 @@
       "10-wg0" = {
         netdevConfig = {
           Kind = "wireguard";
-          MTUBytes = "1300";
           Name = "wg0";
         };
         wireguardConfig.PrivateKeyFile = config.age.secrets.wg-colo.path;
@@ -100,19 +99,4 @@
       "40-wlan0" = r;
     };
   };
-
-  # services.openvpn.servers.chess = {
-  #   autoStart = false;
-  #   config = "config /root/vpn/chess.ovpn";
-  #   down = ''
-  #     ${pkgs.update-systemd-resolved}/libexec/openvpn/update-systemd-resolved
-  #     ${pkgs.procps}/bin/pkill --signal SIGUSR1 coredns
-  #   '';
-  #   up = ''
-  #     ${pkgs.update-systemd-resolved}/libexec/openvpn/update-systemd-resolved
-  #     ${pkgs.procps}/bin/pkill --signal SIGUSR1 coredns
-  #   '';
-  # };
-  # systemd.services.openvpn-chess.after = [ "network-online.target" ];
-
 }

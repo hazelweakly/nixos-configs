@@ -22,11 +22,11 @@
     },
     "cachix": {
       "locked": {
-        "lastModified": 1620808985,
-        "narHash": "sha256-cf/+g1RVawT0rcKmfh2nf/lgnSrj9YZS+1PkCFmoeJQ=",
+        "lastModified": 1620878828,
+        "narHash": "sha256-pQ8wSfdY0SZ903bjfi3oCp+9sHSf1uf1v+hg9XrBOxE=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "327368f98c6a927a84aed3c2f2fd1a7f6983e855",
+        "rev": "c85e2a478c26cfd77d1445169e51475afe9cc7cd",
         "type": "github"
       },
       "original": {
@@ -109,11 +109,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1620913213,
-        "narHash": "sha256-8UKcmpn2+sQuSnJmdbKeBqtO+SwLOuaVEJuGJhubNjM=",
+        "lastModified": 1620993481,
+        "narHash": "sha256-I/gfg3pyIoNbMUDMcUWMoEsiyXFbDVKoQXtBllTscpE=",
         "owner": "colemickens",
         "repo": "flake-firefox-nightly",
-        "rev": "9f73b87f99a56713a773b135ca60843da55620fe",
+        "rev": "3bf4a85b4133beedfa8e99c92ac9f46e97863d69",
         "type": "github"
       },
       "original": {
@@ -197,11 +197,11 @@
         "pypi-deps-db": "pypi-deps-db"
       },
       "locked": {
-        "lastModified": 1620744074,
-        "narHash": "sha256-DGPTmVZOIyGbBlicpkn52CiJWtblsQFranI4+LhKELg=",
+        "lastModified": 1620991308,
+        "narHash": "sha256-xwpA4EymNgjat+FQ3Ia0VaNhPlqffxsmx93Jfx/7zaA=",
         "owner": "DavHau",
         "repo": "mach-nix",
-        "rev": "e4ef89f77469f3dbf9c3c2bab223f389938ca82b",
+        "rev": "f139a8b68aed0646a42e1579f2db9ab4db43df31",
         "type": "github"
       },
       "original": {
@@ -274,11 +274,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1620893651,
-        "narHash": "sha256-iWMfoJPSRz2XCxmlCo1E28xRktkcfJVrfs4BA//yCpc=",
+        "lastModified": 1620980135,
+        "narHash": "sha256-ClhVP9rsGwquxwr/j/tQv1eTFNSn/gNNuUIbC+ZsetQ=",
         "owner": "nix-community",
         "repo": "neovim-nightly-overlay",
-        "rev": "c657ac28e1a515a2c30970be0e5ff18323ce6178",
+        "rev": "65988466d317e89b749381a4612d93a6bf7a2f94",
         "type": "github"
       },
       "original": {
@@ -294,11 +294,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1620819384,
-        "narHash": "sha256-ErnN/I8R8wbjLuQtncFbgAVyA9pygDZjEQppLff94GM=",
+        "lastModified": 1621019809,
+        "narHash": "sha256-AIig9ZKYvKz1uPmjWLCaty3ysIMrFNrfpLIkeejyDyM=",
         "owner": "srid",
         "repo": "neuron",
-        "rev": "2d7c58f0fb80b3e04a2ef18d4153e7cefdefce61",
+        "rev": "83ffa9f3f8700d60882a1f83e10dab53daca4dea",
         "type": "github"
       },
       "original": {
@@ -307,13 +307,30 @@
         "type": "github"
       }
     },
+    "night-theme-switcher": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1619101025,
+        "narHash": "sha256-DRSkkmoelYZ0WHYfnP0hPx9rN1vX1DrvDvpHPvJEQGc=",
+        "owner": "rmnvgr",
+        "repo": "nightthemeswitcher-gnome-shell-extension",
+        "rev": "90e06699ff1268a86da7703c3ea5397e542b99b2",
+        "type": "gitlab"
+      },
+      "original": {
+        "owner": "rmnvgr",
+        "ref": "v50",
+        "repo": "nightthemeswitcher-gnome-shell-extension",
+        "type": "gitlab"
+      }
+    },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1620893076,
-        "narHash": "sha256-nG54zqew1hSRG4jUsPGNlhl9Sy9Vl/8OLxGR2oMB4Bk=",
+        "lastModified": 1620983891,
+        "narHash": "sha256-E2OKVgGo/cUqDsrIeYGVx64b4cxgzd7+bX33NHL0rbA=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "936e4649098d6a5e0762058cb7687be1b2d90550",
+        "rev": "c4399b921fa7ff5f93ee10b3521b56b722ed74d8",
         "type": "github"
       },
       "original": {
@@ -357,11 +374,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1620906858,
-        "narHash": "sha256-6UAfSycZ5l+t7cZPjf0LV6YiDrlZgZEenpX+Zxeb3L4=",
+        "lastModified": 1620993025,
+        "narHash": "sha256-tFVVKSPFkM4sXLXy7Y4qs9qtW82NoEQio8PvDNrsO9k=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "5687a345be5806c3ba6fc3ca33b38525f28c905a",
+        "rev": "5817a051796680d71c358e8bb38447b04c2d0553",
         "type": "github"
       },
       "original": {
@@ -403,14 +420,30 @@
         "type": "github"
       }
     },
+    "pop-os-shell-shortcuts": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1601316015,
+        "narHash": "sha256-P7z1gCYkLSzWYuDelxVLCXjU0/j2mV2AdkZN+UD2kiI=",
+        "owner": "pop-os",
+        "repo": "shell-shortcuts",
+        "rev": "a653635e0f4774a5f6983a790ebf2d44c72035e0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pop-os",
+        "repo": "shell-shortcuts",
+        "type": "github"
+      }
+    },
     "pypi-deps-db": {
       "flake": false,
       "locked": {
-        "lastModified": 1615363940,
-        "narHash": "sha256-GJ3ONLWAr5ejqR5bKVfKpI/n+ClaxjyYewMP+QJyq5M=",
+        "lastModified": 1620853232,
+        "narHash": "sha256-SeePgys1mlGUrN/YhCRoo8nApRx5H+KKjyKM1zQ+yAE=",
         "owner": "DavHau",
         "repo": "pypi-deps-db",
-        "rev": "ab522f2d3255789f1ef97fa7c83d4342be156e67",
+        "rev": "15175225c8295e08e5b95b2965892820a64e9746",
         "type": "github"
       },
       "original": {
@@ -431,10 +464,12 @@
         "matterhorn": "matterhorn",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "neuron": "neuron",
+        "night-theme-switcher": "night-theme-switcher",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
         "obelisk": "obelisk",
         "pop-os-shell": "pop-os-shell",
+        "pop-os-shell-shortcuts": "pop-os-shell-shortcuts",
         "rust-overlay": "rust-overlay",
         "taskwarrior": "taskwarrior",
         "utils": "utils"
@@ -450,11 +485,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1620872977,
-        "narHash": "sha256-o84XQ6zCp6b+Z1LBb24QhJ3pO/QLyoMXU9mOgPeasbU=",
+        "lastModified": 1621021547,
+        "narHash": "sha256-ROaWdUBUCTiPQqUWnnXegdh6qSkxjooF2EFAy9twhbw=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "0f84f3e5ab02e15cf7590467efd86694dc041f2a",
+        "rev": "d2ab727524517187e2103228c2652d7b5fcc4085",
         "type": "github"
       },
       "original": {
@@ -466,11 +501,11 @@
     "taskwarrior": {
       "flake": false,
       "locked": {
-        "lastModified": 1619918452,
-        "narHash": "sha256-MkbzL0HhaZV/rRVomPV7sPPkQeKVywCUt2qYateGBvg=",
+        "lastModified": 1620965088,
+        "narHash": "sha256-txTitfTvK81kwI2oH412hzdyncybHodGULO9eq5IOIM=",
         "ref": "2.6.0",
-        "rev": "73575f8d88dfc95198ae4a5bd31a2f7f0c74251b",
-        "revCount": 9297,
+        "rev": "4fff27f4bc9f0274caaef2e124eba61300a26f69",
+        "revCount": 9298,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/GothenburgBitFactory/taskwarrior.git"
