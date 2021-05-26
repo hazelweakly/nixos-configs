@@ -32,13 +32,15 @@ function! VimrcLoadPlugins()
     Plug 'nvim-lua/lsp-status.nvim'
     Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
     Plug 'jackguo380/vim-lsp-cxx-highlight'
+    Plug 'p00f/nvim-ts-rainbow'
     " https://github.com/metakirby5/codi.vim
 
     " https://github.com/nvim-telescope/telescope.nvim
     " https://github.com/glepnir/lspsaga.nvim
 
     Plug 'honza/vim-snippets'
-    Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey','WhichKey!'] }
+    " Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey','WhichKey!'] }
+    Plug 'folke/which-key.nvim'
     " Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
     Plug 'lambdalisue/suda.vim'
     Plug 'farmergreg/vim-lastplace'
@@ -83,6 +85,7 @@ function! VimrcLoadPlugins()
     Plug 'jceb/vim-orgmode'
 
     Plug 'https://gitlab.com/protesilaos/tempus-themes-vim.git'
+    Plug 'folke/tokyonight.nvim'
 
     " Languages
     Plug 'lervag/vimtex'
@@ -114,6 +117,13 @@ function! VimrcLoadPluginSettings()
 
     " nvim-treesitter
     luafile ~/.config/nvim/lua/setup-treesitter.lua
+
+    " nvim-ts-rainbow
+    lua << EOF
+    require'nvim-treesitter.configs'.setup {
+        rainbow = { enable = true, extended_mode = true, max_file_lines = 1000 }
+    }
+EOF
 
     " fzf.vim
     let s:env_dict = {
@@ -315,8 +325,13 @@ function! VimrcLoadPluginSettings()
     " sandwich.vim
     let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
 
-    " vim-which-key
-    nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
+    " " vim-which-key
+    " nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
+    lua << EOF
+    require("which-key").setup {
+        plugins = { spelling = { enabled = true, }, },
+    }
+EOF
 
     " " chadtree
     " nnoremap <leader>v <cmd>CHADopen<cr>
@@ -521,12 +536,22 @@ function! VimrcLoadFiletypeSettings()
     augroup END
 endfunction
 
+function! DoColors()
+    if filereadable(expand("~/.local/share/theme"))
+        let l:theme = readfile(expand("~/.local/share/theme"))[0]
+        let g:tokyonight_style = l:theme == "dark" ? "night" : "day"
+        execute 'set background=' . l:theme
+        colorscheme tokyonight
+    end
+endfunction
+
 function! VimrcLoadColors()
-    if filereadable(expand("~/.config/nvim_colors"))
-        source ~/.config/nvim_colors
-        call timer_start(60000, {-> execute('source ' . expand("~/.config/nvim_colors"))}, {'repeat': -1})
+    call DoColors()
+    if filereadable(expand("~/.local/share/theme"))
+        call timer_start(60000, {-> DoColors()}, {'repeat': -1})
     else
-        colorscheme tempus_dawn
+        let g:tokyonight_style = "day"
+        colorscheme tokyonight
     endif
     hi! Comment gui=italic
     hi MatchParen guibg=none gui=italic

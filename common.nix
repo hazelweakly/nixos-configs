@@ -142,6 +142,7 @@
       # papis-exts
       manix
       nxr
+      htop
 
       # Programs implicitly relied on in shell
       pistol

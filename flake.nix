@@ -19,8 +19,8 @@
       url = "github:gytis-ivaskevicius/flake-utils-plus/staging";
       inputs.flake-utils.follows = "flake-utils";
     };
-    neovim-nightly-overlay = {
-      url = "github:nix-community/neovim-nightly-overlay";
+    neovim-flake = {
+      url = "github:neovim/neovim?dir=contrib";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
@@ -36,7 +36,11 @@
       url = "github:colemickens/flake-firefox-nightly";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    neuron.url = "github:srid/neuron";
+    neuron = {
+      url = "github:srid/neuron";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.flake-compat.follows = "flake-compat";
+    };
     taskwarrior = {
       url = "https://github.com/GothenburgBitFactory/taskwarrior.git";
       type = "git";
@@ -76,8 +80,8 @@
   };
 
   outputs = inputs@{ self, nixpkgs, utils, home-manager, nixos-hardware
-    , neovim-nightly-overlay, mach-nix, taskwarrior, neuron, obelisk
-    , pop-os-shell, pop-os-shell-shortcuts, night-theme-switcher, flake-utils
+    , neovim-flake, mach-nix, taskwarrior, neuron, obelisk, pop-os-shell
+    , pop-os-shell-shortcuts, night-theme-switcher, flake-utils
     , flake-firefox-nightly, rust-overlay, agenix, ... }:
     let
       moz' = self: super:
@@ -228,7 +232,14 @@
       };
       overlays = [
         neuron-notes
-        neovim-nightly-overlay.overlay
+        (final: prev: {
+          neovim-unwrapped = neovim-flake.packages.${prev.system}.neovim;
+          neovim-nightly = neovim-flake.packages.${prev.system}.neovim;
+          neovim-debug = neovim-flake.packages.${prev.system}.neovim-debug;
+          neovim-developer =
+            neovim-flake.packages.${prev.system}.neovim-developer;
+
+        })
         (_: _: {
           mach-nix = let
             mn = mach-nix.packages.x86_64-linux.mach-nix.overrideAttrs
@@ -249,6 +260,7 @@
       inherit self inputs;
       channels.nixpkgs.input = nixpkgs;
       channelsConfig.allowUnfree = true;
+      channelsConfig.permittedInsecurePackages = [ "ffmpeg-3.4.8" ];
 
       defaultApp.x86_64-linux = let
         pkgs = nixpkgs.legacyPackages.x86_64-linux;

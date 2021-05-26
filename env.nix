@@ -11,13 +11,13 @@ with builtins;
 with pkgs.lib;
 let
   myNvim = import ./neovim.nix { inherit pkgs; };
-  kt = t: toString (./dots/kitty + "/tempus_${t}");
+  kt = t: toString (./dots/kitty + "/${t}");
   themeSwitch = pkgs.writeShellScriptBin "switch-theme" ''
     DISPLAY=:0 DESKTOP_SESSION=gnome TERM=xterm-256color HOME="${config.users.users.hazel.home}" t="$1"
 
     case "$t" in
-      dark)  gt="darker" nvim_colors="tempus_dusk" kitty_theme=${kt "dusk"} ;;
-      light) gt="Polar" nvim_colors="tempus_dawn" kitty_theme=${kt "dawn"}
+      dark)  gt="darker" kitty_theme=${kt "tokyonight_night"} ;;
+      light) gt="Polar" kitty_theme=${kt "tokyonight_day"}
         readarray -t devices < <(colormgr get-devices | grep ID | cut -d' ' -f7-)
         for i in False True; do for x in "''${devices[@]}"; do colormgr device-set-enabled "$x" "$i"; done; done
         ;;
@@ -25,7 +25,7 @@ let
 
     ts=(desktop.{"interface gtk-theme","wm.preferences theme"} "shell.extensions.user-theme name")
     for x in "''${ts[@]}"; do gsettings set org.gnome.$x "Nordic-''${gt}-standard-buttons"; done
-    echo "$t" > $HOME/.local/share/theme; echo "colorscheme $nvim_colors" > $HOME/.config/nvim_colors
+    echo "$t" > $HOME/.local/share/theme
     ln -sf $HOME/.task/{$t,current}.theme
     ln -sf $kitty_theme $HOME/.config/kitty_current_theme
     find /tmp/kitty* -maxdepth 1 -exec kitty @ --to=unix:{} set-colors -a -c $kitty_theme \;
@@ -89,8 +89,6 @@ let
       name='Nordic-Polar-standard-buttons'
 
       [org/gnome/shell/extensions/nightthemeswitcher]
-      command-sunrise='${themeSwitch}/bin/switch-theme "light"'
-      command-sunset='${themeSwitch}/bin/switch-theme "dark"'
       commands-enabled=true
       cursor-variant-original='Paper'
       gtk-variants-enabled=false

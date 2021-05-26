@@ -39,6 +39,7 @@ unsetopt hup              # Don't kill jobs on shell exit.
 unsetopt check_jobs       # Don't report on jobs when shell exit.
 setopt combining_chars
 unsetopt mail_warning
+setopt nonomatch
 
 export HISTSIZE=1000000
 export SAVEHIST=1000000
