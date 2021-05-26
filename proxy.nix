@@ -16,7 +16,7 @@ with pkgs.lib; {
 
     .:5301 {
         loadbalance round_robin
-        forward . tls://9.9.9.9 {
+        forward . tls://9.9.9.9 tls://149.112.112.112 {
             tls_servername dns.quad9.net
             health_check 90s
         }
@@ -25,8 +25,8 @@ with pkgs.lib; {
 
     .:5302 {
         loadbalance round_robin
-        forward . tls://1.1.1.1 tls://1.0.0.1 {
-            tls_servername cloudflare-dns.com
+        forward . tls://8.8.8.8 tls://8.8.4.4 {
+            tls_servername dns.google
             health_check 90s
         }
         cache 60

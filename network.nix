@@ -3,7 +3,7 @@
   networking.firewall.enable = false;
   networking.networkmanager.enable = true; # default true cause gnome
   networking.networkmanager.wifi.backend = "iwd";
-  networking.nameservers = [ "127.0.0.1" ]; # avoid ipv6 cause centurylink
+  networking.nameservers = [ "127.0.0.1" "::1" ]; # avoid ipv6 cause centurylink
   networking.useNetworkd = true;
 
   services.resolved.extraConfig = "DNSStubListener=no";

@@ -86,8 +86,8 @@
         matchConfig.Name = "wg1";
         networkConfig.DNS = [ "10.20.10.1" ];
         networkConfig.Domains = [ "galois.com" ];
-        # address = [ "10.20.10.80/32" "2001:428:6002:410::80/128" ];
-        address = [ "10.20.10.80/32" ];
+        address = [ "10.20.10.80/32" "2001:428:6002:410::80/128" ];
+        # address = [ "10.20.10.80/32" ];
         routes = map mkR [
           "192.168.48.0/20"
           "10.20.0.0/16"
