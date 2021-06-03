@@ -9,7 +9,8 @@ let
     script = "FAHClient --send-${c}";
     startAt = "*-*-* ${s}";
   };
-in {
+in
+{
   services.foldingathome.enable = true;
   services.foldingathome.team = 242964;
   services.foldingathome.user = "Hazel Weakly";

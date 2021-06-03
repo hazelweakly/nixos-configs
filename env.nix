@@ -140,7 +140,8 @@ let
     '';
   };
 
-in {
+in
+{
   programs.dconf.profiles.settings = system-dconf-db;
 
   environment.systemPackages = with pkgs; [

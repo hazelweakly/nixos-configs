@@ -13,7 +13,8 @@
 # https://rust-lang.github.io/rustup-components-history/
 
 let rPkg = pkgs.rustChannelOf { inherit date channel; };
-in pkgs.mkShell {
+in
+pkgs.mkShell {
   buildInputs = [ rPkg.rust ];
   RUST_BACKTRACE = 1;
 

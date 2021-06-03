@@ -1,7 +1,8 @@
 { lib, fetchzip }:
 
 let pname = "Luxi-Mono";
-in fetchzip rec {
+in
+fetchzip rec {
   name = "${pname}-1.2.0";
   url = "https://www.fontsquirrel.com/fonts/download/${pname}";
   postFetch = ''

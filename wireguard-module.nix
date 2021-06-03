@@ -26,13 +26,12 @@ let
 
   mkNetDev = ndOpt: { };
 
-in {
+in
+{
   options.services.wg = {
     enable = mkEnableOption "Wireguard setup with systemd-networkd";
 
-    devices = mkOption {
-
-    };
+    devices = mkOption { };
 
     config = mkOption {
       default = "";
@@ -138,59 +137,63 @@ in {
           }];
         };
       };
-      networks = let
-        r = let
-          wg = d: {
+      networks =
+        let
+          r =
+            let
+              wg = d: {
+                routeConfig = {
+                  Gateway = "192.168.0.1";
+                  Destination = d;
+                  GatewayOnLink = true;
+                  Table = "5000";
+                };
+              };
+            in
+            {
+              routes = [
+                (wg "64.16.52.138") # wg0
+                (wg "65.132.32.180") # wg1
+              ];
+              routingPolicyRules = [{
+                routingPolicyRuleConfig = {
+                  From = "0.0.0.0/0";
+                  Table = "5000";
+                  Priority = 5;
+                };
+              }];
+            };
+          mkR = d: {
             routeConfig = {
-              Gateway = "192.168.0.1";
               Destination = d;
-              GatewayOnLink = true;
-              Table = "5000";
+              Scope = "link";
             };
           };
-        in {
-          routes = [
-            (wg "64.16.52.138") # wg0
-            (wg "65.132.32.180") # wg1
-          ];
-          routingPolicyRules = [{
-            routingPolicyRuleConfig = {
-              From = "0.0.0.0/0";
-              Table = "5000";
-              Priority = 5;
-            };
-          }];
-        };
-        mkR = d: {
-          routeConfig = {
-            Destination = d;
-            Scope = "link";
+        in
+        {
+          "40-wg0" = {
+            matchConfig.Name = "wg0";
+            networkConfig.DNS = [ "10.10.10.1" ];
+            networkConfig.Domains = [ "galois.com" ];
+            address = [ "10.10.10.80/32" ];
+            routes = map mkR [ "10.10.0.0/16" "64.16.52.128/25" ];
           };
+          "40-wg1" = {
+            matchConfig.Name = "wg1";
+            networkConfig.DNS = [ "10.20.10.1" ];
+            networkConfig.Domains = [ "galois.com" ];
+            # address = [ "10.20.10.80/32" "2001:428:6002:410::80/128" ];
+            address = [ "10.20.10.80/32" ];
+            routes = map mkR [
+              "192.168.48.0/20"
+              "10.20.0.0/16"
+              "65.132.32.128/25"
+              "2001:428:6002:400::/56"
+            ];
+          };
+          "40-eno1" = r;
+          "40-wlan0" = r;
         };
-      in {
-        "40-wg0" = {
-          matchConfig.Name = "wg0";
-          networkConfig.DNS = [ "10.10.10.1" ];
-          networkConfig.Domains = [ "galois.com" ];
-          address = [ "10.10.10.80/32" ];
-          routes = map mkR [ "10.10.0.0/16" "64.16.52.128/25" ];
-        };
-        "40-wg1" = {
-          matchConfig.Name = "wg1";
-          networkConfig.DNS = [ "10.20.10.1" ];
-          networkConfig.Domains = [ "galois.com" ];
-          # address = [ "10.20.10.80/32" "2001:428:6002:410::80/128" ];
-          address = [ "10.20.10.80/32" ];
-          routes = map mkR [
-            "192.168.48.0/20"
-            "10.20.0.0/16"
-            "65.132.32.128/25"
-            "2001:428:6002:400::/56"
-          ];
-        };
-        "40-eno1" = r;
-        "40-wlan0" = r;
-      };
     };
 
   };

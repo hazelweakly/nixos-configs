@@ -6,4 +6,5 @@ let
       "https://github.com/edolstra/flake-compat/archive/${compat.rev}.tar.gz";
     sha256 = compat.narHash;
   });
-in flake { src = ./..; }
+in
+flake { src = ./..; }

@@ -79,21 +79,40 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, utils, home-manager, nixos-hardware
-    , neovim-flake, mach-nix, taskwarrior, neuron, obelisk, pop-os-shell
-    , pop-os-shell-shortcuts, night-theme-switcher, flake-utils
-    , flake-firefox-nightly, rust-overlay, agenix, ... }:
+  outputs =
+    inputs@{ self
+    , nixpkgs
+    , utils
+    , home-manager
+    , nixos-hardware
+    , neovim-flake
+    , mach-nix
+    , taskwarrior
+    , neuron
+    , obelisk
+    , pop-os-shell
+    , pop-os-shell-shortcuts
+    , night-theme-switcher
+    , flake-utils
+    , flake-firefox-nightly
+    , rust-overlay
+    , agenix
+    , ...
+    }:
     let
       moz' = self: super:
         let
           mapAttrs = super.stdenv.lib.mapAttrs;
           flip = super.stdenv.lib.flip;
-        in {
+        in
+        {
           latest = super.latest // {
-            rustChannels = flip mapAttrs super.latest.rustChannels (_: value:
-              value // {
-                rust = value.rust.override { extensions = [ "rust-src" ]; };
-              });
+            rustChannels = flip mapAttrs super.latest.rustChannels (
+              _: value:
+                value // {
+                  rust = value.rust.override { extensions = [ "rust-src" ]; };
+                }
+            );
           };
         };
       neuron-notes = _: _: {
@@ -132,25 +151,27 @@
               "INSTALLBASE=$(out)/share/gnome-shell/extensions PLUGIN_BASE=$(out)/share/pop-shell/launcher SCRIPTS_BASE=$(out)/share/pop-shell/scripts"
             ];
             postInstall = ''
-              chmod +x $out/share/gnome-shell/extensions/pop-shell@system76.com/floating_exceptions/main.js
-              chmod +x $out/share/gnome-shell/extensions/pop-shell@system76.com/color_dialog/main.js
+                chmod +x $out/share/gnome-shell/extensions/pop-shell@system76.com/floating_exceptions/main.js
+                chmod +x $out/share/gnome-shell/extensions/pop-shell@system76.com/color_dialog/main.js
 
-              mkdir -p $out/share/gnome-control-center/keybindings
-              cp -r keybindings/*.xml $out/share/gnome-control-center/keybindings
+                mkdir -p $out/share/gnome-control-center/keybindings
+                cp -r keybindings/*.xml $out/share/gnome-control-center/keybindings
 
-              mkdir -p $out/share/gsettings-schemas/pop-shell-${version}/glib-2.0
-              schemadir=${
-                super.glib.makeSchemaPath "$out" "${pname}-${version}"
+                mkdir -p $out/share/gsettings-schemas/pop-shell-${version}/glib-2.0
+                schemadir=${
+              super.glib.makeSchemaPath "$out" "${pname}-${version}"
               }
-              mkdir -p $schemadir
-              cp -r $out/share/gnome-shell/extensions/$uuid/schemas/* $schemadir
+                mkdir -p $schemadir
+                cp -r $out/share/gnome-shell/extensions/$uuid/schemas/* $schemadir
             '';
           };
           night-theme-switcher =
-            super.gnomeExtensions.night-theme-switcher.overrideAttrs (o: {
-              version = "50";
-              src = night-theme-switcher;
-            });
+            super.gnomeExtensions.night-theme-switcher.overrideAttrs (
+              o: {
+                version = "50";
+                src = night-theme-switcher;
+              }
+            );
         };
       };
       intel = _: super: {
@@ -167,7 +188,8 @@
               p11-kit = "${self.p11-kit}/lib/pkcs11/p11-kit-trust.so";
             };
           };
-        in rec {
+        in
+        rec {
           firefox-nightly-bin =
             super.wrapFirefox (firefox-nightly-bin-unwrapped) {
               browserName = "firefox";
@@ -205,41 +227,51 @@
                 defaultPref("pdfjs.enableWebGL", true);
               '';
             };
-          firefox-nightly-bin-unwrapped = let
-            policiesJSON = super.writeText "policy.json"
-              (builtins.toJSON { inherit policies; });
-          in flake-firefox-nightly.packages.x86_64-linux.firefox-nightly-bin.unwrapped.overrideAttrs
-          (o: {
-            installPhase = (o.installPhase or "") + ''
-              ln -sf ${self.p11-kit}/lib/pkcs11/p11-kit-trust.so $out/lib/${n}/libnssckbi.so
-              ln -sf ${policiesJSON} $out/lib/${n}/distribution/policies.json
-            '';
-          });
+          firefox-nightly-bin-unwrapped =
+            let
+              policiesJSON = super.writeText "policy.json"
+                (builtins.toJSON { inherit policies; });
+            in
+            flake-firefox-nightly.packages.x86_64-linux.firefox-nightly-bin.unwrapped.overrideAttrs
+              (
+                o: {
+                  installPhase = (o.installPhase or "") + ''
+                    ln -sf ${self.p11-kit}/lib/pkcs11/p11-kit-trust.so $out/lib/${n}/libnssckbi.so
+                    ln -sf ${policiesJSON} $out/lib/${n}/distribution/policies.json
+                  '';
+                }
+              );
         };
       task = _: super: {
-        taskwarrior = super.taskwarrior.overrideAttrs (o: rec {
-          version = "2.6.0";
-          src = inputs.taskwarrior;
-          postInstall = ''
-            mkdir -p "$out/share/bash-completion/completions"
-            ln -s "../../doc/task/scripts/bash/task.sh" "$out/share/bash-completion/completions/task.bash"
-            mkdir -p "$out/share/fish/vendor_completions.d"
-            ln -s "../../../share/doc/task/scripts/fish/task.fish" "$out/share/fish/vendor_completions.d/task.fish"
-            mkdir -p "$out/share/zsh/site-functions"
-            ln -s "../../../share/doc/task/scripts/zsh/_task" "$out/share/zsh/site-functions/_task"
-          '';
-        });
+        taskwarrior = super.taskwarrior.overrideAttrs (
+          o: rec {
+            version = "2.6.0";
+            src = inputs.taskwarrior;
+            postInstall = ''
+              mkdir -p "$out/share/bash-completion/completions"
+              ln -s "../../doc/task/scripts/bash/task.sh" "$out/share/bash-completion/completions/task.bash"
+              mkdir -p "$out/share/fish/vendor_completions.d"
+              ln -s "../../../share/doc/task/scripts/fish/task.fish" "$out/share/fish/vendor_completions.d/task.fish"
+              mkdir -p "$out/share/zsh/site-functions"
+              ln -s "../../../share/doc/task/scripts/zsh/_task" "$out/share/zsh/site-functions/_task"
+            '';
+          }
+        );
       };
       overlays = [
         neuron-notes
-        (final: prev: {
-          neovim-nightly = neovim-flake.packages.${prev.system}.neovim;
-        })
-        (_: _: {
-          mach-nix = mach-nix.packages.x86_64-linux.mach-nix // {
-            mach-nix = mach-nix.packages.x86_64-linux.mach-nix;
-          } // mach-nix.lib.x86_64-linux;
-        })
+        (
+          final: prev: {
+            neovim-nightly = neovim-flake.packages.${prev.system}.neovim;
+          }
+        )
+        (
+          _: _: {
+            mach-nix = mach-nix.packages.x86_64-linux.mach-nix // {
+              mach-nix = mach-nix.packages.x86_64-linux.mach-nix;
+            } // mach-nix.lib.x86_64-linux;
+          }
+        )
         moz'
         gnomeExts
         intel
@@ -248,7 +280,8 @@
         task
         obelisk
       ];
-    in utils.lib.systemFlake {
+    in
+    utils.lib.systemFlake {
       inherit self inputs;
       channels.nixpkgs.input = nixpkgs;
       channelsConfig.allowUnfree = true;
@@ -258,12 +291,14 @@
         ./machines/nvidia.nix
         ./machines/precision7740.nix
         agenix.nixosModules.age
-        ({ config, ... }: {
-          networking.hostName = "hazelweakly";
-          age.sshKeyPaths =
-            [ "${config.users.users.hazel.home}/.ssh/id_ed25519" ]
-            ++ map (e: e.path) config.services.openssh.hostKeys;
-        })
+        (
+          { config, ... }: {
+            networking.hostName = "hazelweakly";
+            age.sshKeyPaths =
+              [ "${config.users.users.hazel.home}/.ssh/id_ed25519" ]
+              ++ map (e: e.path) config.services.openssh.hostKeys;
+          }
+        )
         ./work.nix
         ./wireguard.nix
         nixos-hardware.nixosModules.common-gpu-nvidia
@@ -289,39 +324,51 @@
         nixos-hardware.nixosModules.common-pc-laptop
         nixos-hardware.nixosModules.common-pc-ssd
         home-manager.nixosModules.home-manager
-        ({ pkgs, ... }: {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.hazel = import ./home.nix;
-        })
-        ({ pkgs, lib, ... }:
+        (
+          { pkgs, ... }: {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.hazel = import ./home.nix;
+          }
+        )
+        (
+          { pkgs, lib, ... }:
           let
             overlay-nix = pkgs.writeText "overlays.nix" ''
               (builtins.getFlake (builtins.toString /etc/nixos)).overlay
             '';
-          in {
-            environment.etc = lib.mapAttrs' (key: val: {
-              name = "channels/${key}";
-              value = {
-                source = if key != "nixpkgs" then
-                  val.outPath
-                else
-                  pkgs.runCommandNoCC "nixpkgs" { } ''
-                    cp -r ${nixpkgs} $out
-                    chmod 700 $out
-                    echo "${
-                      nixpkgs.rev or (builtins.toString nixpkgs.lastModified)
-                    }" > $out/.version-suffix
-                  '';
-              };
-            }) inputs;
+          in
+          {
+            environment.etc = lib.mapAttrs'
+              (
+                key: val: {
+                  name = "channels/${key}";
+                  value = {
+                    source =
+                      if key != "nixpkgs" then
+                        val.outPath
+                      else
+                        pkgs.runCommandNoCC "nixpkgs" { } ''
+                            cp -r ${nixpkgs} $out
+                            chmod 700 $out
+                            echo "${
+                          nixpkgs.rev or (builtins.toString nixpkgs.lastModified)
+                          }" > $out/.version-suffix
+                        '';
+                  };
+                }
+              )
+              inputs;
             nix.nixPath =
-              (lib.mapAttrsToList (name: _: "${name}=/etc/channels/${name}")
-                inputs) ++ [
-                  "nixpkgs-overlays=${overlay-nix}"
-                  "nixos-config=/etc/nixos/compat/config.nix"
-                ];
-          })
+              (
+                lib.mapAttrsToList (name: _: "${name}=/etc/channels/${name}")
+                  inputs
+              ) ++ [
+                "nixpkgs-overlays=${overlay-nix}"
+                "nixos-config=/etc/nixos/compat/config.nix"
+              ];
+          }
+        )
         { nix.generateRegistryFromInputs = true; }
       ];
     };

@@ -10,7 +10,8 @@ let
     ${cfg.package}/bin/caddy adapt \
       --config ${configFile} --adapter ${cfg.adapter} > $out
   '';
-in {
+in
+{
   imports = [
     (mkRemovedOptionModule [ "services" "caddy2" "agree" ]
       "this option is no longer necessary for Caddy 2")

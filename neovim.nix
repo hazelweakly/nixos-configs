@@ -40,18 +40,19 @@ let
     withNodeJs = true;
     extraPython3Packages = p: [ p.black ];
   };
-in (wrapNeovimUnstable.override { nodejs = nodejs_latest; }) neovim-nightly (c
+in
+(wrapNeovimUnstable.override { nodejs = nodejs_latest; }) neovim-nightly (c
   // {
-    wrapperArgs = lib.escapeShellArgs (c.wrapperArgs ++ [
-      "--suffix"
-      "PATH"
-      ":"
-      path
-      "--set"
-      "EXPLAINSHELL_ENDPOINT"
-      "http://localhost:5000"
-    ]);
-    vimAlias = true;
-    viAlias = true;
-    wrapRc = false;
-  })
+  wrapperArgs = lib.escapeShellArgs (c.wrapperArgs ++ [
+    "--suffix"
+    "PATH"
+    ":"
+    path
+    "--set"
+    "EXPLAINSHELL_ENDPOINT"
+    "http://localhost:5000"
+  ]);
+  vimAlias = true;
+  viAlias = true;
+  wrapRc = false;
+})

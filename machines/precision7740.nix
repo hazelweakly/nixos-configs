@@ -16,32 +16,34 @@
 
   # https://unix.stackexchange.com/questions/228988/how-to-automatically-disable-laptop-keyboard-mouse-with-xinput-when-external-key
   # The true solution is eventually: https://bbs.archlinux.org/viewtopic.php?pid=1626055#p1626055
-  services.udev.extraRules = let
-    run = pkgs.writeShellScript "run" ''
-      set +e
-      set -x
-      sleep 1
-      export PATH=${pkgs.lib.makeBinPath [ pkgs.xorg.xinput ]}:$PATH
-      echo "hi there" > /tmp/debug-udev
-      date >> /tmp/debug-udev
-      env >> /tmp/debug-udev
-      if [[ "$ACTION" == "add" ]]; then cmd="--disable"; else cmd="--enable"; fi
-      devices="$(xinput list)"
-      echo "doing the thing" >> /tmp/debug-udev
-      echo "$devices" >> /tmp/debug-udev
-      get_id() { grep "$1" <<< "$devices" | cut -d= -f2 | cut -f1; }
-      for device in 'DELL0927:00 044E:1220 Mouse' 'AT Translated Set 2 keyboard' 'Virtual core XTEST pointer'; do
-        echo xinput "$cmd" "$(get_id "$device")" >> /tmp/debug-udev
-        xinput "$cmd" "$(get_id "$device")" || true
-      done
-      echo "done" >> /tmp/debug-udev
+  services.udev.extraRules =
+    let
+      run = pkgs.writeShellScript "run" ''
+        set +e
+        set -x
+        sleep 1
+        export PATH=${pkgs.lib.makeBinPath [ pkgs.xorg.xinput ]}:$PATH
+        echo "hi there" > /tmp/debug-udev
+        date >> /tmp/debug-udev
+        env >> /tmp/debug-udev
+        if [[ "$ACTION" == "add" ]]; then cmd="--disable"; else cmd="--enable"; fi
+        devices="$(xinput list)"
+        echo "doing the thing" >> /tmp/debug-udev
+        echo "$devices" >> /tmp/debug-udev
+        get_id() { grep "$1" <<< "$devices" | cut -d= -f2 | cut -f1; }
+        for device in 'DELL0927:00 044E:1220 Mouse' 'AT Translated Set 2 keyboard' 'Virtual core XTEST pointer'; do
+          echo xinput "$cmd" "$(get_id "$device")" >> /tmp/debug-udev
+          xinput "$cmd" "$(get_id "$device")" || true
+        done
+        echo "done" >> /tmp/debug-udev
+      '';
+    in
+    ''
+      # ATTRS{idProduct}=="6060", SYMLINK+="chimera"
+      # ATTRS{idProduct}=="6060", RUN+="${pkgs.bash}/bin/bash -c 'touch /tmp/y-tho ; env >> /tmp/y-tho'"
+      ACTION=="add|remove", ENV{ID_MODEL_ID}=="6060", ENV{ID_VENDOR_ID}="feed", SYMLINK+="chimera"
+      ACTION=="add|remove", ENV{ID_MODEL_ID}=="6060", ENV{ID_VENDOR_ID}="feed", RUN+="${pkgs.bash}/bin/bash -c 'touch /tmp/y-tho ; env >> /tmp/y-tho; ${run} &'"
     '';
-  in ''
-    # ATTRS{idProduct}=="6060", SYMLINK+="chimera"
-    # ATTRS{idProduct}=="6060", RUN+="${pkgs.bash}/bin/bash -c 'touch /tmp/y-tho ; env >> /tmp/y-tho'"
-    ACTION=="add|remove", ENV{ID_MODEL_ID}=="6060", ENV{ID_VENDOR_ID}="feed", SYMLINK+="chimera"
-    ACTION=="add|remove", ENV{ID_MODEL_ID}=="6060", ENV{ID_VENDOR_ID}="feed", RUN+="${pkgs.bash}/bin/bash -c 'touch /tmp/y-tho ; env >> /tmp/y-tho; ${run} &'"
-  '';
 
   services.xserver.videoDrivers = [ "nvidia" ];
   # boot.kernelParams = [ "i915.modeset=1" "i915.fastboot=1" ];
