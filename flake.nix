@@ -2,9 +2,10 @@
   description = "Hazel's system configuration";
 
   inputs = {
-    flake-utils.url = "github:numtide/flake-utils";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    flake-utils.url = "github:numtide/flake-utils";
+    digga.url = "github:divnix/digga/develop";
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.flake-utils.follows = "flake-utils";
@@ -72,7 +73,6 @@
       url = "github:matterhorn-chat/matterhorn";
       flake = false;
     };
-
     flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
@@ -233,19 +233,11 @@
       overlays = [
         neuron-notes
         (final: prev: {
-          neovim-unwrapped = neovim-flake.packages.${prev.system}.neovim;
           neovim-nightly = neovim-flake.packages.${prev.system}.neovim;
-          neovim-debug = neovim-flake.packages.${prev.system}.neovim-debug;
-          neovim-developer =
-            neovim-flake.packages.${prev.system}.neovim-developer;
-
         })
         (_: _: {
-          mach-nix = let
-            mn = mach-nix.packages.x86_64-linux.mach-nix.overrideAttrs
-              (o: { name = builtins.elemAt (builtins.split "\n" o.name) 0; });
-          in mach-nix.packages.x86_64-linux.mach-nix // {
-            mach-nix = mn;
+          mach-nix = mach-nix.packages.x86_64-linux.mach-nix // {
+            mach-nix = mach-nix.packages.x86_64-linux.mach-nix;
           } // mach-nix.lib.x86_64-linux;
         })
         moz'
@@ -261,14 +253,6 @@
       channels.nixpkgs.input = nixpkgs;
       channelsConfig.allowUnfree = true;
       channelsConfig.permittedInsecurePackages = [ "ffmpeg-3.4.8" ];
-
-      defaultApp.x86_64-linux = let
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        drv = pkgs.writeScriptBin "nxr" ''
-          #!${pkgs.runtimeShell}
-          exec ${pkgs.nixUnstable}/bin/nix repl ${inputs.utils.lib.repl}
-        '';
-      in flake-utils.lib.mkApp { inherit drv; };
 
       hosts.hazelweakly.modules = [
         ./machines/nvidia.nix
@@ -309,7 +293,6 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.hazel = import ./home.nix;
-          home-manager.extraSpecialArgs = { inherit inputs; };
         })
         ({ pkgs, lib, ... }:
           let
@@ -339,7 +322,7 @@
                   "nixos-config=/etc/nixos/compat/config.nix"
                 ];
           })
-        utils.nixosModules.saneFlakeDefaults
+        { nix.generateRegistryFromInputs = true; }
       ];
     };
 }

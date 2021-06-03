@@ -87,6 +87,10 @@
       "filetypes": ["dhall"],
       "rootPatterns": [".git", "package.dhall"],
       "initializationOptions": {}
+    },
+    "nix": {
+      "command": "rnix-lsp",
+      "filetypes": ["nix"]
     }
   },
   "diagnostic-languageserver.filetypes": {
@@ -99,7 +103,6 @@
   },
   "diagnostic-languageserver.formatFiletypes": {
     "sh": "shfmt",
-    "nix": "nixfmt",
     "bzl": "buildifier",
     "cabal": "cabal-fmt"
   },

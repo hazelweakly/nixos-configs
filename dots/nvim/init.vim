@@ -23,8 +23,7 @@ function! VimrcLoadPlugins()
     Plug 'neoclide/coc.nvim', {'branch': 'feat/lsp-316', 'do': 'yarn install --frozen-lockfile'}
     " Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
     Plug 'antoinemadec/coc-fzf'
-    Plug '~/src/personal/vscode-hie-server', { 'do': 'yarn install --frozen-lockfile' }
-    " Plug 'chitoku-k/coc-yaml', { 'branch': 'dependency-update',  'do': 'yarn install --frozen-lockfile' }
+    Plug 'expipiplus1/vscode-hie-server', { 'branch': 'coc.nvim', 'do': 'yarn install --frozen-lockfile' }
     Plug 'direnv/direnv.vim'
     Plug 'sbdchd/neoformat', { 'for' : ['terraform'] }
     Plug 'editorconfig/editorconfig-vim'

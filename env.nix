@@ -10,7 +10,7 @@
 with builtins;
 with pkgs.lib;
 let
-  myNvim = import ./neovim.nix { inherit pkgs; };
+  myNvim = pkgs.callPackage ./neovim.nix { };
   kt = t: toString (./dots/kitty + "/${t}");
   themeSwitch = pkgs.writeShellScriptBin "switch-theme" ''
     DISPLAY=:0 DESKTOP_SESSION=gnome TERM=xterm-256color HOME="${config.users.users.hazel.home}" t="$1"
@@ -155,7 +155,6 @@ in {
     pop-shell-shortcuts
     # gnomeExtensions.paperwm
     nordic
-    nordic-polar
     paper-icon-theme
     plata-theme
     tdrop
