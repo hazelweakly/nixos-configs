@@ -121,7 +121,6 @@
       (callPackage ./neovim.nix { })
       zoom-us
       neuron-notes
-      obelisk.command
       awscli2
       ssm-session-manager-plugin
       alacritty
@@ -270,4 +269,6 @@
   boot.extraModprobeConfig = "options kvm_intel nested=1";
 
   nix.optimise.automatic = true;
+
+  systemd.services."user@".serviceConfig.Delegate = "cpu cpuset io memory pids";
 }

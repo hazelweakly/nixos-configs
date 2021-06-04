@@ -1,0 +1,1 @@
+{ config, ... }: { networking.hostName = "hazelxps"; }
