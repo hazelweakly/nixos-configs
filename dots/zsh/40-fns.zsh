@@ -67,10 +67,16 @@ dev-ghc() {
   nix-shell -p "haskell.packages.ghc$v.ghcWithPackages (p: [p.zlib p.haskell-language-server p.cabal-fmt])" cabal-install zlib.all xz.all "$@"
 }
 
+# with-ghc() {
+#   v="$1"
+#   shift
+#   nix-shell -p "haskell.packages.ghc$v.ghcWithPackages (p: [p.zlib])" cabal-install zlib xz "$@"
+# }
+
 with-ghc() {
   v="$1"
   shift
-  nix-shell -p "haskell.packages.ghc$v.ghcWithPackages (p: [p.zlib])" cabal-install zlib xz "$@"
+  nix-shell -p "haskell.packages.ghc$v.ghc" cabal-install zlib xz "$@"
 }
 
 ghc-shell() {
@@ -85,11 +91,11 @@ ghci-with() {
 
 zup() {
     zinit self-update && \
-        zinit update -r -q --all --parallel && \
-        zinit creinstall %HOME/.config/zsh/completions && \
-        fd -uu -e zwc . $HOME -x rm -f 2>/dev/null && \
-        rm -rf ~/.config/zsh/.zcompdump* && \
-        zinit compile --all
+      zinit update -r -u -q --all --parallel && \
+      zinit creinstall %HOME/.config/zsh/completions && \
+      fd -uu -e zwc . $HOME -x rm -f 2>/dev/null && \
+      rm -rf ~/.config/zsh/.zcompdump* && \
+      zinit compile --all
 }
 
 # update() {

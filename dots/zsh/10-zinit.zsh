@@ -4,13 +4,14 @@
     # Run interactively
     # zinit creinstall %HOME/.config/zsh/completions
 
-    zinit light-mode lucid wait has"kubectl" for \
-        id-as"kubectl_completion" \
-        as"completion" \
-        atclone"kubectl completion zsh > _kubectl && sed -i '22 s|^.*$|cat \"\$@\" > \$ZSH_CACHE_DIR/source \&\& source \$ZSH_CACHE_DIR/source|' _kubectl" \
-        atpull"%atclone" \
-        run-atpull \
-        zdharma/null
+    (( $+commands[kubectl] )) && \
+            zinit light-mode lucid wait has"kubectl" for \
+            id-as"kubectl_completion" \
+            as"completion" \
+            atclone"kubectl completion zsh > _kubectl && sed -i '22 s|^.*$|cat \"\$@\" > \$ZSH_CACHE_DIR/source \&\& source \$ZSH_CACHE_DIR/source|' _kubectl" \
+            atpull"%atclone" \
+            run-atpull \
+            zdharma/null
 
     zinit depth'1' wait lucid for \
         blockf zsh-users/zsh-completions \
