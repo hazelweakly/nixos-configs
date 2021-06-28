@@ -1,7 +1,7 @@
 { pkgs, config, ... }: {
   boot.initrd.availableKernelModules =
     [ "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
-  boot.kernelModules = [ "kvm-intel" "acpi_call" ];
+  boot.kernelModules = [ "acpi_call" ];
 
   environment.etc."libinput/local-overrides.quirks".text = ''
     [Pointer disable physical button of pointer]

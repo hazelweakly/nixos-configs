@@ -90,12 +90,13 @@ ghci-with() {
 }
 
 zup() {
-    zinit self-update && \
-      zinit update -r -u -q --all --parallel && \
-      zinit creinstall %HOME/.config/zsh/completions && \
-      fd -uu -e zwc . $HOME -x rm -f 2>/dev/null && \
-      rm -rf ~/.config/zsh/.zcompdump* && \
-      zinit compile --all
+  zinit self-update && \
+    fd -uu -e zwc . $HOME -x rm -f 2>/dev/null && \
+    zinit update -r -u -q --all --parallel && \
+    zinit creinstall %HOME/.config/zsh/completions && \
+    fd -uu -e zwc . $HOME -x rm -f 2>/dev/null && \
+    rm -rf ~/.config/zsh/.zcompdump* && \
+    zinit compile --all && zinit self-update
 }
 
 # update() {

@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   nix.extraOptions = ''
     keep-outputs = true
     keep-derivations = true
@@ -59,7 +59,7 @@
     let
       bitwarden-wrapper =
         let
-          path = pkgs.lib.makeBinPath
+          path = lib.makeBinPath
             (with pkgs; [ coreutils utillinux bitwarden-cli systemd gnused ]);
           bw = pkgs.writeShellScriptBin "bw" ''
             export PATH=${path};
@@ -121,7 +121,7 @@
       (callPackage ./neovim.nix { })
       zoom-us
       neuron-notes
-      awscli2
+      # awscli2
       ssm-session-manager-plugin
       alacritty
       ranger
@@ -131,6 +131,7 @@
       manix
       fup-repl
       htop
+      pulseeffects-pw
 
       # Programs implicitly relied on in shell
       pistol
@@ -150,7 +151,6 @@
   };
 
   programs.ssh.startAgent = true;
-  environment.pathsToLink = [ "/share/zsh" ];
   programs.zsh = {
     enable = true;
     enableGlobalCompInit = false;
@@ -159,7 +159,7 @@
   programs.gnupg.agent.enable = true;
 
   services.thermald.enable = true;
-  services.interception-tools.enable = pkgs.lib.mkDefault true;
+  services.interception-tools.enable = lib.mkDefault true;
   services.system-config-printer.enable = true;
   services.printing.enable = true;
   services.printing.drivers = with pkgs; [
@@ -181,9 +181,16 @@
     };
   };
 
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
-  hardware.enableRedistributableFirmware = pkgs.lib.mkDefault true;
+  sound.enable = false;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+  };
+  security.rtkit.enable = true;
+  hardware.pulseaudio.enable = false;
+  hardware.enableRedistributableFirmware = lib.mkDefault true;
   hardware.enableAllFirmware = true;
   services.tlp.enable = false;
   hardware.opengl.enable = true;
@@ -249,7 +256,7 @@
   virtualisation.docker.enable = true;
   virtualisation.docker.enableOnBoot = false;
   environment.etc."docker/daemon.json".text =
-    ''{ "features": { "buildkit": true } }'';
+    ''{ "features": { "buildkit": true, "experimental": true } }'';
 
   virtualisation.oci-containers.containers."explainshell" = {
     image = "spaceinvaderone/explainshell";

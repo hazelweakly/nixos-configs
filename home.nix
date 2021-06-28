@@ -172,7 +172,8 @@ with pkgs.lib; {
 
   services.lorri.enable = true;
   programs.direnv.enable = true;
-  programs.direnv.enableNixDirenvIntegration = true;
+  programs.direnv.nix-direnv.enable = true;
+  programs.direnv.nix-direnv.enableFlakes = true;
   programs.direnv.stdlib = ''
     : ''${XDG_CACHE_HOME:=$HOME/.cache}
     declare -A direnv_layout_dirs
@@ -199,10 +200,7 @@ with pkgs.lib; {
     config.lib.file.mkOutOfStoreSymlink "${dir}/dots/zsh";
   programs.zsh = {
     enable = true;
-    envExtra = ''
-      setopt no_global_rcs
-      skip_global_compinit=1
-    '';
+    envExtra = "skip_global_compinit=1";
     dotDir = ".config/zsh";
     enableCompletion = true;
     defaultKeymap = "emacs";

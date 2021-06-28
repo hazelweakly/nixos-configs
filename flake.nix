@@ -42,6 +42,10 @@
       inputs.flake-utils.follows = "flake-utils";
       inputs.flake-compat.follows = "flake-compat";
     };
+    tree-sitter = {
+      url = "github:tree-sitter/tree-sitter";
+      flake = false;
+    };
     taskwarrior = {
       url = "https://github.com/GothenburgBitFactory/taskwarrior.git";
       type = "git";
@@ -120,11 +124,12 @@
             home-manager.users.hazel = import ./home.nix;
           }
         )
+        # { nix.generateRegistryFromInputs = true; }
         (
           { pkgs, lib, ... }:
           let
             overlay-nix = pkgs.writeText "overlays.nix" ''
-              (builtins.getFlake (builtins.toString /etc/nixos)).overlays
+              builtins.attrValues (builtins.getFlake (builtins.toString /etc/nixos)).overlays
             '';
           in
           {
@@ -154,11 +159,10 @@
                   inputs
               ) ++ [
                 "nixpkgs-overlays=${overlay-nix}"
-                "nixos-config=/etc/nixos/compat/config.nix"
+                "nixos-config=/etc/channels/self/compat/config.nix"
               ];
           }
         )
-        { nix.generateRegistryFromInputs = true; }
       ];
 
       nixos.hostDefaults.modules = [

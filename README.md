@@ -64,3 +64,5 @@ let g:gutentags_project_info = [ {'type': 'python', 'file': 'setup.py'},
                                \ {'type': 'haskell', 'file': 'Setup.hs'} ]
 let g:gutentags_ctags_executable_haskell = 'gutenhasktag
 ```
+
+https://github.com/NixOS/nixpkgs/issues/72401
