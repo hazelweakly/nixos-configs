@@ -42,10 +42,6 @@
       inputs.flake-utils.follows = "flake-utils";
       inputs.flake-compat.follows = "flake-compat";
     };
-    tree-sitter = {
-      url = "github:tree-sitter/tree-sitter";
-      flake = false;
-    };
     taskwarrior = {
       url = "https://github.com/GothenburgBitFactory/taskwarrior.git";
       type = "git";
@@ -110,6 +106,7 @@
         ./hazelxps.nix
       ];
 
+      nixos.hostDefaults.channelName = "nixpkgs";
       nixos.hostDefaults.externalModules = [
         nixos-hardware.nixosModules.common-cpu-intel
         nixos-hardware.nixosModules.common-pc-laptop

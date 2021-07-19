@@ -5,7 +5,9 @@
     experimental-features = nix-command flakes ca-references
   '';
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
+  # thx nvidia
+  boot.kernelPackages = pkgs.linuxPackages_5_12;
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 50;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -272,7 +274,8 @@
 
   virtualisation.libvirtd.enable = false;
   virtualisation.libvirtd.onBoot = "ignore";
-  virtualisation.virtualbox.host.enable = false;
+  virtualisation.virtualbox.host.enable = true;
+  virtualisation.virtualbox.host.enableExtensionPack = true;
   boot.extraModprobeConfig = "options kvm_intel nested=1";
 
   nix.optimise.automatic = true;
