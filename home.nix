@@ -249,9 +249,9 @@ with pkgs.lib; {
     Service.ExecStart =
       "${pkgs.neuron-notes}/bin/neuron -d ${config.home.homeDirectory}/Documents/notes gen -ws 127.53.54.2:50001 --pretty-urls";
   };
-  systemd.user.services.pulseeffects = {
+  systemd.user.services.easyeffects = {
     Install.WantedBy = [ "graphical-session.target" ];
-    Service.ExecStart = "${pkgs.pulseeffects-pw}/bin/pulseeffects --gapplication-service";
-    Service.ExecStopPost = "${pkgs.pulseeffects-pw}/bin/pulseeffects -q";
+    Service.ExecStart = "${pkgs.easyeffects}/bin/easyeffects --gapplication-service";
+    Service.ExecStopPost = "${pkgs.easyeffects}/bin/easyeffects -q";
   };
 }
