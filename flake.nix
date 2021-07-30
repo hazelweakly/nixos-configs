@@ -2,12 +2,27 @@
   description = "Hazel's system configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    flake-utils.url = "github:numtide/flake-utils";
-    digga.url = "github:divnix/digga/develop";
-    digga.inputs.naersk.inputs.nixpkgs.follows = "nixpkgs";
+
+    digga.url = "github:divnix/digga";
     digga.inputs.nixpkgs.follows = "nixpkgs";
+    digga.inputs.nixlib.follows = "nixpkgs";
+
+    # needed for digga I guess?
+    naersk.url = "github:nmattia/naersk";
+    naersk.inputs.nixpkgs.follows = "nixpkgs";
+
+    deploy.follows = "digga/deploy";
+    flake-utils.url = "github:numtide/flake-utils";
+
+    # anti corruption bullshit
+    nixos.follows = "nixpkgs";
+    nixlib.follows = "digga/nixlib";
+    blank.follows = "digga/blank";
+    flake-utils-plus.follows = "utils";
+    # end bullshit
+
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.flake-utils.follows = "flake-utils";
@@ -92,7 +107,7 @@
       channelsConfig.allowUnfree = true;
       channels.nixpkgs.input = nixpkgs;
       channels.nixpkgs.overlays = [ agenix.overlay rust-overlay.overlay (_:_: { inherit inputs; }) ];
-      channels.nixpkgs.imports = [ (digga.lib.importers.overlays ./overlays) ];
+      channels.nixpkgs.imports = [ (digga.lib.importOverlays ./overlays) ];
 
       nixos.hosts.hazelweakly.modules = [
         ./machines/nvidia.nix
