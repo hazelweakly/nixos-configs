@@ -5,9 +5,7 @@
     experimental-features = nix-command flakes ca-references
   '';
 
-  # boot.kernelPackages = pkgs.linuxPackages_latest;
-  # thx nvidia
-  boot.kernelPackages = pkgs.linuxPackages_5_12;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 50;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -161,7 +159,16 @@
   programs.gnupg.agent.enable = true;
 
   services.thermald.enable = true;
-  services.interception-tools.enable = lib.mkDefault true;
+  services.interception-tools = {
+    enable = lib.mkDefault true;
+    plugins = [ pkgs.interception-tools-plugins.caps2esc ];
+    udevmonConfig = ''
+      - JOB: "${pkgs.interception-tools}/bin/intercept -g $DEVNODE | ${pkgs.interception-tools-plugins.caps2esc}/bin/caps2esc | ${pkgs.interception-tools}/bin/uinput -d $DEVNODE"
+        DEVICE:
+          EVENTS:
+            EV_KEY: [KEY_CAPSLOCK, KEY_ESC]
+    '';
+  };
   services.system-config-printer.enable = true;
   services.printing.enable = true;
   services.printing.drivers = with pkgs; [
