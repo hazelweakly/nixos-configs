@@ -6,8 +6,7 @@ list_all() {
 }
 chpwd_functions=(${chpwd_functions[@]} "list_all")
 
-mcd() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1" }
-compdef _directories mcd
+mcd() { [[ $# == 1 ]] && { mkdir -p -- "$1" && cd -- "$1" } || : }
 
 ranger-cd() {
   tempfile="$(mktemp -t tmp.XXXXXX)"

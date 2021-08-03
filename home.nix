@@ -196,6 +196,10 @@ with pkgs.lib; {
     #compdef src
     _path_files -/ -W ~/src
   '';
+  xdg.configFile."zsh/completions/_mcd".text = ''
+    #compdef mcd
+    _directories
+  '';
   xdg.configFile."zsh/config".source =
     config.lib.file.mkOutOfStoreSymlink "${dir}/dots/zsh";
   programs.zsh = {
