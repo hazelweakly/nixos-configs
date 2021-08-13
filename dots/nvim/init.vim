@@ -50,7 +50,7 @@ function! VimrcLoadPlugins()
     Plug 'blueyed/vim-diminactive'
     Plug 'camspiers/lens.vim'
     Plug 'wsdjeg/vim-fetch'
-    Plug '~/src/personal/neuron.vim', { 'for': ['markdown'] }
+    Plug 'hazelweakly/neuron.vim', { 'branch': 'v2', 'for': ['markdown'] }
     " Plug 'chiefnoah/neuron-v2.vim', { 'for': ['markdown'] }
     Plug 'antoinemadec/FixCursorHold.nvim'
 
