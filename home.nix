@@ -243,6 +243,8 @@ with pkgs.lib; {
     };
   };
 
+  services.syncthing.enable = true;
+
   systemd.user.services.neuron = {
     Install.WantedBy = [ "graphical-session.target" ];
     Service.ExecStart =

@@ -3,7 +3,7 @@ final: prev: {
     pname = "pop-shell-shortcuts";
     version = "2020-09-28";
     src = final.inputs.pop-os-shell-shortcuts;
-    cargoSha256 = "sha256-kuaepwKsNHRH4SFLNrQhy1CTPR/HcpVuTyzuTPDaKQI=";
+    cargoSha256 = "sha256-HE/Z7dPSaTjLk0ylXKs3BTMywdrQPg0S0wDjAY5+dIQ=";
     nativeBuildInputs = [ prev.pkg-config ];
     buildInputs = [ prev.gtk3 prev.glib ];
   };

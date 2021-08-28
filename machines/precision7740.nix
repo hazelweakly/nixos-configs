@@ -88,7 +88,7 @@
 
   services.interception-tools.enable = false;
   services.plex = {
-    enable = false;
+    enable = true;
     openFirewall = true;
   };
   system.stateVersion = "20.09";

@@ -13,10 +13,10 @@ in
 rec {
   firefox-nightly-bin =
     prev.wrapFirefox (firefox-nightly-bin-unwrapped) {
-      browserName = "firefox";
+      applicationName = "firefox";
       pname = "firefox-bin";
       desktopName = "Firefox";
-      firefoxLibName = "${n}";
+      libName = "${n}";
       extraPolicies = policies;
       extraPrefs = ''
         defaultPref("accessibility.typeaheadfind.enablesound", false);
