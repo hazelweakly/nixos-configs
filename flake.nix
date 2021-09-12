@@ -34,7 +34,7 @@
       inputs.flake-utils.follows = "flake-utils";
     };
     utils = {
-      url = "github:gytis-ivaskevicius/flake-utils-plus/staging";
+      url = "github:gytis-ivaskevicius/flake-utils-plus";
       inputs.flake-utils.follows = "flake-utils";
     };
     neovim-flake = {
