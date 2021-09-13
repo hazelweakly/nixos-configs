@@ -6,8 +6,7 @@ let
     m="''${3?Message missing}"
     urgencies=("" "critical" "normal")
     urgency="''${urgencies[$1]?Error: mentioned value $1 unexpected}"
-    PATH=${pkgs.bc}/bin:$PATH
-    ${inputs.notify-send}/src/notify-send.sh -u "$urgency" -f -t 60000 -i ${inputs.matterhorn}/logo/matterhorn-icon.svg -a Matterhorn -c "im.received" -- "Matterhorn message from $2" "$m"
+    ${inputs.notify-send}/src/notify-send.sh -u "$urgency" -f -t 60000 -i ${inputs.matterhorn}/logo/matterhorn-icon.svg -a Matterhorn -c "im.received" "Matterhorn message from $2" "$m"
   '';
 
   matterhornWrapper =
