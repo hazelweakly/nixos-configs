@@ -23,12 +23,12 @@ jobs:
           authToken: "${{ secrets.CACHIXCI }}"
           extraPullNames: "srid,nrdxp,nix-community,iohk,hercules-ci,ghcide-nix,eigenvalue,all-hies"
       - name: update
-      - run: |
+        run: |
           set -xeuo pipefail
           nix develop -c nix flake update --commit-lock-file
           nix -Lv flake check
           nix -Lv build ".#"nixosConfigurations.hazel{weakly,xps}.config.system.build.toplevel
           nix -Lv develop -c echo OK
       - run: |
-          git commit -m "auto-update inputs [skip ci]"
+          git commit -am "auto-update inputs [skip ci]"
           git push origin HEAD
