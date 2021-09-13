@@ -1,15 +1,6 @@
 final: prev: {
-  pop-shell-shortcuts = prev.rustPlatform.buildRustPackage rec {
-    pname = "pop-shell-shortcuts";
-    version = "2020-09-28";
-    src = final.inputs.pop-os-shell-shortcuts;
-    cargoSha256 = "sha256-HE/Z7dPSaTjLk0ylXKs3BTMywdrQPg0S0wDjAY5+dIQ=";
-    nativeBuildInputs = [ prev.pkg-config ];
-    buildInputs = [ prev.gtk3 prev.glib ];
-  };
-
-  gnomeExtensions = prev.gnomeExtensions // {
-    pop-os = prev.stdenv.mkDerivation rec {
+  gnome40Extensions = prev.gnome40Extensions // {
+    "pop-shell@system76.com" = prev.stdenv.mkDerivation rec {
       pname = "gnome-shell-extension-pop-os-shell";
       version = "master";
       src = final.inputs.pop-os-shell;
@@ -39,10 +30,5 @@ final: prev: {
         cp -r $out/share/gnome-shell/extensions/$uuid/schemas/* $schemadir
       '';
     };
-    night-theme-switcher =
-      prev.gnomeExtensions.night-theme-switcher.overrideAttrs (o: {
-        version = "50";
-        src = final.inputs.night-theme-switcher;
-      });
   };
 }

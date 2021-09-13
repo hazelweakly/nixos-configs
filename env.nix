@@ -144,21 +144,16 @@ in
 {
   programs.dconf.profiles.settings = system-dconf-db;
 
+  services.xserver.desktopManager.gnome.sessionPath = [ pkgs.gnome40Extensions."pop-shell@system76.com" ];
   environment.systemPackages = with pkgs; [
-    gnome3.dconf
     gnome3.gnome-tweaks
-    gnomeExtensions.dash-to-dock
-    gnomeExtensions.gsconnect
-    gnomeExtensions.taskwhisperer
-    gnomeExtensions.night-theme-switcher
-    gnomeExtensions.pop-os
-    gnome3.gnome-shell-extensions
-    pop-shell-shortcuts
-    # gnomeExtensions.paperwm
+    gnome40Extensions."just-perfection-desktop@just-perfection"
+    gnome40Extensions."gsconnect@andyholmes.github.io"
+    gnome40Extensions."nightthemeswitcher@romainvigier.fr"
+    gnome40Extensions."taskwhisperer-extension@infinicode.de"
+    gnome40Extensions."pop-shell@system76.com"
+    gnome40Extensions."run-or-raise@edvard.cz"
     nordic
-    paper-icon-theme
-    plata-theme
-    tdrop
     themeSwitch
     zafiro-icons
   ];
@@ -170,16 +165,5 @@ in
     wantedBy = [ "multi-user.target" ];
     path = [ pkgs.gnome3.dconf ];
     script = "dconf update";
-  };
-  systemd.user.services.profile-update = {
-    environment.DISPLAY = ":0";
-    serviceConfig.Type = "oneshot";
-    wantedBy = [ "multi-user.target" ];
-    path = with pkgs; [ myNvim zsh sudo cacert curl ];
-    script = ''
-      source ${config.system.build.setEnvironment}
-      zsh -ilc zup || true
-      zsh -ilc nvim --headless '+PlugUpgrade' '+PlugDiff' '+PlugUpdate' '+PlugClean!' '+qall' || true
-    '';
   };
 }

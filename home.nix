@@ -202,6 +202,8 @@ with pkgs.lib; {
   '';
   xdg.configFile."zsh/config".source =
     config.lib.file.mkOutOfStoreSymlink "${dir}/dots/zsh";
+  xdg.configFile."run-or-raise".source =
+    config.lib.file.mkOutOfStoreSymlink "${dir}/dots/run-or-raise";
   programs.zsh = {
     enable = true;
     envExtra = "skip_global_compinit=1";

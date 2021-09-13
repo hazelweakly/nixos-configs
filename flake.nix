@@ -74,20 +74,18 @@
       url = "github:pop-os/shell";
       flake = false;
     };
-    pop-os-shell-shortcuts = {
-      url = "github:pop-os/shell-shortcuts";
-      flake = false;
-    };
-    night-theme-switcher = {
-      url = "gitlab:/rmnvgr/nightthemeswitcher-gnome-shell-extension/v50";
-      flake = false;
-    };
     matterhorn = {
       url = "github:matterhorn-chat/matterhorn";
       flake = false;
     };
     flake-compat = {
       url = "github:edolstra/flake-compat";
+      flake = false;
+    };
+    notify-send = {
+      type = "github";
+      owner = "M3TIOR";
+      repo = "notify-send.sh";
       flake = false;
     };
   };

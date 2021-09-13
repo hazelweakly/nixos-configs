@@ -444,23 +444,6 @@
         "type": "github"
       }
     },
-    "night-theme-switcher": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1619101025,
-        "narHash": "sha256-DRSkkmoelYZ0WHYfnP0hPx9rN1vX1DrvDvpHPvJEQGc=",
-        "owner": "rmnvgr",
-        "repo": "nightthemeswitcher-gnome-shell-extension",
-        "rev": "90e06699ff1268a86da7703c3ea5397e542b99b2",
-        "type": "gitlab"
-      },
-      "original": {
-        "owner": "rmnvgr",
-        "ref": "v50",
-        "repo": "nightthemeswitcher-gnome-shell-extension",
-        "type": "gitlab"
-      }
-    },
     "nix": {
       "inputs": {
         "lowdown-src": "lowdown-src",
@@ -568,6 +551,22 @@
         "type": "github"
       }
     },
+    "notify-send": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1628382869,
+        "narHash": "sha256-iySemdRxHgok5clJuPAOYtbfRcWAPCDYg5FuaqIk/kM=",
+        "owner": "M3TIOR",
+        "repo": "notify-send.sh",
+        "rev": "38f09bcd0fd3fccab19161866b7f8690d84c289c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "M3TIOR",
+        "repo": "notify-send.sh",
+        "type": "github"
+      }
+    },
     "pop-os-shell": {
       "flake": false,
       "locked": {
@@ -581,22 +580,6 @@
       "original": {
         "owner": "pop-os",
         "repo": "shell",
-        "type": "github"
-      }
-    },
-    "pop-os-shell-shortcuts": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1629392416,
-        "narHash": "sha256-/o6sQ/EieIbZrD7p1dwYOQ+uBsk+zf3vjnPXOcD890Q=",
-        "owner": "pop-os",
-        "repo": "shell-shortcuts",
-        "rev": "005f76c8e59d924a7edb59a2d08030d439b7fd45",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pop-os",
-        "repo": "shell-shortcuts",
         "type": "github"
       }
     },
@@ -641,7 +624,6 @@
         "naersk": "naersk_2",
         "neovim-flake": "neovim-flake",
         "neuron": "neuron",
-        "night-theme-switcher": "night-theme-switcher",
         "nixlib": [
           "digga",
           "nixlib"
@@ -651,8 +633,8 @@
         ],
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
+        "notify-send": "notify-send",
         "pop-os-shell": "pop-os-shell",
-        "pop-os-shell-shortcuts": "pop-os-shell-shortcuts",
         "rust-overlay": "rust-overlay",
         "taskwarrior": "taskwarrior",
         "utils": "utils"
