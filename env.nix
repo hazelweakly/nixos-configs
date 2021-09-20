@@ -166,4 +166,6 @@ in
     path = [ pkgs.gnome3.dconf ];
     script = "dconf update";
   };
+  # dconf write /org/gnome/shell/extensions/nightthemeswitcher/commands/sunrise "'$(realpath -L $(which switch-theme)) \"light\"'"
+  # dconf write /org/gnome/shell/extensions/nightthemeswitcher/commands/sunset "'$(realpath -L $(which switch-theme)) \"dark\"'"
 }

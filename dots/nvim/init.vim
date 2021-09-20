@@ -83,10 +83,10 @@ function! VimrcLoadPlugins()
     Plug 'jceb/vim-orgmode'
 
     Plug 'https://gitlab.com/protesilaos/tempus-themes-vim.git'
-    Plug 'folke/tokyonight.nvim'
+    Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 
     " Languages
-    Plug 'lervag/vimtex'
+    Plug 'lervag/vimtex', { 'for': ['latex', 'tex'] }
     Plug 'dkarter/bullets.vim'
     Plug 'sheerun/vim-polyglot'
     call plug#end()
@@ -309,6 +309,10 @@ EOF
     let g:vim_markdown_toml_frontmatter = 1
     let g:vim_markdown_json_frontmatter = 1
     let g:vim_markdown_strikethrough = 1
+    let g:vim_markdown_folding_disabled = 1
+
+    " vimtex
+    " let g:vimtex_syntax_enabled = 0
 
     " vim-easy-align
     xmap <CR> <Plug>(EasyAlign)
@@ -471,7 +475,7 @@ function! VimrcLoadSettings()
     " set winheight=50
 
     " not needed with vim-sleuth (implemented by polyglot)
-    " set expandtab
+    set expandtab
     " set softtabstop=2
     " set shiftwidth=2
 
@@ -536,14 +540,19 @@ endfunction
 
 function! DoColors()
     if filereadable(expand("~/.local/share/theme"))
+        let l:cur = get(g:,'tokyonight_style', 'day')
+        let l:cur_theme = get(g:, 'colors_name', 'default')
         let l:theme = readfile(expand("~/.local/share/theme"))[0]
         let g:tokyonight_style = l:theme == "dark" ? "night" : "day"
-        execute 'set background=' . l:theme
-        colorscheme tokyonight
+        if g:tokyonight_style != l:cur || l:cur_theme != "tokyonight"
+            execute 'set background=' . l:theme
+            colorscheme tokyonight
+        endif
     end
 endfunction
 
 function! VimrcLoadColors()
+    let g:tokyonight_italic_functions = 1
     call DoColors()
     if filereadable(expand("~/.local/share/theme"))
         call timer_start(60000, {-> DoColors()}, {'repeat': -1})
