@@ -2,7 +2,7 @@ name: "Update"
 on:
   push:
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: "0 0 * * *"
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -25,6 +25,8 @@ jobs:
       - name: update
         run: |
           set -xeuo pipefail
+          git config --global user.email "hazel@theweaklys.com"
+          git config --global user.name "Hazel Weakly"
           nix develop -c nix flake update --commit-lock-file
           nix -Lv flake check
           nix -Lv build ".#"nixosConfigurations.hazel{weakly,xps}.config.system.build.toplevel

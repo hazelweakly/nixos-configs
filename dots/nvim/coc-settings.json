@@ -41,7 +41,7 @@
   "sh.explainshellEndpoint": "http://localhost:5000",
   "clangd.semanticHighlighting": true,
   "yaml.schemaStore.enable": true,
-  "yaml.format.enable": true,
+  "yaml.maxItemsComputed": 10000,
   "lua.checkForUpdates": "disabled",
   "Lua.diagnostics.disable": ["lowercase-global"],
   "suggest.completionItemKindLabels": {

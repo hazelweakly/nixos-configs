@@ -78,7 +78,7 @@ function! VimrcLoadPlugins()
     Plug 'wellle/targets.vim'
     Plug 'romainl/vim-cool'
     Plug 'andymass/vim-matchup'
-    Plug 'ryanoasis/vim-devicons'
+    Plug 'kyazdani42/nvim-web-devicons'
     " Plug 'adelarsq/vim-devicons-emoji'
     Plug 'jceb/vim-orgmode'
 
