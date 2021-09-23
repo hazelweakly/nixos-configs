@@ -91,6 +91,12 @@
     "nix": {
       "command": "rnix-lsp",
       "filetypes": ["nix"]
+    },
+    "terraform-ls": {
+      "command": "terraform-ls",
+      "filetypes": ["terraform"],
+      "args": ["serve"],
+      "initializationOptions": {}
     }
   },
   "diagnostic-languageserver.filetypes": {
