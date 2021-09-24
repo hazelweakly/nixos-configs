@@ -32,5 +32,6 @@ jobs:
           nix -Lv build ".#"nixosConfigurations.hazel{weakly,xps}.config.system.build.toplevel
           nix -Lv develop -c echo OK
       - run: |
+          git add flake.lock
           git commit -m "auto-update inputs [skip ci]"
           git push origin HEAD
