@@ -9,6 +9,9 @@
     digga.inputs.nixpkgs.follows = "nixpkgs";
     digga.inputs.nixlib.follows = "nixpkgs";
 
+    darwin.url = "github:lnl7/nix-darwin/master";
+    darwin.inputs.nixpkgs.follows = "nixpkgs";
+
     # needed for digga I guess?
     naersk.url = "github:nmattia/naersk";
     naersk.inputs.nixpkgs.follows = "nixpkgs";
@@ -98,8 +101,10 @@
     , rust-overlay
     , agenix
     , digga
+    , darwin
     , ...
     }:
+
     digga.lib.mkFlake {
       inherit self inputs;
       channelsConfig.allowUnfree = true;
@@ -122,7 +127,17 @@
       ];
 
       nixos.hostDefaults.channelName = "nixpkgs";
-      nixos.hostDefaults.externalModules = [
+
+      nixos.hostDefaults.modules = [
+        ./network.nix
+        ./cachix.nix
+        ./env.nix
+        ./dyn-wp.nix
+        ./common.nix
+        ./proxy.nix
+        ./users.nix
+
+
         nixos-hardware.nixosModules.common-cpu-intel
         nixos-hardware.nixosModules.common-pc-laptop
         nixos-hardware.nixosModules.common-pc-ssd
@@ -177,14 +192,24 @@
         )
       ];
 
-      nixos.hostDefaults.modules = [
-        ./network.nix
-        ./cachix.nix
-        ./env.nix
-        ./dyn-wp.nix
-        ./common.nix
-        ./proxy.nix
-        ./users.nix
-      ];
+      darwinConfigurations."Hazels-MacBook-Pro" = darwin.lib.darwinSystem {
+        system = "x86_64-darwin";
+        modules = [
+          ./cachix.nix
+          home-manager.darwinModules.home-manager
+          {
+            nixpkgs.overlays = builtins.attrValues (self.overlays) ++ [ inputs.flake-utils-plus.overlay ];
+            # [ agenix.overlay rust-overlay.overlay (_: _: { inherit inputs; }) ] ++ (map (f: import f) (digga.lib.importOverlays ./overlays).overlays.content);
+          }
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.hazelweakly = import ./home.nix;
+          }
+          ./nix-darwin.nix
+        ];
+
+      };
+      darwinPackages = self.pkgs."x86_64-darwin".nixpkgs;
     };
 }

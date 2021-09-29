@@ -118,11 +118,17 @@ zup() {
 
 update () {
   echo "Rebuilding"
-  sudo nixos-rebuild \
-    --flake '/etc/nixos#'"$(hostname)" \
-    ${1+"$@"} switch
-  }
+  darwin-rebuild --flake /Users/hazelweakly/src/personal/nixos-configs ${1+"$@"} switch
+  rm -f /Users/hazelweakly/src/personal/nixos-configs/result
+  # sudo nixos-rebuild \
+  #   --flake '/etc/nixos#'"$(hostname)" \
+  #   ${1+"$@"} switch
+}
 
-vup() {
+repl() {
+  command repl /Users/hazelweakly/src/personal/nixos-configs ${1+"$@"}
+}
+
+vup () {
   nvim --headless '+PlugUpgrade' '+PlugUpdate' '+TSUpdateSync' '+PlugClean!' '+CocUpdateSync' '+qall' ; echo
 }

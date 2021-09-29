@@ -1,7 +1,9 @@
 DISABLE_MAGIC_FUNCTIONS="true"
-if [[ -r "${XDG_DATA_HOME}/theme" ]]; then
-  export __sys_theme="$(<${XDG_DATA_HOME}/theme)"
+if ! [[ -r "${XDG_DATA_HOME}/theme" ]]; then
+  printf 'light' > "${XDG_DATA_HOME}/theme"
 fi
+export __sys_theme="$(<${XDG_DATA_HOME}/theme)"
+
 if [[ -r "${XDG_CACHE_HOME}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME}/p10k-instant-prompt-''${(%):-%n}.zsh"
 fi
@@ -20,10 +22,10 @@ if ! [[ -d ${XDG_DATA_HOME}/zsh/zinit/bin ]]; then
   command git clone --depth=1 https://github.com/zdharma/zinit.git ${XDG_DATA_HOME}/zsh/zinit/bin
 fi
 source ${XDG_DATA_HOME}/zsh/zinit/bin/zinit.zsh
-if ! [[ -f ${XDG_DATA_HOME}/zsh/zinit/bin/zmodules/COMPILED_AT ]]; then
-  nix-shell -p clang_11 ncurses autoconf --run 'zsh -ilc "zinit module build"'
-fi
-module_path+=("${XDG_DATA_HOME}/zsh/zinit/bin/zmodules/Src")
-zmodload zdharma/zplugin &>/dev/null
+# if ! [[ -f ${XDG_DATA_HOME}/zsh/zinit/bin/zmodules/COMPILED_AT ]]; then
+#   nix-shell -p clang_11 ncurses autoconf --run 'zsh -ilc "zinit module build"'
+# fi
+# module_path+=("${XDG_DATA_HOME}/zsh/zinit/bin/zmodules/Src")
+# zmodload zdharma/zplugin &>/dev/null
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit

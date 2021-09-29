@@ -1,7 +1,7 @@
 final: prev:
 let
-  n =
-    final.inputs.flake-firefox-nightly.packages.x86_64-linux.firefox-nightly-bin.name;
+  ffox = if prev.system == "x86_64-linux" then final.inputs.flake-firefox-nightly.packages.x86_64-linux.firefox-nightly-bin else prev.firefox-devedition-bin;
+  n = ffox.name;
 
   policies = {
     DisableAppUpdate = true;
@@ -53,7 +53,7 @@ rec {
       policiesJSON = prev.writeText "policy.json"
         (builtins.toJSON { inherit policies; });
     in
-    final.inputs.flake-firefox-nightly.packages.x86_64-linux.firefox-nightly-bin.unwrapped.overrideAttrs
+    ffox.unwrapped.overrideAttrs
       (
         o: {
           installPhase = (o.installPhase or "") + ''

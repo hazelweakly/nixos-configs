@@ -1,4 +1,4 @@
-{ pkgs }:
+{ pkgs, ... }:
 with pkgs;
 let
   isBroken = pkg: (builtins.tryEval (builtins.deepSeq pkg.outPath pkg)).success;
@@ -25,10 +25,10 @@ let
     perl
     python3
     python3Packages.black
-    python-language-server
+    # python-language-server
     shellcheck
     shfmt
-    sumneko-lua-language-server
+    # sumneko-lua-language-server
     tmux
     tree-sitter
     universal-ctags
