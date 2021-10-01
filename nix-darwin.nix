@@ -16,6 +16,7 @@
     htop
     gcc
     openssh
+    xhyve
 
     awscli2 # yey
 
@@ -29,6 +30,7 @@
   ];
   environment.shells = with pkgs; [ bashInteractive zsh ];
   environment.variables.SHELL = "${pkgs.zsh}/bin/zsh";
+  environment.variables.EDITOR = "vim";
 
   fonts.enableFontDir = true;
   fonts.fonts = [ pkgs.opensans-ttf pkgs.victor-mono ];
@@ -95,12 +97,13 @@
   };
   homebrew.casks = [
     "aptible"
-    "camo-studio"
+    # "camo-studio" # didn't work until installed manually.
     "gpg-suite"
     "hammerspoon"
     "hey"
     "mos"
     "obsidian"
+    "openvpn-connect"
     "postico"
     "visual-studio-code"
     "vlc"
