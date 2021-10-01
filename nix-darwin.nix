@@ -1,4 +1,4 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, inputs, ... }: {
   environment.systemPackages = with pkgs; [
     # kitty
     terminal-notifier
@@ -7,16 +7,17 @@
     git-lfs
     cachix
     file
-    timewarrior
-    taskwarrior
-    tasksh
+    # timewarrior
+    # taskwarrior
+    # tasksh
     (callPackage ./neovim.nix { })
     ranger
     fup-repl
-    htop
+    # htop
     gcc
     openssh
     xhyve
+    coreutils
 
     awscli2 # yey
 
@@ -36,6 +37,7 @@
   fonts.fonts = [ pkgs.opensans-ttf pkgs.victor-mono ];
 
   services.nix-daemon.enable = true;
+  services.activate-system.enable = true;
   nixpkgs.config.allowUnfree = true;
   system.stateVersion = 4;
   nix.package = pkgs.nixUnstable;
@@ -60,7 +62,16 @@
     tilesize = 32;
   };
 
+  system.activationScripts.postActivation.text = ''
+    printf "disabling spotlight indexing... "
+    mdutil -i off -d / &> /dev/null
+    mdutil -E / &> /dev/null
+    echo "ok"
+  '';
+
   programs.zsh.enable = true;
+  nix.useSandbox = true;
+  nix.sandboxPaths = [ "/private/tmp" "/private/var/tmp" "/usr/bin/env" ];
 
   homebrew.enable = true;
   homebrew.autoUpdate = true;
@@ -69,14 +80,18 @@
   homebrew.global.noLock = true;
   # sudo ln -sfn /usr/local/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk
   homebrew.brews = [
+    "clj-kondo"
+    "cocoapods"
+    "hopenpgp-tools"
+    "node"
+    "nodenv"
     "openjdk@11"
+    "pinentry-mac"
     "pyenv"
     "pyenv-virtualenv"
-    "nodenv"
-    "node"
     "yarn"
-    "cocoapods"
-    "clj-kondo"
+    "ykman"
+    "yubikey-personalization"
   ];
   homebrew.taps = [
     "borkdude/brew"
@@ -97,16 +112,18 @@
   };
   homebrew.casks = [
     "aptible"
-    # "camo-studio" # didn't work until installed manually.
+    # "camo-studio" # need to install manually
     "gpg-suite"
     "hammerspoon"
     "hey"
+    "kitty"
     "mos"
     "obsidian"
     "openvpn-connect"
     "postico"
     "visual-studio-code"
     "vlc"
+    "yubico-authenticator"
     "yubico-yubikey-manager"
     "yubico-yubikey-personalization-gui"
   ];

@@ -148,7 +148,8 @@
           { pkgs, ... }: {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.hazel = import ./home.nix;
+            home-manager.users.hazelweakly = import ./home.nix;
+            home-manager.home.homeDirectory = "/Users/hazelweakly";
           }
         )
         # { nix.generateRegistryFromInputs = true; }
@@ -194,12 +195,18 @@
 
       darwinConfigurations."Hazels-MacBook-Pro" = darwin.lib.darwinSystem {
         system = "x86_64-darwin";
+        inherit inputs;
         modules = [
           ./cachix.nix
           home-manager.darwinModules.home-manager
+          inputs.flake-utils-plus.nixosModules.autoGenFromInputs
           {
             nixpkgs.overlays = builtins.attrValues (self.overlays) ++ [ inputs.flake-utils-plus.overlay ];
-            # [ agenix.overlay rust-overlay.overlay (_: _: { inherit inputs; }) ] ++ (map (f: import f) (digga.lib.importOverlays ./overlays).overlays.content);
+            nix.generateRegistryFromInputs = true;
+            nix.generateNixPathFromInputs = true;
+            nix.linkInputs = true;
+            nix.nixPath = [ "darwin=/etc/nix/inputs/darwin" "darwin-config=/etc/nix/inputs/self/compat/config.nix" ];
+            environment.etc.hostname.text = "Hazels-MacBook-Pro";
           }
           {
             home-manager.useGlobalPkgs = true;
@@ -207,6 +214,7 @@
             home-manager.users.hazelweakly = import ./home.nix;
           }
           ./nix-darwin.nix
+          ./work.nix
         ];
 
       };

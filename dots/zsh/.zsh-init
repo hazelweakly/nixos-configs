@@ -25,7 +25,7 @@ source ${XDG_DATA_HOME}/zsh/zinit/bin/zinit.zsh
 # if ! [[ -f ${XDG_DATA_HOME}/zsh/zinit/bin/zmodules/COMPILED_AT ]]; then
 #   nix-shell -p clang_11 ncurses autoconf --run 'zsh -ilc "zinit module build"'
 # fi
-# module_path+=("${XDG_DATA_HOME}/zsh/zinit/bin/zmodules/Src")
-# zmodload zdharma/zplugin &>/dev/null
+module_path+=("${XDG_DATA_HOME}/zsh/zinit/bin/zmodules/Src")
+zmodload zdharma/zplugin &>/dev/null
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit

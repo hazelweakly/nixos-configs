@@ -1,3 +1,7 @@
+- https://arslan.io/2021/02/15/automatic-dark-mode-for-terminal-applications/
+- https://github.com/bouk/dark-mode-notify
+- https://github.com/jesse-c/AppearanceNotifier
+
 - https://github.com/bbigras/nix-config/
 - https://github.com/nix-community/impermanence
 - https://github.com/lovesegfault/nix-config
