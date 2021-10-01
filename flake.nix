@@ -206,7 +206,9 @@
             nix.generateNixPathFromInputs = true;
             nix.linkInputs = true;
             nix.nixPath = [ "darwin=/etc/nix/inputs/darwin" "darwin-config=/etc/nix/inputs/self/compat/config.nix" ];
-            environment.etc.hostname.text = "Hazels-MacBook-Pro";
+            environment.etc.hostname.text = ''
+              Hazels-MacBook-Pro
+            '';
           }
           {
             home-manager.useGlobalPkgs = true;
