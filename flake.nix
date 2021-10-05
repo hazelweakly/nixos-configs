@@ -214,6 +214,11 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.hazelweakly = import ./home.nix;
+            home-manager.users.root = { pkgs, ... }: {
+              home.homeDirectory = pkgs.lib.mkForce "/var/root";
+              xdg.enable = true;
+              programs.zsh.enable = true;
+            };
           }
           ./pam.nix
           ./nix-darwin.nix

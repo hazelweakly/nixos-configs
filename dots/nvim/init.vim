@@ -22,7 +22,7 @@ function! VimrcLoadPlugins()
     " Linting + LSP
     Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
     Plug 'antoinemadec/coc-fzf'
-    Plug 'expipiplus1/vscode-hie-server', { 'branch': 'coc.nvim', 'do': 'yarn import ; yarn install --frozen-lockfile ;  yarn vscode:prepublish' }
+    Plug 'expipiplus1/vscode-hie-server', { 'branch': 'coc.nvim', 'do': 'yarn install --frozen-lockfile ;  yarn vscode:prepublish' }
     Plug 'direnv/direnv.vim'
     Plug 'sbdchd/neoformat', { 'for' : ['terraform'] }
     Plug 'editorconfig/editorconfig-vim'
@@ -547,26 +547,26 @@ endfunction
 
 function! DoColors()
     if filereadable(expand("~/.local/share/theme"))
-        let l:cur = get(g:,'tokyonight_style', 'day')
-        let l:cur_theme = get(g:, 'colors_name', 'default')
         let l:theme = readfile(expand("~/.local/share/theme"))[0]
-        let g:tokyonight_style = l:theme == "dark" ? "night" : "day"
-        if g:tokyonight_style != l:cur || l:cur_theme != "tokyonight"
-            execute 'set background=' . l:theme
-            colorscheme tokyonight
-        endif
+        call SetTheme(l:theme)
+    else
+        call SetTheme("light")
     end
+endfunction
+
+function! SetTheme(theme)
+    let l:cur = get(g:,'tokyonight_style', 'day')
+    let l:cur_theme = get(g:, 'colors_name', 'default')
+    let g:tokyonight_style = a:theme == "dark" ? "night" : "day"
+    if g:tokyonight_style != l:cur || l:cur_theme != "tokyonight"
+        execute 'set background=' . a:theme
+        colorscheme tokyonight
+    endif
 endfunction
 
 function! VimrcLoadColors()
     let g:tokyonight_italic_functions = 1
     call DoColors()
-    if filereadable(expand("~/.local/share/theme"))
-        call timer_start(60000, {-> DoColors()}, {'repeat': -1})
-    else
-        let g:tokyonight_style = "day"
-        colorscheme tokyonight
-    endif
     hi! Comment gui=italic
     hi MatchParen guibg=none gui=italic
     hi SignColumn guibg=none

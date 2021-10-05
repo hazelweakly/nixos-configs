@@ -1,4 +1,24 @@
-{ pkgs, config, inputs, ... }: {
+{ pkgs, config, inputs, ... }:
+let switch-theme =
+  pkgs.writeShellScriptBin "switch-theme" ''
+    t="$1"
+    shift
+    if [ -z "$t" ]; then
+      defaults read -g AppleInterfaceStyle >/dev/null 2>&1 && t=dark || t=light
+    fi
+
+    echo "$t" > $HOME/.local/share/theme
+    case "$t" in
+      dark) kitty_theme=${builtins.toString (./dots/kitty + "/tokyonight_night")} ;;
+      light) kitty_theme=${builtins.toString (./dots/kitty + "/tokyonight_day")} ;;
+    esac
+    ln -sf $kitty_theme $HOME/.config/kitty_current_theme
+    find /tmp/kitty* -maxdepth 1 -exec kitty @ --to=unix:{} set-colors -a -c $kitty_theme \;
+    for v in $(nvr --serverlist); do nvr -s --remote-expr "SetTheme(\"$t\")" --servername $v --nostart >/dev/null & done
+    wait
+  '';
+in
+{
   environment.systemPackages = with pkgs; [
     # kitty
     terminal-notifier
@@ -11,6 +31,7 @@
     # taskwarrior
     # tasksh
     (callPackage ./neovim.nix { })
+    neovim-remote
     ranger
     fup-repl
     # htop
@@ -18,7 +39,7 @@
     openssh
     xhyve
     coreutils
-    pam_u2f
+    switch-theme
 
     awscli2 # yey
 
@@ -35,8 +56,9 @@
   environment.variables.EDITOR = "vim";
   environment.variables.TERMINFO_DIRS = "/Applications/kitty.app/Contents/Resources/kitty/terminfo";
 
-  security.pam.enableSudoTouchIdAuth = true;
-  security.pam.enableu2fAuth = true;
+  security.pam.sudoTouchIdAuth.enable = true;
+  security.pam.u2fAuth.enable = true;
+  security.pam.u2fAuth.options = [ "pinverification=0" ];
 
   fonts.enableFontDir = true;
   fonts.fonts = [ pkgs.opensans-ttf pkgs.victor-mono ];
@@ -44,6 +66,7 @@
   services.nix-daemon.enable = true;
   services.activate-system.enable = true;
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnsupportedSystem = true;
   system.stateVersion = 4;
   nix.package = pkgs.nixUnstable;
   nix.extraOptions = ''
@@ -76,6 +99,19 @@
     ''
     config.system.activationScripts.pam.text # temp hack
   ];
+
+  launchd.user.agents.dark-mode-notify = {
+    environment.PATH = "/bin:/usr/bin:${pkgs.lib.makeBinPath [switch-theme pkgs.neovim-remote]}";
+    serviceConfig = {
+      KeepAlive = true;
+      RunAtLoad = true;
+      UserName = "hazelweakly";
+      GroupName = "staff";
+      StandardOutPath = "/tmp/dark-mode-notify.stdout";
+      StandardErrorPath = "/tmp/dark-mode-notify.stderr";
+    };
+    command = "${./dark-mode-notify.swift} ${switch-theme}";
+  };
 
   programs.zsh.enable = true;
   nix.useSandbox = true;
