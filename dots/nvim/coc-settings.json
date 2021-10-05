@@ -73,13 +73,16 @@
   },
   "languageserver": {
     "clojure-lsp": {
-      "command": "bash",
-      "args": ["-c", "clojure-lsp"],
-      "filetypes": ["clojure"],
-      "rootPatterns": ["project.clj"],
+      "command": "clojure-lsp",
+      "filetypes": ["clojure", "edn"],
+      "rootPatterns": ["project.clj", "deps.edn", ".git"],
       "additionalSchemes": ["jar", "zipfile"],
       "trace.server": "verbose",
-      "initializationOptions": {}
+      "initializationOptions": {
+        "document-formatting?": false,
+        "document-range-formatting?": false,
+        "text-document-sync-kind": ":incremental"
+      }
     },
     "dhall-lsp": {
       "command": "dhall-lsp-server",
@@ -99,6 +102,7 @@
       "initializationOptions": {}
     }
   },
+  "diagnostic-languageserver.mergeConfig": true,
   "diagnostic-languageserver.filetypes": {
     "vim": "vint",
     "email": "languagetool",
@@ -110,7 +114,9 @@
   "diagnostic-languageserver.formatFiletypes": {
     "sh": "shfmt",
     "bzl": "buildifier",
-    "cabal": "cabal-fmt"
+    "cabal": "cabal-fmt",
+    "clojure": "zprint",
+    "edn": "zprint"
   },
   "diagnostic-languageserver.linters": {
     "buildifier": {
@@ -149,6 +155,11 @@
     "buildifier": {
       "command": "buildifier",
       "args": []
+    },
+    "zprint": {
+      "command": "zprintm-1.1.2",
+      "doesWriteToFile": true,
+      "args": ["{:search-config? true}", "-w", "%file"]
     }
   }
 }

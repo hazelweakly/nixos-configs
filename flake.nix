@@ -215,6 +215,7 @@
             home-manager.useUserPackages = true;
             home-manager.users.hazelweakly = import ./home.nix;
           }
+          ./pam.nix
           ./nix-darwin.nix
           ./work.nix
         ];

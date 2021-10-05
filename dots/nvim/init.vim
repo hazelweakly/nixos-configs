@@ -31,6 +31,7 @@ function! VimrcLoadPlugins()
     Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
     Plug 'jackguo380/vim-lsp-cxx-highlight'
     Plug 'p00f/nvim-ts-rainbow'
+    Plug 'Olical/conjure'
     " https://github.com/metakirby5/codi.vim
 
     " https://github.com/nvim-telescope/telescope.nvim
@@ -191,6 +192,7 @@ EOF
                 \ 'coc-cfn-lint',
                 \ 'coc-clangd',
                 \ 'coc-cmake',
+                \ 'coc-conjure',
                 \ 'coc-css',
                 \ 'coc-cssmodules',
                 \ 'coc-diagnostic',
@@ -261,6 +263,11 @@ EOF
 
     nmap gp <Plug>(coc-git-prevchunk)
     nmap gn <Plug>(coc-git-nextchunk)
+
+    " conjure
+    let g:conjure#mapping#doc_word = 'K'
+    let g:conjure#highlight#enabled = v:true
+    let g:conjure#extract#tree_sitter#enabled = v:true
 
     " neoformat
     " see also: after/ftplugin/terraform
@@ -569,6 +576,7 @@ function! VimrcLoadColors()
 endfunction
 
 let g:mapleader = "\<Space>"
+let g:maplocalleader = "\<Space>"
 " let g:polyglot_disabled = ['sensible']
 " let g:polyglot_disabled = ['autoindent']
 let g:python_host_skip_check=1 " disable python2

@@ -18,6 +18,7 @@
     openssh
     xhyve
     coreutils
+    pam_u2f
 
     awscli2 # yey
 
@@ -32,6 +33,10 @@
   environment.shells = with pkgs; [ bashInteractive zsh ];
   environment.variables.SHELL = "${pkgs.zsh}/bin/zsh";
   environment.variables.EDITOR = "vim";
+  environment.variables.TERMINFO_DIRS = "/Applications/kitty.app/Contents/Resources/kitty/terminfo";
+
+  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.enableu2fAuth = true;
 
   fonts.enableFontDir = true;
   fonts.fonts = [ pkgs.opensans-ttf pkgs.victor-mono ];
@@ -62,12 +67,15 @@
     tilesize = 32;
   };
 
-  system.activationScripts.postActivation.text = ''
-    printf "disabling spotlight indexing... "
-    mdutil -i off -d / &> /dev/null
-    mdutil -E / &> /dev/null
-    echo "ok"
-  '';
+  system.activationScripts.postActivation.text = builtins.concatStringsSep "\n" [
+    ''
+      printf "disabling spotlight indexing... "
+      mdutil -i off -d / &> /dev/null
+      mdutil -E / &> /dev/null
+      echo "ok"
+    ''
+    config.system.activationScripts.pam.text # temp hack
+  ];
 
   programs.zsh.enable = true;
   nix.useSandbox = true;
@@ -113,6 +121,7 @@
   homebrew.casks = [
     "aptible"
     # "camo-studio" # need to install manually
+    "docker"
     "gpg-suite"
     "hammerspoon"
     "hey"

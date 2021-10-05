@@ -53,7 +53,8 @@ ncp() {
 }
 
 nixcd() {
-  \cd /etc/channels/nixpkgs
+  v="${1:-nixpkgs}"
+  builtin cd /etc/nix/inputs/"$v"
 }
 
 nixos-option() {
