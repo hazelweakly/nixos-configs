@@ -43,6 +43,7 @@ with pkgs.lib; {
   xdg.configFile."nixpkgs/config.nix".text =
     "{ allowUnfree = true; allowUnsupportedSystem = true; }";
 
+  programs.nix-index.enable = true;
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
   programs.direnv.nix-direnv.enableFlakes = true;
@@ -113,3 +114,4 @@ with pkgs.lib; {
     };
   };
 }
+

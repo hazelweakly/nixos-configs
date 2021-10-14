@@ -99,24 +99,6 @@ zup() {
     zinit compile --all && zinit self-update
 }
 
-# update() {
-#     echo "Rebuilding"
-#     build(){
-#       set -x
-#       sudo \
-#         NIX_PATH="$(tr ':' '\n' <<<"$NIX_PATH" | grep -v nixpkgs-overlays | paste -s -d':')" \
-#         nixos-rebuild \
-#           -I $(tr ':' '\n' <<<"$NIX_PATH" | grep -v nixpkgs-overlays | paste -s -d '%' | sed 's/%/ -I /g') \
-#           --flake \
-#           '/etc/nixos#'"$(hostname)" \
-#           --impure \
-#           "$@" \
-#           switch
-#       set +x
-#     }
-#     build "$@" && build "$@"
-# }
-
 update () {
   echo "Rebuilding"
   darwin-rebuild --flake /Users/hazelweakly/src/personal/nixos-configs ${1+"$@"} switch
@@ -124,10 +106,6 @@ update () {
   # sudo nixos-rebuild \
   #   --flake '/etc/nixos#'"$(hostname)" \
   #   ${1+"$@"} switch
-}
-
-repl() {
-  command repl /Users/hazelweakly/src/personal/nixos-configs ${1+"$@"}
 }
 
 vup () {

@@ -1,8 +1,13 @@
-{ hostname ? with builtins; head (split "\n" (readFile /etc/hostname)), system ? builtins.currentSystem, ... }:
 let
-  flake = import ./flake-compat.nix;
-  cfg =
-    if system == "x86_64-darwin" then flake.defaultNix.darwinConfigurations
-    else if system == "x86_64-linux" then flake.defaultNix.nixosConfigurations else { };
+  host = (import ./host).config or { };
+  # Undo all the configuration additions because otherwise darwin-option chokes
+
+  host_nix = builtins.removeAttrs host.nix [
+    "generateNixPathFromInputs"
+    "generateRegistryFromInputs"
+    "linkInputs"
+  ];
+
+  no_pam = builtins.removeAttrs host.security [ "pam" ];
 in
-${cfg}.${hostname}.config
+(builtins.removeAttrs host [ "home-manager" "nix" "security" ]) // { nix = host_nix; security = no_pam; }

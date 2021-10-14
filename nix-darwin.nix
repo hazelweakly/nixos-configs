@@ -40,6 +40,7 @@ in
     xhyve
     coreutils
     switch-theme
+    _1password
 
     awscli2 # yey
 
@@ -64,7 +65,6 @@ in
   fonts.fonts = [ pkgs.opensans-ttf pkgs.victor-mono ];
 
   services.nix-daemon.enable = true;
-  services.activate-system.enable = true;
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowUnsupportedSystem = true;
   system.stateVersion = 4;
@@ -76,32 +76,51 @@ in
   '';
 
   system.defaults.NSGlobalDomain = {
+    "com.apple.mouse.tapBehavior" = 1;
+    "com.apple.sound.beep.feedback" = 0;
+    "com.apple.sound.beep.volume" = "0.0";
+    "com.apple.trackpad.scaling" = "0.0";
+    AppleFontSmoothing = 0;
     AppleShowScrollBars = "Automatic";
     InitialKeyRepeat = 15;
     KeyRepeat = 2;
     NSAutomaticCapitalizationEnabled = false;
+    NSAutomaticDashSubstitutionEnabled = false;
     NSAutomaticPeriodSubstitutionEnabled = false;
+    NSAutomaticQuoteSubstitutionEnabled = false;
+    NSAutomaticSpellingCorrectionEnabled = false;
+    NSDocumentSaveNewDocumentsToCloud = false;
+    _HIHideMenuBar = true;
   };
+  system.defaults.trackpad = {
+    Clicking = true;
+    Dragging = true;
+    TrackpadRightClick = true;
+    TrackpadThreeFingerDrag = true;
+  };
+  system.defaults.finder = {
+    FXEnableExtensionChangeWarning = false;
+    _FXShowPosixPathInTitle = true;
+    CreateDesktop = false;
+    AppleShowAllExtensions = true;
+  };
+
+  system.defaults.SoftwareUpdate.AutomaticallyInstallMacOSUpdates = true;
 
   system.defaults.dock = {
     autohide = true;
-    expose-group-by-app = true;
     mru-spaces = true;
     tilesize = 32;
+    show-recents = false;
+    minimize-to-application = true;
   };
 
   system.activationScripts.postActivation.text = builtins.concatStringsSep "\n" [
-    ''
-      printf "disabling spotlight indexing... "
-      mdutil -i off -d / &> /dev/null
-      mdutil -E / &> /dev/null
-      echo "ok"
-    ''
     config.system.activationScripts.pam.text # temp hack
   ];
 
   launchd.user.agents.dark-mode-notify = {
-    environment.PATH = "/bin:/usr/bin:${pkgs.lib.makeBinPath [switch-theme pkgs.neovim-remote]}";
+    path = [ switch-theme pkgs.neovim-remote config.environment.systemPath ];
     serviceConfig = {
       KeepAlive = true;
       RunAtLoad = true;
@@ -110,19 +129,22 @@ in
       StandardOutPath = "/tmp/dark-mode-notify.stdout";
       StandardErrorPath = "/tmp/dark-mode-notify.stderr";
     };
-    command = "${./dark-mode-notify.swift} ${switch-theme}";
+    command = "${./dark-mode-notify.swift} ${switch-theme}/bin/switch-theme";
   };
 
+  launchd.SoftResourceLimits.NumberOfFiles = 1048576;
+  launchd.HardResourceLimits.NumberOfFiles = 1048576;
+
   programs.zsh.enable = true;
-  nix.useSandbox = true;
-  nix.sandboxPaths = [ "/private/tmp" "/private/var/tmp" "/usr/bin/env" ];
+  programs.zsh.promptInit = "";
+  programs.zsh.enableCompletion = false;
+  programs.zsh.enableBashCompletion = false;
 
   homebrew.enable = true;
   homebrew.autoUpdate = true;
   homebrew.cleanup = "zap";
   homebrew.global.brewfile = true;
   homebrew.global.noLock = true;
-  # sudo ln -sfn /usr/local/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk
   homebrew.brews = [
     "clj-kondo"
     "cocoapods"

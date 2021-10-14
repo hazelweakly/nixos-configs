@@ -184,7 +184,8 @@ EOF
 
     let g:coc_filetype_map = {
           \ 'yaml.ansible': 'yaml',
-          \ 'markdown.neuron':'markdown'
+          \ 'markdown.neuron':'markdown',
+          \ 'direnv':'sh'
           \ }
 
     let g:coc_global_extensions = [

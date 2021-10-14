@@ -1,4 +1,4 @@
-{ pkgs, config, inputs, ... }: {
+{ pkgs, ... }: {
   home-manager.users.hazelweakly = { config, ... }: {
     programs.git = {
       userName = pkgs.lib.mkForce "Hazel Weakly";

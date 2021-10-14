@@ -157,9 +157,8 @@
       "args": []
     },
     "zprint": {
-      "command": "zprintm-1.1.2",
-      "doesWriteToFile": true,
-      "args": ["{:search-config? true}", "-w", "%file"]
+      "command": "zprint",
+      "args": ["{:search-config? true}"]
     }
   }
 }

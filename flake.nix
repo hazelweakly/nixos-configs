@@ -4,27 +4,18 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixpkgs-digga.url = "github:nixos/nixpkgs/f048b1401f8246c4a8841d15190ebe7c8f15941a";
 
     digga.url = "github:divnix/digga";
-    digga.inputs.nixpkgs.follows = "nixpkgs";
-    digga.inputs.nixlib.follows = "nixpkgs";
+    digga.inputs.nixpkgs.follows = "nixpkgs-digga";
+    digga.inputs.nixlib.follows = "nixpkgs-digga";
+    digga.inputs.flake-utils-plus.follows = "flake-utils-plus";
 
-    darwin.url = "github:lnl7/nix-darwin/master";
-    darwin.inputs.nixpkgs.follows = "nixpkgs";
+    darwin.follows = "nix-darwin";
+    nix-darwin.url = "github:lnl7/nix-darwin/master";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
-    # needed for digga I guess?
-    naersk.url = "github:nmattia/naersk";
-    naersk.inputs.nixpkgs.follows = "nixpkgs";
-
-    deploy.follows = "digga/deploy";
     flake-utils.url = "github:numtide/flake-utils";
-
-    # anti corruption bullshit
-    nixos.follows = "nixpkgs";
-    nixlib.follows = "digga/nixlib";
-    blank.follows = "digga/blank";
-    flake-utils-plus.follows = "utils";
-    # end bullshit
 
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
@@ -36,7 +27,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
-    utils = {
+    flake-utils-plus = {
       url = "github:gytis-ivaskevicius/flake-utils-plus";
       inputs.flake-utils.follows = "flake-utils";
     };
@@ -101,131 +92,27 @@
     , rust-overlay
     , agenix
     , digga
-    , darwin
+    , nix-darwin
     , ...
     }:
 
     digga.lib.mkFlake {
       inherit self inputs;
       channelsConfig.allowUnfree = true;
-      channels.nixpkgs.input = nixpkgs;
       channels.nixpkgs.overlays = [ agenix.overlay rust-overlay.overlay (_:_: { inherit inputs; }) ];
       channels.nixpkgs.imports = [ (digga.lib.importOverlays ./overlays) ];
 
-      nixos.hosts.hazelweakly.modules = [
-        ./machines/nvidia.nix
-        ./machines/precision7740.nix
-        ./hazelweakly.nix
-        ./work.nix
-        ./wireguard.nix
-        nixos-hardware.nixosModules.common-gpu-nvidia
-      ];
+      nixos = ./hosts;
+      home = ./home;
 
-      nixos.hosts.hazelxps.modules = [
-        ./machines/xps9350.nix
-        ./hazelxps.nix
-      ];
+      hostDefaults.builder = inputs.nix-darwin.lib.darwinSystem;
+      hostDefaults.output = "darwinConfigurations";
+      hostDefaults.channelName = "nixpkgs";
+      hostDefaults.modules = [{ config.lib = self.lib; }]; # why the fuck does this even work?
 
-      nixos.hostDefaults.channelName = "nixpkgs";
-
-      nixos.hostDefaults.modules = [
-        ./network.nix
-        ./cachix.nix
-        ./env.nix
-        ./dyn-wp.nix
-        ./common.nix
-        ./proxy.nix
-        ./users.nix
-
-
-        nixos-hardware.nixosModules.common-cpu-intel
-        nixos-hardware.nixosModules.common-pc-laptop
-        nixos-hardware.nixosModules.common-pc-ssd
-        home-manager.nixosModules.home-manager
-        agenix.nixosModules.age
-
-        (
-          { pkgs, ... }: {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.hazelweakly = import ./home.nix;
-            home-manager.home.homeDirectory = "/Users/hazelweakly";
-          }
-        )
-        # { nix.generateRegistryFromInputs = true; }
-        (
-          { pkgs, lib, ... }:
-          let
-            overlay-nix = pkgs.writeText "overlays.nix" ''
-              builtins.attrValues (builtins.getFlake (builtins.toString /etc/nixos)).overlays
-            '';
-          in
-          {
-            environment.etc = lib.mapAttrs'
-              (
-                key: val: {
-                  name = "channels/${key}";
-                  value = {
-                    source =
-                      if key != "nixpkgs" then
-                        val.outPath
-                      else
-                        pkgs.runCommandNoCC "nixpkgs" { } ''
-                            cp -r ${nixpkgs} $out
-                            chmod 700 $out
-                            echo "${
-                          nixpkgs.rev or (builtins.toString nixpkgs.lastModified)
-                          }" > $out/.version-suffix
-                        '';
-                  };
-                }
-              )
-              inputs;
-            nix.nixPath =
-              (
-                lib.mapAttrsToList (name: _: "${name}=/etc/channels/${name}")
-                  inputs
-              ) ++ [
-                "nixpkgs-overlays=${overlay-nix}"
-                "nixos-config=/etc/channels/self/compat/config.nix"
-              ];
-          }
-        )
-      ];
-
-      darwinConfigurations."Hazels-MacBook-Pro" = darwin.lib.darwinSystem {
-        system = "x86_64-darwin";
-        inherit inputs;
-        modules = [
-          ./cachix.nix
-          home-manager.darwinModules.home-manager
-          inputs.flake-utils-plus.nixosModules.autoGenFromInputs
-          {
-            nixpkgs.overlays = builtins.attrValues (self.overlays) ++ [ inputs.flake-utils-plus.overlay ];
-            nix.generateRegistryFromInputs = true;
-            nix.generateNixPathFromInputs = true;
-            nix.linkInputs = true;
-            nix.nixPath = [ "darwin=/etc/nix/inputs/darwin" "darwin-config=/etc/nix/inputs/self/compat/config.nix" ];
-            environment.etc.hostname.text = ''
-              Hazels-MacBook-Pro
-            '';
-          }
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.hazelweakly = import ./home.nix;
-            home-manager.users.root = { pkgs, ... }: {
-              home.homeDirectory = pkgs.lib.mkForce "/var/root";
-              xdg.enable = true;
-              programs.zsh.enable = true;
-            };
-          }
-          ./pam.nix
-          ./nix-darwin.nix
-          ./work.nix
-        ];
-
-      };
       darwinPackages = self.pkgs."x86_64-darwin".nixpkgs;
+
+      homeConfigurations = digga.lib.mkHomeConfigurations ((self.nixosConfigurations or {}) // (inputs.nixpkgs.lib.recursiveUpdate (self.darwinConfigurations or {}) {Hazels-MacBook-Pro.config.networking.domain = null;}));
+
     };
 }
