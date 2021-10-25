@@ -2,29 +2,28 @@
   description = "Hazel's system configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixos.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    nixpkgs-digga.url = "github:nixos/nixpkgs/f048b1401f8246c4a8841d15190ebe7c8f15941a";
 
     digga.url = "github:divnix/digga";
-    digga.inputs.nixpkgs.follows = "nixpkgs-digga";
-    digga.inputs.nixlib.follows = "nixpkgs-digga";
+    digga.inputs.nixpkgs.follows = "nixos";
+    digga.inputs.nixlib.follows = "nixos";
     digga.inputs.flake-utils-plus.follows = "flake-utils-plus";
 
     darwin.follows = "nix-darwin";
     nix-darwin.url = "github:lnl7/nix-darwin/master";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    nix-darwin.inputs.nixpkgs.follows = "nixos";
 
     flake-utils.url = "github:numtide/flake-utils";
 
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.flake-utils.follows = "flake-utils";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixos";
     };
     agenix = {
       url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixos";
       inputs.flake-utils.follows = "flake-utils";
     };
     flake-utils-plus = {
@@ -33,12 +32,12 @@
     };
     neovim-flake = {
       url = "github:neovim/neovim?dir=contrib";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixos";
       inputs.flake-utils.follows = "flake-utils";
     };
     home-manager = {
       url = "github:nix-community/home-manager/master";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixos";
     };
     mach-nix = {
       url = "github:DavHau/mach-nix";
@@ -46,7 +45,7 @@
     };
     flake-firefox-nightly = {
       url = "github:colemickens/flake-firefox-nightly";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixos";
     };
     neuron = {
       url = "github:srid/neuron";
@@ -99,20 +98,21 @@
     digga.lib.mkFlake {
       inherit self inputs;
       channelsConfig.allowUnfree = true;
-      channels.nixpkgs.overlays = [ agenix.overlay rust-overlay.overlay (_:_: { inherit inputs; }) ];
-      channels.nixpkgs.imports = [ (digga.lib.importOverlays ./overlays) ];
+      channels.nixos.overlays = [ digga.overlays.patchedNix agenix.overlay rust-overlay.overlay (_:_: { inherit inputs; }) ];
+      channels.nixos.imports = [ (digga.lib.importOverlays ./overlays) ];
 
       nixos = ./hosts;
       home = ./home;
 
+      hostDefaults.system = "x86_64-darwin";
       hostDefaults.builder = inputs.nix-darwin.lib.darwinSystem;
       hostDefaults.output = "darwinConfigurations";
-      hostDefaults.channelName = "nixpkgs";
-      hostDefaults.modules = [{ config.lib = self.lib; }]; # why the fuck does this even work?
+      hostDefaults.modules = [{ config.lib = self.lib; }]; # why the fuck does this even work? And why is it needed?
 
       darwinPackages = self.pkgs."x86_64-darwin".nixpkgs;
 
-      homeConfigurations = digga.lib.mkHomeConfigurations ((self.nixosConfigurations or {}) // (inputs.nixpkgs.lib.recursiveUpdate (self.darwinConfigurations or {}) {Hazels-MacBook-Pro.config.networking.domain = null;}));
-
+      homeConfigurations = digga.lib.mkHomeConfigurations ((self.nixosConfigurations or { })
+        // (inputs.nixos.lib.recursiveUpdate (self.darwinConfigurations or { }) { Hazels-MacBook-Pro.config.networking.domain = null; }));
+      # homeConfigurations = digga.lib.mkHomeConfigurations ((self.nixosConfigurations or { }) // (self.darwinConfigurations or { }));
     };
 }

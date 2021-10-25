@@ -1,0 +1,1 @@
+cd "$HOME/src/personal/nixos-configs/$1"

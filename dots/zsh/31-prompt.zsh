@@ -41,11 +41,13 @@
     scalaenv
     kubecontext
     terraform
+    terraform_version
     aws
     aws_eb_env
     azure
     gcloud
     google_app_cred
+    toolbox
     context
     nordvpn
     ranger
@@ -84,13 +86,14 @@
   function prompt_docker_version() {
     (( $+commands[docker] )) || return
     _p9k_upglob 'Dockerfile|docker-compose.yml' && return
-    _p9k_cached_cmd 0 docker --version && [[ $_p9k__ret == D?* ]] || return
+    _p9k_cached_cmd 0 '' docker --version && [[ $_p9k__ret == D?* ]] || return
     p10k segment -i $'\UF308' -f '014' -t "${${${_p9k__ret//\%/%%}/**, build /}%.*}"
   }
 
   (( ! $+functions[p10k] )) || p10k reload
 }
 
+export POWERLEVEL9K_DISABLE_HOT_RELOAD=true
 export ZLE_RPROMPT_INDENT=0
 (( ${#p10k_config_opts} )) && setopt ${p10k_config_opts[@]}
 'builtin' 'unset' 'p10k_config_opts'

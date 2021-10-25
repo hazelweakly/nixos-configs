@@ -1,0 +1,10 @@
+echo "Rebuilding"
+if [ -f /etc/os-release ]; then
+  sudo nixos-rebuild \
+    --flake '/etc/nixos#'"$(hostname)" \
+    ${1+"$@"} switch
+else
+  cd $HOME/src/personal/nixos-configs >/dev/null || exit
+  darwin-rebuild --flake $HOME/src/personal/nixos-configs ${1+"$@"} switch
+  rm -f $HOME/src/personal/nixos-configs/result
+fi

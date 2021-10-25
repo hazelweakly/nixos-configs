@@ -1,0 +1,4 @@
+[[ -t 1 ]] || return
+[[ -z "$TTY" ]] && return
+emulate -L zsh
+exa --group-directories-first --icons --sort time >$TTY

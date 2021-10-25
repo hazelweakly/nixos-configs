@@ -1,0 +1,4 @@
+net.kovidgoyal.kitty com.
+com.apple.automator.nvim
+
+kitty @ launch --type=tab --tab-title "My Tab" --keep-focus bash

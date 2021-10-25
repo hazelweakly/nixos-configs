@@ -1,31 +1,79 @@
-DISABLE_MAGIC_FUNCTIONS="true"
-if ! [[ -r "${XDG_DATA_HOME}/theme" ]]; then
-  printf 'light' > "${XDG_DATA_HOME}/theme"
-fi
-export __sys_theme="$(<${XDG_DATA_HOME}/theme)"
+zstyle ':z4h:'                auto-update      'no'
+zstyle ':z4h:'                start-tmux       'none'
+zstyle ':z4h:'                prompt-at-bottom 'no'
+zstyle ':z4h:bindkey'         keyboard         'pc'
+zstyle ':z4h:autosuggestions' forward-char     'accept'
+zstyle ':z4h:fzf-complete'    recurse-dirs     'yes'
+zstyle ':z4h:ssh:*'           enable           'no'
+zstyle ':z4h:'                propagate-cwd    yes
 
-if [[ -r "${XDG_CACHE_HOME}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME}/p10k-instant-prompt-''${(%):-%n}.zsh"
-fi
-typeset -A ZINIT=(
-  BIN_DIR         ${XDG_DATA_HOME}/zsh/zinit/bin
-  HOME_DIR        ${XDG_DATA_HOME}/zsh/zinit
-  PLUGINS_DIR     ${XDG_DATA_HOME}/zsh/zinit/plugins
-  COMPLETIONS_DIR ${XDG_DATA_HOME}/zsh/zinit/completions
-  SNIPPETS_DIR    ${XDG_DATA_HOME}/zsh/zinit/snippets
-  COMPINIT_OPTS   -C
-  MUTE_WARNINGS   1
-  OPTIMIZE_OUT_DISK_ACCESSES 1
-)
-if ! [[ -d ${XDG_DATA_HOME}/zsh/zinit/bin ]]; then
-  command mkdir -p ${XDG_DATA_HOME}/zsh/zinit
-  command git clone --depth=1 https://github.com/zdharma/zinit.git ${XDG_DATA_HOME}/zsh/zinit/bin
-fi
-source ${XDG_DATA_HOME}/zsh/zinit/bin/zinit.zsh
-# if ! [[ -f ${XDG_DATA_HOME}/zsh/zinit/bin/zmodules/COMPILED_AT ]]; then
-#   nix-shell -p clang_11 ncurses autoconf --run 'zsh -ilc "zinit module build"'
-# fi
-module_path+=("${XDG_DATA_HOME}/zsh/zinit/bin/zmodules/Src")
-zmodload zdharma/zplugin &>/dev/null
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
+# Some of this is not documented
+zstyle ':z4h:homebrew-command-not-found' channel 'none'
+zstyle ':z4h:fzf' channel command "ln -s -- $__fzf_dir \$Z4H_PACKAGE_DIR"
+function -z4h-postinstall-fzf() {}
+zstyle ':z4h:Tarrasch/zsh-bd' postinstall "command cp \$Z4H_PACKAGE_DIR/{,zsh-}bd.plugin.zsh"
+zstyle ':z4h:chisui/zsh-nix-shell' postinstall "command cp \$Z4H_PACKAGE_DIR/{,zsh-}nix-shell.plugin.zsh"
+
+z4h install chisui/zsh-nix-shell
+z4h install hlissner/zsh-autopair
+z4h install Tarrasch/zsh-bd
+
+# Leave this for a day or so until all the persistent caching issues go away
+export HISTFILE="${XDG_CACHE_HOME}/.zsh_history"
+z4h init || return
+
+() { # remove zsh4human paths
+  # When I wrote this, only the gods and I understood it
+  # and now, who knows?
+  path=(${path:#${~${(j:|:)@}}})
+} {$Z4H/zsh4humans/zb,$Z4H/fzf/bin}
+
+() { # Move nix paths to the front and prune non existing entries
+  path=($@(-FN) ${^path}(-FN))
+} {~/.nix-profile/bin,/etc/profiles/per-user/$USER/bin,/run/current-system/sw/bin,/nix/var/nix/profiles/default/bin}
+
+() { # remove non-existing directories
+  fpath=(${(@)^fpath}(-FN))
+}
+
+z4h load -c chisui/zsh-nix-shell
+z4h load -c hlissner/zsh-autopair
+z4h load -c Tarrasch/zsh-bd
+
+[ -d "$HOME/.local/bin" ] && path+=($HOME/.local/bin)
+fpath+=("$ZDOTDIR/config/completions" "$ZDOTDIR/config/fn")
+z4h source -c -- ${ZDOTDIR}/config/30-prompt.zsh
+z4h source -c -- ${ZDOTDIR}/config/31-prompt.zsh
+z4h source -- ${ZDOTDIR}/config/80-exports.zsh
+
+z4h bindkey z4h-backward-kill-word  Ctrl+Backspace Ctrl+H
+z4h bindkey z4h-backward-kill-zword Ctrl+Alt+Backspace Ctrl+W
+z4h bindkey fzf-cd-widget Alt+C
+bindkey '^[D' z4h-kill-zword
+z4h bindkey fzf-file-widget Ctrl+T
+z4h bindkey backward-kill-line Ctrl+U
+z4h bindkey z4h-eof Ctrl+D
+z4h bindkey undo Ctrl+/
+z4h bindkey redo Alt+/
+
+alias cat='bat --style full'
+alias ls='exa --group-directories-first --icons --sort time'
+alias l='exa --group-directories-first --icons --sort time -al'
+alias ll='exa --group-directories-first --icons --sort time -l'
+alias bc='bc -l'
+
+hash -d dots=~/src/personal/nixos-configs
+hash -d src=~/src
+
+chpwd_functions=(${chpwd_functions[@]} "list_all")
+
+autoload -Uz -- zmv ${ZDOTDIR}/config/fn/[^_]*(.)
+
+setopt glob_dots
+setopt no_auto_menu
+setopt ignore_eof
+setopt nonomatch
+setopt no_flow_control
+
+# Leave this for a day or so until all the persistent caching issues go away
+export HISTFILE="${XDG_CACHE_HOME}/.zsh_history"

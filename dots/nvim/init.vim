@@ -13,10 +13,6 @@ function! VimrcLoadPlugins()
     endif
     unlet autoload_plug_path
 
-    for p in ['backup', 'swap', 'undo']
-        if !isdirectory(stdpath('data') . p) | call mkdir(stdpath('data') . p, "p", 0755) | endif
-    endfor
-
     call plug#begin('~/.local/share/nvim/plugged')
 
     " Linting + LSP
@@ -32,6 +28,7 @@ function! VimrcLoadPlugins()
     Plug 'jackguo380/vim-lsp-cxx-highlight'
     Plug 'p00f/nvim-ts-rainbow'
     Plug 'Olical/conjure'
+    Plug 'lukas-reineke/indent-blankline.nvim'
     " https://github.com/metakirby5/codi.vim
 
     " https://github.com/nvim-telescope/telescope.nvim
@@ -58,7 +55,8 @@ function! VimrcLoadPlugins()
     " filetype ]] [[
     Plug 'arp242/jumpy.vim'
 
-    Plug 'tomtom/tcomment_vim'
+    Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+    Plug 'numToStr/Comment.nvim'
     Plug 'tommcdo/vim-exchange'
     " g>, g<, gs
     Plug 'machakann/vim-swap'
@@ -94,6 +92,7 @@ function! VimrcLoadPlugins()
 
     if plug_install || len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
       PlugInstall --sync
+      PlugClean!
     endif
     unlet plug_install
 endfunction
@@ -101,6 +100,24 @@ endfunction
 function! VimrcLoadPluginSettings()
     " vim-cool
     let g:CoolTotalMatches = 1
+
+    " Comment.nvim
+    lua << EOF
+    require('Comment').setup({
+    -- ---@param ctx Ctx
+    -- pre_hook = function(ctx)
+    --     return require('ts_context_commentstring.internal').calculate_commentstring()
+    -- end
+    -- })
+
+    ---@param ctx Ctx
+    pre_hook = function(ctx)
+        local U = require('Comment.utils')
+        local ty = ctx.ctype == U.ctype.line and 'single' or 'multi'
+        return require('ts_context_commentstring.internal').calculate_commentstring(ty)
+    end,
+})
+EOF
 
     " vim-matchup
     let g:matchup_transmute_enabled = 1
@@ -211,7 +228,6 @@ EOF
                 \ 'coc-pairs',
                 \ 'coc-prettier',
                 \ 'coc-pyright',
-                \ 'coc-python',
                 \ 'coc-rust-analyzer',
                 \ 'coc-sh',
                 \ 'coc-snippets',
@@ -465,9 +481,7 @@ function! VimrcLoadSettings()
     set undofile
     set lazyredraw
     set virtualedit=block
-    set dir=$XDG_DATA_HOME/nvim/swap//
-    set undodir=$XDG_DATA_HOME/nvim/undo//
-    set backupdir=$XDG_DATA_HOME/nvim/backup//
+    set backupdir-=.
     set noerrorbells visualbell t_vb=
     set list
     set listchars=tab:▸\ ,extends:❯,precedes:❮,trail:⌴

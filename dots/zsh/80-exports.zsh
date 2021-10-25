@@ -1,11 +1,7 @@
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=4"
-export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
-export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
-export ZSH_AUTOSUGGEST_USE_ASYNC=true
-export ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 export DIRENV_LOG_FORMAT=
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-# export BAT_THEME="ansi"
+export GPG_TTY=$TTY
+export HOMEBREW_NO_ANALYTICS=1
 
 # TODO: Replace when https://github.com/dandavison/delta/issues/447 is fixed
 typeset -A _bat_themes=(

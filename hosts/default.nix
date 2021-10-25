@@ -41,10 +41,10 @@ let
                     val.outPath
                   else
                     pkgs.runCommandNoCC "nixpkgs" { } ''
-                        cp -r ${inputs.nixpkgs} $out
+                        cp -r ${inputs.nixos} $out
                         chmod 700 $out
                         echo "${
-                          inputs.nixpkgs.rev or (builtins.toString inputs.nixpkgs.lastModified)
+                          inputs.nixos.rev or (builtins.toString inputs.nixos.lastModified)
                       }" > $out/.version-suffix
                     '';
               };
@@ -63,7 +63,7 @@ let
   ];
 in
 {
-  hostDefaults.channelName = "nixpkgs";
+  hostDefaults.channelName = "nixos"; # needs to be here. dum.
   hosts = {
     # hazelweakly.modules = [
     #   ../machines/nvidia.nix
@@ -80,6 +80,8 @@ in
 
     Hazels-MacBook-Pro = {
       system = "x86_64-darwin";
+      # builder = inputs.nix-darwin.lib.darwinSystem;
+      # output = "darwinConfigurations";
       modules = [
         { config._module.check = false; }
         ../cachix.nix
@@ -112,10 +114,4 @@ in
       tests = [ allProfilesTest ];
     };
   };
-
-  # importables = rec {
-  #   suites = rec {
-  #     base = [ ];
-  #   };
-  # };
 }
