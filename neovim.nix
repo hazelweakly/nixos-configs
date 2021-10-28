@@ -19,7 +19,6 @@ let
     languagetool
     libcxx
     neovim-remote
-    neuron-notes
     nixpkgs-fmt
     rnix-lsp
     perl

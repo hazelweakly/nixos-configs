@@ -48,8 +48,6 @@ function! VimrcLoadPlugins()
     Plug 'blueyed/vim-diminactive'
     Plug 'camspiers/lens.vim'
     Plug 'wsdjeg/vim-fetch'
-    Plug 'hazelweakly/neuron.vim', { 'branch': 'v2', 'for': ['markdown'] }
-    " Plug 'chiefnoah/neuron-v2.vim', { 'for': ['markdown'] }
     Plug 'antoinemadec/FixCursorHold.nvim'
 
     " filetype ]] [[
@@ -201,7 +199,6 @@ EOF
 
     let g:coc_filetype_map = {
           \ 'yaml.ansible': 'yaml',
-          \ 'markdown.neuron':'markdown',
           \ 'direnv':'sh'
           \ }
 
@@ -316,7 +313,7 @@ EOF
                 \ })
 
     " bullets.vim
-    let g:bullets_enabled_file_types = ['markdown', 'markdown.neuron', 'text', 'gitcommit']
+    let g:bullets_enabled_file_types = ['markdown', 'text', 'gitcommit']
     let g:bullets_outline_levels = ['num', 'std-']
 
     " vim-polyglot

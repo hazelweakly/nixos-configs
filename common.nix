@@ -120,7 +120,6 @@
       niv
       (callPackage ./neovim.nix { })
       zoom-us
-      neuron-notes
       # awscli2
       ssm-session-manager-plugin
       alacritty

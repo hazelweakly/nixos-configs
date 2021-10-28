@@ -20,16 +20,6 @@ with pkgs.lib; {
     config.lib.file.mkOutOfStoreSymlink "${dir}/dots/run-or-raise";
 
   services.syncthing.enable = true;
-  systemd.user.services.neuron = {
-    Install.WantedBy = [ "graphical-session.target" ];
-    Service.ExecStart =
-      "${pkgs.neuron-notes}/bin/neuron -d ${config.home.homeDirectory}/zettelkasten rib -ws 127.53.54.1:50000 --pretty-urls";
-  };
-  systemd.user.services.neuron-notes = {
-    Install.WantedBy = [ "graphical-session.target" ];
-    Service.ExecStart =
-      "${pkgs.neuron-notes}/bin/neuron -d ${config.home.homeDirectory}/Documents/notes gen -ws 127.53.54.2:50001 --pretty-urls";
-  };
   systemd.user.services.easyeffects = {
     Install.WantedBy = [ "graphical-session.target" ];
     Service.ExecStart = "${pkgs.easyeffects}/bin/easyeffects --gapplication-service";

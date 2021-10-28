@@ -47,11 +47,6 @@
       url = "github:colemickens/flake-firefox-nightly";
       inputs.nixpkgs.follows = "nixos";
     };
-    neuron = {
-      url = "github:srid/neuron";
-      inputs.flake-utils.follows = "flake-utils";
-      inputs.flake-compat.follows = "flake-compat";
-    };
     taskwarrior = {
       url = "https://github.com/GothenburgBitFactory/taskwarrior.git";
       type = "git";
