@@ -17,8 +17,8 @@ in
     git-lfs
     cachix
     file
-    # timewarrior
-    # taskwarrior
+    timewarrior
+    taskwarrior
     # tasksh
     (callPackage ./neovim.nix { })
     neovim-remote

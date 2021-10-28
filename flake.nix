@@ -47,13 +47,6 @@
       url = "github:colemickens/flake-firefox-nightly";
       inputs.nixpkgs.follows = "nixos";
     };
-    taskwarrior = {
-      url = "https://github.com/GothenburgBitFactory/taskwarrior.git";
-      type = "git";
-      ref = "2.6.0";
-      submodules = true;
-      flake = false;
-    };
     dynamic-wallpaper = {
       url = "github:adi1090x/dynamic-wallpaper";
       flake = false;
