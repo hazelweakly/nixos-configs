@@ -23,7 +23,8 @@ in
     (callPackage ./neovim.nix { })
     neovim-remote
     ranger
-    fup-repl
+    repl
+    # fup-repl
     # htop
     gcc
     openssh
@@ -50,6 +51,7 @@ in
   environment.variables.VISUAL = "nvim";
   environment.variables.TERMINFO_DIRS = "/Applications/kitty.app/Contents/Resources/kitty/terminfo";
 
+  networking.hostName = "Hazels-MacBook-Pro";
   security.pam.sudoTouchIdAuth.enable = true;
   security.pam.u2fAuth.enable = true;
   security.pam.u2fAuth.options = [ "origin=pam://${config.networking.hostName} appid=pam://${config.networking.hostName}" ];
