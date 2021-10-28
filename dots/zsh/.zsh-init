@@ -6,6 +6,8 @@ zstyle ':z4h:autosuggestions' forward-char     'accept'
 zstyle ':z4h:fzf-complete'    recurse-dirs     'yes'
 zstyle ':z4h:ssh:*'           enable           'no'
 zstyle ':z4h:'                propagate-cwd    yes
+zstyle ':z4h:direnv'          enable           'yes'
+zstyle ':z4h:direnv:success'  notify           'no'
 
 # Some of this is not documented
 zstyle ':z4h:homebrew-command-not-found' channel 'none'
@@ -28,23 +30,33 @@ z4h init || return
   path=(${path:#${~${(j:|:)@}}})
 } {$Z4H/zsh4humans/zb,$Z4H/fzf/bin}
 
-() { # Move nix paths to the front and prune non existing entries
-  path=($@(-FN) ${^path}(-FN))
-} {~/.nix-profile/bin,/etc/profiles/per-user/$USER/bin,/run/current-system/sw/bin,/nix/var/nix/profiles/default/bin}
+() { # Move nix paths to the front of the first non nix-store paths and prune non existing entries
+  local idx=${path[(i)/(usr|Library|bin|sbin)/*]}
+  path=(${path[1,$idx]}(-FN) $@(-FN) ${path[idx,-1]}(-FN))
+} {/run/current-system/sw/bin,~/.nix-profile/bin,/etc/profiles/per-user/$USER/bin,/nix/var/nix/profiles/default/bin}
 
 () { # remove non-existing directories
   fpath=(${(@)^fpath}(-FN))
 }
 
-z4h load -c chisui/zsh-nix-shell
-z4h load -c hlissner/zsh-autopair
-z4h load -c Tarrasch/zsh-bd
+typeset -gaUr _initial_fpath=($fpath)
+munge_xdg_data_dirs() {
+  # Might have to postinstall hack into some core zsh4humans thingy to sed
+  # replace some bullshit and get myself this function in the right location
+  # before compinit is called for the first time?
+
+  set -- "${(s.:.)^XDG_DATA_DIRS}"{/zsh/site-functions,/zsh/$ZSH_VERSION/functions,/zsh/vendor-completions}
+  # remove non-existing directories, add existing XDG_DATA_DIRS
+  [[ -n "$IN_NIX_SHELL" ]] && fpath=($@(-FN) ${(@)^fpath}(-FN)) && -z4h-compinit
+  [[ -z "$IN_NIX_SHELL" ]] && fpath=($_initial_fpath) && -z4h-compinit
+}
+# add-zsh-hook -- precmd munge_xdg_data_dirs
+
+z4h load -c -- chisui/zsh-nix-shell hlissner/zsh-autopair Tarrasch/zsh-bd
 
 [ -d "$HOME/.local/bin" ] && path+=($HOME/.local/bin)
 fpath+=("$ZDOTDIR/config/completions" "$ZDOTDIR/config/fn")
-z4h source -c -- ${ZDOTDIR}/config/30-prompt.zsh
-z4h source -c -- ${ZDOTDIR}/config/31-prompt.zsh
-z4h source -- ${ZDOTDIR}/config/80-exports.zsh
+z4h source -c -- ${ZDOTDIR}/config/{30-prompt,31-prompt,80-exports}.zsh
 
 z4h bindkey z4h-backward-kill-word  Ctrl+Backspace Ctrl+H
 z4h bindkey z4h-backward-kill-zword Ctrl+Alt+Backspace Ctrl+W

@@ -1,4 +1,3 @@
-export DIRENV_LOG_FORMAT=
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export GPG_TTY=$TTY
 export HOMEBREW_NO_ANALYTICS=1

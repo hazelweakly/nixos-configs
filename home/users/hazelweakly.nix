@@ -47,6 +47,7 @@ with pkgs.lib; {
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
   programs.direnv.nix-direnv.enableFlakes = true;
+  programs.direnv.enableZshIntegration = false;
   programs.direnv.stdlib = ''
     : ''${XDG_CACHE_HOME:=$HOME/.cache}
     declare -A direnv_layout_dirs
@@ -119,6 +120,7 @@ with pkgs.lib; {
     userName = "hazelweakly";
     userEmail = "hazel@theweaklys.com";
     package = pkgs.gitAndTools.gitFull;
+    lfs.enable = true;
     extraConfig = {
       rerere.enabled = true;
       rerere.autoupdate = true;

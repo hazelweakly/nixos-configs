@@ -1,2 +1,6 @@
-nvim --headless '+PlugUpgrade' '+PlugUpdate' '+TSUpdateSync' '+PlugClean!' '+CocUpdateSync' '+qall'
+nvim --headless '+PlugUpgrade'   '+qall'
+nvim --headless '+PlugUpdate'    '+qall'
+nvim --headless '+TSUpdateSync'  '+qall'
+nvim --headless '+PlugClean!'    '+qall'
+nvim --headless '+CocUpdateSync' '+qall'
 echo

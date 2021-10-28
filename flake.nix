@@ -109,7 +109,7 @@
       hostDefaults.output = "darwinConfigurations";
       hostDefaults.modules = [{ config.lib = self.lib; }]; # why the fuck does this even work? And why is it needed?
 
-      darwinPackages = self.pkgs."x86_64-darwin".nixpkgs;
+      darwinPackages = self.pkgs."x86_64-darwin".nixos;
 
       homeConfigurations = digga.lib.mkHomeConfigurations ((self.nixosConfigurations or { })
         // (inputs.nixos.lib.recursiveUpdate (self.darwinConfigurations or { }) { Hazels-MacBook-Pro.config.networking.domain = null; }));

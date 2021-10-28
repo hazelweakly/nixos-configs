@@ -45,7 +45,7 @@ in
     ripgrep
   ];
   environment.shells = with pkgs; [ bashInteractive zsh ];
-  environment.variables.SHELL = "${pkgs.zsh}/bin/zsh";
+  environment.variables.SHELL = "/run/current-system/sw/bin/zsh";
   environment.variables.EDITOR = "nvim";
   environment.variables.VISUAL = "nvim";
   environment.variables.TERMINFO_DIRS = "/Applications/kitty.app/Contents/Resources/kitty/terminfo";
@@ -136,6 +136,7 @@ in
   homebrew.brews = [
     "cocoapods"
     "hopenpgp-tools"
+    "ios-deploy"
     "pinentry-mac"
     "ykman"
     "yubikey-personalization"
@@ -169,6 +170,7 @@ in
     "obsidian"
     "openvpn-connect"
     "postico"
+    "react-native-debugger"
     "rectangle"
     "visual-studio-code"
     "vlc"
