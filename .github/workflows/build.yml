@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
       - uses: cachix/install-nix-action@v13
@@ -20,7 +20,7 @@ jobs:
         with:
           name: hazel-nix-configs
           authToken: "${{ secrets.CACHIXCI }}"
-          extraPullNames: "srid,nrdxp,nix-community,iohk,hercules-ci,ghcide-nix,eigenvalue,all-hies"
+          extraPullNames: "nix-community,hercules-ci"
       - run: nix -Lv flake check
-      - run: nix -Lv build ".#"nixosConfigurations.hazel{weakly,xps}.config.system.build.toplevel
+      - run: nix -Lv build ".#"darwinConfigurations.Hazels-MacBook-Pro.config.system.build.toplevel
       - run: nix -Lv develop -c echo OK

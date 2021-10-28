@@ -5,7 +5,7 @@ on:
     - cron: "0 0 * * *"
 jobs:
   update:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
         with:
@@ -21,7 +21,7 @@ jobs:
         with:
           name: hazel-nix-configs
           authToken: "${{ secrets.CACHIXCI }}"
-          extraPullNames: "srid,nrdxp,nix-community,iohk,hercules-ci,ghcide-nix,eigenvalue,all-hies"
+          extraPullNames: "nix-community,hercules-ci"
       - name: update
         run: |
           set -xeuo pipefail
@@ -29,7 +29,7 @@ jobs:
           git config --global user.name "Hazel Weakly"
           nix develop -c nix flake update --commit-lock-file
           nix -Lv flake check
-          nix -Lv build ".#"nixosConfigurations.hazel{weakly,xps}.config.system.build.toplevel
+          nix -Lv build ".#"darwinConfigurations.Hazels-MacBook-Pro.config.system.build.toplevel
           nix -Lv develop -c echo OK
       - run: |
           git add flake.lock
