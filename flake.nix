@@ -129,6 +129,11 @@
           ./work.nix
         ];
       };
-      darwinPackages = self.darwinConfigurations."Hazels-MacBook-Pro".pkgs;
+      darwinPackages = self.darwinConfigurations."Hazels-MacBook-Pro".pkgs // {
+        dev-shell = self.devShell.x86_64-darwin.inputDerivation;
+      };
+      devShell.x86_64-darwin = self.darwinPackages.mkShell {
+        nativeBuildInputs = with self.darwinPackages; [ nixUnstable ];
+      };
     };
 }
