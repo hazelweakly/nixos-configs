@@ -6,6 +6,7 @@ on:
 
 jobs:
   build:
+    if: "! contains(toJSON(github.event.commits.*.message), 'flake.lock: Update')"
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
