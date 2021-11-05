@@ -1,7 +1,7 @@
 final: prev:
 let
-  mapAttrs = prev.stdenv.lib.mapAttrs;
-  flip = prev.stdenv.lib.flip;
+  mapAttrs = prev.lib.mapAttrs;
+  flip = prev.lib.flip;
 in
 {
   latest = (prev.latest or { }) // {

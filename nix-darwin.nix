@@ -9,7 +9,7 @@ let
 in
 {
   environment.systemPackages = with pkgs; [
-    # kitty
+    kitty
     bfs
     terminal-notifier
     curl
@@ -24,8 +24,6 @@ in
     neovim-remote
     ranger
     repl
-    # fup-repl
-    # htop
     gcc
     openssh
     xhyve
@@ -35,7 +33,7 @@ in
 
     docker
     docker-compose
-    # awscli2 # yey
+    awscli2 # yey
 
     # Programs implicitly relied on in shell
     pistol
@@ -49,13 +47,43 @@ in
   environment.variables.SHELL = "/run/current-system/sw/bin/zsh";
   environment.variables.EDITOR = "nvim";
   environment.variables.VISUAL = "nvim";
-  environment.variables.TERMINFO_DIRS = "/Applications/kitty.app/Contents/Resources/kitty/terminfo";
+  environment.variables.TERMINFO_DIRS = "${pkgs.kitty.terminfo}/share/terminfo";
+
+  system.activationScripts.postActivation.text = ''
+    app_folder=~/"Applications/Nix"
+    mkdir -p "$app_folder"
+    IFS=$'\n'
+    old_paths=($(mdfind kMDItemKind="Alias" -onlyin "$app_folder"))
+    new_paths=($(find -L "$systemConfig/Applications" -maxdepth 1 -name '*.app'))
+    unset IFS
+    old_size="''${#old_paths[@]}"
+    echo "removing $old_size aliased apps from $app_folder"
+    for i in "''${!old_paths[@]}"; do
+      rm -f "''${old_paths[$i]}"
+    done
+    new_size="''${#new_paths[@]}"
+    echo "adding $new_size aliased apps into $app_folder"
+    for i in "''${!new_paths[@]}"; do
+      real_app=$(realpath "''${new_paths[$i]}")
+      app_name=$(basename "''${new_paths[$i]}")
+      rm -f "$app_folder/$app_name"
+      osascript \
+        -e "tell app \"Finder\"" \
+        -e "make new alias file at POSIX file \"$app_folder\" to POSIX file \"$real_app\"" \
+        -e "set name of result to \"$app_name\"" \
+        -e "end tell"
+    done
+  '';
 
   networking.hostName = "Hazels-MacBook-Pro";
   security.pam.sudoTouchIdAuth.enable = true;
 
   fonts.enableFontDir = true;
-  fonts.fonts = [ pkgs.opensans-ttf pkgs.victor-mono ];
+  fonts.fonts = [
+    pkgs.opensans-ttf
+    pkgs.victor-mono
+    (pkgs.nerdfonts.override { fonts = [ "VictorMono" ]; })
+  ];
 
   services.nix-daemon.enable = true;
   nixpkgs.config.allowUnfree = true;
@@ -165,7 +193,6 @@ in
     "gpg-suite"
     "hammerspoon"
     "hey"
-    "kitty"
     "mos"
     "obsidian"
     "openvpn-connect"

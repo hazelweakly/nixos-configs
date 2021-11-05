@@ -1,8 +1,6 @@
 #!/usr/bin/env zsh
 echo "Rebuilding"
-local nix() {
-  command nix --extra-experimental-features 'nix-command flakes' $@
-}
+
 if [ -f /etc/os-release ]; then
   sudo nixos-rebuild \
     --flake '/etc/nixos#'"$(hostname)" \
@@ -12,6 +10,9 @@ else
   if command -v darwin-rebuild >/dev/null; then
     darwin-rebuild --flake $HOME/src/personal/nixos-configs ${1+"$@"} switch
   else
+      local nix() {
+      command nix --extra-experimental-features 'nix-command flakes' $@
+    }
     hostname="$(hostname)"
     while [ ! -L ./result ]; do
       nix build .#darwinConfigurations."${hostname%\.local}".system --keep-going ${1+"$@"}

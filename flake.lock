@@ -126,6 +126,21 @@
         "type": "github"
       }
     },
+    "latest": {
+      "locked": {
+        "lastModified": 1636136103,
+        "narHash": "sha256-XAuj2WzvJGXpLjD42DwyJ/L/FJFE4z7LcHTFvePdOns=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "505caf29fe0f892927bdd5fb3539f6cb9b85cd39",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "mach-nix": {
       "inputs": {
         "flake-utils": [
@@ -324,14 +339,12 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
-        "darwin": [
-          "nix-darwin"
-        ],
         "dynamic-wallpaper": "dynamic-wallpaper",
         "flake-compat": "flake-compat",
         "flake-firefox-nightly": "flake-firefox-nightly",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
+        "latest": "latest",
         "mach-nix": "mach-nix",
         "matterhorn": "matterhorn",
         "neovim-flake": "neovim-flake",
