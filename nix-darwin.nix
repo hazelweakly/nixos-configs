@@ -35,7 +35,7 @@ in
 
     docker
     docker-compose
-    awscli2 # yey
+    # awscli2 # yey
 
     # Programs implicitly relied on in shell
     pistol
@@ -53,9 +53,6 @@ in
 
   networking.hostName = "Hazels-MacBook-Pro";
   security.pam.sudoTouchIdAuth.enable = true;
-  security.pam.u2fAuth.enable = true;
-  security.pam.u2fAuth.options = [ "origin=pam://${config.networking.hostName} appid=pam://${config.networking.hostName}" ];
-  security.pam.u2fAuth.sudo.enable = true;
 
   fonts.enableFontDir = true;
   fonts.fonts = [ pkgs.opensans-ttf pkgs.victor-mono ];
@@ -138,6 +135,7 @@ in
   homebrew.brews = [
     "cocoapods"
     "hopenpgp-tools"
+    "hyperkit"
     "ios-deploy"
     "pinentry-mac"
     "ykman"
