@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 fd -uu -e zwc . $HOME -x rm -f 2>/dev/null && \
     fd -uu '.zcompdump*' . $HOME -x rm -f 2>/dev/null && \
     z4h update

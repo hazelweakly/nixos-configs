@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 [[ -t 1 ]] || return
 [[ -z "$TTY" ]] && return
 emulate -L zsh

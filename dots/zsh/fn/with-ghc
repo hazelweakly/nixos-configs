@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 v="$1"
 shift
 nix-shell -p "haskell.packages.ghc$v.ghc" cabal-install zlib xz "$@"

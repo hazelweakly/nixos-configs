@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 echo "Rebuilding"
 local nix() {
   command nix --extra-experimental-features 'nix-command flakes' $@
@@ -12,7 +13,9 @@ else
     darwin-rebuild --flake $HOME/src/personal/nixos-configs ${1+"$@"} switch
   else
     hostname="$(hostname)"
-    nix build .#darwinConfigurations."${hostname//.local}".system --keep-going ${1+"$@"}
+    while [ ! -L ./result ]; do
+      nix build .#darwinConfigurations."${hostname%\.local}".system --keep-going ${1+"$@"}
+    done
     ./result/sw/bin/darwin-rebuild --flake $HOME/src/personal/nixos-configs ${1+"$@"} switch
   fi
   rm -f $HOME/src/personal/nixos-configs/result

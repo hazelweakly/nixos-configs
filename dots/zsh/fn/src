@@ -1,1 +1,2 @@
+#!/usr/bin/env zsh
 cd "$HOME/src/$1"

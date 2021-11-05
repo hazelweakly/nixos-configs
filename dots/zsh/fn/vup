@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 nvim --headless '+PlugUpgrade'   '+qall'
 nvim --headless '+PlugUpdate'    '+qall'
 nvim --headless '+TSUpdateSync'  '+qall'

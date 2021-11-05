@@ -1,2 +1,3 @@
+#!/usr/bin/env zsh
 v="${1:-nixpkgs}"
 builtin cd /etc/nix/inputs/"$v"

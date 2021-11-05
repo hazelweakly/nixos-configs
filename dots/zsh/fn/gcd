@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 target="$1"
 shift
 git clone "$target" $@ && cd "${"${target##*/}"/.git/}"

@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 init="$1"
 shift
 nix shell "nixpkgs#$init" -c ${@:-$init}
