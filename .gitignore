@@ -1,5 +1,6 @@
 *.hi
 *.o
 dots/zsh/completions/
+dots/kitty/*.py
 *.zwc
 .netrwhist

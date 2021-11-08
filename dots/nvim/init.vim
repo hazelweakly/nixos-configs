@@ -68,7 +68,7 @@ function! VimrcLoadPlugins()
     Plug 'rhysd/conflict-marker.vim'
     " Plug 'dhruvasagar/vim-zoom'
     " Plug 'voldikss/vim-floaterm'
-    " Plug 'christoomey/vim-tmux-navigator'
+    Plug 'knubie/vim-kitty-navigator', {'do': 'cp ./*.py ~/.config/kitty/'}
     Plug 'tyru/open-browser.vim'
 
     Plug 'machakann/vim-sandwich'
@@ -300,12 +300,12 @@ EOF
     " let g:floaterm_winblend = 30
     " let g:floaterm_keymap_toggle = '<F12>'
 
-    " " vim-tmux-navigation
-    " let g:tmux_navigator_no_mappings = 1
-    " nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
-    " nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
-    " nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
-    " nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
+    " " vim-kitty-navigation
+    let g:kitty_navigator_no_mappings = 1
+    nnoremap <silent> <M-h> :KittyNavigateLeft<cr>
+    nnoremap <silent> <M-j> :KittyNavigateDown<cr>
+    nnoremap <silent> <M-k> :KittyNavigateUp<cr>
+    nnoremap <silent> <M-l> :KittyNavigateRight<cr>
 
     " targets.vim
     autocmd User targets#mappings#user call targets#mappings#extend({
