@@ -1,0 +1,2 @@
+#compdef nixcd
+_path_files -/ -W /etc/nix/inputs

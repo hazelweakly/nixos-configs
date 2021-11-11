@@ -71,8 +71,8 @@ z4h bindkey redo Alt+/
 
 alias cat='bat --style full'
 alias ls='exa --group-directories-first --icons --sort time'
-alias l='exa --group-directories-first --icons --sort time -al'
-alias ll='exa --group-directories-first --icons --sort time -l'
+alias l='exa --group-directories-first --icons --sort time -alg'
+alias ll='exa --group-directories-first --icons --sort time -lg'
 alias bc='bc -l'
 
 hash -d dots=~/src/personal/nixos-configs

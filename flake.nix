@@ -11,6 +11,8 @@
 
     nix-darwin.url = "github:lnl7/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    mkalias.url = "github:reckenrode/mkalias";
+
 
     flake-utils.url = "github:numtide/flake-utils";
 

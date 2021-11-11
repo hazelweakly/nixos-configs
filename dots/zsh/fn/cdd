@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+[[ $# == 1 ]] || exit
+(( $+commands[$1] )) || exit
+dir="${commands[$1]:P:h}"
+[[ "${dir:t}" == bin ]] && dir="${dir:h}"
+[[ -d "$dir" ]] || exit
+cd -- "$dir"

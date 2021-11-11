@@ -1,0 +1,2 @@
+#compdef dots
+_path_files -/ -W ~/src/personal/nixos-configs

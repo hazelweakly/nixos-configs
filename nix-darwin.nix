@@ -47,10 +47,11 @@ in
   environment.variables.SHELL = "/run/current-system/sw/bin/zsh";
   environment.variables.EDITOR = "nvim";
   environment.variables.VISUAL = "nvim";
+
   environment.variables.TERMINFO_DIRS = "${pkgs.kitty.terminfo}/share/terminfo";
 
   system.activationScripts.postActivation.text = ''
-    app_folder=~/"Applications/Nix"
+    app_folder="$HOME/Applications/Nix"
     mkdir -p "$app_folder"
     IFS=$'\n'
     old_paths=($(mdfind kMDItemKind="Alias" -onlyin "$app_folder"))
@@ -67,12 +68,9 @@ in
       real_app=$(realpath "''${new_paths[$i]}")
       app_name=$(basename "''${new_paths[$i]}")
       rm -f "$app_folder/$app_name"
-      osascript \
-        -e "tell app \"Finder\"" \
-        -e "make new alias file at POSIX file \"$app_folder\" to POSIX file \"$real_app\"" \
-        -e "set name of result to \"$app_name\"" \
-        -e "end tell"
+      ${pkgs.mkalias}/bin/mkalias "$real_app" "$app_folder/$app_name"
     done
+    unlink "$HOME/Applications/Nix Apps" >/dev/null || true
   '';
 
   networking.hostName = "Hazels-MacBook-Pro";
@@ -102,6 +100,7 @@ in
     "com.apple.sound.beep.volume" = "0.0";
     "com.apple.trackpad.scaling" = "2.0";
     AppleFontSmoothing = 0;
+    AppleReduceDesktopTinting = true;
     InitialKeyRepeat = 15;
     KeyRepeat = 2;
     NSAutomaticCapitalizationEnabled = false;
@@ -109,7 +108,10 @@ in
     NSAutomaticPeriodSubstitutionEnabled = false;
     NSAutomaticQuoteSubstitutionEnabled = false;
     NSAutomaticSpellingCorrectionEnabled = false;
+    NSAutomaticTextCompletionEnabled = false;
     NSDocumentSaveNewDocumentsToCloud = false;
+    NSUserQuotesArray = [ ''"'' ''"'' "'" "'" ];
+    WebAutomaticSpellingCorrectionEnabled = false;
   };
   system.defaults.trackpad = {
     Clicking = true;
