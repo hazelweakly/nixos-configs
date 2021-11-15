@@ -34,6 +34,7 @@ in
     docker
     docker-compose
     awscli2 # yey
+    ssm-session-manager-plugin
 
     # Programs implicitly relied on in shell
     pistol
