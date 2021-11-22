@@ -28,3 +28,13 @@ function! Backtick() abort
         let n += 1
     endwhile
 endfunction
+
+
+" zk
+command! -nargs=0 ZkIndex :call CocAction('runCommand', 'zk.index', expand("%:p:h"))
+nnoremap <leader>zi :ZkIndex<CR>
+
+command! -nargs=? ZkNew :exec 'edit '.CocAction('runCommand', 'zk.new', expand("%:p:h"), <args>).path
+
+" Create a new note after prompting for its title.
+nnoremap <leader>zn :ZkNew {"title": input("Title: ")}<CR>

@@ -34,6 +34,7 @@ let
     vim-vint
     watchman
     yarn
+    zk
   ]));
   c = (neovimUtils.override { nodejs = nodejs_latest; }).makeNeovimConfig {
     withNodeJs = true;
