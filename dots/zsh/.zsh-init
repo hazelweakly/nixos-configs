@@ -1,11 +1,6 @@
-zstyle ':z4h:'                auto-update      'no'
 zstyle ':z4h:'                start-tmux       'none'
 zstyle ':z4h:'                prompt-at-bottom 'no'
-zstyle ':z4h:bindkey'         keyboard         'pc'
-zstyle ':z4h:autosuggestions' forward-char     'accept'
-zstyle ':z4h:fzf-complete'    recurse-dirs     'yes'
 zstyle ':z4h:ssh:*'           enable           'no'
-zstyle ':z4h:'                propagate-cwd    yes
 zstyle ':z4h:direnv'          enable           'yes'
 zstyle ':z4h:direnv:success'  notify           'no'
 
@@ -20,8 +15,6 @@ z4h install chisui/zsh-nix-shell
 z4h install hlissner/zsh-autopair
 z4h install Tarrasch/zsh-bd
 
-# Leave this for a day or so until all the persistent caching issues go away
-export HISTFILE="${XDG_CACHE_HOME}/.zsh_history"
 z4h init || return
 
 () { # remove zsh4human paths
@@ -40,19 +33,6 @@ z4h init || return
   fpath=(${(@)^fpath}(-FN))
 }
 
-typeset -gaUr _initial_fpath=($fpath)
-munge_xdg_data_dirs() {
-  # Might have to postinstall hack into some core zsh4humans thingy to sed
-  # replace some bullshit and get myself this function in the right location
-  # before compinit is called for the first time?
-
-  set -- "${(s.:.)^XDG_DATA_DIRS}"{/zsh/site-functions,/zsh/$ZSH_VERSION/functions,/zsh/vendor-completions}
-  # remove non-existing directories, add existing XDG_DATA_DIRS
-  [[ -n "$IN_NIX_SHELL" ]] && fpath=($@(-FN) ${(@)^fpath}(-FN)) && -z4h-compinit
-  [[ -z "$IN_NIX_SHELL" ]] && fpath=($_initial_fpath) && -z4h-compinit
-}
-# add-zsh-hook -- precmd munge_xdg_data_dirs
-
 z4h load -c -- chisui/zsh-nix-shell hlissner/zsh-autopair Tarrasch/zsh-bd
 
 [ -d "$HOME/.local/bin" ] && path+=($HOME/.local/bin)
@@ -66,13 +46,13 @@ bindkey '^[D' z4h-kill-zword
 z4h bindkey fzf-file-widget Ctrl+T
 z4h bindkey backward-kill-line Ctrl+U
 z4h bindkey z4h-eof Ctrl+D
-z4h bindkey undo Ctrl+/
+z4h bindkey undo Ctrl+/ Shift+Tab
 z4h bindkey redo Alt+/
 
 alias cat='bat --style full'
 alias ls='exa --group-directories-first --icons --sort time'
-alias l='exa --group-directories-first --icons --sort time -alg'
-alias ll='exa --group-directories-first --icons --sort time -lg'
+alias ll="${aliases[ls]} -lg"
+alias l="${aliases[ll]} -a"
 alias bc='bc -l'
 
 hash -d dots=~/src/personal/nixos-configs
@@ -87,6 +67,3 @@ setopt no_auto_menu
 setopt ignore_eof
 setopt nonomatch
 setopt no_flow_control
-
-# Leave this for a day or so until all the persistent caching issues go away
-export HISTFILE="${XDG_CACHE_HOME}/.zsh_history"

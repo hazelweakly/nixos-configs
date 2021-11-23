@@ -6,77 +6,32 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    latest.url = "github:nixos/nixpkgs";
 
     nix-darwin.url = "github:lnl7/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     mkalias.url = "github:reckenrode/mkalias";
 
-
     flake-utils.url = "github:numtide/flake-utils";
 
-    rust-overlay = {
-      url = "github:oxalica/rust-overlay";
-      inputs.flake-utils.follows = "flake-utils";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    agenix = {
-      url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-    };
-    neovim-flake = {
-      url = "github:neovim/neovim?dir=contrib";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-    };
-    home-manager = {
-      url = "github:nix-community/home-manager/master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    mach-nix = {
-      url = "github:DavHau/mach-nix";
-      inputs.flake-utils.follows = "flake-utils";
-    };
-    flake-firefox-nightly = {
-      url = "github:colemickens/flake-firefox-nightly";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    dynamic-wallpaper = {
-      url = "github:adi1090x/dynamic-wallpaper";
-      flake = false;
-    };
-    pop-os-shell = {
-      url = "github:pop-os/shell";
-      flake = false;
-    };
-    matterhorn = {
-      url = "github:matterhorn-chat/matterhorn";
-      flake = false;
-    };
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
-      flake = false;
-    };
-    notify-send = {
-      type = "github";
-      owner = "M3TIOR";
-      repo = "notify-send.sh";
-      flake = false;
-    };
+    rust-overlay.url = "github:oxalica/rust-overlay";
+    rust-overlay.inputs.flake-utils.follows = "flake-utils";
+    rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
+
+    neovim-flake.url = "github:neovim/neovim?dir=contrib";
+    neovim-flake.inputs.nixpkgs.follows = "nixpkgs";
+    neovim-flake.inputs.flake-utils.follows = "flake-utils";
+
+    home-manager.url = "github:nix-community/home-manager/master";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    mach-nix.url = "github:DavHau/mach-nix";
+    mach-nix.inputs.flake-utils.follows = "flake-utils";
+
+    flake-compat.url = "github:edolstra/flake-compat";
+    flake-compat.flake = false;
   };
 
-  outputs =
-    inputs@{ self
-    , nixpkgs
-    , home-manager
-    , nixos-hardware
-    , rust-overlay
-    , agenix
-    , nix-darwin
-    , ...
-    }:
+  outputs = inputs@{ self, ... }:
     let
       inherit (builtins) listToAttrs concatMap attrNames map mapAttrs;
       mapAttrs' = f: set: listToAttrs (map (attr: f attr set.${attr}) (attrNames set));
@@ -101,9 +56,8 @@
         system = "x86_64-darwin";
         inherit inputs;
         modules = [
-          { config._module.check = false; }
           ./cachix.nix
-          inputs.home-manager.darwinModules.home-manager
+
           ({ lib, ... }: {
             nix.nixPath = lib.mapAttrsToList (n: _: "${n}=/etc/nix/inputs/${n}") flakesWithPkgs;
             nix.registry = mapAttrs (name: v: { flake = v; }) flakes;
@@ -112,8 +66,9 @@
               inputs;
           })
           {
-            nixpkgs.overlays = [ agenix.overlay rust-overlay.overlay (_:_: { inherit inputs; }) ] ++ (builtins.attrValues (self.overlays));
-            nix.nixPath = [ "darwin=/etc/nix/inputs/darwin" ]; # generateNixPathFromInputs doesn't pick up nix-darwin
+            nixpkgs.overlays = [ inputs.rust-overlay.overlay (_:_: { inherit inputs; }) ] ++ (builtins.attrValues (self.overlays));
+            imports = [ inputs.home-manager.darwinModules.home-manager ];
+            nix.nixPath = [ "darwin=/etc/nix/inputs/nix-darwin" ]; # doesn't pick up nix-darwin
             environment.darwinConfig = "/etc/nix/inputs/self/compat/config.nix";
             environment.etc.hostname.text = ''
               Hazels-MacBook-Pro

@@ -57,12 +57,13 @@
     vpn_id
     todo
     time
-    taskwarrior
     newline
+    taskwarrior
     timewarrior
   )
 
   typeset -g POWERLEVEL9K_DIR_ANCHOR_BOLD=false
+  typeset -g POWERLEVEL9K_TIME_UPDATE_ON_COMMAND=true
 
   typeset -g POWERLEVEL9K_NIX_SHELL_CONTENT_EXPANSION=
   typeset -g POWERLEVEL9K_PCHAR_{NIX,DIRENV}_VISUAL_IDENTIFIER_EXPANSION='Λ'
@@ -90,10 +91,10 @@
     p10k segment -i $'\UF308' -f '014' -t "${${${_p9k__ret//\%/%%}/**, build /}%.*}"
   }
 
+  typeset -g POWERLEVEL9K_TRANSIENT_PROMPT=same-dir
   (( ! $+functions[p10k] )) || p10k reload
 }
 
-export POWERLEVEL9K_DISABLE_HOT_RELOAD=true
-export ZLE_RPROMPT_INDENT=0
+typeset -g ZLE_RPROMPT_INDENT=0
 (( ${#p10k_config_opts} )) && setopt ${p10k_config_opts[@]}
 'builtin' 'unset' 'p10k_config_opts'

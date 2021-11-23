@@ -44,7 +44,7 @@ with pkgs.lib; {
     dotDir = ".config/zsh";
     enableCompletion = true;
     defaultKeymap = "emacs";
-    history.path = "${config.xdg.cacheHome}/.zsh_history";
+    history.path = "${config.xdg.configHome}/zsh/.zsh_history";
     completionInit = "";
     initExtraBeforeCompInit = ''
       XDG_DATA_HOME=${config.xdg.dataHome}

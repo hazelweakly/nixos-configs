@@ -1,57 +1,5 @@
 {
   "nodes": {
-    "agenix": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1637625975,
-        "narHash": "sha256-ByDgmhpLykhAVeaFggjqoSRdl2OzTDODnxjPuu97fL4=",
-        "owner": "ryantm",
-        "repo": "agenix",
-        "rev": "a0e9ca505c82e762d39e9477a428b537a0aab022",
-        "type": "github"
-      },
-      "original": {
-        "owner": "ryantm",
-        "repo": "agenix",
-        "type": "github"
-      }
-    },
-    "cachix": {
-      "locked": {
-        "lastModified": 1635350005,
-        "narHash": "sha256-tAMJnUwfaDEB2aa31jGcu7R7bzGELM9noc91L2PbVjg=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "1c1f5649bb9c1b0d98637c8c365228f57126f361",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-20.09",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "dynamic-wallpaper": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1626085718,
-        "narHash": "sha256-Wam7ZNEmMWI+CA+WQhLUMQGukGkmSvFgobK9k88tbXM=",
-        "owner": "adi1090x",
-        "repo": "dynamic-wallpaper",
-        "rev": "fe7b1c419b57decb1754a95e016c0cb9628d37e4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "adi1090x",
-        "repo": "dynamic-wallpaper",
-        "type": "github"
-      }
-    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -65,28 +13,6 @@
       "original": {
         "owner": "edolstra",
         "repo": "flake-compat",
-        "type": "github"
-      }
-    },
-    "flake-firefox-nightly": {
-      "inputs": {
-        "cachix": "cachix",
-        "mozilla": "mozilla",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1637624809,
-        "narHash": "sha256-OObQ97k3q2OyyVlR1JZe0TIO5gVnLoWjEk+04NCL7+g=",
-        "owner": "colemickens",
-        "repo": "flake-firefox-nightly",
-        "rev": "49701828316657dfbad4f8ed37974cc8b58c1cba",
-        "type": "github"
-      },
-      "original": {
-        "owner": "colemickens",
-        "repo": "flake-firefox-nightly",
         "type": "github"
       }
     },
@@ -156,21 +82,6 @@
         "type": "github"
       }
     },
-    "latest": {
-      "locked": {
-        "lastModified": 1637628572,
-        "narHash": "sha256-C6ehrxyd2whIWBTSWexLTrZ0k6rFmfdFGZ9GX2VkKtU=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "c4686c15cc17d07e408ce9aa95fe4735e32bf175",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "mach-nix": {
       "inputs": {
         "flake-utils": [
@@ -193,22 +104,6 @@
         "type": "github"
       }
     },
-    "matterhorn": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1636578111,
-        "narHash": "sha256-61tymI3zOzOjXOI5J24BUHNZaZIGyncNUe0MVgkcnLY=",
-        "owner": "matterhorn-chat",
-        "repo": "matterhorn",
-        "rev": "2d5aa08b544dcc5173022c993234ad0ef90563c5",
-        "type": "github"
-      },
-      "original": {
-        "owner": "matterhorn-chat",
-        "repo": "matterhorn",
-        "type": "github"
-      }
-    },
     "mkalias": {
       "inputs": {
         "flake-utils": "flake-utils_2",
@@ -226,22 +121,6 @@
       "original": {
         "owner": "reckenrode",
         "repo": "mkalias",
-        "type": "github"
-      }
-    },
-    "mozilla": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1637337116,
-        "narHash": "sha256-LKqAcdL+woWeYajs02bDQ7q8rsqgXuzhC354NoRaV80=",
-        "owner": "mozilla",
-        "repo": "nixpkgs-mozilla",
-        "rev": "cbc7435f5b0b3d17b16fb1d20cf7b616eec5e093",
-        "type": "github"
-      },
-      "original": {
-        "owner": "mozilla",
-        "repo": "nixpkgs-mozilla",
         "type": "github"
       }
     },
@@ -288,22 +167,6 @@
         "owner": "lnl7",
         "ref": "master",
         "repo": "nix-darwin",
-        "type": "github"
-      }
-    },
-    "nixos-hardware": {
-      "locked": {
-        "lastModified": 1637564544,
-        "narHash": "sha256-wwdjkfdQEbFn+Gr1iBiA5DGgl+Q7PASL83Swo/Wqwy0=",
-        "owner": "NixOS",
-        "repo": "nixos-hardware",
-        "rev": "08cda8e3a5a4e685af525e5a589dfeb74267d505",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "master",
-        "repo": "nixos-hardware",
         "type": "github"
       }
     },
@@ -369,38 +232,6 @@
         "type": "github"
       }
     },
-    "notify-send": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1633757384,
-        "narHash": "sha256-s972u6M4CaXF589X0HzaTH8f06TIlXdaZL15vGSBOAk=",
-        "owner": "M3TIOR",
-        "repo": "notify-send.sh",
-        "rev": "f509ef764b356edb5f1ec2a7443c5410106d188a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "M3TIOR",
-        "repo": "notify-send.sh",
-        "type": "github"
-      }
-    },
-    "pop-os-shell": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1637361371,
-        "narHash": "sha256-Lt/ibFFGLuttOAGfMWoyKcjAjncct/tK4tP76f04upc=",
-        "owner": "pop-os",
-        "repo": "shell",
-        "rev": "5e36798d71c3aa0a3984050051c781a42b915618",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pop-os",
-        "repo": "shell",
-        "type": "github"
-      }
-    },
     "pypi-deps-db": {
       "flake": false,
       "locked": {
@@ -419,22 +250,14 @@
     },
     "root": {
       "inputs": {
-        "agenix": "agenix",
-        "dynamic-wallpaper": "dynamic-wallpaper",
         "flake-compat": "flake-compat",
-        "flake-firefox-nightly": "flake-firefox-nightly",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
-        "latest": "latest",
         "mach-nix": "mach-nix",
-        "matterhorn": "matterhorn",
         "mkalias": "mkalias",
         "neovim-flake": "neovim-flake",
         "nix-darwin": "nix-darwin",
-        "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_4",
-        "notify-send": "notify-send",
-        "pop-os-shell": "pop-os-shell",
         "rust-overlay": "rust-overlay_2"
       }
     },

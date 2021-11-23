@@ -11,7 +11,7 @@ case "$t" in
   dark) kitty_theme="@kitty_path@/tokyonight_night" ;;
   light) kitty_theme="@kitty_path@/tokyonight_day" ;;
 esac
-# ln -sf "$HOME"/.config/task/{"$t",current}.theme
+ln -sf "$HOME"/.config/task/{"$t",current}.theme
 ln -sf $kitty_theme "$HOME"/.config/kitty_current_theme
 kitty @ --to=unix:/tmp/kitty set-colors -a -c $kitty_theme
 for v in $(nvr --serverlist); do (timeout 1 nvr -s --remote-expr "SetTheme('$t')" --servername "$v" --nostart > /dev/null) & done
