@@ -56,9 +56,8 @@
         system = "x86_64-darwin";
         inherit inputs;
         modules = [
-          { config._module.check = false; }
           ./cachix.nix
-          inputs.home-manager.darwinModules.home-manager
+
           ({ lib, ... }: {
             nix.nixPath = lib.mapAttrsToList (n: _: "${n}=/etc/nix/inputs/${n}") flakesWithPkgs;
             nix.registry = mapAttrs (name: v: { flake = v; }) flakes;
@@ -68,7 +67,8 @@
           })
           {
             nixpkgs.overlays = [ inputs.rust-overlay.overlay (_:_: { inherit inputs; }) ] ++ (builtins.attrValues (self.overlays));
-            nix.nixPath = [ "darwin=/etc/nix/inputs/darwin" ]; # generateNixPathFromInputs doesn't pick up nix-darwin
+            imports = [ inputs.home-manager.darwinModules.home-manager ];
+            nix.nixPath = [ "darwin=/etc/nix/inputs/nix-darwin" ]; # doesn't pick up nix-darwin
             environment.darwinConfig = "/etc/nix/inputs/self/compat/config.nix";
             environment.etc.hostname.text = ''
               Hazels-MacBook-Pro

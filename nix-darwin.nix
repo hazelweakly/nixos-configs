@@ -8,6 +8,7 @@ let
   switch-theme = pkgs.writeScriptBin "switch-theme" theme;
 in
 {
+  imports = [ ./options.nix ];
   environment.systemPackages = with pkgs; [
     kitty
     bfs
@@ -95,13 +96,13 @@ in
     experimental-features = nix-command flakes ca-references
   '';
 
+  system.checks.text = pkgs.lib.mkForce "";
   system.defaults.NSGlobalDomain = {
     "com.apple.mouse.tapBehavior" = 1;
     "com.apple.sound.beep.feedback" = 0;
     "com.apple.sound.beep.volume" = "0.0";
     "com.apple.trackpad.scaling" = "2.0";
     AppleFontSmoothing = 0;
-    AppleReduceDesktopTinting = true;
     InitialKeyRepeat = 15;
     KeyRepeat = 2;
     NSAutomaticCapitalizationEnabled = false;
@@ -111,8 +112,6 @@ in
     NSAutomaticSpellingCorrectionEnabled = false;
     NSAutomaticTextCompletionEnabled = false;
     NSDocumentSaveNewDocumentsToCloud = false;
-    NSUserQuotesArray = [ ''"'' ''"'' "'" "'" ];
-    WebAutomaticSpellingCorrectionEnabled = false;
   };
   system.defaults.trackpad = {
     Clicking = true;
@@ -150,8 +149,8 @@ in
     command = "${./dark-mode-notify.swift} ${switch-theme}/bin/switch-theme";
   };
 
-  launchd.SoftResourceLimits.NumberOfFiles = 1048576;
-  launchd.HardResourceLimits.NumberOfFiles = 1048576;
+  launchd.daemons.SoftResourceLimits.NumberOfFiles = 1048576;
+  launchd.daemons.HardResourceLimits.NumberOfFiles = 1048576;
 
   programs.zsh.enable = true;
   programs.zsh.promptInit = "";
