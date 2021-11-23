@@ -96,7 +96,6 @@ in
     experimental-features = nix-command flakes ca-references
   '';
 
-  system.checks.text = pkgs.lib.mkForce "";
   system.defaults.NSGlobalDomain = {
     "com.apple.mouse.tapBehavior" = 1;
     "com.apple.sound.beep.feedback" = 0;
@@ -149,8 +148,9 @@ in
     command = "${./dark-mode-notify.swift} ${switch-theme}/bin/switch-theme";
   };
 
-  launchd.daemons.SoftResourceLimits.NumberOfFiles = 1048576;
-  launchd.daemons.HardResourceLimits.NumberOfFiles = 1048576;
+  # figure this out later
+  # launchd.daemons."limit.maxfiles".SoftResourceLimits.NumberOfFiles = 1048576;
+  # launchd.daemons."limit.maxfiles".HardResourceLimits.NumberOfFiles = 1048576;
 
   programs.zsh.enable = true;
   programs.zsh.promptInit = "";
