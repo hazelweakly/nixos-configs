@@ -1,8 +1,12 @@
-zstyle ':z4h:'                start-tmux       'none'
-zstyle ':z4h:'                prompt-at-bottom 'no'
-zstyle ':z4h:ssh:*'           enable           'no'
-zstyle ':z4h:direnv'          enable           'yes'
-zstyle ':z4h:direnv:success'  notify           'no'
+zstyle ':z4h:'               start-tmux          'none'
+zstyle ':z4h:'               prompt-at-bottom    'no'
+zstyle ':z4h:ssh:*'          enable              'no'
+zstyle ':z4h:direnv'         enable              'yes'
+zstyle ':z4h:direnv:success' notify              'no'
+# kitty is set to force macos option to be alt
+# so we set this to false to make z4h think option should not be messed with
+# (which it shouldn't, because it already "is" alt)
+zstyle ':z4h:bindkey'        macos-option-as-alt 'no'
 
 # Some of this is not documented
 zstyle ':z4h:homebrew-command-not-found' channel 'none'
@@ -17,32 +21,14 @@ z4h install Tarrasch/zsh-bd
 
 z4h init || return
 
-() { # remove zsh4human paths
-  # When I wrote this, only the gods and I understood it
-  # and now, who knows?
-  path=(${path:#${~${(j:|:)@}}})
-} {$Z4H/zsh4humans/zb,$Z4H/fzf/bin}
-
-() { # Move nix paths to the front of the first non nix-store paths and prune non existing entries
-  local idx=$((${path[(i)/(usr|Library|bin|sbin)/*]} - 1))
-  path=(${path[1,idx]} $@ ${path[idx,-1]})
-  path=(${(@)^path}(-FN))
-} {/run/current-system/sw/bin,~/.nix-profile/bin,/etc/profiles/per-user/$USER/bin,/nix/var/nix/profiles/default/bin}
-
-() { # remove non-existing directories
-  fpath=(${(@)^fpath}(-FN))
-}
-
 z4h load -c -- chisui/zsh-nix-shell hlissner/zsh-autopair Tarrasch/zsh-bd
 
-[ -d "$HOME/.local/bin" ] && path+=($HOME/.local/bin)
-fpath+=("$ZDOTDIR/config/completions" "$ZDOTDIR/config/fn")
-z4h source -c -- ${ZDOTDIR}/config/{30-prompt,31-prompt,80-exports}.zsh
+z4h source -c -- ${ZDOTDIR}/config/[0-9]*.zsh(.)
 
 z4h bindkey z4h-backward-kill-word  Ctrl+Backspace Ctrl+H
 z4h bindkey z4h-backward-kill-zword Ctrl+Alt+Backspace Ctrl+W
 z4h bindkey fzf-cd-widget Alt+C
-bindkey '^[D' z4h-kill-zword
+z4h bindkey z4h-kill-word Alt+D
 z4h bindkey fzf-file-widget Ctrl+T
 z4h bindkey backward-kill-line Ctrl+U
 z4h bindkey z4h-eof Ctrl+D
@@ -67,3 +53,6 @@ setopt no_auto_menu
 setopt ignore_eof
 setopt nonomatch
 setopt no_flow_control
+setopt extended_history
+setopt hist_reduce_blanks
+setopt hist_ignore_space

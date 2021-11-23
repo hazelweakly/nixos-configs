@@ -8,8 +8,8 @@ fi
 
 echo "$t" > "$HOME"/.local/share/theme
 case "$t" in
-  dark) kitty_theme="@kitty_path@/tokyonight_night" ;;
-  light) kitty_theme="@kitty_path@/tokyonight_day" ;;
+  dark) kitty_theme="@kitty_path@/themes/tokyonight_night.conf" ;;
+  light) kitty_theme="@kitty_path@/themes/tokyonight_day.conf" ;;
 esac
 ln -sf "$HOME"/.config/task/{"$t",current}.theme
 ln -sf $kitty_theme "$HOME"/.config/kitty_current_theme

@@ -20,7 +20,6 @@ fetchzip rec {
       by Kris Holmes and Charles Bigelow from Bigelow & Holmes Inc. The Luxi
       typefaces are similar to Lucida – their previous font design.
     '';
-    # maintainers = with maintainers; [ raskin rycee ];
     license = licenses.mit;
     platforms = platforms.all;
   };

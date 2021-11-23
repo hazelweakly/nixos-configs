@@ -34,69 +34,22 @@
     flake-compat.flake = false;
   };
 
-  outputs = inputs@{ self, ... }:
-    let
-      inherit (builtins) listToAttrs concatMap attrNames map mapAttrs;
-      mapAttrs' = f: set: listToAttrs (map (attr: f attr set.${attr}) (attrNames set));
+  outputs = inputs@{ self, ... }: {
+    overlays = with builtins; foldl' (x: f: f x) ./overlays [
+      readDir
+      (mapAttrs (n: _: import (./overlays + "/${n}")))
+    ];
 
-      filterAttrs = pred: set:
-        listToAttrs (concatMap (name: let value = set.${name}; in if pred name value then [{ inherit name value; }] else [ ]) (attrNames set));
-
-      flakes = filterAttrs (name: value: value ? outputs) inputs;
-      flakesWithPkgs = filterAttrs (name: value: value.outputs ? legacyPackages || value.outputs ? packages) flakes;
-    in
-
-    {
-      overlays =
-        let
-          inherit (builtins) head split readDir;
-          prefix = s: head (split ".nix" s);
-          impt = f: import (./overlays + "/${f}");
-        in
-        mapAttrs' (f: _: { name = prefix f; value = impt f; }) (readDir (./overlays));
-
-      darwinConfigurations."Hazels-MacBook-Pro" = inputs.nix-darwin.lib.darwinSystem {
-        system = "x86_64-darwin";
-        inherit inputs;
-        modules = [
-          ./cachix.nix
-
-          ({ lib, ... }: {
-            nix.nixPath = lib.mapAttrsToList (n: _: "${n}=/etc/nix/inputs/${n}") flakesWithPkgs;
-            nix.registry = mapAttrs (name: v: { flake = v; }) flakes;
-            environment.etc = mapAttrs'
-              (name: value: { name = "nix/inputs/${name}"; value = { source = value.outPath; }; })
-              inputs;
-          })
-          {
-            nixpkgs.overlays = [ inputs.rust-overlay.overlay (_:_: { inherit inputs; }) ] ++ (builtins.attrValues (self.overlays));
-            imports = [ inputs.home-manager.darwinModules.home-manager ];
-            nix.nixPath = [ "darwin=/etc/nix/inputs/nix-darwin" ]; # doesn't pick up nix-darwin
-            environment.darwinConfig = "/etc/nix/inputs/self/compat/config.nix";
-            environment.etc.hostname.text = ''
-              Hazels-MacBook-Pro
-            '';
-          }
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.hazelweakly = import ./home/users/hazelweakly.nix;
-            home-manager.users.root = { pkgs, ... }: {
-              home.homeDirectory = pkgs.lib.mkForce "/var/root";
-              xdg.enable = true;
-              programs.zsh.enable = true;
-            };
-          }
-          ./pam.nix
-          ./nix-darwin.nix
-          ./work.nix
-        ];
-      };
-      darwinPackages = self.darwinConfigurations."Hazels-MacBook-Pro".pkgs // {
-        dev-shell = self.devShell.x86_64-darwin.inputDerivation;
-      };
-      devShell.x86_64-darwin = self.darwinPackages.mkShell {
-        nativeBuildInputs = with self.darwinPackages; [ nixUnstable ];
-      };
+    darwinConfigurations."Hazels-MacBook-Pro" = inputs.nix-darwin.lib.darwinSystem {
+      system = "x86_64-darwin";
+      inherit inputs;
+      modules = import ./modules/hosts/Hazels-MacBook-Pro.nix { inherit inputs self; };
     };
+    darwinPackages = self.darwinConfigurations."Hazels-MacBook-Pro".pkgs // {
+      dev-shell = self.devShell.x86_64-darwin.inputDerivation;
+    };
+    devShell.x86_64-darwin = self.darwinPackages.mkShell {
+      nativeBuildInputs = with self.darwinPackages; [ nixUnstable ];
+    };
+  };
 }
