@@ -24,10 +24,9 @@ let
     perl
     python3
     python3Packages.black
-    # python-language-server
     shellcheck
     shfmt
-    # sumneko-lua-language-server
+    terraform-ls
     tmux
     tree-sitter
     universal-ctags
