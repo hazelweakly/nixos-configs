@@ -35,15 +35,13 @@
   };
 
   outputs = inputs@{ self, ... }: {
-    overlays = with builtins; foldl' (x: f: f x) ./overlays [
-      readDir
-      (mapAttrs (n: _: import (./overlays + "/${n}")))
-    ];
+    overlays = import ./overlays;
 
     darwinConfigurations."Hazels-MacBook-Pro" = inputs.nix-darwin.lib.darwinSystem {
       system = "x86_64-darwin";
       inherit inputs;
-      modules = import ./modules/hosts/Hazels-MacBook-Pro.nix { inherit inputs self; };
+      modules = import ./modules/hosts/Hazels-MacBook-Pro.nix { inherit self inputs; };
+      specialArgs = { inherit self; };
     };
     darwinPackages = self.darwinConfigurations."Hazels-MacBook-Pro".pkgs // {
       dev-shell = self.devShell.x86_64-darwin.inputDerivation;
