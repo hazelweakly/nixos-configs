@@ -13,6 +13,8 @@ let
     exa
     gcc
     git
+    go
+    gopls
     haskellPackages.cabal-fmt
     haskellPackages.hadolint
     jq
@@ -26,6 +28,8 @@ let
     python3Packages.black
     shellcheck
     shfmt
+    stylua
+    taplo-lsp
     terraform-ls
     tmux
     tree-sitter

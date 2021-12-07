@@ -1,6 +1,6 @@
 {
   description = "Hazel's system configuration";
-  nixConfig.extra-experimental-features = "nix-command flakes ca-references";
+  nixConfig.extra-experimental-features = "nix-command flakes";
   nixConfig.extra-substituters = "https://nix-community.cachix.org https://hazel-nix-configs.cachix.org";
   nixConfig.extra-trusted-public-keys = "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= hazel-nix-configs.cachix.org-1:AyBQRdv7dppOc1Kq9VyBb+8EuGbBZD8Hgsm9e2GnyCI=";
 
@@ -27,8 +27,13 @@
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    mach-nix.url = "github:DavHau/mach-nix";
-    mach-nix.inputs.flake-utils.follows = "flake-utils";
+    rnix-lsp.url = "github:nix-community/rnix-lsp";
+    rnix-lsp.inputs.nixpkgs.follows = "nixpkgs";
+    rnix-lsp.inputs.utils.follows = "flake-utils";
+    # workaround to flatten nixpkgs for naersk.
+    naersk.url = "github:nmattia/naersk";
+    naersk.inputs.nixpkgs.follows = "nixpkgs";
+    rnix-lsp.inputs.naersk.follows = "naersk";
 
     flake-compat.url = "github:edolstra/flake-compat";
     flake-compat.flake = false;

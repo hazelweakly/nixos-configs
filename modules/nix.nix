@@ -10,7 +10,7 @@ with builtins;
   nix.extraOptions = ''
     keep-outputs = true
     keep-derivations = true
-    experimental-features = nix-command flakes ca-references
+    experimental-features = nix-command flakes
   '';
 
   nix.nixPath = lib.mapAttrsToList (n: _: "${n}=/etc/nix/inputs/${n}") (l.inputsWithPkgs inputs);
