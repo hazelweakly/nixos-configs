@@ -3,7 +3,25 @@ let g:did_load_filetypes = 1 " skip loading default filetypes
 " https://learnvimscriptthehardway.stevelosh.com/chapters/42.html
 " https://github.com/22mahmoud/neovim
 " https://github.com/nanotee/nvim-lua-guide/
+
+" configs:
+" - https://old.reddit.com/r/neovim/comments/r0a33t/good_neovim_configurations/
+" ecovim for reactJS: https://github.com/ecosse3/nvim
+" lunarvim and nvchad / gigachad
+
 " https://github.com/phaazon/hop.nvim
+" lightspeed.nvim
+" renamer.nvim
+" ldelossa/calltree.nvim
+" neovim-cmp ?
+" fine-cmdline.nvim
+" telescope
+" cokeline.nvim ?
+" searchbox.nvim ?
+" dressing.nvim
+" lazy load packer stuff.
+" evaluate packer vs paq vs...?
+" mini.nvim ?
 function! VimrcLoadPlugins()
     lua require('plugins')
 endfunction
@@ -98,8 +116,6 @@ function! VimrcLoadMappings()
     nnoremap <silent> go :pu _<CR>:'[-1<CR>
     nnoremap <silent> gO :pu! _<CR>:']+1<CR>
 
-    nnoremap Y y$
-
     " Replace cursor under word. Pressing . will move to next match and repeat
     nnoremap c* /\<<C-R>=expand('<cword>')<CR>\>\C<CR>``cgn
     nnoremap c# ?\<<C-R>=expand('<cword>')<CR>\>\C<CR>``cgN
@@ -125,12 +141,9 @@ endfunction
 
 function! VimrcLoadSettings()
     set title
-    set nojoinspaces
-    set inccommand=nosplit
     set pumblend=30
     set winblend=30
     set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
-    set hidden " Required for coc.nvim
     set mouse=a " coc.nvim scrolling
     set complete+=k
     set completeopt=menu,menuone,noinsert
@@ -142,11 +155,9 @@ function! VimrcLoadSettings()
     set lazyredraw
     set virtualedit=block
     set backupdir-=.
-    set noerrorbells visualbell t_vb=
     set list
     set listchars=tab:▸\ ,extends:❯,precedes:❮,trail:⌴
     set showbreak=↪\ \ 
-    set fillchars=diff:⣿,vert:│,fold:\
     set scrolloff=2
     set sidescrolloff=2
     set number
@@ -163,10 +174,8 @@ function! VimrcLoadSettings()
     set nofoldenable
 
     " auto reload file on changes
-    set autoread
     autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
 
-    set redrawtime=10000
     set synmaxcol=500
     set termguicolors
     " fixcursorhold.nvim
@@ -181,10 +190,7 @@ function! VimrcLoadSettings()
     let g:netrw_nogx = 1 " disable netrw's gx mapping.
     nmap gx <Plug>(openbrowser-smart-search)
 
-    if has('nvim-0.3.2') || has("patch-8.1.0360")
-        set diffopt=filler,internal,algorithm:histogram,indent-heuristic
-    endif
-    set diffopt+=hiddenoff
+    set diffopt=filler,internal,algorithm:histogram,indent-heuristic,hiddenoff
 
     augroup vimrc_settings
         au!

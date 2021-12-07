@@ -5,6 +5,7 @@ require("filetype").setup({
       babelrc = "json",
       tex = "tex",
       just = "just",
+      tf = "terraform",
     },
     literal = {
       httpd = "apache",

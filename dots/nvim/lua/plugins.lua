@@ -348,7 +348,7 @@ packer.startup(function(use)
   })
 
   -- Speed up stuff
-  use("lewis6991/impatient.nvim")
+  use({ "lewis6991/impatient.nvim", rocks = "mpack" })
   use({
     "nathom/filetype.nvim",
     config = function()
