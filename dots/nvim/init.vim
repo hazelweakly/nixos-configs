@@ -1,292 +1,18 @@
+let g:did_load_filetypes = 1 " skip loading default filetypes
+
 " https://learnvimscriptthehardway.stevelosh.com/chapters/42.html
 " https://github.com/22mahmoud/neovim
 " https://github.com/nanotee/nvim-lua-guide/
+" https://github.com/phaazon/hop.nvim
 function! VimrcLoadPlugins()
-    " Install vim-plug if not available
-    let plug_install = 0
-    let autoload_plug_path = stdpath('data') . '/site/autoload/plug.vim'
-    if !filereadable(autoload_plug_path)
-        silent exe '!curl -fLo ' . autoload_plug_path . ' --create-dirs ' .
-                    \ 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-        execute 'source ' . fnameescape(autoload_plug_path)
-        let plug_install = 1
-    endif
-    unlet autoload_plug_path
-
-    call plug#begin('~/.local/share/nvim/plugged')
-
-    " Linting + LSP
-    Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
-    Plug 'antoinemadec/coc-fzf'
-    Plug 'expipiplus1/vscode-hie-server', { 'branch': 'coc.nvim', 'do': 'yarn install --frozen-lockfile ;  yarn vscode:prepublish' }
-    Plug 'direnv/direnv.vim'
-    Plug 'sbdchd/neoformat', { 'for' : ['terraform'] }
-    Plug 'editorconfig/editorconfig-vim'
-    " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
-    Plug 'nvim-lua/lsp-status.nvim'
-    Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
-    Plug 'jackguo380/vim-lsp-cxx-highlight'
-    Plug 'p00f/nvim-ts-rainbow'
-    Plug 'Olical/conjure'
-    Plug 'lukas-reineke/indent-blankline.nvim'
-    " https://github.com/metakirby5/codi.vim
-
-    " https://github.com/nvim-telescope/telescope.nvim
-    " https://github.com/glepnir/lspsaga.nvim
-
-    Plug 'honza/vim-snippets'
-    " Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey','WhichKey!'] }
-    Plug 'folke/which-key.nvim'
-    " Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
-    Plug 'lambdalisue/suda.vim'
-    Plug 'farmergreg/vim-lastplace'
-    " Plug 'cohama/lexima.vim'
-    Plug 'junegunn/fzf'
-    Plug 'junegunn/fzf.vim'
-    Plug 'junegunn/vim-easy-align'
-    Plug '907th/vim-auto-save'
-    Plug 'blueyed/vim-diminactive'
-    Plug 'camspiers/lens.vim'
-    Plug 'wsdjeg/vim-fetch'
-    Plug 'antoinemadec/FixCursorHold.nvim'
-
-    " filetype ]] [[
-    Plug 'arp242/jumpy.vim'
-
-    Plug 'JoosepAlviste/nvim-ts-context-commentstring'
-    Plug 'numToStr/Comment.nvim'
-    Plug 'tommcdo/vim-exchange'
-    " g>, g<, gs
-    Plug 'machakann/vim-swap'
-    Plug 'airblade/vim-rooter'
-    " Plug 'svermeulen/vim-subversive'
-
-    " Plug 'liuchengxu/vista.vim'
-    Plug 'rhysd/git-messenger.vim'
-    " x[ and x] to jump conflicts
-    " ct for top/them, co for bottom/us, cn for none, cb for both
-    Plug 'rhysd/conflict-marker.vim'
-    " Plug 'dhruvasagar/vim-zoom'
-    " Plug 'voldikss/vim-floaterm'
-    Plug 'knubie/vim-kitty-navigator', {'do': 'cp ./*.py ~/.config/kitty/'}
-    Plug 'tyru/open-browser.vim'
-
-    Plug 'machakann/vim-sandwich'
-    Plug 'wellle/targets.vim'
-    Plug 'romainl/vim-cool'
-    Plug 'andymass/vim-matchup'
-    Plug 'kyazdani42/nvim-web-devicons'
-    " Plug 'adelarsq/vim-devicons-emoji'
-    Plug 'jceb/vim-orgmode'
-
-    Plug 'https://gitlab.com/protesilaos/tempus-themes-vim.git'
-    Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
-
-    " Languages
-    Plug 'lervag/vimtex', { 'for': ['latex', 'tex'] }
-    Plug 'dkarter/bullets.vim'
-    Plug 'sheerun/vim-polyglot'
-    call plug#end()
-
-    if plug_install || len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-      PlugInstall --sync
-      PlugClean!
-    endif
-    unlet plug_install
+    lua require('plugins')
 endfunction
 
 function! VimrcLoadPluginSettings()
-    " vim-cool
-    let g:CoolTotalMatches = 1
-
-    " Comment.nvim
-    lua << EOF
-    require('Comment').setup({
-    -- ---@param ctx Ctx
-    -- pre_hook = function(ctx)
-    --     return require('ts_context_commentstring.internal').calculate_commentstring()
-    -- end
-    -- })
-
-    ---@param ctx Ctx
-    pre_hook = function(ctx)
-        local U = require('Comment.utils')
-        local ty = ctx.ctype == U.ctype.line and 'single' or 'multi'
-        return require('ts_context_commentstring.internal').calculate_commentstring(ty)
-    end,
-})
-EOF
-
-    " vim-matchup
-    let g:matchup_transmute_enabled = 1
-    let g:matchup_matchparen_deferred = 1
-    let g:matchup_matchparen_status_offscreen = 0
-    let g:matchup_delim_stopline = 2500
-
-    " lens.vim
-    let g:lens#disabled_filetypes = ['nerdtree', 'fzf']
-
-    " vimtex
-    let g:tex_flavor = 'latex'
-
-    " nvim-treesitter
-    luafile ~/.config/nvim/lua/setup-treesitter.lua
-
-    " nvim-ts-rainbow
-    lua << EOF
-    require'nvim-treesitter.configs'.setup {
-        rainbow = { enable = true, extended_mode = true, max_file_lines = 1000 }
-    }
-EOF
-
-    " fzf.vim
-    let s:env_dict = {
-                \ "FZF_PREVIEW_COMMAND": 'bat --style=numbers,changes --color always {}',
-                \ "FZF_DEFAULT_OPTS": "--color=light --reverse ",
-                \ "FZF_DEFAULT_COMMAND": 'fd -t f -L -H -E .git',
-                \ "BAT_THEME": "ansi",
-                \ }
-
-    for [l:e, l:d] in items(s:env_dict)
-        let l:_e = getenv(l:e)
-        if l:_e == "" || l:_e == v:null
-            call setenv(l:e, l:d)
-        endif
-    endfor
-
-    let &shell = "bash"
-    let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9 } }
-
-    " fzf-preview.vim
-    nnoremap <silent> <leader>f :<C-u>CocCommand fzf-preview.DirectoryFiles<CR>
-    nnoremap <silent> <leader>h :<C-u>CocCommand fzf-preview.History<CR>
-    nnoremap <silent> <leader>b :<C-u>CocCommand fzf-preview.Buffers<CR>
-    nnoremap <silent> <leader><space> :<C-u>CocCommand fzf-preview.ProjectGrep .<CR>
-    xnoremap <silent> <leader><space> y:Rg <C-R>"<CR>
-    nnoremap <silent> <leader>/ :<C-u>CocCommand fzf-preview.Lines<CR>
-    nnoremap <silent> <Leader>gs :<C-u>CocCommand fzf-preview.GitStatus<CR>
-    let g:fzf_preview_use_dev_icons = 1
-    let g:fzf_preview_git_status_preview_command =  "[[ $(git diff --cached -- {-1}) != \"\" ]] && git diff --cached --color=always -- {-1} || " .
-                \ "[[ $(git diff -- {-1}) != \"\" ]] && git diff --color=always -- {-1} || " .
-                \ 'bat --color=always --plain {-1}'
-
-    " coc.nvim
-    nmap <silent> gd <Plug>(coc-definition)
-    nmap <silent> gr <Plug>(coc-rename)
-    nmap <silent> gR <Plug>(coc-references)
-    nmap <silent> K :call CocActionAsync('doHover')<CR>
-    nmap <silent> gz <Plug>(coc-refactor)
-    nmap <silent> gl <Plug>(coc-codelens-action)
-
-    if has('nvim-0.4.0') || has('patch-8.2.0750')
-        nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-        nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-        inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-        inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-        vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-        vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-    endif
-
-    function! s:cocActionsOpenFromSelected(type) abort
-        execute 'CocCommand actions.open ' . a:type
-    endfunction
-    xmap <silent> ga :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
-    nmap <silent> ga :<C-u>set operatorfunc=<SID>cocActionsOpenFromSelected<CR>g@
-
-    nmap <silent> gA <Plug>(coc-fix-current)
-    nmap <silent> <C-n> <Plug>(coc-diagnostic-next)
-    nmap <silent> <C-p> <Plug>(coc-diagnostic-prev)
-
-    let g:coc_filetype_map = {
-          \ 'yaml.ansible': 'yaml',
-          \ 'direnv':'sh'
-          \ }
-
-    let g:coc_global_extensions = [
-                \ 'coc-actions',
-                \ 'coc-cfn-lint',
-                \ 'coc-clangd',
-                \ 'coc-cmake',
-                \ 'coc-conjure',
-                \ 'coc-css',
-                \ 'coc-cssmodules',
-                \ 'coc-diagnostic',
-                \ 'coc-dictionary',
-                \ 'coc-docker',
-                \ 'coc-emmet',
-                \ 'coc-emoji',
-                \ 'coc-eslint',
-                \ 'coc-fzf-preview',
-                \ 'coc-git',
-                \ 'coc-highlight',
-                \ 'coc-html',
-                \ 'coc-json',
-                \ 'coc-lua',
-                \ 'coc-pairs',
-                \ 'coc-prettier',
-                \ 'coc-pyright',
-                \ 'coc-rust-analyzer',
-                \ 'coc-sh',
-                \ 'coc-snippets',
-                \ 'coc-tslint-plugin',
-                \ 'coc-tsserver',
-                \ 'coc-vetur',
-                \ 'coc-vimlsp',
-                \ 'coc-vimtex',
-                \ 'coc-word',
-                \ 'coc-yaml'
-                \ ]
-
-    let g:coc_fzf_preview = ''
-    let g:coc_fzf_opts = []
-
-    augroup coc
-        au!
-        au CompleteDone * if pumvisible() == 0 | pclose | endif
-        au User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-        au CursorHold * silent! call CocActionAsync('highlight')
-        au User CocQuickfixChange :CocFzfList --normal quickfix
-    augroup END
-
-    " inoremap <expr> <Tab> pumvisible() ? coc#_select_confirm() : "\<Tab>"
-    inoremap <expr> <CR> complete_info()["selected"] != "-1" ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-    " inoremap <expr> <S-Tab> "\<C-h>"
-    inoremap <silent><expr> <c-space> coc#refresh()
-
-    inoremap <silent><expr> <TAB>
-                \ pumvisible() ? coc#_select_confirm() :
-                \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-                \ <SID>check_back_space() ? "\<TAB>" :
-                \ coc#refresh()
-
-    function! s:check_back_space() abort
-        let col = col('.') - 1
-        return !col || getline('.')[col - 1]  =~# '\s'
-    endfunction
-
-    let g:coc_snippet_next = '<Tab>'
-    let g:coc_snippet_prev = '<S-Tab>'
-
-    xmap <silent> <TAB> <Plug>(coc-range-select)
-    xmap <silent> <S-TAB> <Plug>(coc-range-select-backword)
-
-    nmap <silent> <leader>c :CocCommand<CR>
-    nmap <silent> <leader>lo :<C-u>CocFzfList outline<CR>
-    nmap <silent> <leader>ls :<C-u>CocFzfList -I symbols<CR>
-    nmap <silent> <leader>ld :<C-u>CocFzfList diagnostics<CR>
-
-    nmap gp <Plug>(coc-git-prevchunk)
-    nmap gn <Plug>(coc-git-nextchunk)
-
-    " conjure
-    let g:conjure#mapping#doc_word = 'K'
-    let g:conjure#highlight#enabled = v:true
-    let g:conjure#extract#tree_sitter#enabled = v:true
+    " https://github.com/xiyaowong/coc-sumneko-lua/blob/c2f7cd231626df0dab02d42bd3338fc62f6c153f/src/ctx.ts#L52
 
     " neoformat
     " see also: after/ftplugin/terraform
-    let g:neoformat_only_msg_on_error = 1
-    command! NeoformatDisable au! neoformat
 
     " " vista.vim
     " let g:vista#renderer#enable_icon = 1
@@ -300,7 +26,7 @@ EOF
     " let g:floaterm_winblend = 30
     " let g:floaterm_keymap_toggle = '<F12>'
 
-    " " vim-kitty-navigation
+    " vim-kitty-navigator
     let g:kitty_navigator_no_mappings = 1
     nnoremap <silent> <M-h> :KittyNavigateLeft<cr>
     nnoremap <silent> <M-j> :KittyNavigateDown<cr>
@@ -343,6 +69,7 @@ EOF
 
     " vim-auto-save
     let g:auto_save = 1
+    let g:auto_save_write_all_buffers = 1
     let g:auto_save_events = ["FocusLost"]
 
     " sandwich.vim
@@ -425,14 +152,9 @@ function! VimrcLoadSettings()
     set number
     set shortmess+=caIA
 
-    " breaks popup windows
-    " set winwidth=79
-    " set winheight=50
-
-    " not needed with vim-sleuth (implemented by polyglot)
     set expandtab
-    " set softtabstop=2
-    " set shiftwidth=2
+    set softtabstop=2
+    set shiftwidth=2
 
     set ignorecase " Required so that smartcase works
     set smartcase
@@ -440,11 +162,14 @@ function! VimrcLoadSettings()
     set nowrap
     set nofoldenable
 
+    " auto reload file on changes
+    set autoread
+    autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
+
     set redrawtime=10000
     set synmaxcol=500
     set termguicolors
     " fixcursorhold.nvim
-    " set updatetime=100
     set updatetime=4001 " don't get overridden by sensible
     let g:cursorhold_updatetime = 100
     set splitright
@@ -464,11 +189,6 @@ function! VimrcLoadSettings()
     augroup vimrc_settings
         au!
         au BufWritePost $MYVIMRC nested source $MYVIMRC
-        au BufWritePost $MYVIMRC
-                    \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-                    \|   PlugInstall --sync | q
-                    \| endif
-        " au VimEnter * call vista#RunForNearestMethodOrFunction()
         au VimEnter * set title
     augroup END
 
@@ -477,7 +197,15 @@ function! VimrcLoadSettings()
         au VimResized * wincmd =
     augroup END
 
-    set statusline=%f\ %h%w%m%r%=%{NearestMethodOrFunction()}%-8.(%)\ %-14.(%l,%c%V%)\ %P
+
+    func! NvimGps() abort
+        return luaeval("require'nvim-gps'.is_available()") ?
+                    \ luaeval("require'nvim-gps'.get_location()") :
+                    \ !empty(get(b:,'coc_current_function','')) ? b:coc_current_function :
+                    \ !empty(nvim_treesitter#statusline()) ? nvim_treesitter#statusline() : ""
+    endf
+    " set statusline=%f\ %h%w%m%r%=%{NvimGps()}%-8.(%)\ %-14.{ObsessionStatus('Session\ Active','Session\ Paused','Session\ N/A')}\ %-10.(%l,%c%V%)\ %P
+    set statusline=%f\ %h%w%m%r%=%{NvimGps()}%-8.(%)\ %-10.(%l,%c%V%)\ %P
 
     augroup LuaHighlight
         au!
@@ -528,8 +256,7 @@ let g:maplocalleader = "\<Space>"
 function! Requirements_matched_filename(arg)
     return v:true
 endfunction
-" let g:polyglot_disabled = ['sensible']
-" let g:polyglot_disabled = ['autoindent']
+let g:polyglot_disabled = ['sensible', 'ftdetect']
 let g:python_host_skip_check=1 " disable python2
 let g:loaded_python_provider=1 " disable python2
 

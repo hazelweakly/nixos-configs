@@ -1,4 +1,5 @@
 {
+  "coc.preferences.currentFunctionSymbolAutoUpdate": true,
   "emmet.optimizeStylesheetParsing": false,
   "suggest.preferCompleteThanJumpPlaceholder": true,
   "suggest.invalidInsertCharacters": [],
@@ -35,6 +36,11 @@
   "css.lint.unknownProperties": "ignore",
   "python.formatting.provider": "black",
   "haskell.formattingProvider": "fourmolu",
+  "go.checkForUpdates": "disabled",
+  "go.goplsPath": "gopls",
+  "stylua.styluaPath": "/nix/store/55yr9v6gslmjjkxia1lq6lz583sp95aj-stylua-0.11.2/bin/stylua",
+  "toml.semanticTokens": true,
+  "Lua.diagnostics.globals": ["vim"],
   "sh.explainshellEndpoint": "http://localhost:5000",
   "clangd.semanticHighlighting": true,
   "yaml.schemaStore.enable": true,
