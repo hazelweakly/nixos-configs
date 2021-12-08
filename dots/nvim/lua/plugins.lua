@@ -48,6 +48,7 @@ packer.startup({
     use("nvim-lua/lsp-status.nvim")
     use({
       "SmiteshP/nvim-gps",
+      requires = "nvim-treesitter/nvim-treesitter",
       config = function()
         require("nvim-gps").setup()
       end,
@@ -227,7 +228,6 @@ packer.startup({
       branch = "master",
       run = "yarn install --frozen-lockfile",
       config = function()
-        print("wtf m8")
         vim.cmd([=[
           " fzf-preview.vim
           nmap <silent> <leader>f :<C-u>CocCommand fzf-preview.DirectoryFiles<CR>
@@ -385,7 +385,6 @@ packer.startup({
     })
     use({
       "nvim-treesitter/nvim-treesitter",
-      opt = true,
       run = { ":TSInstall all", ":TSUpdate" },
       config = function()
         require("configs.nvim-treesitter")

@@ -1,7 +1,10 @@
 #!/usr/bin/env zsh
-nvim --headless '+PlugUpgrade'   '+qall'
-nvim --headless '+PlugUpdate'    '+qall'
+printf '\n%s\n' "Packer Sync"
+nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+printf '\n%s\n' "Packer Clean"
+nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerClean'
+printf '\n%s\n' "TSUpdate"
 nvim --headless '+TSUpdateSync'  '+qall'
-nvim --headless '+PlugClean!'    '+qall'
+printf '\n%s\n' "Coc Update"
 nvim --headless '+CocUpdateSync' '+qall'
-echo
+echo ""

@@ -22,8 +22,8 @@ vim.cmd([[
                     \ !empty(get(b:,'coc_current_function','')) ? b:coc_current_function :
                     \ !empty(nvim_treesitter#statusline()) ? nvim_treesitter#statusline() : ""
     endf
-    " set statusline=%f\ %h%w%m%r%=%{NvimGps()}%-8.(%)\ %-14.{ObsessionStatus('Session\ Active','Session\ Paused','Session\ N/A')}\ %-10.(%l,%c%V%)\ %P
     set statusline=%f\ %h%w%m%r%=%{NvimGps()}%-8.(%)\ %-10.(%l,%c%V%)\ %P
+    " set statusline=%f\ %h%w%m%r%=%-8.(%)\ %-10.(%l,%c%V%)\ %P
 
     augroup LuaHighlight
         au!
