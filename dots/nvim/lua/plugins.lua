@@ -11,156 +11,232 @@ if (fn.empty(fn.glob(packer_path)) > 0) or (fn.empty(fn.glob(packer_compiled_pat
   command("packadd packer.nvim")
 end
 
-if fn.filereadable(packer_compiled_path) and not bootstrap then
-  require("impatient")
-  require("packer_compiled")
+local packer = require("packer")
+
+do -- Hacky way of auto clean/install/compile
+  command([[
+    augroup plugins
+    " Reload plugins.lua
+    autocmd!
+    autocmd BufWritePost plugins.lua lua package.loaded["plugins"] = nil; require("plugins")
+    autocmd BufWritePost plugins.lua PackerClean
+    augroup END
+  ]])
+
+  local state = "cleaned"
+  local orig_complete = packer.on_complete
+  packer.on_complete = vim.schedule_wrap(function()
+    if state == "cleaned" then
+      packer.install()
+      state = "installed"
+    elseif state == "installed" then
+      packer.compile()
+      state = "compiled"
+    elseif state == "compiled" then
+      packer.on_complete = orig_complete
+      state = "done"
+    end
+  end)
 end
 
-local packer = require("packer")
-local util = require("packer.util")
+packer.startup({
+  function(use)
+    use("wbthomason/packer.nvim")
 
-packer.init({
-  compile_path = packer_compiled_path,
-  display = {
-    open_fn = function()
-      return util.float({
-        border = "single",
-        height = math.ceil(vim.o.lines * 0.5),
-      })
-    end,
-  },
-})
+    use("direnv/direnv.vim")
+    use("editorconfig/editorconfig-vim")
+    use("nvim-lua/lsp-status.nvim")
+    use({
+      "SmiteshP/nvim-gps",
+      config = function()
+        require("nvim-gps").setup()
+      end,
+    })
+    use("jackguo380/vim-lsp-cxx-highlight")
+    use({
+      "p00f/nvim-ts-rainbow",
+      requires = "nvim-treesitter/nvim-treesitter",
+    })
+    use({
+      "Olical/conjure",
+      config = function()
+        vim.g["conjure#mapping#doc_word"] = "K"
+        vim.g["conjure#highlight#enabled"] = true
+        vim.g["conjure#extract#tree_sitter#enabled"] = true
+      end,
+    })
+    use({
+      "lukas-reineke/indent-blankline.nvim",
+      requires = { "nvim-treesitter/nvim-treesitter" },
+      config = function()
+        require("configs.indent-blankline")
+      end,
+    })
+    use("folke/lsp-colors.nvim")
+    use("honza/vim-snippets")
+    use({
+      "folke/which-key.nvim",
+      config = function()
+        vim.defer_fn(function()
+          require("which-key").setup({
+            plugins = { spelling = { enabled = true } },
+          })
+        end, 2000)
+      end,
+    })
+    use({
+      "lambdalisue/suda.vim",
+      config = function()
+        vim.cmd([[command! W :w suda://%]])
+      end,
+    })
+    use("farmergreg/vim-lastplace")
 
-packer.startup(function(use)
-  use("wbthomason/packer.nvim")
+    use("junegunn/fzf")
+    use({
+      "junegunn/fzf.vim",
+      requires = "junegunn/fzf",
+      config = function()
+        local env_dict = {
+          FZF_PREVIEW_COMMAND = "bat --style=numbers,changes --color always {}",
+          FZF_DEFAULT_OPTS = "--color=light --reverse ",
+          FZF_DEFAULT_COMMAND = "fd -t f -L -H -E .git",
+          BAT_THEME = "ansi",
+        }
+        for k, v in pairs(env_dict) do
+          local ev = vim.env[k]
+          vim.env[k] = (ev == nil or ev == "" and v) or ev
+        end
+        vim.o.shell = "bash"
+        vim.g.fzf_layout = { window = { width = 0.9, height = 0.9 } }
+      end,
+    })
+    use({
+      "junegunn/vim-easy-align",
+      config = function()
+        vim.cmd("xmap <CR> <Plug>(EasyAlign)")
+      end,
+    })
+    use({
+      "907th/vim-auto-save",
+      config = function()
+        vim.g.auto_save = 1
+        vim.g.auto_save_write_all_buffers = 1
+        vim.g.auto_save_events = { "FocusLost" }
+      end,
+    })
+    use("blueyed/vim-diminactive")
+    use({
+      "camspiers/lens.vim",
+      config = function()
+        vim.g["lens#disabled_filetypes"] = { "nerdtree", "fzf" }
+      end,
+    })
+    use("wsdjeg/vim-fetch")
 
-  use("direnv/direnv.vim")
-  use("editorconfig/editorconfig-vim")
-  use("nvim-lua/lsp-status.nvim")
-  use({
-    "SmiteshP/nvim-gps",
-    config = function()
-      require("nvim-gps").setup()
-    end,
-  })
-  use("jackguo380/vim-lsp-cxx-highlight")
-  use({
-    "p00f/nvim-ts-rainbow",
-    requires = "nvim-treesitter/nvim-treesitter",
-    config = function()
-      require("nvim-treesitter.configs").setup({
-        rainbow = { enable = true, extended_mode = true, max_file_lines = 1000 },
-      })
-    end,
-  })
-  use({
-    "Olical/conjure",
-    config = function()
-      vim.g["conjure#mapping#doc_word"] = "K"
-      vim.g["conjure#highlight#enabled"] = true
-      vim.g["conjure#extract#tree_sitter#enabled"] = true
-    end,
-  })
-  use({
-    "lukas-reineke/indent-blankline.nvim",
-    config = function()
-      require("indent")
-    end,
-  })
-  use("folke/lsp-colors.nvim")
-  use("honza/vim-snippets")
-  use("folke/which-key.nvim")
-  use("lambdalisue/suda.vim")
-  use("farmergreg/vim-lastplace")
+    use("arp242/jumpy.vim")
+    use("JoosepAlviste/nvim-ts-context-commentstring")
+    use({
+      "numToStr/Comment.nvim",
+      requires = "JoosepAlviste/nvim-ts-context-commentstring",
+      config = function()
+        require("configs.comment")
+      end,
+    })
+    use({
+      "tommcdo/vim-exchange",
+      config = function()
+        vim.cmd("xmap gx <Plug>(Exchange)")
+      end,
+    })
+    use("machakann/vim-swap")
+    use("airblade/vim-rooter")
+    use({
+      "rmagatti/auto-session",
+      config = function()
+        require("auto-session").setup({ auto_save_enabled = true })
+        vim.opt.sessionoptions:append({ "winpos", "terminal" })
+      end,
+    })
+    use("rhysd/git-messenger.vim")
+    use("rhysd/conflict-marker.vim")
 
-  use("junegunn/fzf")
-  use({
-    "junegunn/fzf.vim",
-    requires = "junegunn/fzf",
-    config = function()
-      local env_dict = {
-        FZF_PREVIEW_COMMAND = "bat --style=numbers,changes --color always {}",
-        FZF_DEFAULT_OPTS = "--color=light --reverse ",
-        FZF_DEFAULT_COMMAND = "fd -t f -L -H -E .git",
-        BAT_THEME = "ansi",
-      }
-      for k, v in pairs(env_dict) do
-        local ev = vim.env[k]
-        vim.env[k] = (ev == nil or ev == "" and v) or ev
-      end
-      vim.o.shell = "bash"
-      vim.g.fzf_layout = { window = { width = 0.9, height = 0.9 } }
-    end,
-  })
-  use("junegunn/vim-easy-align")
-  use("907th/vim-auto-save")
-  use("blueyed/vim-diminactive")
-  use({
-    "camspiers/lens.vim",
-    config = function()
-      vim.g["lens#disabled_filetypes"] = { "nerdtree", "fzf" }
-    end,
-  })
-  use("wsdjeg/vim-fetch")
+    use("tyru/open-browser.vim")
+    use({
+      "machakann/vim-sandwich",
+      config = function()
+        vim.g["sandwich#recipes"] = vim.deepcopy(vim.g["sandwich#default_recipes"])
+      end,
+    })
+    use({
+      "wellle/targets.vim",
+      config = function()
+        vim.cmd([[
+          autocmd User targets#mappings#user call targets#mappings#extend({
+          \ 'a': {'argument': [{'o': '[({[]', 'c': '[]})]', 's': ','}]}
+          \ })
+        ]])
+      end,
+    })
+    use({ "romainl/vim-cool", config = "vim.g.CoolTotalMatches = 1" })
+    use({
+      "andymass/vim-matchup",
+      config = function()
+        vim.g.matchup_transmute_enabled = 1
+        vim.g.matchup_matchparen_deferred = 1
+        vim.g.matchup_matchparen_status_offscreen = 0
+        vim.g.matchup_delim_stopline = 2500
+      end,
+    })
+    use("kyazdani42/nvim-web-devicons")
+    use("jceb/vim-orgmode")
+    use("https://gitlab.com/protesilaos/tempus-themes-vim.git")
 
-  use("arp242/jumpy.vim")
-  use("JoosepAlviste/nvim-ts-context-commentstring")
-  use({
-    "numToStr/Comment.nvim",
-    requires = "JoosepAlviste/nvim-ts-context-commentstring",
-    config = function()
-      require("comment_setup")
-    end,
-  })
-  use("tommcdo/vim-exchange")
-  use("machakann/vim-swap")
-  use("airblade/vim-rooter")
-  use({
-    "rmagatti/auto-session",
-    config = function()
-      require("auto-session").setup({ auto_save_enabled = true })
-      vim.opt.sessionoptions:append({ "winpos", "terminal" })
-    end,
-  })
-  use("rhysd/git-messenger.vim")
-  use("rhysd/conflict-marker.vim")
+    use({
+      "dkarter/bullets.vim",
+      config = function()
+        vim.g.bullets_enabled_file_types = { "markdown", "text", "gitcommit" }
+        vim.g.bullets_outline_levels = { "num", "std-" }
+      end,
+    })
 
-  use("tyru/open-browser.vim")
-  use("machakann/vim-sandwich")
-  use("wellle/targets.vim")
-  use({ "romainl/vim-cool", config = "vim.g.CoolTotalMatches = 1" })
-  use({
-    "andymass/vim-matchup",
-    config = function()
-      vim.g.matchup_transmute_enabled = 1
-      vim.g.matchup_matchparen_deferred = 1
-      vim.g.matchup_matchparen_status_offscreen = 0
-      vim.g.matchup_delim_stopline = 2500
-    end,
-  })
-  use("kyazdani42/nvim-web-devicons")
-  use("jceb/vim-orgmode")
-  use("https://gitlab.com/protesilaos/tempus-themes-vim.git")
+    use({
+      "sheerun/vim-polyglot",
+      config = function()
+        vim.g.haskell_enable_quantification = 1
+        vim.g.haskell_enable_pattern_synonyms = 1
+        vim.g.haskell_enable_typeroles = 1
+        vim.g.php_html_load = 1
+        vim.g.vim_jsx_pretty_colorful_config = 1
+        vim.g.vim_jsx_pretty_template_tags = {}
+        vim.g.vim_markdown_new_list_item_indent = 0
+        vim.g.vim_markdown_auto_insert_bullets = 0
+        vim.g.vim_markdown_math = 1
+        vim.g.vim_markdown_frontmatter = 1
+        vim.g.vim_markdown_toml_frontmatter = 1
+        vim.g.vim_markdown_json_frontmatter = 1
+        vim.g.vim_markdown_strikethrough = 1
+        vim.g.vim_markdown_folding_disabled = 1
+      end,
+    })
 
-  use("dkarter/bullets.vim")
-  use("sheerun/vim-polyglot")
+    use({ "antoinemadec/coc-fzf", requires = { "neoclide/coc.nvim", "junegunn/fzf.vim" } })
 
-  use({ "antoinemadec/coc-fzf", requires = { "neoclide/coc.nvim", "junegunn/fzf.vim" } })
-
-  use({
-    "neoclide/coc.nvim",
-    branch = "master",
-    run = "yarn install --frozen-lockfile",
-    config = function()
-      vim.cmd([=[
+    use({
+      "neoclide/coc.nvim",
+      branch = "master",
+      run = "yarn install --frozen-lockfile",
+      config = function()
+        print("wtf m8")
+        vim.cmd([=[
           " fzf-preview.vim
-          nnoremap <silent> <leader>f :<C-u>CocCommand fzf-preview.DirectoryFiles<CR>
-          nnoremap <silent> <leader>h :<C-u>CocCommand fzf-preview.History<CR>
-          nnoremap <silent> <leader>b :<C-u>CocCommand fzf-preview.Buffers<CR>
-          nnoremap <silent> <leader><space> :<C-u>CocCommand fzf-preview.ProjectGrep .<CR>
-          xnoremap <silent> <leader><space> y:Rg <C-R>"<CR>
-          nnoremap <silent> <leader>/ :<C-u>CocCommand fzf-preview.Lines<CR>
-          nnoremap <silent> <Leader>gs :<C-u>CocCommand fzf-preview.GitStatus<CR>
+          nmap <silent> <leader>f :<C-u>CocCommand fzf-preview.DirectoryFiles<CR>
+          nmap <silent> <leader>h :<C-u>CocCommand fzf-preview.History<CR>
+          nmap <silent> <leader>b :<C-u>CocCommand fzf-preview.Buffers<CR>
+          nmap <silent> <leader><space> :<C-u>CocCommand fzf-preview.ProjectGrep .<CR>
+          nmap <silent> <leader><space> y:Rg <C-R>"<CR>
+          nmap <silent> <leader>/ :<C-u>CocCommand fzf-preview.Lines<CR>
+          nmap <silent> <Leader>gs :<C-u>CocCommand fzf-preview.GitStatus<CR>
           let g:fzf_preview_use_dev_icons = 1
           let g:fzf_preview_git_status_preview_command =  "[[ $(git diff --cached -- {-1}) != \"\" ]] && git diff --cached --color=always -- {-1} || " .
           \ "[[ $(git diff -- {-1}) != \"\" ]] && git diff --color=always -- {-1} || " .
@@ -279,21 +355,21 @@ packer.startup(function(use)
           nmap gp <Plug>(coc-git-prevchunk)
           nmap gn <Plug>(coc-git-nextchunk)
         ]=])
-    end,
-  })
-  use({ "rafcamlet/coc-nvim-lua", requires = "neoclide/coc.nvim" })
-  use({
-    "expipiplus1/vscode-hie-server",
-    branch = "coc.nvim",
-    run = "yarn install --frozen-lockfile ;  yarn vscode:prepublish",
-  })
-  use({
-    "sbdchd/neoformat",
-    ft = { "terraform" },
-    config = function()
-      vim.g.neoformat_only_msg_on_error = 1
-      vim.cmd([[command! NeoformatDisable au! neoformat]])
-      vim.cmd([[
+      end,
+    })
+    use({ "rafcamlet/coc-nvim-lua", requires = "neoclide/coc.nvim" })
+    use({
+      "expipiplus1/vscode-hie-server",
+      branch = "coc.nvim",
+      run = "yarn install --frozen-lockfile ;  yarn vscode:prepublish",
+    })
+    use({
+      "sbdchd/neoformat",
+      ft = { "terraform" },
+      config = function()
+        vim.g.neoformat_only_msg_on_error = 1
+        vim.cmd([[command! NeoformatDisable au! neoformat]])
+        vim.cmd([[
       augroup neoformat
       au! * <buffer>
       au BufWritePre <buffer> try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | finally | silent Neoformat | endtry
@@ -305,66 +381,91 @@ packer.startup(function(use)
 
       let b:undo_ftplugin .= " | exe 'au! neoformat * <buffer>' "
       ]])
-    end,
-  })
-  use({
-    "nvim-treesitter/nvim-treesitter",
-    run = ":TSUpdate",
-    config = function()
-      require("setup-treesitter")
-    end,
-  })
-  use({
-    "IndianBoy42/tree-sitter-just",
-    requires = { "nvim-treesitter/nvim-treesitter", "nathom/filetype.nvim" },
-    run = function()
-      require("tree-sitter-just").setup({})
-    end,
-  })
+      end,
+    })
+    use({
+      "nvim-treesitter/nvim-treesitter",
+      opt = true,
+      run = { ":TSInstall all", ":TSUpdate" },
+      config = function()
+        require("configs.nvim-treesitter")
+      end,
+    })
+    use({
+      "IndianBoy42/tree-sitter-just",
+      requires = { "nvim-treesitter/nvim-treesitter", "nathom/filetype.nvim" },
+      run = function()
+        require("tree-sitter-just").setup({})
+      end,
+    })
 
-  use({ "knubie/vim-kitty-navigator", run = "cp ./*.py ~/.config/kitty/" })
+    use({
+      "knubie/vim-kitty-navigator",
+      run = "cp ./*.py ~/.config/kitty/",
+      config = function()
+        vim.g.kitty_navigator_no_mappings = 1
+        vim.cmd([[
+          nnoremap <silent> <M-h> :KittyNavigateLeft<cr>
+          nnoremap <silent> <M-j> :KittyNavigateDown<cr>
+          nnoremap <silent> <M-k> :KittyNavigateUp<cr>
+          nnoremap <silent> <M-l> :KittyNavigateRight<cr>
+        ]])
+      end,
+    })
 
-  use({ "folke/tokyonight.nvim", branch = "main" })
+    use({ "folke/tokyonight.nvim", branch = "main" })
 
-  use({
-    "lervag/vimtex",
-    ft = { "latex", "tex" },
-    config = function()
-      vim.g.tex_flavor = "latex"
-    end,
-  })
+    use({
+      "lervag/vimtex",
+      ft = { "latex", "tex" },
+      config = function()
+        vim.g.tex_flavor = "latex"
+      end,
+    })
+    use({
+      "lewis6991/spellsitter.nvim",
+      config = function()
+        require("spellsitter").setup()
+      end,
+    })
 
-  use("nvim-lua/plenary.nvim")
-  use("neovim/nvim-lspconfig")
-  use({
-    "jose-elias-alvarez/null-ls.nvim",
-    requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-    config = function()
-      require("null-ls").config({
-        sources = { require("null-ls").builtins.formatting.stylua },
-      })
-      require("lspconfig")["null-ls"].setup({})
-    end,
-  })
+    use("nvim-lua/plenary.nvim")
+    use("neovim/nvim-lspconfig")
+    -- use({
+    --   "jose-elias-alvarez/null-ls.nvim",
+    --   requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    --   config = function()
+    --     require("null-ls").config({
+    --       sources = { require("null-ls").builtins.formatting.stylua },
+    --     })
+    --     require("lspconfig")["null-ls"].setup({})
+    --   end,
+    -- })
 
-  -- Speed up stuff
-  use({ "lewis6991/impatient.nvim", rocks = "mpack" })
-  use({
-    "nathom/filetype.nvim",
-    config = function()
-      require("filetype_nvim_setup")
-    end,
-  })
-  use("antoinemadec/FixCursorHold.nvim")
+    -- Speed up stuff
+    use({ "lewis6991/impatient.nvim", rocks = "mpack" })
+    use({
+      "nathom/filetype.nvim",
+      config = function()
+        require("configs.filetype-nvim")
+      end,
+    })
+    use("antoinemadec/FixCursorHold.nvim")
 
-  if bootstrap then
-    require("packer").sync()
-  end
-end)
-
-vim.cmd([[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
-  augroup end
-]])
+    if bootstrap then
+      require("packer").sync()
+    end
+  end,
+  config = {
+    compile_path = packer_compiled_path,
+    display = {
+      open_fn = function()
+        return require("packer.util").float({
+          border = "single",
+          height = math.ceil(vim.o.lines * 0.5),
+        })
+      end,
+    },
+  },
+})
+return packer
