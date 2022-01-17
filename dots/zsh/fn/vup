@@ -1,10 +1,6 @@
 #!/usr/bin/env zsh
 printf '\n%s\n' "Packer Sync"
-nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
-printf '\n%s\n' "Packer Clean"
-nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerClean'
+nvim -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 printf '\n%s\n' "TSUpdate"
 nvim --headless '+TSUpdateSync'  '+qall'
-printf '\n%s\n' "Coc Update"
-nvim --headless '+CocUpdateSync' '+qall'
 echo ""

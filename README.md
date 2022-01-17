@@ -9,7 +9,7 @@ Configurations for my NixOS and macOS systems (work/home laptops)
 - Full system can be created from a single command with no incremental bootstrapping needed
 - Whenever possible, have declarative configuration of environment.
   - Try to keep configuration in the natural language of that environment. (eg don't fully embed vimrc into nix)
-- (Soon) System configuration should be buildable from CI
+- System configuration should be buildable from CI
 
 ## Install Instructions
 

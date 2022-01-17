@@ -5,5 +5,5 @@ final: prev: {
       kitty_path = builtins.toString ../dots/kitty;
       isExecutable = true;
     };
-    in prev.writeScriptBin "switch-theme" theme;
+    in prev.writeScriptBin "switch-theme" (builtins.readFile theme);
 }

@@ -1,7 +1,6 @@
 { pkgs, ... }: {
   environment.systemPackages = with pkgs; [
     kitty
-    # terminal-notifier
     curl
     gitAndTools.gitFull
     git-lfs
@@ -23,7 +22,8 @@
     docker
     docker-compose
     awscli2 # yey
-    ssm-session-manager-plugin
+    # ssm-session-manager-plugin
+    github-cli
 
     # Programs implicitly relied on in shell
     pistol

@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
+  system.activationScripts.applications.text = lib.mkForce "";
   system.activationScripts.postActivation.text = ''
     app_folder="$HOME/Applications/Nix"
     mkdir -p "$app_folder"
@@ -19,6 +20,5 @@
       rm -f "$app_folder/$app_name"
       ${pkgs.mkalias}/bin/mkalias "$real_app" "$app_folder/$app_name"
     done
-    unlink "$HOME/Applications/Nix Apps" >/dev/null || true
   '';
 }

@@ -1,8 +1,27 @@
-vim.g.did_load_filetypes = 1
+vim.api.nvim_set_keymap("", "<Space>", "<Nop>", { noremap = true, silent = true })
 vim.g.mapleader = [[ ]]
 vim.g.maplocalleader = [[ ]]
-vim.g.polyglot_disabled = { "sensible", "ftdetect" }
+
+vim.g.markdown_fenced_languages = {
+  "lua",
+  "vim",
+  "json",
+  "typescript",
+  "javascript",
+  "js=javascript",
+  "ts=typescript",
+  "shell=sh",
+  "python",
+  "sh",
+  "bash=sh",
+  "console=sh",
+  "tsx=typescriptreact",
+  "jsx=javascriptreact",
+}
+
 vim.g.python_host_skip_check = 1
+vim.g.do_filetype_lua = 1
+vim.g.did_load_filetypes = 1
 
 vim.g.netrw_dirhistmax = 0
 vim.g.netrw_nogx = 1
@@ -13,7 +32,7 @@ vim.opt.winblend = 30
 vim.opt.grepprg = [[rg\ --vimgrep\ --no-heading\ --smart-case]]
 vim.opt.mouse = "a"
 vim.opt.complete:append("k")
-vim.opt.completeopt = "menu,menuone,noinsert"
+vim.opt.completeopt = "menuone,noinsert,noselect"
 vim.opt.nrformats = "bin,hex,octal,alpha"
 vim.opt.breakindent = true
 vim.opt.clipboard = "unnamedplus"
@@ -44,6 +63,8 @@ vim.opt.termguicolors = true
 vim.opt.updatetime = 4001
 vim.opt.splitright = true
 vim.opt.splitbelow = true
-vim.opt.fixendofline = false
+-- https://github.com/jose-elias-alvarez/null-ls.nvim/issues/569
+-- vim.opt.fixendofline = false
 vim.opt.pyx = 3
 vim.opt.diffopt = "filler,internal,algorithm:histogram,indent-heuristic,hiddenoff"
+vim.opt.spelllang = { "en_us" }

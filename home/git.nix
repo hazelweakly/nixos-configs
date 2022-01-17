@@ -5,15 +5,17 @@
     userEmail = "hazel@theweaklys.com";
     package = pkgs.gitAndTools.gitFull;
     lfs.enable = true;
+    ignores = [ ".DS_Store" ];
     extraConfig = {
       rerere.enabled = true;
       rerere.autoupdate = true;
-      core.pager = "${pkgs.gitAndTools.delta}/bin/delta";
-      interactive.diffFilter =
-        "${pkgs.gitAndTools.delta}/bin/delta --color-only";
       color.ui = true;
       diff.colorMoved = "default";
-      delta = {
+      diff.external = "${pkgs.difftastic}/bin/difft";
+    };
+    delta = {
+      enable = true;
+      options = {
         line-numbers = true;
         side-by-side = true;
         features = "side-by-side line-numbers decorations";
