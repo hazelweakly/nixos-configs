@@ -55,7 +55,6 @@ cmp.setup({
         else
           fallback()
         end
-        -- doSig()
       end,
       s = function(fallback)
         if cmp.visible() then
@@ -65,7 +64,6 @@ cmp.setup({
         else
           fallback()
         end
-        -- doSig()
       end,
       c = function(fallback)
         fallback()
@@ -78,7 +76,6 @@ cmp.setup({
         else
           fallback()
         end
-        -- doSig()
       end,
       s = function(fallback)
         if luasnip.jumpable(-1) then
@@ -86,7 +83,6 @@ cmp.setup({
         else
           fallback()
         end
-        -- doSig()
       end,
       c = function(fallback)
         fallback()
@@ -105,15 +101,6 @@ cmp.setup({
   formatting = {
     format = require("lspkind").cmp_format({
       with_text = false,
-      -- menu = {
-      --   luasnip = "[LuaSnip]",
-      --   nvim_lsp = "[LSP]",
-      --   buffer = "[Buffer]",
-      --   path = "[Path]",
-      --   nuspell = "[Nuspell]",
-      --   emoji = "[Emoji]",
-      --   latex_symbols = "[LaTeX]",
-      -- },
     }),
   },
   completion = { completeopt = vim.o.completeopt },

@@ -1,6 +1,16 @@
 local telescope = require("telescope")
 telescope.setup({
   defaults = {
+    vimgrep_arguments = {
+      "rg",
+      "--color=never",
+      "--no-heading",
+      "--with-filename",
+      "--line-number",
+      "--column",
+      "--smart-case",
+      "--trim",
+    },
     mappings = {
       i = {
         ["<C-u>"] = false,
@@ -15,25 +25,9 @@ telescope.setup({
     },
   },
 })
-telescope.load_extension("projects")
 telescope.load_extension("fzf")
-telescope.load_extension("zk")
 
-vim.api.nvim_set_keymap(
-  "n",
-  "<leader><space>",
-  [[<cmd>lua require('telescope.builtin').live_grep()<CR>]],
-  { noremap = true, silent = true }
-)
-vim.api.nvim_set_keymap(
-  "n",
-  "<leader>f",
-  [[<cmd>lua require('telescope.builtin').find_files()<CR>]],
-  { noremap = true, silent = true }
-)
-vim.api.nvim_set_keymap(
-  "n",
-  "<leader>b",
-  [[<cmd>lua require('telescope.builtin').buffers()<CR>]],
-  { noremap = true, silent = true }
-)
+local map = require("configs.utils").map
+map("n", "<leader><space>", [[<cmd>lua require('telescope.builtin').live_grep()<CR>]])
+map("n", "<leader>f", [[<cmd>lua require('telescope.builtin').find_files()<CR>]])
+map("n", "<leader>b", [[<cmd>lua require('telescope.builtin').buffers()<CR>]])

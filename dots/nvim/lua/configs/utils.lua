@@ -13,8 +13,11 @@ local function unload(module_pattern, reload)
 end
 
 local function clear_cache()
-  if 0 == vim.fn.delete(vim.fn.stdpath("config") .. "/packer/packer_compiled.lua") then
-    vim.cmd(":LuaCacheClear")
+  if 0 == vim.fn.delete(vim.fn.stdpath("config") .. "/lua/packer_compiled.lua") then
+    local loaded, impatient = pcall(require, "impatient")
+    if loaded then
+      impatient.clear_cache()
+    end
   end
 end
 
@@ -28,11 +31,7 @@ end
 
 -- https://github.com/neovim/neovim/pull/16591
 M.map = function(mode, lhs, rhs, opts)
-  local options = { noremap = true, silent = true }
-  if opts then
-    options = M.merge(options, opts)
-  end
-  vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+  vim.keymap.set(mode, lhs, rhs, M.merge({ silent = true }, opts or {}))
 end
 
 M.merge = function(...)
@@ -40,28 +39,35 @@ M.merge = function(...)
 end
 
 M.buf_map = function(bufnr, mode, lhs, rhs, opts)
-  local options = { noremap = true, silent = true }
-  if opts then
-    options = M.merge(options, opts)
-  end
-  vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, options)
+  M.map(mode, lhs, rhs, M.merge({ buffer = bufnr }, opts or {}))
 end
 
-M.reload_user_config_sync = function()
+M.reload_user_config_sync = function(sync)
+  sync = sync or false
   M.reload_user_config()
-  clear_cache()
-  unload("utils.config", true)
-  unload("utils.plugins", true)
-  vim.cmd(":PackerSync")
+  if sync then
+    require("packer").sync()
+  end
 end
 
 M.reload_user_config = function(compile)
   compile = compile or false
-  unload("utils.config", true)
+  clear_cache()
+  unload("packer_compiled", false)
+  unload("configs.*$", false)
   if compile then
-    vim.cmd(":PackerCompile")
+    require("packer").compile()
   end
 end
+
+M.packer_pre_fn = {
+  Sync = function()
+    M.reload_user_config_sync()
+  end,
+  Compile = function()
+    M.reload_user_config()
+  end,
+}
 
 M.border = {
   { "🭽", "FloatBorder" },
@@ -91,4 +97,3 @@ M.packer_lazy_load = function(plugin, timer)
 end
 
 return M
-

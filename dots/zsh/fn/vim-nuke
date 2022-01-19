@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
 rm -rf ~/.cache/{hererocks,luarocks,nvim}
-$XDG_CACHE_HOME/nvim/
-~dots/dots/nvim/plugin/packer_compiled.lua
-~/.local/share/nvim/site/pack
+rm -rf "$XDG_CACHE_HOME/nvim/"
+rm -rf ~dots/dots/nvim/plugin/packer_compiled.lua
+rm -rf ~/.local/share/nvim/site/pack

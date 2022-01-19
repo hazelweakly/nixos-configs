@@ -9,15 +9,29 @@ M.set_theme = function(args)
   if vim.g.tokyonight_style ~= cur or cur_theme ~= "tokyonight" then
     vim.o.background = theme
   end
+  package.loaded["tokyonight.config"] = nil
   require("tokyonight").colorscheme()
   vim.highlight.link("TSDefinitionUsage", "CursorLine")
   vim.highlight.link("TSDefinition", "CursorLine")
+  local colors = M.get().colors -- error warning info hint
+  for level, color in pairs({
+    DEBUG = colors.hint,
+    ERROR = colors.error,
+    INFO = colors.info,
+    TRACE = colors.hint,
+    WARN = colors.warning,
+  }) do
+    for _, i in ipairs({ "Border", "Icon", "Title" }) do
+      vim.highlight.link("Notify" .. level .. i, color, true)
+    end
+  end
 end
 
 M.setup = function()
   vim.g.tokyonight_italic_functions = 1
   vim.wo.colorcolumn = "99999"
   vim.o.termguicolors = true
+  require("configs.packerInit").packer.loader("plenary.nvim")
   local theme = require("plenary.path"):new("~/.local/share/theme"):head(1)
   M.set_theme({ args = theme or "light" })
   M.add_user_cmd()

@@ -28,6 +28,7 @@ if not present then
 end
 
 packer.init({
+  compile_path = vim.fn.stdpath("config") .. "/lua/packer_compiled.lua",
   git = { clone_timeout = 600 },
   max_jobs = 20,
   disable_commands = true,

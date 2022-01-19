@@ -1,22 +1,19 @@
--- some of the servers are preinstlaled with nix and not available in "nvim-lsp-installer"
--- If I wire them in here, I don't need to split out my lsp registration setup
--- and can handle everything in a single location consistently.
--- (except for zk which is special because of the zk-nvim plugin...)
-local mkServer = function(name)
-  local svr = require("nvim-lsp-installer.server")
-  return svr.Server:new({
+local register = require("nvim-lsp-installer.servers").register
+local svr = require("nvim-lsp-installer.server")
+
+-- Some of the servers are preinstlaled with nix. If I wire them in here, I
+-- don't need to split out my lsp registration setup and can handle everything
+-- in a single location consistently.
+for _, name in ipairs({ "rnix", "taplo", "zk" }) do
+  register(svr.Server:new({
     name = name,
     root_dir = svr.get_server_root_path(name),
-    ---@diagnostic disable-next-line: unused-local
-    installer = function(server, callback, context)
+    installer = function(_, callback, _)
       callback(true)
     end,
     default_options = require("lspconfig")[name].document_config.default_config,
-  })
+  }))
 end
-
-require("nvim-lsp-installer.servers").register(mkServer("rnix"))
-require("nvim-lsp-installer.servers").register(mkServer("taplo"))
 
 local lsp_installer = require("nvim-lsp-installer")
 local servers = {
@@ -30,6 +27,7 @@ local servers = {
   "hls",
   "html",
   "jsonls",
+  "ltex",
   "pyright",
   "rnix",
   "sumneko_lua",
@@ -41,16 +39,15 @@ local servers = {
   "tsserver",
   "vimls",
   "yamlls",
+  "zk",
 }
 
 local utils = require("configs.utils")
 for _, name in pairs(servers) do
   local server_is_found, server = lsp_installer.get_server(name)
-  if server_is_found then
-    if not server:is_installed() then
-      utils.log_info("Installing " .. name)
-      server:install()
-    end
+  if server_is_found and not server:is_installed() then
+    utils.log_info("Installing " .. name)
+    server:install()
   end
 end
 
@@ -64,8 +61,7 @@ vim.diagnostic.config({
   float = { border = utils.border },
 })
 
-local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-for type, icon in pairs(signs) do
+for type, icon in pairs({ Error = " ", Warn = " ", Hint = " ", Info = " " }) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end

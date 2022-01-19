@@ -8,11 +8,11 @@ parser_configs.just = {
   maintainers = { "@IndianBoy42" },
   filetype = "just",
 }
-parser_configs.haskell.install_info.files = { "src/parser.c", "src/scanner.c" }
 
 require("nvim-treesitter.configs").setup({
   highlight = { enable = true },
   indent = { enable = true },
+  ignore_install = { "swift" },
   context_commentstring = {
     enable = true,
     enable_autocmd = false,
