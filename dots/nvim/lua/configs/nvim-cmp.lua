@@ -4,7 +4,11 @@ local doSig = function(_)
   if _LSP_SIG_CFG == nil then
     return false
   end
-  local cap, _, _, _ = require("lsp_signature.helper").check_lsp_cap(vim.lsp.get_active_clients(), "")
+  local clients = {}
+  vim.lsp.for_each_buffer_client(0, function(client, _, _)
+    table.insert(clients, client)
+  end)
+  local cap, _, _, _ = require("lsp_signature.helper").check_lsp_cap(clients, "")
   if cap then
     vim.lsp.buf.signature_help()
   end

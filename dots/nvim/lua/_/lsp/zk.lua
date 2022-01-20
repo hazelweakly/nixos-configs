@@ -16,7 +16,9 @@ return {
       end)
     end)
 
-    buf_map(bufnr, "n", "<leader>zz", require("zk").edit)
+    buf_map(bufnr, "n", "<leader>zz", function()
+      return require("zk").edit({}, {})
+    end)
     buf_map(bufnr, "n", "<leader>zt", require("zk.commands").get("ZkTags"))
 
     buf_map(bufnr, "n", "<leader>zf", function()
@@ -30,5 +32,4 @@ return {
     -- dum
     buf_map(bufnr, "v", "<leader>zf", ":'<,'>ZkMatch<CR>")
   end,
-  root_dir = require("zk.util").notebook_root,
 }

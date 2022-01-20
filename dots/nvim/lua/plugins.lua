@@ -7,7 +7,7 @@ local use = packer.use
 return packer.startup(function()
   use({
     { "lewis6991/impatient.nvim" },
-    { "rcarriga/nvim-notify", config = [[vim.notify = require("notify")]] },
+    { "rcarriga/nvim-notify", config = [[require("configs.notify")]] },
     { "wbthomason/packer.nvim", opt = true },
     { "nathom/filetype.nvim", config = [[require("configs.filetype-nvim")]] },
     { "nvim-lua/plenary.nvim", event = "BufRead" },
@@ -82,9 +82,9 @@ return packer.startup(function()
     config = [[require("configs.nvim-cmp")]],
     requires = {
       { "hrsh7th/cmp-nvim-lsp", event = "InsertEnter", after = "nvim-cmp" },
-      { "hrsh7th/cmp-buffer", event = "BufReadPre", after = "nvim-cmp" },
-      { "hrsh7th/cmp-path", event = "BufReadPre", after = "nvim-cmp" },
-      { "hrsh7th/cmp-cmdline", event = "BufReadPre", after = "nvim-cmp" },
+      { "hrsh7th/cmp-buffer", event = "BufWinEnter", after = "nvim-cmp" },
+      { "hrsh7th/cmp-path", event = "BufWinEnter", after = "nvim-cmp" },
+      { "hrsh7th/cmp-cmdline", event = "BufWinEnter", after = "nvim-cmp" },
       { "hrsh7th/cmp-emoji", event = "InsertEnter", after = "nvim-cmp" },
       { "PaterJason/cmp-conjure", requires = "Olical/conjure", ft = "clojure" },
       { "f3fora/cmp-nuspell", event = "InsertEnter", after = "nvim-cmp" },
@@ -125,8 +125,8 @@ return packer.startup(function()
     requires = { "nvim-lua/plenary.nvim" },
   })
   use({ "ahmedkhalf/project.nvim", config = [[require("project_nvim").setup({})]] })
-  use({ "direnv/direnv.vim", event = "BufWinEnter" })
-  use({ "editorconfig/editorconfig-vim", event = "BufWinEnter" })
+  use({ "direnv/direnv.vim", event = "BufWinEnter", after = "project.nvim" })
+  use({ "editorconfig/editorconfig-vim", event = "BufWinEnter", after = "project.nvim" })
   use({ "ethanholz/nvim-lastplace", config = [[require("nvim-lastplace").setup()]] })
   use({ "junegunn/vim-easy-align", setup = [[vim.cmd("xmap <CR> <Plug>(EasyAlign)")]], keys = { { "x", "<CR>" } } })
   -- Revisit eventually once keymappings work better.
@@ -204,7 +204,6 @@ return packer.startup(function()
 
   -- https://github.com/blackCauldron7/surround.nvim
   -- keep an eye on this thing
-  use({ "machakann/vim-sandwich", config = [[require("configs.vim-sandwich")]] })
   use({ "romainl/vim-cool", event = "CursorMoved", config = "vim.g.CoolTotalMatches = 1" })
   use({
     "monkoose/matchparen.nvim",
@@ -218,7 +217,7 @@ return packer.startup(function()
   use({
     "stevearc/dressing.nvim",
     requires = { "MunifTanjim/nui.nvim", module = "dressing.select.nui" },
-    event = "BufReadPre",
+    event = "BufWinEnter",
     config = function()
       require("dressing").setup({
         builtin = { border = require("configs.utils").border },
@@ -231,7 +230,7 @@ return packer.startup(function()
   use({
     "akinsho/bufferline.nvim",
     wants = { "nvim-web-devicons", "tokyonight.nvim" },
-    event = "BufReadPre",
+    event = "BufWinEnter",
     config = [[require("configs.bufferline")]],
   })
   use({
@@ -247,7 +246,8 @@ return packer.startup(function()
     setup = [[require('configs.dial')]],
     keys = { { "n", "<C-a>" }, { "n", "<C-x>" }, { "v", "<C-a>" }, { "v", "<C-x>" }, { "v", "g" } },
   })
-  use({ "ggandor/lightspeed.nvim", requires = "tpope/vim-repeat", event = "CursorMoved" })
+  use({ "ggandor/lightspeed.nvim", requires = "tpope/vim-repeat" })
+  use({ "machakann/vim-sandwich", after = "lightspeed.nvim", config = [[require("configs.vim-sandwich")]] })
 
   use({ "tweekmonster/startuptime.vim", cmd = "StartupTime" })
   -- Should be the last plugin, or the setup needs to go in init.lua after plugins happen

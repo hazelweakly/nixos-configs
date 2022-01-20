@@ -24,7 +24,11 @@ null_ls.setup({
     null_ls.builtins.diagnostics.hadolint,
     -- null_ls.builtins.diagnostics.statix,
 
-    -- null_ls.builtins.formatting.shfmt,
+    null_ls.builtins.formatting.shfmt.with({
+      extra_args = function(params)
+        return { "-s", "-i", vim.api.nvim_buf_get_option(params.bufnr, "shiftwidth") }
+      end,
+    }),
     null_ls.builtins.formatting.prettierd,
     null_ls.builtins.formatting.stylua,
     null_ls.builtins.formatting.terraform_fmt,

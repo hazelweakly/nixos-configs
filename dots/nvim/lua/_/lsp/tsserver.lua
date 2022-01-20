@@ -12,6 +12,6 @@ return {
     })
     ts_utils.setup_client(client)
   end,
-  init_options = require("nvim-lsp-ts-utils"),
+  init_options = require("nvim-lsp-ts-utils").init_options,
   settings = { completions = { completeFunctionCalls = true } },
 }

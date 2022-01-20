@@ -10,7 +10,7 @@ require("filetype").setup({
       tik = "tex", -- vimtex
     },
     function_extensions = {
-      ["tex"] = function()
+      tex = function()
         -- don't set filetype. cuz reasons
         -- https://github.com/lervag/vimtex/blob/c72d34bfca5972c36bb72c39098c62ea213d73ae/ftdetect/tex.vim#L12,L14
         vim.g.tex_flavor = "latex"
@@ -25,6 +25,7 @@ require("filetype").setup({
       [".envrc"] = "direnv",
       [".direnvrc"] = "direnv",
       ["direnvrc"] = "direnv",
+      ["flake.lock"] = "json",
     },
     complex = {
       ["docker-compose*.{yaml,yml}*"] = "yaml",

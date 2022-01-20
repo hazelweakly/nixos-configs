@@ -11,7 +11,6 @@
       rerere.autoupdate = true;
       color.ui = true;
       diff.colorMoved = "default";
-      diff.external = "${pkgs.difftastic}/bin/difft";
     };
     delta = {
       enable = true;
