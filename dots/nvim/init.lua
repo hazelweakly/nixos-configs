@@ -4,16 +4,14 @@ vim.opt.shadafile = "NONE"
 
 pcall(require, "impatient")
 
-local modules = {
+for _, m in ipairs({
   "_.disable_built_ins",
   "configs.options",
   "configs.mappings",
   "configs.commands",
   "packer_compiled",
   "configs.settings",
-}
-
-for _, m in ipairs(modules) do
+}) do
   pcall(require, m)
 end
 
