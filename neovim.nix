@@ -47,22 +47,23 @@ let
     extraPython3Packages = p: [ p.black p.pynvim ];
     extraLuaPackages = p: [ lua-nuspell p.luarocks ];
   };
+  # Load the direnv environment of root before starting. This basically
+  # unloads the current direnv environment, which lets us change $PATH using
+  # makeWrapper. If we don't do this, the direnv vim plugin will errnously
+  # unload our injected $PATH once we leave the starting directory.
+  # We use bash here because the wrapperArgs runs inside bash, regardless of
+  # the shell the system uses
   preRun = ''
-    # Load the direnv environment of root before starting. This basically
-    # unloads the current direnv environment, which lets us change $PATH using
-    # makeWrapper. If we don't do this, the direnv vim plugin will errnously
-    # unload our injected $PATH once we leave the starting directory.
-
     pushd / &>/dev/null
-    # We use bash here because the wrapperArgs runs inside bash, regardless of
-    # the shell the system uses
     eval "$(direnv export bash)"
     popd &>/dev/null
   '';
 in
 (wrapNeovimUnstable.override { nodejs = nodejs_latest; }) neovim-nightly (c
   // {
-  wrapperArgs = lib.escapeShellArgs (c.wrapperArgs ++ [
+  wrapperArgs = c.wrapperArgs ++ [
+    "--run"
+    preRun
     "--suffix"
     "PATH"
     ":"
@@ -71,9 +72,7 @@ in
     "DICPATH"
     ":"
     (lib.makeSearchPath "share/hunspell" dicts)
-    "--run"
-    (lib.escapeShellArg preRun)
-  ]);
+  ];
   vimAlias = true;
   viAlias = true;
   wrapRc = false;
