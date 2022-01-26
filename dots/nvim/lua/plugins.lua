@@ -7,8 +7,8 @@ local use = packer.use
 return packer.startup(function()
   use({
     { "lewis6991/impatient.nvim" },
-    { "rcarriga/nvim-notify", config = [[require("configs.notify")]] },
     { "wbthomason/packer.nvim", opt = true },
+    { "rcarriga/nvim-notify", config = [[require("configs.notify")]] },
     { "nathom/filetype.nvim", config = [[require("configs.filetype-nvim")]] },
     { "nvim-lua/plenary.nvim", event = "BufRead" },
     "antoinemadec/FixCursorHold.nvim",
@@ -126,8 +126,8 @@ return packer.startup(function()
   })
   use({ "ahmedkhalf/project.nvim", config = [[require("project_nvim").setup({})]] })
   use({ "direnv/direnv.vim", event = "BufWinEnter", after = "project.nvim" })
-  use({ "editorconfig/editorconfig-vim", event = "BufWinEnter", after = "project.nvim" })
-  use({ "ethanholz/nvim-lastplace", config = [[require("nvim-lastplace").setup()]] })
+  use({ "editorconfig/editorconfig-vim", event = "BufNewFile,BufReadPost,BufFilePost", after = "project.nvim" })
+  use({ "ethanholz/nvim-lastplace", event = "BufReadPost", config = [[require("nvim-lastplace").setup()]] })
   use({ "junegunn/vim-easy-align", setup = [[vim.cmd("xmap <CR> <Plug>(EasyAlign)")]], keys = { { "x", "<CR>" } } })
   -- Revisit eventually once keymappings work better.
   -- use({

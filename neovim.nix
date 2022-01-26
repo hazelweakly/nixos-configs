@@ -61,9 +61,7 @@ let
 in
 (wrapNeovimUnstable.override { nodejs = nodejs_latest; }) neovim-nightly (c
   // {
-  wrapperArgs = c.wrapperArgs ++ [
-    "--run"
-    preRun
+  wrapperArgs = [ "--run" preRun ] ++ c.wrapperArgs ++ [
     "--suffix"
     "PATH"
     ":"
