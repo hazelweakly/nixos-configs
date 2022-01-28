@@ -14,7 +14,6 @@
     repl
     gcc
     openssh
-    xhyve
     coreutils
     switch-theme
     _1password

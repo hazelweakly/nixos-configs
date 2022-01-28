@@ -13,9 +13,9 @@ else
       local nix() {
       command nix --extra-experimental-features 'nix-command flakes' $@
     }
-    hostname="$(hostname)"
-    while [ ! -L ./result ]; do
-      nix build .#darwinConfigurations."${hostname%\.local}".system --keep-going ${1+"$@"}
+    tries=0
+    while [[ ! -L ./result && tries -lt 5 ]]; do
+      nix build .#darwinConfigurations."${"$(hostname)"%\.local}".system --keep-going ${1+"$@"} || (( ++tries ))
     done
     ./result/sw/bin/darwin-rebuild --flake $HOME/src/personal/nixos-configs ${1+"$@"} switch
   fi

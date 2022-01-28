@@ -48,11 +48,20 @@
       modules = import ./modules/hosts/Hazels-MacBook-Pro.nix { inherit self inputs; };
       specialArgs = { inherit self; };
     };
-    darwinPackages = self.darwinConfigurations."Hazels-MacBook-Pro".pkgs // {
-      dev-shell = self.devShell.x86_64-darwin.inputDerivation;
+
+    darwinConfigurations."Eden-C02GR3NTQ05N" = inputs.nix-darwin.lib.darwinSystem {
+      system = "aarch64-darwin";
+      inherit inputs;
+      modules = import ./modules/hosts/Eden-C02GR3NTQ05N.nix { inherit self inputs; };
+      specialArgs = { inherit self; };
     };
-    devShell.x86_64-darwin = self.darwinPackages.mkShell {
-      nativeBuildInputs = with self.darwinPackages; [ nixUnstable ];
-    };
+
+    # darwinPackages = self.darwinConfigurations."Hazels-MacBook-Pro".pkgs // {
+    #   dev-shell = self.devShell.x86_64-darwin.inputDerivation;
+    # };
+
+    # devShell.x86_64-darwin = self.darwinPackages.mkShell {
+    #   nativeBuildInputs = with self.darwinPackages; [ nixUnstable ];
+    # };
   };
 }
