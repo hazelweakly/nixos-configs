@@ -59,19 +59,21 @@ let
     popd &>/dev/null
   '';
 in
-(wrapNeovimUnstable.override { nodejs = nodejs_latest; }) neovim-nightly (c
-  // {
-  wrapperArgs = [ "--run" preRun ] ++ c.wrapperArgs ++ [
-    "--suffix"
-    "PATH"
-    ":"
-    path
-    "--suffix"
-    "DICPATH"
-    ":"
-    (lib.makeSearchPath "share/hunspell" dicts)
-  ];
-  vimAlias = true;
-  viAlias = true;
-  wrapRc = false;
-})
+(wrapNeovimUnstable.override { nodejs = nodejs_latest; })
+  neovim-nightly
+  (c
+    // {
+    wrapperArgs = [ "--run" preRun ] ++ c.wrapperArgs ++ [
+      "--suffix"
+      "PATH"
+      ":"
+      path
+      "--suffix"
+      "DICPATH"
+      ":"
+      (lib.makeSearchPath "share/hunspell" dicts)
+    ];
+    vimAlias = true;
+    viAlias = true;
+    wrapRc = false;
+  })
