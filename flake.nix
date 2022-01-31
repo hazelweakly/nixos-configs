@@ -30,6 +30,8 @@
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    zig.url = "github:roarkanize/zig-overlay";
+
     rnix-lsp.url = "github:nix-community/rnix-lsp";
     rnix-lsp.inputs.nixpkgs.follows = "nixpkgs";
     rnix-lsp.inputs.utils.follows = "flake-utils";

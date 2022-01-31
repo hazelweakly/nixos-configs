@@ -51,6 +51,7 @@ return packer.startup(function()
     run = ":TSUpdate",
     requires = {
       { "p00f/nvim-ts-rainbow", event = "BufWinEnter" },
+      { "IndianBoy42/tree-sitter-just", requires = "filetype.nvim" },
       { "nvim-treesitter/nvim-treesitter-refactor", event = "BufWinEnter" },
     },
     config = [[require("configs.nvim-treesitter")]],

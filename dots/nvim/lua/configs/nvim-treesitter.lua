@@ -1,14 +1,16 @@
-local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
-require("nvim-treesitter.install").compilers = { "clang", "gcc", "cc" }
-parser_configs.just = {
-  install_info = {
-    url = "https://github.com/IndianBoy42/tree-sitter-just",
-    files = { "src/parser.c", "src/scanner.cc" },
-    branch = "main",
-  },
-  maintainers = { "@IndianBoy42" },
-  filetype = "just",
-}
+-- require("nvim-treesitter.install").compilers = { "clang", "gcc", "cc" }
+require("nvim-treesitter.install").compilers = { "gcc", "clang", "cc" }
+
+-- ugly hack to "add" zsh: https://github.com/nvim-treesitter/nvim-treesitter/issues/655
+local ft_to_lang = require("nvim-treesitter.parsers").ft_to_lang
+require("nvim-treesitter.parsers").ft_to_lang = function(ft)
+  if ft == "zsh" then
+    return "bash"
+  end
+  return ft_to_lang(ft)
+end
+
+require("tree-sitter-just").setup({})
 
 require("nvim-treesitter.configs").setup({
   highlight = { enable = true },

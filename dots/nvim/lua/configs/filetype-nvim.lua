@@ -4,7 +4,6 @@ require("filetype").setup({
       stack = "yaml",
       babelrc = "json",
       tex = "tex",
-      just = "just",
       tf = "terraform",
       cls = "tex", -- vimtex
       tik = "tex", -- vimtex
