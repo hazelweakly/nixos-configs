@@ -7,11 +7,6 @@ local conditions = {
   hide_in_width = function()
     return vim.fn.winwidth(0) > 90
   end,
-  check_git_workspace = function()
-    local filepath = vim.fn.expand("%:p:h")
-    local gitdir = vim.fn.finddir(".git", filepath .. ";")
-    return gitdir and #gitdir > 0 and #gitdir < #filepath
-  end,
 }
 
 local function dirname()
@@ -25,30 +20,8 @@ local function filenameIcon()
   return icon .. " " .. filename
 end
 
-local function lsp_provider()
-  local Lsp = vim.lsp.util.get_progress_messages()[1]
-
-  if Lsp then
-    local percentage = Lsp.percentage or 0
-    local spinners = { "", "", "" }
-    local success_icon = { "", "", "" }
-
-    local ms = vim.loop.hrtime() / 1000000
-    local frame = math.floor(ms / 120) % #spinners
-    local icons = percentage >= 70 and success_icon or spinners
-
-    return string.format(" %%<%s %s %s (%s%%%%) ", icons[frame + 1], Lsp.title or "", Lsp.message or "", percentage)
-  end
-
-  return ""
-end
-
 local function has_lsp()
-  if next(vim.lsp.buf_get_clients()) ~= nil then
-    return "  LSP"
-  else
-    return ""
-  end
+  return next(vim.lsp.buf_get_clients()) ~= nil and "  LSP" or ""
 end
 
 theme = require("configs.utils").merge(theme, {
@@ -67,13 +40,14 @@ theme = require("configs.utils").merge(theme, {
     lualine_b = {
       { "branch", cond = conditions.hide_in_width },
       { "diff", symbols = { added = " ", removed = " ", modified = " " } },
+    },
+    lualine_c = {
       {
         "diagnostics",
         symbols = { error = "  ", warn = "  ", info = "  ", hint = "  " },
         update_in_insert = true,
       },
     },
-    lualine_c = { { "%=", separator = "" }, lsp_provider },
     lualine_x = {
       { has_lsp, cond = conditions.hide_in_width },
       {

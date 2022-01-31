@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   environment.systemPackages = with pkgs; [
-    kitty
+    kitty.terminfo
     curl
     gitAndTools.gitFull
     git-lfs

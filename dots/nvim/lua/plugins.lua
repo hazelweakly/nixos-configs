@@ -24,7 +24,7 @@ return packer.startup(function()
     event = "BufWinEnter",
     requires = {
       { "ray-x/lsp_signature.nvim", module = "lsp_signature" },
-      { "folke/lua-dev.nvim", module = "lua-dev", ft = "lua" },
+      { "folke/lua-dev.nvim", module = "lua-dev" },
       { "hrsh7th/cmp-nvim-lsp" },
       { "mickael-menu/zk-nvim", ft = "markdown" },
       { "b0o/schemastore.nvim", module = "schemastore" },
@@ -40,13 +40,15 @@ return packer.startup(function()
   use({
     "lewis6991/gitsigns.nvim",
     requires = "nvim-lua/plenary.nvim",
-    event = "BufWinEnter",
+    opt = true,
+    setup = function()
+      require("configs.utils").packer_lazy_load("gitsigns.nvim")
+    end,
     config = [[require("configs.gitsigns")]],
   })
   use({
     "nvim-treesitter/nvim-treesitter",
-    event = "BufWinEnter",
-    run = ":TSUpdateSync",
+    run = ":TSUpdate",
     requires = {
       { "p00f/nvim-ts-rainbow", event = "BufWinEnter" },
       { "nvim-treesitter/nvim-treesitter-refactor", event = "BufWinEnter" },
@@ -61,8 +63,10 @@ return packer.startup(function()
       { "nvim-telescope/telescope-fzf-native.nvim", run = "make", module = "telescope._extensions.fzf" },
     },
     after = "nvim-treesitter",
-    event = "BufWinEnter",
-    config = [[require("configs.telescope")]],
+    cmd = "Telescope",
+    module = "telescope",
+    config = [[require("configs.telescope").config()]],
+    setup = [[require("configs.telescope").mappings()]],
   })
   use({ "nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter" })
   use({ "RRethy/nvim-treesitter-textsubjects", after = "nvim-treesitter" })
@@ -81,19 +85,18 @@ return packer.startup(function()
     "hrsh7th/nvim-cmp",
     config = [[require("configs.nvim-cmp")]],
     requires = {
-      { "hrsh7th/cmp-nvim-lsp", event = "InsertEnter", after = "nvim-cmp" },
+      { "hrsh7th/cmp-nvim-lsp", event = "BufWinEnter", after = "nvim-cmp" },
       { "hrsh7th/cmp-buffer", event = "BufWinEnter", after = "nvim-cmp" },
       { "hrsh7th/cmp-path", event = "BufWinEnter", after = "nvim-cmp" },
       { "hrsh7th/cmp-cmdline", event = "BufWinEnter", after = "nvim-cmp" },
-      { "hrsh7th/cmp-emoji", event = "InsertEnter", after = "nvim-cmp" },
-      { "PaterJason/cmp-conjure", requires = "Olical/conjure", ft = "clojure" },
-      { "f3fora/cmp-nuspell", event = "InsertEnter", after = "nvim-cmp" },
-      { "kdheepak/cmp-latex-symbols", event = "InsertEnter", after = "nvim-cmp" },
+      { "hrsh7th/cmp-emoji", event = "BufWinEnter", after = "nvim-cmp" },
+      { "f3fora/cmp-nuspell", event = "BufWinEnter", after = "nvim-cmp" },
+      { "kdheepak/cmp-latex-symbols", event = "BufWinEnter", after = "nvim-cmp" },
       { "onsails/lspkind-nvim", module = "lspkind" },
-      { "L3MON4D3/LuaSnip", event = "InsertEnter", module = "luasnip" },
+      { "L3MON4D3/LuaSnip", event = "BufWinEnter", module = "luasnip" },
       {
         "saadparwaiz1/cmp_luasnip",
-        event = "InsertEnter",
+        event = "BufWinEnter",
         config = [[require("configs.luasnip")]],
         after = "LuaSnip",
       },
@@ -250,6 +253,8 @@ return packer.startup(function()
   use({ "machakann/vim-sandwich", after = "lightspeed.nvim", config = [[require("configs.vim-sandwich")]] })
 
   use({ "tweekmonster/startuptime.vim", cmd = "StartupTime" })
+
+  use({ "j-hui/fidget.nvim", after = "nvim-lsp-installer", config = [[require("fidget").setup()]] })
   -- Should be the last plugin, or the setup needs to go in init.lua after plugins happen
   use({ "norcalli/nvim-colorizer.lua", after = "indent-blankline.nvim", config = [[require("colorizer").setup()]] })
 
