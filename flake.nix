@@ -7,6 +7,9 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
+    nix.url = "github:nixos/nix/f05fefcd0306a8d24f42da52b1e8ea49e4b4c8d0";
+    nix.inputs.nixpkgs.follows = "nixpkgs";
+
     nix-darwin.url = "github:lnl7/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     mkalias.url = "github:reckenrode/mkalias";

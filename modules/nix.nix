@@ -6,7 +6,7 @@ with builtins;
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowUnsupportedSystem = true;
   system.stateVersion = 4;
-  nix.package = pkgs.nixUnstable;
+  nix.package = pkgs.nix;
   nix.extraOptions = ''
     keep-outputs = true
     keep-derivations = true
@@ -17,5 +17,5 @@ with builtins;
   nix.registry = mapAttrs (_: v: { flake = v; }) (l.inputsWithOutputs inputs);
   environment.etc = lib.mapAttrs' (n: v: l.nameValuePair "nix/inputs/${n}" { source = v.outPath; }) inputs;
 
-  nixpkgs.overlays = [ inputs.rust-overlay.overlay (_:_: { inherit inputs; }) ] ++ (attrValues (self.overlays));
+  nixpkgs.overlays = [ inputs.nix.overlay inputs.rust-overlay.overlay (_:_: { inherit inputs; }) ] ++ (attrValues (self.overlays));
 }

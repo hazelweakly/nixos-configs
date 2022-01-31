@@ -4,3 +4,4 @@ dots/kitty/*.py
 *.zwc
 .netrwhist
 dots/nvim/spell
+/result

@@ -1,9 +1,6 @@
 final: prev:
 
 let
-  pkgz = builtins.toJSON
-    { "@fsouza/prettierd" = "*"; };
-
   ifd =
     { runCommandNoCC
     , nodejs
@@ -39,4 +36,3 @@ in
 {
   myNodePackages = (prev.callPackage ifd { }).node2nixProd;
 }
-
