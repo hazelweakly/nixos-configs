@@ -1,11 +1,9 @@
 final: prev: {
+  # remove when boost isn't an accidental runtime dependeny
   nix = prev.nix.overrideAttrs (o: {
     doCheck = false;
     doInstallCheck = false;
     strictDeps = false;
-    disallowedReferences = [ ]; # pls just werk, I don't care rn
+    disallowedReferences = [ ];
   });
-  # nixPinned = final.inputs.nix.packages.${prev.system}.nix;
-  # nixUnstable = nixPinned;
-  # nixFlakes = nixPinned;
 }
