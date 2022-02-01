@@ -21,8 +21,8 @@ M.set_theme = function(args)
     TRACE = colors.hint,
     WARN = colors.warning,
   }) do
-    for _, i in ipairs({ "Border", "Icon", "Title" }) do
-      vim.highlight.link("Notify" .. level .. i, color, true)
+    for _, i in ipairs({ "Border", "Icon", "Title", "Body" }) do
+      vim.highlight.create("Notify" .. level .. i, { guifg = color })
     end
   end
 end
@@ -31,7 +31,6 @@ M.setup = function()
   vim.g.tokyonight_italic_functions = 1
   vim.wo.colorcolumn = "99999"
   vim.o.termguicolors = true
-  require("configs.packerInit").packer.loader("plenary.nvim")
   local theme = require("plenary.path"):new("~/.local/share/theme"):head(1)
   M.set_theme({ args = theme or "light" })
   M.add_user_cmd()

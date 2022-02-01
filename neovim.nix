@@ -40,6 +40,7 @@ let
     universal-ctags
     watchman
     yarn
+    zig
     zk
   ]));
   c = (neovimUtils.override { nodejs = nodejs_latest; }).makeNeovimConfig {

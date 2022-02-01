@@ -1,5 +1,5 @@
 -- require("nvim-treesitter.install").compilers = { "clang", "gcc", "cc" }
-require("nvim-treesitter.install").compilers = { "gcc", "clang", "cc" }
+require("nvim-treesitter.install").compilers = { "zig" }
 
 -- ugly hack to "add" zsh: https://github.com/nvim-treesitter/nvim-treesitter/issues/655
 local ft_to_lang = require("nvim-treesitter.parsers").ft_to_lang
@@ -24,7 +24,6 @@ require("nvim-treesitter.configs").setup({
     enable = true,
     keymaps = {
       init_selection = "<CR>",
-      scope_incremental = "<CR>",
       node_incremental = "<TAB>",
       node_decremental = "<S-TAB>",
     },

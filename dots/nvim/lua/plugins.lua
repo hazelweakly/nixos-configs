@@ -10,10 +10,10 @@ return packer.startup(function()
     { "wbthomason/packer.nvim", opt = true },
     { "rcarriga/nvim-notify", config = [[require("configs.notify")]] },
     { "nathom/filetype.nvim", config = [[require("configs.filetype-nvim")]] },
-    { "nvim-lua/plenary.nvim", event = "BufRead" },
+    { "nvim-lua/plenary.nvim", module = "plenary" },
     "antoinemadec/FixCursorHold.nvim",
   })
-  use({ "folke/tokyonight.nvim", after = "plenary.nvim", config = [[require("configs.colors").setup()]] }) -- https://github.com/olimorris/onedarkpro.nvim ?
+  use({ "folke/tokyonight.nvim", requires = "plenary.nvim", config = [[require("configs.colors").setup()]] }) -- https://github.com/olimorris/onedarkpro.nvim ?
 
   use({ "kyazdani42/nvim-web-devicons", event = "BufWinEnter", config = [[require("nvim-web-devicons").setup()]] })
   use({ "nvim-lualine/lualine.nvim", after = "nvim-web-devicons", config = [[require('configs.lualine')]] })
@@ -132,7 +132,7 @@ return packer.startup(function()
   use({ "direnv/direnv.vim", event = "BufWinEnter", after = "project.nvim" })
   use({ "editorconfig/editorconfig-vim", event = "BufNewFile,BufReadPost,BufFilePost", after = "project.nvim" })
   use({ "ethanholz/nvim-lastplace", event = "BufReadPost", config = [[require("nvim-lastplace").setup()]] })
-  use({ "junegunn/vim-easy-align", setup = [[vim.cmd("xmap <CR> <Plug>(EasyAlign)")]], keys = { { "x", "<CR>" } } })
+  use({ "junegunn/vim-easy-align", setup = [[require("configs.utils").map("x", "<CR>", "<Plug>(EasyAlign)")]] })
   -- Revisit eventually once keymappings work better.
   -- use({
   --   "folke/which-key.nvim",
@@ -203,7 +203,7 @@ return packer.startup(function()
   use({
     "tyru/open-browser.vim",
     event = "CursorHold",
-    config = [[vim.api.nvim_set_keymap("n", "gx", "<Plug>(openbrowser-smart-search)", {})]],
+    config = [[require("configs.utils").map("n", "gx", "<Plug>(openbrowser-smart-search)")]],
   })
 
   -- https://github.com/blackCauldron7/surround.nvim
