@@ -42,23 +42,22 @@ local servers = {
   "zk",
 }
 
-local utils = require("configs.utils")
 for _, name in pairs(servers) do
   local server_is_found, server = lsp_installer.get_server(name)
   if server_is_found and not server:is_installed() then
-    utils.log_info("Installing " .. name)
+    require("configs.utils").log_info("Installing " .. name)
     server:install()
   end
 end
 
 lsp_installer.on_server_ready(function(server)
   local lsp = require("_.lsp")
-  server:setup(utils.merge(lsp.default_opts(), lsp.servers[server.name] or {}))
+  server:setup(require("configs.utils").merge(lsp.default_opts(), lsp.servers[server.name] or {}))
 end)
 
 vim.diagnostic.config({
   severity_sort = true,
-  float = { border = utils.border },
+  float = { border = require("configs.utils").border },
 })
 
 for type, icon in pairs({ Error = " ", Warn = " ", Hint = " ", Info = " " }) do

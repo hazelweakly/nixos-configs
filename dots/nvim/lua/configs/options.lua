@@ -1,23 +1,5 @@
-vim.api.nvim_set_keymap("", "<Space>", "<Nop>", { noremap = true, silent = true })
 vim.g.mapleader = [[ ]]
 vim.g.maplocalleader = [[ ]]
-
-vim.g.markdown_fenced_languages = {
-  "lua",
-  "vim",
-  "json",
-  "typescript",
-  "javascript",
-  "js=javascript",
-  "ts=typescript",
-  "shell=sh",
-  "python",
-  "sh",
-  "bash=sh",
-  "console=sh",
-  "tsx=typescriptreact",
-  "jsx=javascriptreact",
-}
 
 vim.g.python_host_skip_check = 1
 vim.g.do_filetype_lua = 1
@@ -69,3 +51,4 @@ vim.opt.splitbelow = true
 vim.opt.pyx = 3
 vim.opt.diffopt = "filler,internal,algorithm:histogram,indent-heuristic,hiddenoff"
 vim.opt.spelllang = { "en_us" }
+vim.opt.shell = "/bin/sh"

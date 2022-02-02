@@ -14,5 +14,6 @@ for _, m in ipairs({
 }) do
   pcall(require, m)
 end
+require("configs.colors").setup()
 
 vim.opt.shadafile = ""

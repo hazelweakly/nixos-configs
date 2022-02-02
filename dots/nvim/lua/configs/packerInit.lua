@@ -29,8 +29,13 @@ end
 
 packer.init({
   compile_path = vim.fn.stdpath("config") .. "/lua/packer_compiled.lua",
-  git = { clone_timeout = 600 },
-  max_jobs = 20,
+  git = {
+    clone_timeout = 600,
+    subcommands = {
+      fetch = "fetch --no-tags --no-recurse-submodules --update-shallow --progress",
+    },
+  },
+  max_jobs = 30,
   disable_commands = true,
   display = {
     open_fn = function()

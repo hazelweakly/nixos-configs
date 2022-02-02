@@ -11,20 +11,22 @@ M.set_theme = function(args)
   end
   package.loaded["tokyonight.config"] = nil
   require("tokyonight").colorscheme()
-  vim.highlight.link("TSDefinitionUsage", "CursorLine")
-  vim.highlight.link("TSDefinition", "CursorLine")
-  local colors = M.get().colors -- error warning info hint
-  for level, color in pairs({
-    DEBUG = colors.hint,
-    ERROR = colors.error,
-    INFO = colors.info,
-    TRACE = colors.hint,
-    WARN = colors.warning,
-  }) do
-    for _, i in ipairs({ "Border", "Icon", "Title", "Body" }) do
-      vim.highlight.create("Notify" .. level .. i, { guifg = color })
+  vim.defer_fn(function()
+    vim.highlight.link("TSDefinitionUsage", "CursorLine", true)
+    vim.highlight.link("TSDefinition", "CursorLine", true)
+    local colors = M.get().colors -- error warning info hint
+    for level, color in pairs({
+      DEBUG = colors.hint,
+      ERROR = colors.error,
+      INFO = colors.info,
+      TRACE = colors.hint,
+      WARN = colors.warning,
+    }) do
+      for _, i in ipairs({ "Border", "Icon", "Title", "Body" }) do
+        vim.highlight.create("Notify" .. level .. i, { guifg = color })
+      end
     end
-  end
+  end, 100)
 end
 
 M.setup = function()
@@ -33,7 +35,7 @@ M.setup = function()
   vim.o.termguicolors = true
   local theme = require("plenary.path"):new("~/.local/share/theme"):head(1)
   M.set_theme({ args = theme or "light" })
-  M.add_user_cmd()
+  vim.defer_fn(M.add_user_cmd, 50)
 end
 
 M.add_user_cmd = function()

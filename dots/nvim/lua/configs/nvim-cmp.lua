@@ -1,4 +1,3 @@
-local luasnip = require("luasnip")
 local cmp = require("cmp")
 local doSig = function(_)
   if _LSP_SIG_CFG == nil then
@@ -20,7 +19,7 @@ end
 cmp.setup({
   snippet = {
     expand = function(args)
-      luasnip.lsp_expand(args.body)
+      require("luasnip").lsp_expand(args.body)
     end,
   },
   mapping = {
@@ -52,6 +51,7 @@ cmp.setup({
     }),
     ["<Tab>"] = cmp.mapping({
       i = function(fallback)
+        local luasnip = require("luasnip")
         if cmp.visible() then
           cmp.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace })
         elseif luasnip.expand_or_jumpable() then
@@ -61,6 +61,7 @@ cmp.setup({
         end
       end,
       s = function(fallback)
+        local luasnip = require("luasnip")
         if cmp.visible() then
           cmp.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace })
         elseif luasnip.expand_or_jumpable() then
@@ -75,6 +76,7 @@ cmp.setup({
     }),
     ["<S-Tab>"] = cmp.mapping({
       i = function(fallback)
+        local luasnip = require("luasnip")
         if luasnip.jumpable(-1) then
           luasnip.jump(-1)
         else
@@ -82,6 +84,7 @@ cmp.setup({
         end
       end,
       s = function(fallback)
+        local luasnip = require("luasnip")
         if luasnip.jumpable(-1) then
           luasnip.jump(-1)
         else
@@ -103,15 +106,10 @@ cmp.setup({
     { name = "latex_symbols" },
   }),
   formatting = {
-    format = require("lspkind").cmp_format({
-      with_text = false,
-    }),
+    format = require("lspkind").cmp_format({ with_text = false }),
   },
   completion = { completeopt = vim.o.completeopt },
-  experimental = {
-    ghost_text = true,
-    native_menu = false,
-  },
+  experimental = { ghost_text = true },
 })
 cmp.setup.cmdline("/", {
   sources = cmp.config.sources({ { name = "buffer" } }),

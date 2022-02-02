@@ -1,11 +1,11 @@
 local M = {}
-local utils = require("configs.utils")
 
 M.on_attach = function(client, bufnr)
   if client.resolved_capabilities.document_range_formatting then
     vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
   end
 
+  local utils = require("configs.utils")
   require("lsp_signature").on_attach({
     bind = true,
     max_height = 4,
@@ -49,6 +49,7 @@ M.on_attach = function(client, bufnr)
 end
 
 M.default_opts = function()
+  local utils = require("configs.utils")
   local handlers = {
     ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = utils.border }),
     ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
