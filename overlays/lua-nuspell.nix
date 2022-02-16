@@ -6,19 +6,12 @@ final: prev: {
       url = "https://luarocks.org/lua-nuspell-0.3alpha-1.rockspec";
       sha256 = "0vzvm7nmwvm6w05qgd9ryhkag31ja1znl9mhaw3pk23a6dkvlbya";
     }).outPath;
-    src = prev.fetchgit (builtins.removeAttrs
-      (builtins.fromJSON ''{
-  "url": "https://github.com/f3fora/lua-nuspell.git",
-  "rev": "505b291070282c3942f85b758c1f319b253969c4",
-  "date": "2021-08-30T20:49:39+02:00",
-  "path": "/nix/store/ajazvvqi4nlffi23pc494l5c0a3gzbki-lua-nuspell",
-  "sha256": "0kapwbn2wvvzcn51695a2fp4yf2givrscr8rrypbl3lq7phj95vp",
-  "fetchLFS": false,
-  "fetchSubmodules": true,
-  "deepClone": false,
-  "leaveDotGit": false
-}
- '') [ "date" "path" ]);
+    src = prev.fetchFromGitHub {
+      owner = "f3fora";
+      repo = "lua-nuspell";
+      rev = "9fe6855eb99d0714367234b7b4fce9dffec7d408";
+      sha256 = "zIRHfXjOQpl6sWwGD0JdpeSFcN9PssGfT6W+Cky+boI=";
+    };
 
     disabled = with prev.luajit_2_1.pkgs.lib; (luaOlder "5.1");
 
