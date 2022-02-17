@@ -90,7 +90,12 @@ return packer.startup(function()
   })
   use({ "rafamadriz/friendly-snippets", module = "cmp_nvim_lsp", event = "InsertEnter" })
   use({ "hrsh7th/nvim-cmp", after = "friendly-snippets", config = [[require("configs.nvim-cmp")]] })
-  use({ "L3MON4D3/LuaSnip", config = [[require("configs.luasnip")]], after = "nvim-cmp", wants = "friendly-snippets" })
+  use({
+    "L3MON4D3/LuaSnip",
+    config = [[require("configs.luasnip")]],
+    after = "nvim-cmp",
+    wants = "friendly-snippets",
+  })
   use({
     { "saadparwaiz1/cmp_luasnip", after = "LuaSnip" },
     { "hrsh7th/cmp-nvim-lsp", after = "cmp_luasnip" },

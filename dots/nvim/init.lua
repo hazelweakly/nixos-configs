@@ -4,14 +4,16 @@ vim.opt.shadafile = "NONE"
 
 pcall(require, "impatient")
 
-for _, m in ipairs({
-  "_.disable_built_ins",
-  "configs.options",
-  "configs.mappings",
-  "configs.commands",
-  "packer_compiled",
-  "configs.settings",
-}) do
+for _, m in
+  ipairs({
+    "_.disable_built_ins",
+    "configs.options",
+    "configs.mappings",
+    "configs.commands",
+    "packer_compiled",
+    "configs.settings",
+  })
+do
   pcall(require, m)
 end
 require("configs.colors").setup()

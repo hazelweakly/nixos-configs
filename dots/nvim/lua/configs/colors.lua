@@ -15,13 +15,15 @@ M.set_theme = function(args)
     vim.highlight.link("TSDefinitionUsage", "CursorLine", true)
     vim.highlight.link("TSDefinition", "CursorLine", true)
     local colors = M.get().colors -- error warning info hint
-    for level, color in pairs({
-      DEBUG = colors.hint,
-      ERROR = colors.error,
-      INFO = colors.info,
-      TRACE = colors.hint,
-      WARN = colors.warning,
-    }) do
+    for level, color in
+      pairs({
+        DEBUG = colors.hint,
+        ERROR = colors.error,
+        INFO = colors.info,
+        TRACE = colors.hint,
+        WARN = colors.warning,
+      })
+    do
       for _, i in ipairs({ "Border", "Icon", "Title", "Body" }) do
         vim.highlight.create("Notify" .. level .. i, { guifg = color })
       end
