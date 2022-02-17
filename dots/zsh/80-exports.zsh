@@ -18,3 +18,6 @@ typeset -A _ls_colors=(
 )
 export LS_COLORS=$_ls_colors[$__sys_theme]
 unset _ls_colors
+
+# If you are using a two-line prompt with an empty line before it, add this for smoother rendering
+export POSTEDIT=$'\n\n\e[2A'

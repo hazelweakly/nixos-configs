@@ -1,11 +1,14 @@
 zstyle ':z4h:'               start-tmux             'none'
 zstyle ':z4h:'               prompt-at-bottom       'no'
 zstyle ':z4h:ssh:*'          enable                 'no'
-zstyle ':z4h:direnv'         enable                 'yes'
+zstyle ':z4h:direnv'         enable                 'no'
 zstyle ':z4h:direnv:success' notify                 'no'
 zstyle ':z4h:'               term-shell-integration 'yes'
 zstyle ':z4h:'               auto-update            'ask'
 zstyle ':z4h:'               auto-update-days       '7'
+zstyle ':z4h:'               propagate-cwd          'yes'
+zstyle ':z4h:fzf-complete'   recurse-dirs           'yes'
+zstyle ':z4h:fzf-complete'   fzf-bindings           tab:repeat
 
 # kitty is set to force macos option to be alt
 # so we set this to false to make z4h think option should not be messed with

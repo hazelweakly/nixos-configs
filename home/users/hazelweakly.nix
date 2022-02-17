@@ -22,7 +22,7 @@ with pkgs.lib; {
   programs.nix-index.enable = true;
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
-  programs.direnv.enableZshIntegration = false;
+  programs.direnv.enableZshIntegration = true;
   programs.direnv.stdlib = ''
     : ''${XDG_CACHE_HOME:=$HOME/.cache}
     declare -A direnv_layout_dirs
