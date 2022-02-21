@@ -46,6 +46,22 @@ M.on_attach = function(client, bufnr)
   end)
   utils.buf_map(bufnr, "n", "<C-p>", vim.diagnostic.goto_prev)
   utils.buf_map(bufnr, "n", "<C-n>", vim.diagnostic.goto_next)
+
+  if client.resolved_capabilities.document_formatting then
+    vim.cmd(string.format(
+      [[
+      if !exists('#LspFormatting%d#BufWritePre')
+        augroup LspFormatting%d
+          autocmd! * <buffer>
+          autocmd BufWritePre <buffer=%d> lua vim.lsp.buf.formatting_seq_sync()
+        augroup END
+      endif
+    ]],
+      bufnr,
+      bufnr,
+      bufnr
+    ))
+  end
 end
 
 M.default_opts = function()
@@ -67,16 +83,27 @@ M.default_opts = function()
   }
 end
 
-M.servers = {
-  ansiblels = require("_.lsp.ansiblels"),
-  jsonls = require("_.lsp.jsonls"),
-  rnix = require("_.lsp.rnix"),
-  sumneko_lua = require("_.lsp.sumneko_lua"),
-  tailwindcss = require("_.lsp.tailwindcss"),
-  tsserver = require("_.lsp.tsserver"),
-  pyright = require("_.lsp.pyright"),
-  zk = require("_.lsp.zk"),
-  bashls = require("_.lsp.bashls"),
-}
+M.start_or_restart = function()
+  if vim.b.direnv_lsp_loaded ~= nil then
+    return
+  end
+
+  local bufnr = vim.api.nvim_get_current_buf()
+  local util = require("lspconfig").util
+  for _, client in ipairs(util.get_managed_clients()) do
+    if util.get_active_client_by_name(bufnr, client.name) ~= nil then
+      client.stop()
+    end
+  end
+  local buffer_filetype = vim.bo.filetype
+  for _, config in pairs(require("lspconfig.configs")) do
+    for _, filetype_match in ipairs(config.filetypes or {}) do
+      if buffer_filetype == filetype_match then
+        vim.defer_fn(config.launch, 500)
+      end
+    end
+  end
+  vim.b.direnv_lsp_loaded = true
+end
 
 return M

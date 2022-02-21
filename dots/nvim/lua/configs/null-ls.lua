@@ -1,27 +1,14 @@
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
 local null_ls = require("null-ls")
-local h = require("null-ls.helpers")
-local methods = require("null-ls.methods")
-local FORMATTING = methods.internal.FORMATTING
-local nixpkgs_fmt = h.make_builtin({
-  name = "nixpkgs_fmt",
-  method = FORMATTING,
-  filetypes = { "nix" },
-  generator_opts = {
-    command = "nixpkgs-fmt",
-    to_stdin = true,
-  },
-  factory = h.formatter_factory,
-})
-null_ls.register(nixpkgs_fmt)
 null_ls.setup({
-  debounce = 150,
+  debounce = 250,
   sources = {
     null_ls.builtins.code_actions.shellcheck,
 
     -- null_ls.builtins.diagnostics.codespell,
     null_ls.builtins.diagnostics.shellcheck,
     null_ls.builtins.diagnostics.hadolint,
+    null_ls.builtins.diagnostics.actionlint,
     -- null_ls.builtins.diagnostics.statix,
 
     null_ls.builtins.formatting.shfmt.with({
@@ -34,16 +21,11 @@ null_ls.setup({
     null_ls.builtins.formatting.terraform_fmt,
     null_ls.builtins.formatting.shellharden,
     null_ls.builtins.formatting.black,
+    null_ls.builtins.formatting.isort,
+    null_ls.builtins.formatting.nixpkgs_fmt,
   },
-  update_on_insert = true,
+  update_on_insert = false, -- some language servers really hate this
   on_attach = function(client)
-    if client.resolved_capabilities.document_formatting then
-      vim.cmd([[
-        augroup LspFormatting
-          autocmd! * <buffer>
-          autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()
-        augroup END
-      ]])
-    end
+    return require("_.lsp").on_attach(client, vim.api.nvim_get_current_buf())
   end,
 })

@@ -1,18 +1,17 @@
-local register = require("nvim-lsp-installer.servers").register
-local svr = require("nvim-lsp-installer.server")
+local ss = require("nvim-lsp-installer.servers")
 
 -- Some of the servers are preinstlaled with nix. If I wire them in here, I
 -- don't need to split out my lsp registration setup and can handle everything
 -- in a single location consistently.
 for _, name in ipairs({ "rnix", "taplo", "zk" }) do
-  register(svr.Server:new({
-    name = name,
-    root_dir = svr.get_server_root_path(name),
-    installer = function(_, callback, _)
+  local has, s = ss.get_server(name)
+  if has then
+    s._installer = function(_, callback, _)
       callback(true)
-    end,
-    default_options = require("lspconfig")[name].document_config.default_config,
-  }))
+    end
+  else
+    require("configs.utils").log_err("server configs not available: " .. name, "[configs.lua]")
+  end
 end
 
 local lsp_installer = require("nvim-lsp-installer")
@@ -30,6 +29,7 @@ local servers = {
   "ltex",
   "pyright",
   "rnix",
+  "rust_analyzer",
   "sumneko_lua",
   "tailwindcss",
   "taplo",
@@ -52,7 +52,23 @@ end
 
 lsp_installer.on_server_ready(function(server)
   local lsp = require("_.lsp")
-  server:setup(require("configs.utils").merge(lsp.default_opts(), lsp.servers[server.name] or {}))
+  local merge = require("configs.utils").merge
+
+  local has, s_opts = pcall(require, "_.lsp." .. server.name)
+  if not has then
+    s_opts = {}
+  end
+
+  local opts = merge(server:get_default_options(), lsp.default_opts())
+  if type(s_opts) == "function" then
+    s_opts(server, opts)
+  else
+    server:setup_lsp(merge(opts, s_opts))
+  end
+
+  if not (opts.autostart == false) then
+    server:attach_buffers()
+  end
 end)
 
 vim.diagnostic.config({
@@ -64,3 +80,11 @@ for type, icon in pairs({ Error = " ", Warn = " ", Hint = " ", Info = "
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
+
+-- This is here because this file is included and ran exactly once and is a stateful module.
+vim.cmd([[
+augroup DirenvRestartServer
+  autocmd!
+  autocmd User DirenvLoaded lua require("_.lsp").start_or_restart()
+augroup END
+]])

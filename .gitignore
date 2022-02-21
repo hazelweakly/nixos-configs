@@ -5,3 +5,4 @@ dots/kitty/*.py
 .netrwhist
 dots/nvim/spell
 /result
+packer_compiled.lua

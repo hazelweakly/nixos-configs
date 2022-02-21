@@ -7,7 +7,6 @@ local packer = packer_init.packer
 local use = packer.use
 return packer.startup(function()
   use({
-    { "lewis6991/impatient.nvim" },
     { "wbthomason/packer.nvim", opt = true },
     { "rcarriga/nvim-notify", config = [[require("configs.notify")]] },
     { "nathom/filetype.nvim", config = [[require("configs.filetype-nvim")]] },
@@ -23,15 +22,23 @@ return packer.startup(function()
   })
   use({ "nvim-lualine/lualine.nvim", after = "nvim-web-devicons", config = [[require('configs.lualine')]] })
 
+  use({ "airblade/vim-rooter" })
+  use({ "~/src/personal/direnv.vim" })
   use({
     "williamboman/nvim-lsp-installer",
     config = [[require("configs.lsp")]],
-    event = "CursorHold",
+    event = "User DirenvLoaded",
     requires = {
       { "ray-x/lsp_signature.nvim", module = "lsp_signature" },
       { "folke/lua-dev.nvim", module = "lua-dev" },
       { "hrsh7th/cmp-nvim-lsp" },
       { "mickael-menu/zk-nvim", ft = "markdown" },
+      {
+        "simrat39/rust-tools.nvim",
+        module = "rust-tools",
+        config = [[require("rust-tools").start_standalone_if_required = function() end]],
+        run = [[rm -rf plugin]],
+      },
       { "b0o/schemastore.nvim", module = "schemastore" },
       { "jose-elias-alvarez/nvim-lsp-ts-utils", module = "nvim-lsp-ts-utils" },
     },
@@ -78,16 +85,7 @@ return packer.startup(function()
     config = [[require("configs.telescope").config()]],
     setup = [[require("configs.telescope").mappings()]],
   })
-  use({
-    "neovim/nvim-lspconfig",
-    module = "lspconfig",
-    setup = function()
-      require("configs.utils").packer_lazy_load("nvim-lspconfig")
-      vim.defer_fn(function()
-        vim.cmd('if &ft == "packer" | echo "" | else | silent! e %')
-      end, 0)
-    end,
-  })
+  use({ "neovim/nvim-lspconfig", module = "lspconfig" })
   use({ "rafamadriz/friendly-snippets", module = "cmp_nvim_lsp", event = "InsertEnter" })
   use({ "hrsh7th/nvim-cmp", after = "friendly-snippets", config = [[require("configs.nvim-cmp")]] })
   use({
@@ -131,10 +129,9 @@ return packer.startup(function()
     config = [[require("configs.null-ls")]],
     requires = { "nvim-lua/plenary.nvim" },
     event = "CursorHold",
+    after = "vim-rooter",
   })
-  use({ "ahmedkhalf/project.nvim", config = [[require("project_nvim").setup({})]] })
-  use({ "direnv/direnv.vim", event = "CursorHold", after = "project.nvim" })
-  use({ "editorconfig/editorconfig-vim", event = "CursorHold", after = "project.nvim" })
+  use({ "editorconfig/editorconfig-vim", event = "CursorHold", after = "vim-rooter" })
   use({ "ethanholz/nvim-lastplace", event = "BufReadPost", config = [[require("nvim-lastplace").setup()]] })
   use({ "junegunn/vim-easy-align", setup = [[require("configs.utils").map("x", "<CR>", "<Plug>(EasyAlign)")]] })
   -- Revisit eventually once keymappings work better.
@@ -194,7 +191,7 @@ return packer.startup(function()
     run = "cp ./*.py ~/.config/kitty/",
     config = [[require("configs.kitty")]],
     setup = [[vim.g.kitty_navigator_no_mappings = 1]],
-    keys = { "<M-h>", "<M-i>", "<M-j>", "<M-k>" },
+    keys = { "<M-h>", "<M-l>", "<M-j>", "<M-k>" },
   })
 
   use({

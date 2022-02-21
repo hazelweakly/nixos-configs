@@ -1,4 +1,9 @@
 local present, packer = pcall(require, "packer")
+if not present then
+  vim.cmd("packadd packer.nvim")
+  present, packer = pcall(require, "packer")
+end
+
 local utils = require("configs.utils")
 local first_install = false
 
@@ -28,7 +33,6 @@ if not present then
 end
 
 packer.init({
-  compile_path = vim.fn.stdpath("config") .. "/lua/packer_compiled.lua",
   git = {
     clone_timeout = 600,
     subcommands = {
@@ -36,7 +40,6 @@ packer.init({
     },
   },
   max_jobs = 30,
-  disable_commands = true,
   display = {
     open_fn = function()
       return require("packer.util").float({ border = utils.border })

@@ -1,6 +1,15 @@
 local M = {}
 
 M.set_theme = function(args)
+  local loaded, tokyonight = pcall(require, "tokyonight")
+  if not loaded then
+    vim.cmd([[packadd tokyonight.nvim]])
+    loaded, tokyonight = pcall(require, "tokyonight")
+  end
+  if not loaded then
+    return nil
+  end
+
   local theme = args.args or "light"
   local cur = vim.g.tokyonight_style or "day"
   local cur_theme = vim.g.colors_name or "default"
@@ -10,7 +19,7 @@ M.set_theme = function(args)
     vim.o.background = theme
   end
   package.loaded["tokyonight.config"] = nil
-  require("tokyonight").colorscheme()
+  tokyonight.colorscheme()
   vim.defer_fn(function()
     vim.highlight.link("TSDefinitionUsage", "CursorLine", true)
     vim.highlight.link("TSDefinition", "CursorLine", true)
@@ -35,7 +44,8 @@ M.setup = function()
   vim.g.tokyonight_italic_functions = 1
   vim.wo.colorcolumn = "99999"
   vim.o.termguicolors = true
-  local theme = require("plenary.path"):new("~/.local/share/theme"):head(1)
+  local theme = vim.fn.readfile(vim.fn.expand("~/.local/share/theme"))[1]
+  -- local theme = require("plenary.path"):new("~/.local/share/theme"):head(1)
   M.set_theme({ args = theme or "light" })
   vim.defer_fn(M.add_user_cmd, 50)
 end

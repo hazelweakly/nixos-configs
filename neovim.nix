@@ -6,6 +6,7 @@ let
   luaWith = neovim-unwrapped.lua.withPackages (p: [ lua-nuspell p.luarocks ]);
   dicts = [ hunspellDicts.en_US hunspellDicts.en_US-large ];
   path = lib.makeBinPath (builtins.sort (a: b: a.name < b.name) (nonBrokenPkgs [
+    actionlint
     bat
     binutils
     buildifier
@@ -27,7 +28,7 @@ let
     (nuspellWithDicts dicts)
     nixpkgs-fmt
     perl
-    (python3.withPackages (p: [ p.black p.pynvim ]))
+    (python3.withPackages (p: [ p.black p.pynvim p.isort ]))
     rnix-lsp
     shellcheck
     shellharden
@@ -51,17 +52,15 @@ let
   # We use bash here because the wrapperArgs runs inside bash, regardless of
   # the shell the system uses
   preRun = ''
-    {
-      pushd /
-      eval "$(direnv export bash)"
-      popd
-    } &>/dev/null || true
+    pushd /
+    eval "$(direnv export bash)"
+    popd
   '';
 
   stuff = rec {
     neovimConfig' = (neovimUtils.makeNeovimConfig {
       withNodeJs = true;
-      extraPython3Packages = p: [ p.black ];
+      extraPython3Packages = p: [ p.black p.isort ];
       extraLuaPackages = p: [ lua-nuspell p.luarocks ];
       wrapRc = false;
       vimAlias = true;
