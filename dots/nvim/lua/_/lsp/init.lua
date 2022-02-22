@@ -1,7 +1,7 @@
 local M = {}
 
 M.on_attach = function(client, bufnr)
-  if client.resolved_capabilities.document_range_formatting then
+  if client.supports_method("textDocument/rangeFormatting") then
     vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
   end
 
@@ -16,27 +16,27 @@ M.on_attach = function(client, bufnr)
     handler_opts = { border = utils.border },
   }, bufnr)
 
-  if client.resolved_capabilities.code_action then
+  if client.supports_method("textDocument/codeAction") then
     utils.buf_map(bufnr, "n", "ga", vim.lsp.buf.code_action)
   end
-  if client.resolved_capabilities.declaration then
+  if client.supports_method("textDocument/declaration") then
     utils.buf_map(bufnr, "n", "gD", vim.lsp.buf.declaration)
   end
-  if client.resolved_capabilities.goto_definition then
+  if client.supports_method("textDocument/definition") then
     utils.buf_map(bufnr, "n", "gd", function()
       return require("telescope.builtin").lsp_definitions()
     end)
   end
-  if client.resolved_capabilities.hover then
+  if client.supports_method("textDocument/hover") then
     utils.buf_map(bufnr, "n", "K", vim.lsp.buf.hover)
   end
-  if client.resolved_capabilities.signature_help then
+  if client.supports_method("textDocument/signatureHelp") then
     utils.buf_map(bufnr, "n", "gk", vim.lsp.buf.signature_help)
   end
-  if client.resolved_capabilities.rename then
+  if client.supports_method("textDocument/rename") then
     utils.buf_map(bufnr, "n", "gr", vim.lsp.buf.rename)
   end
-  if client.resolved_capabilities.find_references then
+  if client.supports_method("textDocument/references") then
     utils.buf_map(bufnr, "n", "gR", function()
       return require("telescope.builtin").lsp_references()
     end)
@@ -47,7 +47,7 @@ M.on_attach = function(client, bufnr)
   utils.buf_map(bufnr, "n", "<C-p>", vim.diagnostic.goto_prev)
   utils.buf_map(bufnr, "n", "<C-n>", vim.diagnostic.goto_next)
 
-  if client.resolved_capabilities.document_formatting then
+  if client.supports_method("textDocument/formatting") then
     vim.cmd(string.format(
       [[
       if !exists('#LspFormatting%d#BufWritePre')
