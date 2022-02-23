@@ -6,14 +6,19 @@ with pkgs.lib; {
   xdg.configFile."zsh/config".source =
     config.lib.file.mkOutOfStoreSymlink "${dir}/dots/zsh";
 
+  home.sessionVariables = {
+    __sys_theme = ''$(<''${XDG_DATA_HOME:-$HOME/.local/share}/theme)'';
+  };
+
   programs.zsh = {
     enable = true;
     envExtra = ''
-      unsetopt GLOBAL_RCS
-      skip_global_compinit=1
+      # re-export variables that depend on $__sys_theme
+      export FZF_DEFAULT_OPTS="${config.home.sessionVariables.FZF_DEFAULT_OPTS}"
 
       if [ -n "''${ZSH_VERSION-}" ]; then
         : ''${ZDOTDIR:=~/.config/zsh}
+        skip_global_compinit=1
         setopt no_global_rcs
         [[ -o no_interactive && -z "''${Z4H_BOOTSTRAPPING-}" ]] && return
         setopt no_rcs

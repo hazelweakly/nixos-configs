@@ -7,6 +7,7 @@ require("filetype").setup({
       tf = "terraform",
       cls = "tex", -- vimtex
       tik = "tex", -- vimtex
+      nix = "nix",
     },
     function_extensions = {
       tex = function()

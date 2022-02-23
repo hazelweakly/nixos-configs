@@ -10,7 +10,7 @@
       ];
       defaultCommand = "${fd} -tf 2> /dev/null";
       defaultOptions =
-        [ "--color=$__sys_theme --ansi --layout=reverse --inline-info" ];
+        [ ''--color=''${__sys_theme:-light} --ansi --layout=reverse --inline-info'' ];
       fileWidgetCommand = "${fd} .";
       fileWidgetOptions =
         let
@@ -19,9 +19,7 @@
         in
         [ "--preview '${preview} | head -200'" ];
       historyWidgetOptions = [
-        ''
-          --preview 'echo {} | cut -d\" \" -f2- | fold -w $(($(tput cols)-4))' --preview-window down:4:hidden --bind '?:toggle-preview'
-        ''
+        ''--preview 'echo {} | cut -d\" \" -f2- | fold -w $(($(tput cols)-4))' --preview-window down:4:hidden --bind '?:toggle-preview${"'"}''
       ];
     };
 }

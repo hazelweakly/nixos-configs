@@ -23,7 +23,7 @@ jobs:
           git config --global user.name "Hazel Weakly"
           nix develop -c nix flake update --commit-lock-file
           nix -Lv flake check
-          nix -Lv build ".#"darwinConfigurations.Hazels-MacBook-Pro.config.system.build.toplevel
+          nix -Lv build ".#"darwinConfigurations.x86_64-darwin.config.system.build.toplevel
           nix -Lv develop -c echo OK
       - run: |
           git push origin HEAD

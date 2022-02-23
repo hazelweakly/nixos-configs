@@ -47,26 +47,28 @@
   outputs = inputs@{ self, ... }: {
     overlays = import ./overlays;
 
-    darwinConfigurations."Hazels-MacBook-Pro" = inputs.nix-darwin.lib.darwinSystem {
+    darwinConfigurations."x86_64-darwin" = inputs.nix-darwin.lib.darwinSystem {
       system = "x86_64-darwin";
       inherit inputs;
       modules = import ./modules/hosts/Hazels-MacBook-Pro.nix { inherit self inputs; };
       specialArgs = { inherit self; };
     };
 
-    darwinConfigurations."Eden-C02GR3NTQ05N" = inputs.nix-darwin.lib.darwinSystem {
+    darwinConfigurations."aarch64-darwin" = inputs.nix-darwin.lib.darwinSystem {
       system = "aarch64-darwin";
       inherit inputs;
       modules = import ./modules/hosts/Eden-C02GR3NTQ05N.nix { inherit self inputs; };
       specialArgs = { inherit self; };
     };
 
-    # darwinPackages = self.darwinConfigurations."Hazels-MacBook-Pro".pkgs // {
-    #   dev-shell = self.devShell.x86_64-darwin.inputDerivation;
-    # };
+    darwinConfigurations."Hazels-MacBook-Pro" = self.darwinConfigurations.x86_64-darwin;
+    darwinConfigurations."Eden-C02GR3NTQ05N" = self.darwinConfigurations.aarch64-darwin;
 
-    # devShell.x86_64-darwin = self.darwinPackages.mkShell {
-    #   nativeBuildInputs = with self.darwinPackages; [ nixUnstable ];
-    # };
-  };
+  } // inputs.flake-utils.lib.eachSystem [ "aarch64-darwin" "x86_64-darwin" ] (system: {
+    packages = self.darwinConfigurations.${system}.pkgs;
+
+    devShell = self.packages.${system}.mkShell {
+      nativeBuildInputs = with self.packages.${system}; [ nixUnstable ];
+    };
+  });
 }

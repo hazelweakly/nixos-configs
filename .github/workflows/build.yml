@@ -20,5 +20,5 @@ jobs:
           authToken: "${{ secrets.CACHIXCI }}"
           extraPullNames: "nix-community,hercules-ci"
       - run: nix -Lv flake check
-      - run: nix -Lv build ".#"darwinConfigurations.Hazels-MacBook-Pro.config.system.build.toplevel
+      - run: nix -Lv build ".#"darwinConfigurations.x86_64-darwin.config.system.build.toplevel
       - run: nix -Lv develop -c echo OK

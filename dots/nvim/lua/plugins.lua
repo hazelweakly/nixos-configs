@@ -23,7 +23,7 @@ return packer.startup(function()
   use({ "nvim-lualine/lualine.nvim", after = "nvim-web-devicons", config = [[require('configs.lualine')]] })
 
   use({ "airblade/vim-rooter" })
-  use({ "~/src/personal/direnv.vim" })
+  use({ "hazelweakly/direnv.vim" })
   use({
     "williamboman/nvim-lsp-installer",
     config = [[require("configs.lsp")]],
