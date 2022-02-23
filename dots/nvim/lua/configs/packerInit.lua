@@ -1,7 +1,9 @@
 local present, packer = pcall(require, "packer")
 if not present then
-  vim.cmd("packadd packer.nvim")
-  present, packer = pcall(require, "packer")
+  present, _ = pcall(vim.cmd, "packadd packer.nvim")
+  if present then
+    present, packer = pcall(require, "packer")
+  end
 end
 
 local utils = require("configs.utils")

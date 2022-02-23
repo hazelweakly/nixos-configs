@@ -3,8 +3,10 @@ local M = {}
 M.set_theme = function(args)
   local loaded, tokyonight = pcall(require, "tokyonight")
   if not loaded then
-    vim.cmd([[packadd tokyonight.nvim]])
-    loaded, tokyonight = pcall(require, "tokyonight")
+    loaded, _ = pcall(vim.cmd, "packadd tokyonight.nvim")
+    if loaded then
+      loaded, tokyonight = pcall(require, "tokyonight")
+    end
   end
   if not loaded then
     return nil
