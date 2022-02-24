@@ -4,6 +4,7 @@ vim.opt.shadafile = "NONE"
 
 for _, m in
   ipairs({
+    -- "impatient",
     "_.disable_built_ins",
     "configs.options",
     "configs.mappings",
@@ -18,5 +19,4 @@ do
 end
 
 require("configs.colors").setup()
-
 vim.opt.shadafile = ""

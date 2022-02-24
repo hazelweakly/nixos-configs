@@ -11,8 +11,11 @@ return packer.startup(function()
     { "rcarriga/nvim-notify", config = [[require("configs.notify")]] },
     { "nathom/filetype.nvim", config = [[require("configs.filetype-nvim")]] },
     { "nvim-lua/plenary.nvim", module = "plenary" },
+    "lewis6991/impatient.nvim",
     "antoinemadec/FixCursorHold.nvim",
   })
+  use({ "jedi2610/nvim-rooter.lua", config = [[require("nvim-rooter").setup()]] })
+  use({ "~/src/personal/direnv.vim", after = "nvim-rooter.lua" }) -- need very performant version of this. Load it asap. Benchmark direnv as well?
   use({ "folke/tokyonight.nvim", requires = "plenary.nvim", module = "tokyonight" }) -- https://github.com/olimorris/onedarkpro.nvim ?
 
   use({
@@ -22,8 +25,7 @@ return packer.startup(function()
   })
   use({ "nvim-lualine/lualine.nvim", after = "nvim-web-devicons", config = [[require('configs.lualine')]] })
 
-  use({ "airblade/vim-rooter" })
-  use({ "hazelweakly/direnv.vim" })
+  -- also benchmark actual time to startup vim in an empty directory.
   use({
     "williamboman/nvim-lsp-installer",
     config = [[require("configs.lsp")]],
@@ -95,6 +97,12 @@ return packer.startup(function()
     wants = "friendly-snippets",
   })
   use({
+    "danymat/neogen",
+    config = [[require("configs.neogen")]],
+    after = "nvim-cmp",
+    requires = "nvim-treesitter/nvim-treesitter",
+  })
+  use({
     { "saadparwaiz1/cmp_luasnip", after = "LuaSnip" },
     { "hrsh7th/cmp-nvim-lsp", after = "cmp_luasnip" },
     { "hrsh7th/cmp-buffer", after = "cmp-nvim-lsp" },
@@ -105,13 +113,19 @@ return packer.startup(function()
     { "kdheepak/cmp-latex-symbols", after = "cmp-nvim-lsp" },
     { "onsails/lspkind-nvim", module = "lspkind" },
   })
+  -- use({
+  --   "windwp/nvim-autopairs",
+  --   after = "nvim-cmp",
+  --   config = function()
+  --     require("nvim-autopairs").setup({ check_ts = true, fast_wrap = {} })
+  --     require("cmp").event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done())
+  --   end,
+  -- })
   use({
-    "windwp/nvim-autopairs",
+    "ZhiyuanLck/smart-pairs",
+    event = "InsertEnter",
     after = "nvim-cmp",
-    config = function()
-      require("nvim-autopairs").setup({ check_ts = true, fast_wrap = {} })
-      require("cmp").event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done())
-    end,
+    config = [[require("configs.smart-pairs")]],
   })
   use({
     "Olical/conjure",
@@ -129,9 +143,9 @@ return packer.startup(function()
     config = [[require("configs.null-ls")]],
     requires = { "nvim-lua/plenary.nvim" },
     event = "CursorHold",
-    after = "vim-rooter",
+    after = "nvim-rooter.lua",
   })
-  use({ "editorconfig/editorconfig-vim", event = "CursorHold", after = "vim-rooter" })
+  use({ "editorconfig/editorconfig-vim", event = "CursorHold", after = "nvim-rooter.lua" })
   use({ "ethanholz/nvim-lastplace", event = "BufReadPost", config = [[require("nvim-lastplace").setup()]] })
   use({ "junegunn/vim-easy-align", setup = [[require("configs.utils").map("x", "<CR>", "<Plug>(EasyAlign)")]] })
   -- Revisit eventually once keymappings work better.
@@ -211,7 +225,6 @@ return packer.startup(function()
 
   -- https://github.com/blackCauldron7/surround.nvim
   -- keep an eye on this thing
-  use({ "romainl/vim-cool", event = "CursorMoved", config = "vim.g.CoolTotalMatches = 1" })
   use({
     "monkoose/matchparen.nvim",
     keys = "%",
@@ -263,6 +276,7 @@ return packer.startup(function()
   use({ "j-hui/fidget.nvim", after = "nvim-lsp-installer", config = [[require("fidget").setup()]] })
   -- Should be the last plugin, or the setup needs to go in init.lua after plugins happen
   use({ "norcalli/nvim-colorizer.lua", after = "indent-blankline.nvim", config = [[require("colorizer").setup()]] })
+  use({ "kevinhwang91/nvim-hlslens", event = "CursorMoved", config = [[require("configs.nvim-hlslens")]] })
 
   if packer_init.first_install then
     packer.sync()

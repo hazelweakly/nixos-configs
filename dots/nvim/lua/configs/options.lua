@@ -1,3 +1,4 @@
+vim.api.nvim_set_keymap("", "<Space>", "<Nop>", { noremap = true, silent = true })
 vim.g.mapleader = [[ ]]
 vim.g.maplocalleader = [[ ]]
 
@@ -39,6 +40,7 @@ vim.opt.showmatch = false
 vim.opt.wrap = false
 vim.opt.foldenable = false
 vim.opt.signcolumn = "yes"
+vim.cmd([[syntax off]])
 
 vim.g.cursorhold_updatetime = 100
 vim.opt.synmaxcol = 500

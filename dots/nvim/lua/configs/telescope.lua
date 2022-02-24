@@ -12,6 +12,9 @@ M.config = function()
         "--column",
         "--smart-case",
         "--trim",
+        "--iglob",
+        "!.git",
+        "--hidden",
       },
       mappings = {
         i = {
@@ -23,7 +26,7 @@ M.config = function()
     },
     pickers = {
       find_files = {
-        find_command = { "fd", "--type", "f", "--strip-cwd-prefix" },
+        find_command = { "fd", "--type", "f", "--strip-cwd-prefix", "--hidden", "--exclude", "/.git/" },
       },
     },
   })

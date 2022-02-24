@@ -2,9 +2,8 @@
 let l = import ../lib.nix; in
 with builtins;
 {
+  # set nixpkgs.{config} options in flake.nix directly
   services.nix-daemon.enable = true;
-  nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.allowUnsupportedSystem = true;
   system.stateVersion = 4;
   nix.package = pkgs.nix;
   nix.extraOptions = ''
@@ -16,6 +15,4 @@ with builtins;
   nix.nixPath = lib.mapAttrsToList (n: _: "${n}=/etc/nix/inputs/${n}") (l.inputsWithPkgs inputs);
   nix.registry = mapAttrs (_: v: { flake = v; }) (l.inputsWithOutputs inputs);
   environment.etc = lib.mapAttrs' (n: v: l.nameValuePair "nix/inputs/${n}" { source = v.outPath; }) inputs;
-
-  nixpkgs.overlays = [ inputs.nix.overlay inputs.rust-overlay.overlay (_:_: { inherit inputs; }) ] ++ (attrValues (self.overlays));
 }

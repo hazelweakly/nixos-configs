@@ -1,18 +1,4 @@
 local cmp = require("cmp")
-local doSig = function(_)
-  if _LSP_SIG_CFG == nil then
-    return false
-  end
-  local clients = {}
-  vim.lsp.for_each_buffer_client(0, function(client, _, _)
-    table.insert(clients, client)
-  end)
-  local cap, _, _, _ = require("lsp_signature.helper").check_lsp_cap(clients, "")
-  if cap then
-    vim.lsp.buf.signature_help()
-  end
-  return cap
-end
 
 -- This comment is needed because, somehow, autopairs is showing up before nvim-cmp.
 ---@diagnostic disable-next-line: redundant-parameter
@@ -35,7 +21,16 @@ cmp.setup({
     }),
     ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
     ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
-    ["<C-Space>"] = cmp.mapping.complete(),
+    ["<C-Space>"] = cmp.mapping({
+      i = cmp.mapping.complete(),
+      c = function(fallback)
+        if cmp.visible() then
+          return cmp.complete_common_string()
+        else
+          fallback()
+        end
+      end,
+    }),
     ["<CR>"] = cmp.mapping({
       i = function(fallback)
         cmp.abort()
@@ -52,56 +47,76 @@ cmp.setup({
     ["<Tab>"] = cmp.mapping({
       i = function(fallback)
         local luasnip = require("luasnip")
+        local neogen = require("neogen")
         if cmp.visible() then
           cmp.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace })
         elseif luasnip.expand_or_jumpable() then
           luasnip.expand_or_jump()
+        elseif neogen.jumpable() then
+          neogen.jump_next()
         else
           fallback()
         end
       end,
       s = function(fallback)
         local luasnip = require("luasnip")
+        local neogen = require("neogen")
         if cmp.visible() then
           cmp.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace })
         elseif luasnip.expand_or_jumpable() then
           luasnip.expand_or_jump()
+        elseif neogen.jumpable() then
+          neogen.jump_next()
         else
           fallback()
         end
       end,
-      c = function(fallback)
-        fallback()
+      c = function()
+        if cmp.visible() then
+          cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+        else
+          cmp.complete()
+        end
       end,
     }),
     ["<S-Tab>"] = cmp.mapping({
       i = function(fallback)
         local luasnip = require("luasnip")
+        local neogen = require("neogen")
         if luasnip.jumpable(-1) then
           luasnip.jump(-1)
+        elseif neogen.jumpable(true) then
+          neogen.jump_prev()
         else
           fallback()
         end
       end,
       s = function(fallback)
         local luasnip = require("luasnip")
+        local neogen = require("neogen")
         if luasnip.jumpable(-1) then
           luasnip.jump(-1)
+        elseif neogen.jumpable(true) then
+          neogen.jump_prev()
         else
           fallback()
         end
       end,
-      c = function(fallback)
-        fallback()
+      c = function()
+        if cmp.visible() then
+          cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
+        else
+          cmp.complete()
+        end
       end,
     }),
   },
   sources = cmp.config.sources({
     { name = "nvim_lsp" },
     { name = "luasnip" },
-    { name = "buffer", keyword_length = 5, max_item_count = 5 },
+    { name = "buffer", keyword_length = 3 },
     { name = "path", trigger_characters = { "/" } },
-    { name = "nuspell", keyword_length = 5, max_item_count = 3 },
+    { name = "nuspell", keyword_length = 4, max_item_count = 3 },
     { name = "emoji" },
     { name = "latex_symbols" },
   }),
@@ -122,4 +137,6 @@ cmp.setup.cmdline(":", {
   }),
 })
 
-cmp.event:on("complete_done", doSig)
+cmp.event:on("complete_done", function(_)
+  require("lsp_signature").signature()
+end)

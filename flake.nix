@@ -50,6 +50,7 @@
     darwinConfigurations."x86_64-darwin" = inputs.nix-darwin.lib.darwinSystem {
       system = "x86_64-darwin";
       inherit inputs;
+      pkgs = self.legacyPackages.x86_64-darwin;
       modules = import ./modules/hosts/Hazels-MacBook-Pro.nix { inherit self inputs; };
       specialArgs = { inherit self; };
     };
@@ -57,6 +58,7 @@
     darwinConfigurations."aarch64-darwin" = inputs.nix-darwin.lib.darwinSystem {
       system = "aarch64-darwin";
       inherit inputs;
+      pkgs = self.legacyPackages.aarch64-darwin;
       modules = import ./modules/hosts/Eden-C02GR3NTQ05N.nix { inherit self inputs; };
       specialArgs = { inherit self; };
     };
@@ -65,10 +67,16 @@
     darwinConfigurations."Eden-C02GR3NTQ05N" = self.darwinConfigurations.aarch64-darwin;
 
   } // inputs.flake-utils.lib.eachSystem [ "aarch64-darwin" "x86_64-darwin" ] (system: {
-    packages = self.darwinConfigurations.${system}.pkgs;
+    legacyPackages = import inputs.nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+      config.allowUnsupportedSystem = true;
+      overlays = [ inputs.nix.overlay inputs.rust-overlay.overlay (_: _: { inherit inputs; }) ] ++ (builtins.attrValues self.overlays);
+    };
 
-    devShell = self.packages.${system}.mkShell {
-      nativeBuildInputs = with self.packages.${system}; [ nixUnstable ];
+    devShell = self.legacyPackages.${system}.mkShell {
+      nativeBuildInputs = with self.legacyPackages.${system};
+        [ nixUnstable ];
     };
   });
 }

@@ -1,6 +1,3 @@
-require("nvim-treesitter.install").compilers = { "clang", "gcc", "cc" }
--- require("nvim-treesitter.install").compilers = { "zig" }
-
 -- ugly hack to "add" zsh: https://github.com/nvim-treesitter/nvim-treesitter/issues/655
 local ft_to_lang = require("nvim-treesitter.parsers").ft_to_lang
 require("nvim-treesitter.parsers").ft_to_lang = function(ft)

@@ -7,12 +7,10 @@ M.on_attach = function(client, bufnr)
 
   local utils = require("configs.utils")
   require("lsp_signature").on_attach({
-    bind = true,
-    max_height = 4,
-    transparency = 30,
-    zindex = 50,
-    always_trigger = true,
-    timer_interval = 100,
+    bind = false,
+    transparency = 50,
+    zindex = 10,
+    hint_enable = false,
     handler_opts = { border = utils.border },
   }, bufnr)
 
@@ -67,6 +65,10 @@ end
 M.default_opts = function()
   local utils = require("configs.utils")
   local handlers = {
+    ["textDocument/signatureHelp"] = vim.lsp.with(
+      require("lsp_signature").signature_handler,
+      { border = utils.border }
+    ),
     ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = utils.border }),
     ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
       underline = true,
