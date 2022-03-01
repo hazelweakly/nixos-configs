@@ -4,7 +4,7 @@ vim.opt.shadafile = "NONE"
 
 for _, m in
   ipairs({
-    -- "impatient",
+    "impatient",
     "_.disable_built_ins",
     "configs.options",
     "configs.mappings",

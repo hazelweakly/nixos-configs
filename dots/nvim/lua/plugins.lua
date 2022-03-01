@@ -15,8 +15,8 @@ return packer.startup(function()
     "antoinemadec/FixCursorHold.nvim",
   })
   use({ "jedi2610/nvim-rooter.lua", config = [[require("nvim-rooter").setup()]] })
-  use({ "~/src/personal/direnv.vim", after = "nvim-rooter.lua" }) -- need very performant version of this. Load it asap. Benchmark direnv as well?
-  use({ "folke/tokyonight.nvim", requires = "plenary.nvim", module = "tokyonight" }) -- https://github.com/olimorris/onedarkpro.nvim ?
+  use({ "hazelweakly/direnv.vim", after = "nvim-rooter.lua" })
+  use({ "folke/tokyonight.nvim", requires = "plenary.nvim", module = "tokyonight" })
 
   use({
     "kyazdani42/nvim-web-devicons",

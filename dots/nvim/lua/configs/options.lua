@@ -48,8 +48,7 @@ vim.opt.termguicolors = true
 vim.opt.updatetime = 4001
 vim.opt.splitright = true
 vim.opt.splitbelow = true
--- https://github.com/jose-elias-alvarez/null-ls.nvim/issues/569
--- vim.opt.fixendofline = false
+vim.opt.fixendofline = false
 vim.opt.pyx = 3
 vim.opt.diffopt = "filler,internal,algorithm:histogram,indent-heuristic,hiddenoff"
 vim.opt.spelllang = { "en_us" }

@@ -42,6 +42,9 @@
 
     flake-compat.url = "github:edolstra/flake-compat";
     flake-compat.flake = false;
+
+    direnv.url = "github:hazelweakly/direnv";
+    direnv.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs@{ self, ... }: {

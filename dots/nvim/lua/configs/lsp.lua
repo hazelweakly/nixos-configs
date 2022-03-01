@@ -23,6 +23,7 @@ local servers = {
   "dockerls",
   "emmet_ls",
   "eslint",
+  "gopls",
   "hls",
   "html",
   "jsonls",
