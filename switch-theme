@@ -2,17 +2,32 @@
 
 t="$1"
 shift
+sys_t=""
+defaults read -g AppleInterfaceStyle >/dev/null 2>&1 && sys_t=dark || sys_t=light
 if [ -z "$t" ]; then
-  defaults read -g AppleInterfaceStyle > /dev/null 2>&1 && t=dark || t=light
+  t=$sys_t
+fi
+if [ "$t" != "$sys_t" ]; then
+  [ "$t" = "light" ] && b=false || b=true
+  (
+    osascript -l JavaScript -e "Application('System Events').appearancePreferences.darkMode = $b" &
+    disown
+  )
 fi
 
-echo "$t" > "$HOME"/.local/share/theme
+echo "$t" >"$HOME"/.local/share/theme
 case "$t" in
-  dark) kitty_theme="@kitty_path@/themes/tokyonight_night.conf" ;;
-  light) kitty_theme="@kitty_path@/themes/tokyonight_day.conf" ;;
+dark) kitty_theme="@kitty_path@/themes/tokyonight_night.conf" ;;
+light) kitty_theme="@kitty_path@/themes/tokyonight_day.conf" ;;
 esac
 ln -sf "$HOME"/.config/task/{"$t",current}.theme
-ln -sf $kitty_theme "$HOME"/.config/kitty_current_theme
-kitty @ --to=unix:/tmp/kitty set-colors -a -c $kitty_theme
-for v in $(nvr --serverlist); do (timeout 1 nvr -s -c "SetTheme $t" --remote-expr '' --servername "$v" --nostart > /dev/null) & done
-wait
+if [ -f "$kitty_theme" ]; then
+  ln -sf "$kitty_theme" "$HOME"/.config/kitty_current_theme
+  kitty @ --to=unix:/tmp/kitty set-colors -a -c "$kitty_theme"
+fi
+while IFS= read -r v; do
+  (
+    timeout 1 nvr -s -c "SetTheme $t" --remote-expr '' --servername "$v" --nostart >/dev/null &
+    disown
+  )
+done < <(nvr --serverlist)
