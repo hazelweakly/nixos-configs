@@ -7,9 +7,6 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
-    nix.url = "github:nixos/nix/f05fefcd0306a8d24f42da52b1e8ea49e4b4c8d0";
-    nix.inputs.nixpkgs.follows = "nixpkgs";
-
     nix-darwin.url = "github:lnl7/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     mkalias.url = "github:reckenrode/mkalias";
@@ -31,6 +28,8 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     zig.url = "github:roarkanize/zig-overlay";
+    zig.inputs.nixpkgs.follows = "nixpkgs";
+    zig.inputs.flake-utils.follows = "flake-utils";
 
     rnix-lsp.url = "github:nix-community/rnix-lsp";
     rnix-lsp.inputs.nixpkgs.follows = "nixpkgs";
@@ -74,7 +73,7 @@
       inherit system;
       config.allowUnfree = true;
       config.allowUnsupportedSystem = true;
-      overlays = [ inputs.nix.overlay inputs.rust-overlay.overlay (_: _: { inherit inputs; }) ] ++ (builtins.attrValues self.overlays);
+      overlays = [ inputs.rust-overlay.overlay (_: _: { inherit inputs; }) ] ++ (builtins.attrValues self.overlays);
     };
 
     devShell = self.legacyPackages.${system}.mkShell {
