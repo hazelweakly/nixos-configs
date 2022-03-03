@@ -273,7 +273,11 @@ return packer.startup(function()
   -- use({ "tweekmonster/startuptime.vim", cmd = "StartupTime" })
   use({ "dstein64/vim-startuptime", cmd = "StartupTime" })
 
-  use({ "j-hui/fidget.nvim", after = "nvim-lsp-installer", config = [[require("fidget").setup()]] })
+  use({
+    "j-hui/fidget.nvim",
+    after = "nvim-lsp-installer",
+    config = [[require("fidget").setup({sources = {["null-ls"] = {ignore = true}}})]],
+  })
   -- Should be the last plugin, or the setup needs to go in init.lua after plugins happen
   use({ "norcalli/nvim-colorizer.lua", after = "indent-blankline.nvim", config = [[require("colorizer").setup()]] })
   use({ "kevinhwang91/nvim-hlslens", event = "CursorMoved", config = [[require("configs.nvim-hlslens")]] })

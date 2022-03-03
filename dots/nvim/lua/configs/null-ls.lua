@@ -8,7 +8,17 @@ null_ls.setup({
     -- null_ls.builtins.diagnostics.codespell,
     null_ls.builtins.diagnostics.shellcheck,
     null_ls.builtins.diagnostics.hadolint,
-    null_ls.builtins.diagnostics.actionlint,
+    null_ls.builtins.diagnostics.actionlint.with({
+      extra_args = function(params)
+        local path = require("configs.utils").path_join(".github", "actionlint.yaml")
+        local has = require("null-ls.utils").make_conditional_utils().has_file(path)
+        if has then
+          return { "-config-file", path }
+        else
+          return false
+        end
+      end,
+    }),
     -- null_ls.builtins.diagnostics.statix,
 
     null_ls.builtins.formatting.shfmt.with({
