@@ -46,19 +46,14 @@ M.on_attach = function(client, bufnr)
   utils.buf_map(bufnr, "n", "<C-n>", vim.diagnostic.goto_next)
 
   if client.supports_method("textDocument/formatting") then
-    vim.cmd(string.format(
-      [[
-      if !exists('#LspFormatting%d#BufWritePre')
-        augroup LspFormatting%d
-          autocmd! * <buffer>
-          autocmd BufWritePre <buffer=%d> lua vim.lsp.buf.formatting_seq_sync()
-        augroup END
-      endif
-    ]],
-      bufnr,
-      bufnr,
-      bufnr
-    ))
+    vim.api.nvim_create_augroup("LspFormatting" .. bufnr, {})
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      group = "LspFormatting" .. bufnr,
+      buffer = bufnr,
+      callback = function()
+        vim.lsp.buf.formatting_seq_sync()
+      end,
+    })
   end
 end
 

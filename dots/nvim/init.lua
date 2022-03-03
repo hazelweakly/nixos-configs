@@ -12,8 +12,7 @@ for _, m in
     "configs.settings",
   })
 do
-  local ok, _ = pcall(require, m)
-  if not ok then
+  if not pcall(require, m) then
     require("configs.utils").log_err("error loading " .. m, "[init]")
   end
 end

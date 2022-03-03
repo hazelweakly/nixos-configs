@@ -25,6 +25,9 @@ M.set_theme = function(args)
   vim.defer_fn(function()
     vim.highlight.link("TSDefinitionUsage", "CursorLine", true)
     vim.highlight.link("TSDefinition", "CursorLine", true)
+    vim.highlight.link("HlSearchFloat", "CursorLine", true)
+    vim.highlight.link("HlSearchLensNear", "CursorLine", true)
+    vim.highlight.link("HlSearchLens", "CursorLine", true)
     local colors = M.get().colors -- error warning info hint
     for level, color in
       pairs({

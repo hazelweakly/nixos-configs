@@ -1,11 +1,11 @@
-vim.cmd([[
-    augroup win_resize
-        au!
-        au VimResized * wincmd =
-    augroup END
-
-    augroup LuaHighlight
-        au!
-        au TextYankPost * silent! lua require'vim.highlight'.on_yank()
-    augroup END
-]])
+vim.api.nvim_create_augroup("_settings", {})
+vim.api.nvim_create_autocmd("VimResized", {
+  group = "_settings",
+  command = "tabdo wincmd =",
+})
+vim.api.nvim_create_autocmd("TextYankPost", {
+  group = "_settings",
+  callback = function()
+    vim.highlight.on_yank({ higroup = "Visual" })
+  end,
+})

@@ -113,14 +113,6 @@ return packer.startup(function()
     { "kdheepak/cmp-latex-symbols", after = "cmp-nvim-lsp" },
     { "onsails/lspkind-nvim", module = "lspkind" },
   })
-  -- use({
-  --   "windwp/nvim-autopairs",
-  --   after = "nvim-cmp",
-  --   config = function()
-  --     require("nvim-autopairs").setup({ check_ts = true, fast_wrap = {} })
-  --     require("cmp").event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done())
-  --   end,
-  -- })
   use({
     "ZhiyuanLck/smart-pairs",
     event = "InsertEnter",
@@ -188,11 +180,14 @@ return packer.startup(function()
     after = "vim-repeat",
     event = "CursorHold",
     config = function()
-      vim.cmd([[
-         autocmd User targets#mappings#user call targets#mappings#extend({
-         \ 'a': {'argument': [{'o': '[({[]', 'c': '[]})]', 's': ','}]}
-         \ })
-       ]])
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "targets#mappings#user",
+        command = [[
+         call targets#mappings#extend({
+           \ 'a': {'argument': [{'o': '[({[]', 'c': '[]})]', 's': ','}]}
+           \ })
+        ]],
+      })
     end,
   })
   use({
@@ -258,7 +253,11 @@ return packer.startup(function()
     "kosayoda/nvim-lightbulb",
     event = "CursorHold",
     config = function()
-      vim.cmd([[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]])
+      vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+        callback = function()
+          require("nvim-lightbulb").update_lightbulb()
+        end,
+      })
     end,
   })
   use({ "Pocco81/HighStr.nvim", cmd = { "HSHighlight", "HSRmHighlight", "HSImport", "HSExport" } }) -- https://github.com/Pocco81/HighStr.nvim

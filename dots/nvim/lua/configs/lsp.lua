@@ -83,9 +83,11 @@ for type, icon in pairs({ Error = " ", Warn = " ", Hint = " ", Info = "
 end
 
 -- This is here because this file is included and ran exactly once and is a stateful module.
-vim.cmd([[
-augroup DirenvRestartServer
-  autocmd!
-  autocmd User DirenvLoaded lua require("_.lsp").start_or_restart()
-augroup END
-]])
+vim.api.nvim_create_augroup("DirenvRestartServer", {})
+vim.api.nvim_create_autocmd("User", {
+  group = "DirenvRestartServer",
+  pattern = "DirenvLoaded",
+  callback = function()
+    require("_.lsp").start_or_restart()
+  end,
+})

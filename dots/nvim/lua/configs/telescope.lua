@@ -35,9 +35,15 @@ end
 
 M.mappings = function()
   local map = require("configs.utils").map
-  map("n", "<leader><space>", [[<cmd>lua require('telescope.builtin').live_grep()<CR>]])
-  map("n", "<leader>f", [[<cmd>lua require('telescope.builtin').find_files()<CR>]])
-  map("n", "<leader>b", [[<cmd>lua require('telescope.builtin').buffers()<CR>]])
+  map("n", "<leader><space>", function()
+    return require("telescope.builtin").live_grep()
+  end)
+  map("n", "<leader>f", function()
+    return require("telescope.builtin").find_files()
+  end)
+  map("n", "<leader>b", function()
+    return require("telescope.builtin").buffers()
+  end)
 end
 
 return M
