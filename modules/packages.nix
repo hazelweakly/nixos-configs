@@ -8,7 +8,6 @@
     file
     timewarrior
     taskwarrior
-    myNeovim
     neovim-remote
     ranger
     repl

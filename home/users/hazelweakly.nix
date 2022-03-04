@@ -7,7 +7,7 @@ with pkgs.lib; {
   home.homeDirectory = mkForce "/Users/hazelweakly";
   xdg.enable = true;
 
-  imports = [ ../task.nix ../fzf.nix ../zsh.nix ../git.nix ];
+  imports = [ ../task.nix ../fzf.nix ../zsh.nix ../git.nix ../neovim.nix ];
 
   xdg.configFile."kitty".source =
     config.lib.file.mkOutOfStoreSymlink "${dir}/dots/kitty";
