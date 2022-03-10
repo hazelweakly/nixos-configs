@@ -74,13 +74,13 @@ end
 ---@param ... string The paths to join.
 ---@return string
 M.path_join = function(...)
-  local args = {...}
+  local args = { ... }
   if #args == 0 then
     return ""
   end
 
   local all_parts = {}
-  if type(args[1]) =="string" and args[1]:sub(1, 1) == M.path_separator then
+  if type(args[1]) == "string" and args[1]:sub(1, 1) == M.path_separator then
     all_parts[1] = ""
   end
 

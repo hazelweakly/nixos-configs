@@ -6,6 +6,9 @@
     package = pkgs.gitAndTools.gitFull;
     lfs.enable = true;
     ignores = [ ".DS_Store" ];
+    fetch = {
+      prune = true;
+    };
     extraConfig = {
       rerere.enabled = true;
       rerere.autoupdate = true;

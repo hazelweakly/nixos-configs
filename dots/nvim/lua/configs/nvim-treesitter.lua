@@ -9,28 +9,35 @@ end
 
 require("tree-sitter-just").setup({})
 
+local disable_if_large = function(_, bufnr)
+  return require("_.large_file").is_large_file(bufnr)
+end
+
 require("nvim-treesitter.configs").setup({
-  highlight = { enable = true },
-  indent = { enable = true },
+  highlight = { enable = true, disable = disable_if_large },
+  indent = { enable = true, disable = disable_if_large },
   ignore_install = { "swift" },
   context_commentstring = {
     enable = true,
+    disable = disable_if_large,
     enable_autocmd = false,
   },
   incremental_selection = {
     enable = true,
+    disable = disable_if_large,
     keymaps = {
       init_selection = "<CR>",
       node_incremental = "<TAB>",
       node_decremental = "<S-TAB>",
     },
   },
-  rainbow = { enable = true, extended_mode = true },
-  autotag = { enable = true },
-  autopairs = { enable = true },
+  rainbow = { enable = true, disable = disable_if_large, extended_mode = true },
+  autotag = { enable = true, disable = disable_if_large },
+  autopairs = { enable = true, disable = disable_if_large },
   textobjects = {
     select = {
       enable = true,
+      disable = disable_if_large,
       lookahead = true,
       keymaps = {
         ["af"] = "@function.outer",
@@ -41,6 +48,7 @@ require("nvim-treesitter.configs").setup({
     },
     swap = {
       enable = true,
+      disable = disable_if_large,
       swap_next = {
         ["g>"] = "@parameter.inner",
       },
@@ -50,6 +58,7 @@ require("nvim-treesitter.configs").setup({
     },
     lsp_interop = {
       enable = true,
+      disable = disable_if_large,
       border = require("configs.utils").border,
       peek_definition_code = {
         ["gD"] = "@function.outer",
@@ -57,9 +66,10 @@ require("nvim-treesitter.configs").setup({
       },
     },
   },
-  refactor = { highlight_definitions = { enable = true } },
+  refactor = { highlight_definitions = { enable = true, disable = disable_if_large } },
   textsubjects = {
     enable = true,
+    disable = disable_if_large,
     keymaps = {
       ["."] = "textsubjects-smart",
       [";"] = "textsubjects-container-outer",

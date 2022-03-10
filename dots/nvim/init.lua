@@ -4,6 +4,7 @@ vim.opt.shadafile = "NONE"
 
 for _, m in
   ipairs({
+    "_.large_file_detect",
     "impatient",
     "_.disable_built_ins",
     "configs.options",

@@ -38,9 +38,9 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.showmatch = false
 vim.opt.wrap = false
-vim.opt.foldenable = false
+vim.wo.foldenable = false
 vim.opt.signcolumn = "yes"
-vim.cmd([[syntax off]])
+vim.opt.syntax = "off"
 
 vim.g.cursorhold_updatetime = 100
 vim.opt.synmaxcol = 500

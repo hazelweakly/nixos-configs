@@ -4,8 +4,12 @@ if not present then
   return false
 end
 local packer = packer_init.packer
-local use = packer.use
-return packer.startup(function()
+
+return packer.startup(function(use)
+  local load_if_small_file = function()
+    return not require("_.large_file").is_large_file()
+  end
+
   use({
     { "wbthomason/packer.nvim", opt = true },
     { "rcarriga/nvim-notify", config = [[require("configs.notify")]] },
@@ -22,8 +26,13 @@ return packer.startup(function()
     "kyazdani42/nvim-web-devicons",
     module = "nvim-web-devicons",
     config = [[require("nvim-web-devicons").setup()]],
+    cond = load_if_small_file,
   })
-  use({ "nvim-lualine/lualine.nvim", after = "nvim-web-devicons", config = [[require('configs.lualine')]] })
+  use({
+    "nvim-lualine/lualine.nvim",
+    after = { "nvim-web-devicons", "tokyonight.nvim" },
+    config = [[require('configs.lualine')]],
+  })
 
   -- also benchmark actual time to startup vim in an empty directory.
   use({
@@ -44,12 +53,14 @@ return packer.startup(function()
       { "b0o/schemastore.nvim", module = "schemastore" },
       { "jose-elias-alvarez/nvim-lsp-ts-utils", module = "nvim-lsp-ts-utils" },
     },
+    cond = load_if_small_file,
   })
   use({
     "lukas-reineke/indent-blankline.nvim",
     event = "CursorHold",
     after = { "nvim-treesitter", "tokyonight.nvim" },
     config = [[require("configs.indent-blankline")]],
+    cond = load_if_small_file,
   })
   use({
     "lewis6991/gitsigns.nvim",
@@ -59,6 +70,7 @@ return packer.startup(function()
       require("configs.utils").packer_lazy_load("gitsigns.nvim", 100)
     end,
     config = [[require("configs.gitsigns")]],
+    cond = load_if_small_file,
   })
   use({
     "nvim-treesitter/nvim-treesitter",
@@ -73,6 +85,7 @@ return packer.startup(function()
       { "windwp/nvim-ts-autotag", after = "nvim-treesitter" },
     },
     config = [[require("configs.nvim-treesitter")]],
+    cond = load_if_small_file,
   })
   use({
     "nvim-telescope/telescope.nvim",
@@ -182,11 +195,7 @@ return packer.startup(function()
     config = function()
       vim.api.nvim_create_autocmd("User", {
         pattern = "targets#mappings#user",
-        command = [[
-         call targets#mappings#extend({
-           \ 'a': {'argument': [{'o': '[({[]', 'c': '[]})]', 's': ','}]}
-           \ })
-        ]],
+        command = [[call targets#mappings#extend({ 'a': {'argument': [{'o': '[({[]', 'c': '[]})]', 's': ','}]} })]],
       })
     end,
   })

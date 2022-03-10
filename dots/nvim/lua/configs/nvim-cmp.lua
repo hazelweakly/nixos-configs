@@ -1,8 +1,38 @@
 local cmp = require("cmp")
 
--- This comment is needed because, somehow, autopairs is showing up before nvim-cmp.
----@diagnostic disable-next-line: redundant-parameter
+--- This tab key behaves pretty closely to how vscode does things.
+-- It is used with a configuration that completely disables using
+-- the enter key to confirm completion in any way.
+---@param d "'forward'" | "'back'"
+---@param m "'i'" | "'c'" | "'s'"
+---@return none
+local function tab(d, m)
+  local fwd = d == "forward"
+  return function(fallback)
+    local l, ng = require("luasnip"), require("neogen")
+
+    if m == "c" then
+      if cmp.visible() then
+        return (fwd and cmp.select_next_item or cmp.select_prev_item)()
+      else
+        return cmp.complete()
+      end
+    end
+
+    if fwd and cmp.visible() then
+      cmp.confirm({ select = true })
+    elseif (fwd and l.expand_or_jumpable or l.jumpable)(fwd and 1 or -1) then
+      (fwd and l.expand_or_jump or l.jump)(fwd and 1 or -1)
+    elseif ng.jumpable(not fwd) then
+      (fwd and ng.jump_next or ng.jump_prev)()
+    else
+      fallback()
+    end
+  end
+end
+
 cmp.setup({
+  preselect = cmp.PreselectMode.None,
   snippet = {
     expand = function(args)
       require("luasnip").lsp_expand(args.body)
@@ -31,100 +61,27 @@ cmp.setup({
         end
       end,
     }),
-    ["<CR>"] = cmp.mapping({
-      i = function(fallback)
-        cmp.abort()
-        fallback()
-      end,
-      s = function(fallback)
-        cmp.abort()
-        fallback()
-      end,
-      c = function(fallback)
-        fallback()
-      end,
-    }),
+    ["<CR>"] = cmp.config.disable,
     ["<Tab>"] = cmp.mapping({
-      i = function(fallback)
-        local luasnip = require("luasnip")
-        local neogen = require("neogen")
-        if cmp.visible() then
-          cmp.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace })
-        elseif luasnip.expand_or_jumpable() then
-          luasnip.expand_or_jump()
-        elseif neogen.jumpable() then
-          neogen.jump_next()
-        else
-          fallback()
-        end
-      end,
-      s = function(fallback)
-        local luasnip = require("luasnip")
-        local neogen = require("neogen")
-        if cmp.visible() then
-          cmp.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace })
-        elseif luasnip.expand_or_jumpable() then
-          luasnip.expand_or_jump()
-        elseif neogen.jumpable() then
-          neogen.jump_next()
-        else
-          fallback()
-        end
-      end,
-      c = function()
-        if cmp.visible() then
-          cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
-        else
-          cmp.complete()
-        end
-      end,
+      i = tab("forward", "i"),
+      s = tab("forward", "s"),
+      c = tab("forward", "c"),
     }),
     ["<S-Tab>"] = cmp.mapping({
-      i = function(fallback)
-        local luasnip = require("luasnip")
-        local neogen = require("neogen")
-        if luasnip.jumpable(-1) then
-          luasnip.jump(-1)
-        elseif neogen.jumpable(true) then
-          neogen.jump_prev()
-        else
-          fallback()
-        end
-      end,
-      s = function(fallback)
-        local luasnip = require("luasnip")
-        local neogen = require("neogen")
-        if luasnip.jumpable(-1) then
-          luasnip.jump(-1)
-        elseif neogen.jumpable(true) then
-          neogen.jump_prev()
-        else
-          fallback()
-        end
-      end,
-      c = function()
-        if cmp.visible() then
-          cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
-        else
-          cmp.complete()
-        end
-      end,
+      i = tab("back", "i"),
+      s = tab("back", "s"),
+      c = tab("back", "c"),
     }),
   },
   sources = cmp.config.sources({
-    { name = "nvim_lsp" },
     { name = "luasnip" },
+    { name = "nvim_lsp" },
     { name = "buffer", keyword_length = 3 },
     { name = "path", trigger_characters = { "/" } },
-    { name = "nuspell", keyword_length = 4, max_item_count = 3 },
-    { name = "emoji" },
-    { name = "latex_symbols" },
   }),
   formatting = {
     format = require("lspkind").cmp_format({ with_text = false }),
   },
-  completion = { completeopt = vim.o.completeopt },
-  experimental = { ghost_text = true },
 })
 cmp.setup.cmdline("/", {
   sources = cmp.config.sources({ { name = "buffer" } }),
@@ -134,6 +91,13 @@ cmp.setup.cmdline(":", {
     { name = "path", keyword_length = 2 },
   }, {
     { name = "cmdline", keyword_length = 2 },
+  }),
+})
+cmp.setup.filetype({ "markdown", "tex" }, {
+  sources = cmp.config.sources({
+    { name = "nuspell", keyword_length = 4, max_item_count = 3 },
+    { name = "emoji" },
+    { name = "latex_symbols" },
   }),
 })
 

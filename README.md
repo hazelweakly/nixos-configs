@@ -24,3 +24,14 @@ Configurations for my NixOS and macOS systems (work/home laptops)
 7. zsh dots/zsh/fn/update
 8. once it works, remove: /etc/shells, /etc/zshrc, /etc/nix/nix.conf and run again
 
+---
+
+- https://github.com/roginfarrer/dotfiles/blob/main/nvim/.config/nvim/lua/user/packerInit.lua
+  - requires plugins from user.plugins
+- https://github.com/aitvann/dotfiles/blob/master/nvim/.config/nvim/lua/lsp/utils.lua
+  - resolve_capabilities intelligently
+- https://old.reddit.com/r/neovim/comments/rw4imi/what_is_the_most_interesting_part_of_your_lua/hrfrcrn/
+  - auto require local config for plugins
+- https://github.com/olimorris/dotfiles/blob/main/.config/nvim/init.lua
+  - shows how to setup full reload of config
+  - https://old.reddit.com/r/neovim/comments/puuskh/how_to_reload_my_lua_config_while_using_neovim/
