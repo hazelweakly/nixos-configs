@@ -1,10 +1,9 @@
-return {
-  on_attach = function(client, bufnr)
-    require("_.lsp").on_attach(client, bufnr)
+return function(server, opts)
+  local on_attach = function(client, bufnr)
+    opts.on_attach(client, bufnr)
     if require("zk.util").notebook_root(vim.fn.expand("#" .. bufnr .. ":p")) == nil then
       return
     end
-    require("zk").setup({ picker = "telescope", auto_attach = { enabled = false } })
 
     local buf_map = require("configs.utils").buf_map
 
@@ -31,5 +30,18 @@ return {
 
     -- dum
     buf_map(bufnr, "v", "<leader>zf", ":'<,'>ZkMatch<CR>")
-  end,
-}
+  end
+
+  local merge = require("configs.utils").merge
+  local o = merge({
+    lsp = { config = merge(opts, { on_attach = on_attach, auto_attach = false }) },
+  }, { picker = "telescope" })
+
+  if o.lsp.config.cmd_env ~= nil and o.lsp.config.cmd_env.PATH ~= nil then
+    o.lsp.config.cmd_env.PATH = nil
+  end
+  require("zk").setup(o)
+  local oo = require("zk.config").options.lsp.config
+  oo.auto_attach = true
+  server:setup_lsp(oo)
+end

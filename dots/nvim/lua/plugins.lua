@@ -43,7 +43,7 @@ return packer.startup(function(use)
       { "ray-x/lsp_signature.nvim", module = "lsp_signature" },
       { "folke/lua-dev.nvim", module = "lua-dev" },
       { "hrsh7th/cmp-nvim-lsp" },
-      { "mickael-menu/zk-nvim", ft = "markdown" },
+      { "mickael-menu/zk-nvim", ft = "markdown", module = "zk" },
       {
         "simrat39/rust-tools.nvim",
         module = "rust-tools",
@@ -126,10 +126,12 @@ return packer.startup(function(use)
     { "kdheepak/cmp-latex-symbols", after = "cmp-nvim-lsp" },
     { "onsails/lspkind-nvim", module = "lspkind" },
   })
+  use({ "abecodes/tabout.nvim", module = "tabout", wants = "nvim-treesitter", after = "nvim-cmp" })
   use({
-    "ZhiyuanLck/smart-pairs",
+    "windwp/nvim-autopairs",
     event = "InsertEnter",
-    after = "nvim-cmp",
+    after = { "nvim-cmp", "nvim-treesitter" },
+    wants = "tabout.nvim",
     config = [[require("configs.smart-pairs")]],
   })
   use({
