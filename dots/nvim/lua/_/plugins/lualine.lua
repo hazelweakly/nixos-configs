@@ -25,7 +25,7 @@ local function has_lsp()
 end
 
 theme = require("configs.utils").merge(theme, {
-  options = { theme = "tokyonight" },
+  options = { globalstatus = true },
   sections = {
     lualine_a = {
       {

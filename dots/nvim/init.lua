@@ -8,6 +8,7 @@ for _, m in
     "impatient",
     "_.disable_built_ins",
     "configs.options",
+    "configs.filetype-nvim",
     "configs.mappings",
     "plugins",
     "configs.settings",

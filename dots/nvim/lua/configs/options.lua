@@ -4,7 +4,7 @@ vim.g.maplocalleader = [[ ]]
 
 vim.g.python_host_skip_check = 1
 vim.g.do_filetype_lua = 1
-vim.g.did_load_filetypes = 1
+vim.g.did_load_filetypes = 0
 
 vim.g.netrw_dirhistmax = 0
 vim.g.netrw_nogx = 1
