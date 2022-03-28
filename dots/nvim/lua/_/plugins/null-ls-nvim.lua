@@ -9,6 +9,9 @@ null_ls.setup({
     null_ls.builtins.diagnostics.shellcheck,
     null_ls.builtins.diagnostics.hadolint,
     null_ls.builtins.diagnostics.actionlint.with({
+      runtime_condition = function(params)
+        return string.match(params.bufname, ".*%.github/workflows/.*%.ya?ml") ~= nil
+      end,
       extra_args = function(params)
         local path = require("configs.utils").path_join(".github", "actionlint.yaml")
         local has = require("null-ls.utils").make_conditional_utils().has_file(path)

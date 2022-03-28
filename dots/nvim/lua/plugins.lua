@@ -91,9 +91,9 @@ return packer.startup(mod_spec({
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
     event = "BufWinEnter",
-    module_pattern = "nvim-treesitter.*",
+    module_pattern = { "nvim-treesitter.*", "nvim-treesitter" },
     requires = {
-      { "p00f/nvim-ts-rainbow", event = "BufWinEnter", after = "nvim-treesitter" },
+      { "p00f/nvim-ts-rainbow", event = "BufWinEnter", wants = "nvim-treesitter" },
       { "IndianBoy42/tree-sitter-just", module = "tree-sitter-just" },
       { "nvim-treesitter/nvim-treesitter-refactor", after = "nvim-treesitter" },
       { "nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter" },
