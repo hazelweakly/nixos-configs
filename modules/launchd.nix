@@ -11,10 +11,5 @@
     };
     command = "dark-mode-notify switch-theme";
   };
-
-  # figure this out later
-  # launchd.daemons."limit.maxfiles".SoftResourceLimits.NumberOfFiles = 1048576;
-  # launchd.daemons."limit.maxfiles".HardResourceLimits.NumberOfFiles = 1048576;
+  environment.launchDaemons."limit.maxfiles.plist".source = ../limit.maxfiles.plist;
 }
-
-
