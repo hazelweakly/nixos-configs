@@ -1,7 +1,10 @@
 vim.notify = function(msg, ...)
   -- Hide unnecessary notifications because I use framework specific language servers
-  if string.find(msg, "[lspconfig] Autostart", 1, true) then
-    return
+  local ignore = { "[lspconfig] Autostart", "method typescript/inlayHints" }
+  for _, value in ipairs(ignore) do
+    if string.find(msg, value, 1, true) then
+      return
+    end
   end
   require("notify")(msg, ...)
 end

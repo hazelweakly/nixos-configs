@@ -74,8 +74,9 @@ cmp.setup({
     }),
   },
   sources = cmp.config.sources({
-    { name = "luasnip" },
     { name = "nvim_lsp" },
+    -- place snips second otherwise ctrl+space doesn't give relevant completion
+    { name = "luasnip", max_item_count = 3 },
     { name = "buffer", keyword_length = 3 },
     { name = "path", trigger_characters = { "/" } },
   }),
