@@ -1,5 +1,3 @@
-local theme = require("lualine").get_config()
-
 local conditions = {
   buffer_not_empty = function()
     return vim.fn.empty(vim.fn.expand("%:t")) ~= 1
@@ -24,7 +22,7 @@ local function has_lsp()
   return next(vim.lsp.buf_get_clients()) ~= nil and "  LSP" or ""
 end
 
-theme = require("configs.utils").merge(theme, {
+require("lualine").setup({
   options = { globalstatus = true },
   sections = {
     lualine_a = {
@@ -61,5 +59,3 @@ theme = require("configs.utils").merge(theme, {
     lualine_z = { { "location", padding = { left = 1, right = 0 }, cond = conditions.hide_in_width } },
   },
 })
-
-require("lualine").setup(theme)

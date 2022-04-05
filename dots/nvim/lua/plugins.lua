@@ -6,14 +6,20 @@ end
 local packer = packer_init.packer
 
 local function mod_spec(spec)
-  for _, v in ipairs(spec) do
+  for idx, v in ipairs(spec) do
+    if type(v) == "string" then
+      spec[idx] = {}
+      table.insert(spec[idx], v)
+      v = spec[idx]
+    end
     if type(v) == "table" then
       if v.config == nil then
         local i = string.find(v[1], "/")
         local config_mod = string.sub(v[1], i + 1):lower():gsub("[%._]", "-")
+        -- print("config mod", config_mod)
         local config_file = string.format("%s/lua/_/plugins/%s.lua", vim.fn.stdpath("config"), config_mod)
         if vim.fn.filereadable(config_file) == 1 then
-          v.config = string.format('pcall(require, "_.plugins.%s")', config_mod)
+          v.config = string.format('require("_.plugins.%s")', config_mod)
         end
       end
       -- too complex to fix. I think this might eventually be better handled by
@@ -33,13 +39,13 @@ local function load_if_small_file()
   return not require("_.large_file").is_large_file()
 end
 
-return packer.startup(mod_spec({
+local spec = mod_spec({
   { "wbthomason/packer.nvim", opt = true },
-  { "rcarriga/nvim-notify" },
+  "rcarriga/nvim-notify",
   { "nvim-lua/plenary.nvim", module = "plenary" },
   "lewis6991/impatient.nvim",
   "antoinemadec/FixCursorHold.nvim",
-  { "jedi2610/nvim-rooter.lua" },
+  "jedi2610/nvim-rooter.lua",
   { "hazelweakly/direnv.vim", after = "nvim-rooter.lua" },
   { "folke/tokyonight.nvim", requires = "plenary.nvim", module = "tokyonight" },
   {
@@ -247,7 +253,7 @@ return packer.startup(mod_spec({
     keys = { { "n", "<C-a>" }, { "n", "<C-x>" }, { "v", "<C-a>" }, { "v", "<C-x>" }, { "v", "g" } },
   },
   { "ggandor/lightspeed.nvim", after = "vim-repeat", event = "CursorHold" },
-  { "machakann/vim-sandwich" },
+  "machakann/vim-sandwich",
 
   -- use({ "tweekmonster/startuptime.vim", cmd = "StartupTime" })
   { "dstein64/vim-startuptime", cmd = "StartupTime" },
@@ -256,4 +262,6 @@ return packer.startup(mod_spec({
   -- Should be the last plugin, or the setup needs to go in init.lua after plugins happen
   { "norcalli/nvim-colorizer.lua", after = "indent-blankline.nvim" },
   { "kevinhwang91/nvim-hlslens", event = "CursorMoved" },
-}))
+})
+-- print(vim.inspect(spec))
+return packer.startup(spec)
