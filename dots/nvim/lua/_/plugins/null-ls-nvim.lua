@@ -30,7 +30,7 @@ null_ls.setup({
         return { "-s", "-i", vim.api.nvim_buf_get_option(params.bufnr, "shiftwidth") }
       end,
     }),
-    null_ls.builtins.formatting.prettierd.with({ command = "prettierme" }),
+    null_ls.builtins.formatting.prettierd.with({ command = "prettierme", dynamic_command = nil }),
     null_ls.builtins.formatting.stylua,
     null_ls.builtins.formatting.terraform_fmt,
     null_ls.builtins.formatting.shellharden,
