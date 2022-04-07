@@ -35,4 +35,9 @@ let
 in
 {
   myNodePackages = (prev.callPackage ifd { }).node2nixProd;
+  prettierme = prev.writeShellScriptBin "prettierme" ''
+    [ ! -f ~/.prettierd ] && { prettierd start && sleep 0.1; }
+    read -r prettierdport prettierdtoken <~/.prettierd
+    nc 127.0.0.1 "$prettierdport" < <(printf '%s\n%s' "$prettierdtoken $PWD $1" "$(<"$1")")
+  '';
 }

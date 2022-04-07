@@ -1,5 +1,6 @@
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
 local null_ls = require("null-ls")
+
 null_ls.setup({
   debounce = 250,
   sources = {
@@ -12,7 +13,7 @@ null_ls.setup({
       runtime_condition = function(params)
         return string.match(params.bufname, ".*%.github/workflows/.*%.ya?ml") ~= nil
       end,
-      extra_args = function(params)
+      extra_args = function(_)
         local path = require("configs.utils").path_join(".github", "actionlint.yaml")
         local has = require("null-ls.utils").make_conditional_utils().has_file(path)
         if has then
@@ -29,12 +30,26 @@ null_ls.setup({
         return { "-s", "-i", vim.api.nvim_buf_get_option(params.bufnr, "shiftwidth") }
       end,
     }),
-    null_ls.builtins.formatting.prettierd,
+    null_ls.builtins.formatting.prettierd.with({ command = "prettierme" }),
     null_ls.builtins.formatting.stylua,
     null_ls.builtins.formatting.terraform_fmt,
     null_ls.builtins.formatting.shellharden,
-    null_ls.builtins.formatting.black,
-    null_ls.builtins.formatting.isort,
+    null_ls.builtins.formatting.isort.with({
+      command = "curl",
+      args = {
+        "-s",
+        "-X",
+        "POST",
+        "localhost:47393",
+        "-H",
+        "XX-SRC: $ROOT",
+        "-H",
+        "XX-PATH: $FILENAME",
+        "--data-binary",
+        "@-",
+      },
+    }),
+    null_ls.builtins.formatting.black.with({ command = "blackd-client", args = {} }),
     null_ls.builtins.formatting.nixpkgs_fmt,
   },
   update_on_insert = false, -- some language servers really hate this

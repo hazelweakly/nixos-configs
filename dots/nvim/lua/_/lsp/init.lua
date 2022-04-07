@@ -65,11 +65,6 @@ M.default_opts = function()
       { border = utils.border }
     ),
     ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = utils.border }),
-    ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-      underline = true,
-      virtual_text = { spacing = 5, severity_limit = "Warning" },
-      update_in_insert = false,
-    }),
   }
 
   return {

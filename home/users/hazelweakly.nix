@@ -15,6 +15,10 @@ with pkgs.lib; {
     config.lib.file.mkOutOfStoreSymlink "${dir}/dots/ranger";
   xdg.configFile."nvim".source =
     config.lib.file.mkOutOfStoreSymlink "${dir}/dots/nvim";
+  xdg.configFile."isort.cfg".text = ''
+    [isort]
+    profile = black
+  '';
   xdg.configFile."nixpkgs/config.nix".text =
     "{ allowUnfree = true; allowUnsupportedSystem = true; }";
 

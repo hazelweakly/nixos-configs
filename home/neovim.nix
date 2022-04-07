@@ -10,6 +10,7 @@ let
     actionlint
     bat
     binutils
+    blackd-client
     buildifier
     cmake
     direnv
@@ -19,6 +20,7 @@ let
     go
     haskellPackages.cabal-fmt
     haskellPackages.hadolint
+    isortd
     jq
     languagetool
     libcxx
@@ -29,7 +31,7 @@ let
     (nuspellWithDicts dicts)
     nixpkgs-fmt
     perl
-    (python3.withPackages (p: [ p.black p.pynvim p.isort ]))
+    prettierme
     rnix-lsp
     shellcheck
     shellharden
@@ -78,7 +80,6 @@ in
     withNodeJs = true;
     withRuby = true;
     withPython3 = true;
-    extraPython3Packages = p: [ p.black p.pynvim p.isort ];
     inherit extraLuaPackages;
     extraPackages = path;
     manifestRc = false;

@@ -61,6 +61,9 @@ lsp_installer.on_server_ready(function(server)
   end
 
   local opts = merge(server:get_default_options(), lsp.default_opts())
+  -- if opts.cmd_env ~= nil and opts.cmd_env.PATH ~= nil then
+  --   opts.cmd_env.PATH = nil
+  -- end
   if type(s_opts) == "function" then
     s_opts(server, opts)
   else
@@ -75,6 +78,10 @@ end)
 vim.diagnostic.config({
   severity_sort = true,
   float = { border = require("configs.utils").border },
+  virtual_text = false,
+  update_in_insert = false,
+  signs = true,
+  underline = false,
 })
 
 for type, icon in pairs({ Error = " ", Warn = " ", Hint = " ", Info = " " }) do

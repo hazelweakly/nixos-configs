@@ -4,15 +4,22 @@ local hover = function(_, result, ctx, config)
   if not (result and result.contents) then
     return vim.lsp.handlers.hover(_, result, ctx, config)
   end
+
+  local s = ""
   if type(result.contents) == "string" then
-    local s = string.gsub(result.contents or "", "``` man", "```man")
-    result.contents = s
-    return vim.lsp.handlers.hover(_, result, ctx, config)
+    s = result.contents
   else
-    local s = string.gsub((result.contents or {}).value or "", "``` man", "```man")
-    result.contents.value = s
-    return vim.lsp.handlers.hover(_, result, ctx, config)
+    s = (result.contents or {}).value
   end
+  s = string.gsub(s or "", "``` man", "```man")
+
+  if type(result.contents) == "string" then
+    result.contents = s
+  else
+    result.contents.value = s
+  end
+
+  return vim.lsp.handlers.hover(_, result, ctx, config)
 end
 
 return {

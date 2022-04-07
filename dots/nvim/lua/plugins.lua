@@ -122,7 +122,7 @@ local spec = mod_spec({
   },
   { "neovim/nvim-lspconfig", module = "lspconfig" },
   { "rafamadriz/friendly-snippets", module = "cmp_nvim_lsp", event = "InsertEnter" },
-  { "hrsh7th/nvim-cmp", after = "friendly-snippets" },
+  { "hrsh7th/nvim-cmp", after = "friendly-snippets", branch = "dev" },
   {
     "L3MON4D3/LuaSnip",
     after = "nvim-cmp",
@@ -259,6 +259,7 @@ local spec = mod_spec({
   { "dstein64/vim-startuptime", cmd = "StartupTime" },
 
   { "j-hui/fidget.nvim", after = "nvim-lsp-installer" },
+  { "rhysd/conflict-marker.vim", after = "gitsigns.nvim" },
   -- Should be the last plugin, or the setup needs to go in init.lua after plugins happen
   { "norcalli/nvim-colorizer.lua", after = "indent-blankline.nvim" },
   { "kevinhwang91/nvim-hlslens", event = "CursorMoved" },

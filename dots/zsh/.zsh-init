@@ -1,4 +1,5 @@
 zstyle ':z4h:'               start-tmux             'none'
+zstyle ':z4h:'               term-vresize           'top'
 zstyle ':z4h:'               prompt-at-bottom       'no'
 zstyle ':z4h:ssh:*'          enable                 'no'
 zstyle ':z4h:direnv'         enable                 'no'
@@ -11,6 +12,7 @@ zstyle ':z4h:fzf-complete'   recurse-dirs           'yes'
 zstyle ':z4h:fzf-complete'   fzf-bindings           tab:repeat
 # uses bfs by default
 zstyle ':z4h:(cd-down|fzf-complete)' find-flags -exclude -name .git -exclude -name node_modules -name '.*' -prune -print -o -print
+zstyle ':z4h:*' fzf-flags "--color=$__sys_theme"
 
 # kitty is set to force macos option to be alt
 # so we set this to false to make z4h think option should not be messed with
@@ -59,10 +61,13 @@ chpwd_functions=(${chpwd_functions[@]} "list_all")
 autoload -Uz -- zmv ${ZDOTDIR}/config/fn/[^_]*(.)
 
 setopt glob_dots
-setopt no_auto_menu
+setopt auto_menu
 setopt ignore_eof
 setopt nonomatch
 setopt no_flow_control
 setopt extended_history
 setopt hist_reduce_blanks
 setopt hist_ignore_space
+
+# smoother rendering
+POSTEDIT=$'\n\n\e[2A'

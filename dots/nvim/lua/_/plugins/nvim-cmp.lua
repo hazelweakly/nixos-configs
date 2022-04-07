@@ -83,6 +83,21 @@ cmp.setup({
   formatting = {
     format = require("lspkind").cmp_format({ with_text = false }),
   },
+  window = {
+    completion = {
+      border = require("configs.utils").border,
+      scrollbar = "║",
+      autocomplete = {
+        require("cmp.types").cmp.TriggerEvent.InsertEnter,
+        require("cmp.types").cmp.TriggerEvent.TextChanged,
+      },
+    },
+    documentation = {
+      border = require("configs.utils").border,
+      scrollbar = "║",
+    },
+  },
+  experimental = { ghost_text = true },
 })
 
 cmp.setup.cmdline("/", {

@@ -11,5 +11,32 @@
     };
     command = "dark-mode-notify switch-theme";
   };
+
+  launchd.user.agents.blackd = {
+    path = [ pkgs.black ];
+    serviceConfig = {
+      KeepAlive = true;
+      RunAtLoad = true;
+      UserName = "hazelweakly";
+      GroupName = "staff";
+      StandardOutPath = "/tmp/blackd.stdout";
+      StandardErrorPath = "/tmp/blackd.stderr";
+    };
+    command = "blackd";
+  };
+
+  launchd.user.agents.isortd = {
+    path = [ pkgs.isortd ];
+    serviceConfig = {
+      KeepAlive = true;
+      RunAtLoad = true;
+      UserName = "hazelweakly";
+      GroupName = "staff";
+      StandardOutPath = "/tmp/isortd.stdout";
+      StandardErrorPath = "/tmp/isortd.stderr";
+    };
+    command = "isortd";
+  };
+
   environment.launchDaemons."limit.maxfiles.plist".source = ../limit.maxfiles.plist;
 }
