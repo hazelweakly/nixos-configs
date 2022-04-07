@@ -84,22 +84,11 @@ cmp.setup({
     format = require("lspkind").cmp_format({ with_text = false }),
   },
   window = {
-    completion = {
-      border = require("configs.utils").border,
-      scrollbar = "║",
-      autocomplete = {
-        require("cmp.types").cmp.TriggerEvent.InsertEnter,
-        require("cmp.types").cmp.TriggerEvent.TextChanged,
-      },
-    },
-    documentation = {
-      border = require("configs.utils").border,
-      scrollbar = "║",
-    },
+    completion = { border = require("configs.utils").border },
+    documentation = { border = require("configs.utils").border },
   },
   experimental = { ghost_text = true },
 })
-
 cmp.setup.cmdline("/", {
   sources = cmp.config.sources({ { name = "buffer" } }),
 })
@@ -112,18 +101,22 @@ cmp.setup.cmdline(":", {
   }),
 })
 
-local sources = cmp.get_config().sources
 local table_concat = function(t1, t2)
-  for i = 1, #t2 do
-    t1[#t1 + 1] = t2[i]
+  local t0 = {}
+  for _, v in ipairs(t1) do
+    table.insert(t0, v)
   end
-  return t1
+  for _, v in ipairs(t2) do
+    table.insert(t0, v)
+  end
+  return t0
 end
 
+---@diagnostic disable-next-line: undefined-field
 cmp.setup.filetype({ "markdown", "tex" }, {
-  sources = cmp.config.sources(table_concat(sources, {
+  sources = cmp.config.sources(table_concat(cmp.get_config().sources, {
     { name = "nuspell", keyword_length = 4, max_item_count = 3 },
-    { name = "emoji" },
+    { name = "emoji", option = { insert = true } },
     { name = "latex_symbols" },
   })),
 })
