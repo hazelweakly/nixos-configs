@@ -75,4 +75,5 @@ require("nvim-treesitter.configs").setup({
       [";"] = "textsubjects-container-outer",
     },
   },
+  matchup = { enable = true, disable_virtual_text = true, disable = disable_if_large },
 })

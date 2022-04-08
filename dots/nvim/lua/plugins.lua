@@ -16,18 +16,19 @@ local function mod_spec(spec)
       if v.config == nil then
         local i = string.find(v[1], "/")
         local config_mod = string.sub(v[1], i + 1):lower():gsub("[%._]", "-")
-        -- print("config mod", config_mod)
         local config_file = string.format("%s/lua/_/plugins/%s.lua", vim.fn.stdpath("config"), config_mod)
         if vim.fn.filereadable(config_file) == 1 then
           v.config = string.format('require("_.plugins.%s")', config_mod)
         end
       end
-      -- too complex to fix. I think this might eventually be better handled by
-      -- somehow getting packer to do it when requiring plugins for the first time
-      --
-      -- if type(v.requires) == "table" then
-      --   v.requires = mod_spec(v.requires)
-      -- end
+      if v.setup == nil then
+        local i = string.find(v[1], "/")
+        local config_mod = "setup_" .. string.sub(v[1], i + 1):lower():gsub("[%._]", "-")
+        local setup_file = string.format("%s/lua/_/plugins/%s.lua", vim.fn.stdpath("config"), config_mod)
+        if vim.fn.filereadable(setup_file) == 1 then
+          v.setup = string.format('require("_.plugins.%s")', config_mod)
+        end
+      end
     end
   end
   local tbl = {}
@@ -52,6 +53,7 @@ local spec = mod_spec({
     "kyazdani42/nvim-web-devicons",
     module = "nvim-web-devicons",
     cond = load_if_small_file,
+    opt = true,
   },
   {
     "nvim-lualine/lualine.nvim",
@@ -80,33 +82,34 @@ local spec = mod_spec({
   },
   {
     "lukas-reineke/indent-blankline.nvim",
-    event = "CursorHold",
     after = { "nvim-treesitter", "tokyonight.nvim" },
     cond = load_if_small_file,
+    opt = true,
   },
   {
     "lewis6991/gitsigns.nvim",
     requires = "nvim-lua/plenary.nvim",
-    opt = true,
-    setup = function()
-      require("configs.utils").packer_lazy_load("gitsigns.nvim", 100)
-    end,
     cond = load_if_small_file,
+    opt = true,
   },
   {
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
-    event = "BufWinEnter",
-    module_pattern = { "nvim-treesitter.*", "nvim-treesitter" },
     requires = {
-      { "p00f/nvim-ts-rainbow", event = "BufWinEnter", wants = "nvim-treesitter" },
-      { "IndianBoy42/tree-sitter-just", module = "tree-sitter-just" },
-      { "nvim-treesitter/nvim-treesitter-refactor", after = "nvim-treesitter" },
-      { "nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter" },
-      { "RRethy/nvim-treesitter-textsubjects", after = "nvim-treesitter" },
-      { "windwp/nvim-ts-autotag", after = "nvim-treesitter" },
+      { "p00f/nvim-ts-rainbow", after = "nvim-treesitter", opt = true },
+      { "IndianBoy42/tree-sitter-just", module = "tree-sitter-just", opt = true },
+      { "nvim-treesitter/nvim-treesitter-refactor", after = "nvim-treesitter", opt = true },
+      { "nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter", opt = true },
+      { "RRethy/nvim-treesitter-textsubjects", after = "nvim-treesitter", opt = true },
+      { "windwp/nvim-ts-autotag", after = "nvim-treesitter", opt = true },
+      {
+        "andymass/vim-matchup",
+        keys = "%",
+        after = "nvim-treesitter",
+        setup = [[require('_.plugins.setup_vim-matchup')]],
+      },
     },
-    cond = load_if_small_file,
+    opt = false,
   },
   {
     "nvim-telescope/telescope.nvim",
@@ -117,29 +120,20 @@ local spec = mod_spec({
     },
     after = "nvim-treesitter",
     cmd = "Telescope",
-    module_pattern = "telescope.*",
-    setup = [[require("configs.telescope")]],
+    module_pattern = { "telescope.*" },
   },
   { "neovim/nvim-lspconfig", module = "lspconfig" },
   { "rafamadriz/friendly-snippets", module = "cmp_nvim_lsp", event = "InsertEnter" },
   { "hrsh7th/nvim-cmp", after = "friendly-snippets", branch = "dev" },
-  {
-    "L3MON4D3/LuaSnip",
-    after = "nvim-cmp",
-    wants = "friendly-snippets",
-  },
-  {
-    "danymat/neogen",
-    after = "nvim-cmp",
-    requires = "nvim-treesitter/nvim-treesitter",
-  },
+  { "L3MON4D3/LuaSnip", after = "nvim-cmp", wants = "friendly-snippets" },
+  { "danymat/neogen", after = "nvim-cmp", requires = "nvim-treesitter/nvim-treesitter", opt = true },
   { "saadparwaiz1/cmp_luasnip", after = "LuaSnip" },
   { "hrsh7th/cmp-nvim-lsp", after = "cmp_luasnip" },
   { "hrsh7th/cmp-buffer", after = "cmp-nvim-lsp" },
   { "hrsh7th/cmp-path", after = "cmp-nvim-lsp" },
   { "hrsh7th/cmp-cmdline", after = "cmp-nvim-lsp" },
   { "hrsh7th/cmp-emoji", after = "cmp-nvim-lsp" },
-  { "f3fora/cmp-nuspell", after = "cmp-nvim-lsp" },
+  { "f3fora/cmp-nuspell", after = "cmp-nvim-lsp", opt = true },
   { "kdheepak/cmp-latex-symbols", after = "cmp-nvim-lsp" },
   { "onsails/lspkind-nvim", module = "lspkind" },
   { "abecodes/tabout.nvim", module = "tabout", wants = "nvim-treesitter", after = "nvim-cmp" },
@@ -149,60 +143,26 @@ local spec = mod_spec({
     after = { "nvim-cmp", "nvim-treesitter" },
     wants = "tabout.nvim",
   },
-  {
-    "Olical/conjure",
-    ft = "clojure",
-  },
+  { "Olical/conjure", ft = "clojure", opt = true },
   {
     "jose-elias-alvarez/null-ls.nvim",
     requires = { "nvim-lua/plenary.nvim" },
-    event = "CursorHold",
+    event = "User DirenvLoaded",
     after = "nvim-rooter.lua",
   },
-  { "editorconfig/editorconfig-vim", event = "CursorHold", after = "nvim-rooter.lua" },
-  { "ethanholz/nvim-lastplace", event = "BufReadPost" },
-  { "junegunn/vim-easy-align", setup = [[require("configs.utils").map("x", "<CR>", "<Plug>(EasyAlign)")]] },
-  -- Revisit eventually once keymappings work better.
-  -- use({
-  --   "folke/which-key.nvim",
-  --   -- keys = "<space>",
-  --   config = function()
-  --     require("which-key").setup({
-  --       plugins = { spelling = { enabled = true } },
-  --       window = { border = require("configs.utils").border },
-  --     })
-  --   end,
-  -- })
-  { "lambdalisue/suda.vim", cmd = "W", setup = [=[vim.cmd([[command! W :w suda://%]])]=] },
-
-  {
-    "dkarter/bullets.vim",
-    ft = { "markdown", "text", "gitcommit" },
-  },
-
+  { "editorconfig/editorconfig-vim", event = "User DirenvLoaded", after = "nvim-rooter.lua" },
+  "ethanholz/nvim-lastplace",
+  "junegunn/vim-easy-align",
+  { "lambdalisue/suda.vim", cmd = "W" },
+  { "dkarter/bullets.vim", ft = { "markdown", "text", "gitcommit" }, opt = true },
   "wsdjeg/vim-fetch",
-  {
-    "907th/vim-auto-save",
-    event = "FocusLost",
-    setup = function()
-      vim.g.auto_save = 1
-      vim.g.auto_save_silent = 1
-      vim.g.auto_save_write_all_buffers = 1
-      vim.g.auto_save_events = { "FocusLost" }
-    end,
-  },
-
-  { "tpope/vim-repeat", event = "CursorHold" },
-  {
-    "wellle/targets.vim",
-    after = "vim-repeat",
-    event = "CursorHold",
-  },
-  { "lervag/vimtex", ft = { "latex", "tex" } },
+  { "907th/vim-auto-save", event = "FocusLost" },
+  { "tpope/vim-repeat", opt = true },
+  { "wellle/targets.vim", after = "vim-repeat", opt = true },
+  { "lervag/vimtex", ft = { "latex", "tex" }, opt = true },
   {
     "knubie/vim-kitty-navigator",
     run = "cp ./*.py ~/.config/kitty/",
-    setup = [[vim.g.kitty_navigator_no_mappings = 1]],
     keys = { "<M-h>", "<M-l>", "<M-j>", "<M-k>" },
   },
 
@@ -215,54 +175,23 @@ local spec = mod_spec({
   },
 
   { "tyru/open-browser.vim", event = "CursorHold" },
-
-  -- https://github.com/blackCauldron7/surround.nvim
-  -- keep an eye on this thing
-  {
-    "andymass/vim-matchup",
-    keys = "%",
-    setup = function()
-      vim.g.matchup_override_vimtex = 1
-      vim.g.matchup_matchparen_deferred = 1
-      vim.g.matchup_surround_enabled = 0
-      vim.g.matchup_motion_oerride_Npercent = 0
-      vim.g.matchup_matchparen_offscreen = { method = "popup", scrolloff = 1 }
-      vim.defer_fn(function()
-        require("nvim-treesitter.configs").setup({ matchup = { enable = true } })
-      end, 500)
-    end,
-    requires = "nvim-treesitter",
-  },
   { "MunifTanjim/nui.nvim", module_pattern = "nui.*" },
-  {
-    "stevearc/dressing.nvim",
-    requires = { "MunifTanjim/nui.nvim" },
-    event = "CursorHold",
-    wants = { "telescope.nvim" },
-  },
-  {
-    "akinsho/bufferline.nvim",
-    wants = { "nvim-web-devicons", "tokyonight.nvim" },
-    event = "BufWinEnter",
-  },
-  { "kosayoda/nvim-lightbulb", event = "CursorHold" },
+  { "stevearc/dressing.nvim", requires = { "MunifTanjim/nui.nvim" }, opt = true, wants = { "telescope.nvim" } },
+  { "akinsho/bufferline.nvim", wants = { "nvim-web-devicons", "tokyonight.nvim" }, opt = true },
+  { "kosayoda/nvim-lightbulb", event = "User DirenvLoaded" },
   { "Pocco81/HighStr.nvim", cmd = { "HSHighlight", "HSRmHighlight", "HSImport", "HSExport" } }, -- https://github.com/Pocco81/HighStr.nvim
   {
     "monaqa/dial.nvim",
-    setup = [[require('configs.dial')]],
     keys = { { "n", "<C-a>" }, { "n", "<C-x>" }, { "v", "<C-a>" }, { "v", "<C-x>" }, { "v", "g" } },
   },
-  { "ggandor/lightspeed.nvim", after = "vim-repeat", event = "CursorHold" },
-  "machakann/vim-sandwich",
+  { "machakann/vim-sandwich", opt = true },
 
-  -- use({ "tweekmonster/startuptime.vim", cmd = "StartupTime" })
-  { "dstein64/vim-startuptime", cmd = "StartupTime" },
+  { "tweekmonster/startuptime.vim", cmd = "StartupTime" },
+  -- { "dstein64/vim-startuptime", cmd = "StartupTime" },
 
-  { "j-hui/fidget.nvim", after = "nvim-lsp-installer" },
-  { "rhysd/conflict-marker.vim", after = "gitsigns.nvim" },
-  -- Should be the last plugin, or the setup needs to go in init.lua after plugins happen
-  { "norcalli/nvim-colorizer.lua", after = "indent-blankline.nvim" },
-  { "kevinhwang91/nvim-hlslens", event = "CursorMoved" },
+  { "j-hui/fidget.nvim", after = "nvim-lsp-installer", event = "User DirenvLoaded" },
+  { "rhysd/conflict-marker.vim", after = "gitsigns.nvim", opt = true },
+  { "norcalli/nvim-colorizer.lua", after = "indent-blankline.nvim", opt = true },
+  { "kevinhwang91/nvim-hlslens", event = "CursorMoved", opt = true },
 })
--- print(vim.inspect(spec))
 return packer.startup(spec)

@@ -6,6 +6,7 @@ local ss = require("nvim-lsp-installer.servers")
 for _, name in ipairs({ "rnix", "taplo", "zk" }) do
   local has, s = ss.get_server(name)
   if has then
+    s._async = false
     s._installer = function(_, callback, _)
       callback(true)
     end

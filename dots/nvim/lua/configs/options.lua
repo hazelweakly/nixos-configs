@@ -1,3 +1,5 @@
+local is_root = vim.env.USER == "root"
+
 vim.api.nvim_set_keymap("", "<Space>", "<Nop>", { noremap = true, silent = true })
 vim.g.mapleader = [[ ]]
 vim.g.maplocalleader = [[ ]]
@@ -12,15 +14,18 @@ vim.g.netrw_nogx = 1
 vim.opt.title = true
 vim.opt.pumblend = 30
 vim.opt.winblend = 30
-vim.opt.grepprg = [[rg\ --vimgrep\ --no-heading\ --smart-case]]
+vim.opt.grepprg = "rg --engine auto --vimgrep --smart-case --hidden"
+vim.opt.grepformat = "%f:%l:%c:%m"
 vim.opt.mouse = "a"
 vim.opt.complete:append("k")
 vim.opt.completeopt = "menuone,noinsert,noselect"
 vim.opt.nrformats = "bin,hex,octal,alpha"
 vim.opt.breakindent = true
 vim.opt.clipboard = "unnamedplus"
-vim.opt.backup = true
-vim.opt.undofile = true
+vim.opt.backup = not is_root
+vim.opt.writebackup = not is_root
+vim.bo.undofile = not is_root
+vim.bo.swapfile = not is_root
 vim.opt.lazyredraw = true
 vim.opt.virtualedit = "block"
 vim.opt.backupdir:remove(".")
@@ -53,3 +58,26 @@ vim.opt.pyx = 3
 vim.opt.diffopt = "filler,internal,algorithm:histogram,indent-heuristic,hiddenoff"
 vim.opt.spelllang = { "en_us" }
 vim.opt.shell = "/bin/sh"
+
+-- Set filetypes that should be ignored in other plugins
+vim.g.ignored_buffer_types = {
+  "Trouble",
+  "help",
+  "nofile",
+  "packer",
+  "quickfix",
+  "terminal",
+}
+
+vim.g.ignored_file_types = {
+  "TelescopePrompt",
+  "TelescopeResults",
+  "checkhealth",
+  "gitcommit",
+  "gitrebase",
+  "glowpreview",
+  "help",
+  "minimap",
+  "packer",
+  "vim",
+}

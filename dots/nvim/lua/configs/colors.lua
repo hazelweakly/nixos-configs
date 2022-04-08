@@ -27,27 +27,25 @@ M.tokyonight = {
       vim.o.background = theme
     end
     vim.cmd("colorscheme tokyonight")
-    vim.defer_fn(function()
-      vim.highlight.link("TSDefinitionUsage", "CursorLine", true)
-      vim.highlight.link("TSDefinition", "CursorLine", true)
-      vim.highlight.link("HlSearchFloat", "CursorLine", true)
-      vim.highlight.link("HlSearchLensNear", "CursorLine", true)
-      vim.highlight.link("HlSearchLens", "CursorLine", true)
-      local colors = M.tokyonight.get().colors -- error warning info hint
-      for level, color in
-        pairs({
-          DEBUG = colors.hint,
-          ERROR = colors.error,
-          INFO = colors.info,
-          TRACE = colors.hint,
-          WARN = colors.warning,
-        })
-      do
-        for _, i in ipairs({ "Border", "Icon", "Title", "Body" }) do
-          vim.highlight.create("Notify" .. level .. i, { guifg = color })
-        end
+    vim.highlight.link("TSDefinitionUsage", "CursorLine", true)
+    vim.highlight.link("TSDefinition", "CursorLine", true)
+    vim.highlight.link("HlSearchFloat", "CursorLine", true)
+    vim.highlight.link("HlSearchLensNear", "CursorLine", true)
+    vim.highlight.link("HlSearchLens", "CursorLine", true)
+    local colors = M.tokyonight.get().colors -- error warning info hint
+    for level, color in
+      pairs({
+        DEBUG = colors.hint,
+        ERROR = colors.error,
+        INFO = colors.info,
+        TRACE = colors.hint,
+        WARN = colors.warning,
+      })
+    do
+      for _, i in ipairs({ "Border", "Icon", "Title", "Body" }) do
+        vim.highlight.create("Notify" .. level .. i, { guifg = color })
       end
-    end, 100)
+    end
   end,
   get = function()
     return require("tokyonight.theme").setup()
@@ -57,7 +55,7 @@ M.tokyonight = {
     vim.wo.colorcolumn = "99999"
     vim.o.termguicolors = true
     local theme = vim.fn.readfile(vim.fn.expand("~/.local/share/theme"))[1]
-    M.set_theme({ args = theme or "light" })
+    M.tokyonight.set_theme({ args = theme or "light" })
     vim.defer_fn(M.add_user_cmd, 50)
   end,
 }
