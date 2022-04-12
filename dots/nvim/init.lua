@@ -1,5 +1,7 @@
 -- keep in mind any time you touch after, ftplugin, etc.
 -- https://vi.stackexchange.com/a/13456
+--
+-- List of breaking changes: https://github.com/neovim/neovim/issues/14090
 vim.opt.shadafile = "NONE"
 local is_root = vim.env.USER == "root"
 

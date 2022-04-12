@@ -16,8 +16,6 @@ map("x", ">", ">gv")
 map("n", "<leader>,", ":")
 map("x", "<leader>,", ":")
 
-map("i", "<S-Tab>", "<C-d>")
-
 map("n", "<S-l>", ":bnext<CR>")
 map("n", "<S-h>", ":bprevious<CR>")
 map("n", "q:", "<nop>")

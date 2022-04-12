@@ -1,5 +1,6 @@
 vim.b.did_sandwich_markdown_ftplugin = 1
 
+require("packer").loader("vim-sandwich")
 vim.b["sandwich_recipes"] = vim.fn["sandwich#get_recipes"]() or {}
 vim.b["sandwich_recipes"] = vim.list_extend(vim.b["sandwich_recipes"], {
   {

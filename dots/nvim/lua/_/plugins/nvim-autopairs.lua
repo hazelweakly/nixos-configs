@@ -1,15 +1,3 @@
--- require("pairs"):setup()
---
--- local cmp = require("cmp")
--- local kind = cmp.lsp.CompletionItemKind
--- cmp.event:on("confirm_done", function(event)
---   local item = event.entry:get_completion_item()
---   local parensDisabled = item.data and item.data.funcParensDisabled or false
---   if not parensDisabled and (item.kind == kind.Method or item.kind == kind.Function) then
---     require("pairs.bracket").type_left("(")
---   end
--- end)
-
 local npairs = require("nvim-autopairs")
 local Rule = require("nvim-autopairs.rule")
 
@@ -45,10 +33,22 @@ npairs.add_rules({
     :use_key("]"),
 })
 
+-- Setup everything manually because nightly breakage
 require("tabout").setup({
-  act_as_shift_tab = true,
-  completion = true,
+  act_as_shift_tab = false,
+  tabkey = "",
+  backwards_tabkey = "",
+  completion = false,
 })
+
+-- Fix breakage with nightly neovim
+local map = require("configs.utils").map
+map("i", "<Tab>", function()
+  return vim.fn.pumvisible() ~= 0 and "<C-n>" or "<Plug>(TaboutMulti)"
+end, { expr = true })
+map("i", "<S-Tab>", function()
+  return vim.fn.pumvisible() ~= 0 and "<C-p>" or "<Plug>(TaboutBackMulti)<C-d>"
+end, { expr = true })
 
 local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 local cmp = require("cmp")

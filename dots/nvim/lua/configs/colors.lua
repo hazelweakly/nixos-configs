@@ -76,7 +76,7 @@ M.nightfox = {
 M.set_theme = M.tokyonight.set_theme
 
 M.add_user_cmd = function()
-  vim.api.nvim_add_user_command("SetTheme", M.set_theme, {
+  vim.api.nvim_create_user_command("SetTheme", M.set_theme, {
     nargs = "?",
     complete = function(arg, _, _)
       local options = { "light", "dark" }

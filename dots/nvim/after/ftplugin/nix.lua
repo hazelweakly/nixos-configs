@@ -1,4 +1,5 @@
 vim.b.did_sandwich_nix_ftplugin = 1
+require("packer").loader("vim-sandwich")
 vim.cmd([[
 call sandwich#util#addlocal([
   \ { 'buns': ["''", "''"], 'input': ['q'], 'cursor': 'keep' },

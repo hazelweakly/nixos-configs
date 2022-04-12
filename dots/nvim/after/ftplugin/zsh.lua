@@ -1,6 +1,7 @@
 vim.opt.iskeyword:append("-")
 vim.b.did_sandwich_zsh_ftplugin = 1
 
+require("packer").loader("vim-sandwich")
 vim.cmd([[call sandwich#util#addlocal([{ 'buns': ['${','}'],  'input': ['$'] }])]])
 
 require("configs.utils").ftplugin.undo({

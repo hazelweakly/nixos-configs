@@ -3,26 +3,22 @@ local cmp = require("cmp")
 --- This tab key behaves pretty closely to how vscode does things.
 -- It is used with a configuration that completely disables using
 -- the enter key to confirm completion in any way.
----@param d "'forward'" | "'back'"
+---@param d 1 | -1
 ---@param m "'i'" | "'c'" | "'s'"
 ---@return none
 local function tab(d, m)
-  local fwd = d == "forward"
+  local fwd = d == 1
   return function(fallback)
-    local l, ng = require("luasnip"), require("neogen")
+    local s, ng = require("snippy"), require("neogen")
 
     if m == "c" then
-      if cmp.visible() then
-        return (fwd and cmp.select_next_item or cmp.select_prev_item)()
-      else
-        return cmp.complete()
-      end
+      return cmp.visible() and (fwd and cmp.select_next_item or cmp.select_prev_item)() or cmp.complete()
     end
 
     if fwd and cmp.visible() then
       cmp.confirm({ select = true })
-    elseif (fwd and l.expand_or_jumpable or l.jumpable)(fwd and 1 or -1) then
-      (fwd and l.expand_or_jump or l.jump)(fwd and 1 or -1)
+    elseif (fwd and s.can_expand_or_advance or s.can_jump)(d) then
+      (fwd and s.expand_or_advance or s.previous)()
     elseif ng.jumpable(not fwd) then
       (fwd and ng.jump_next or ng.jump_prev)()
     else
@@ -35,7 +31,7 @@ cmp.setup({
   preselect = cmp.PreselectMode.None,
   snippet = {
     expand = function(args)
-      require("luasnip").lsp_expand(args.body)
+      require("snippy").expand_snippet(args.body)
     end,
   },
   mapping = {
@@ -63,20 +59,20 @@ cmp.setup({
     }),
     ["<CR>"] = cmp.config.disable,
     ["<Tab>"] = cmp.mapping({
-      i = tab("forward", "i"),
-      s = tab("forward", "s"),
-      c = tab("forward", "c"),
+      i = tab(1, "i"),
+      s = tab(1, "s"),
+      c = tab(1, "c"),
     }),
     ["<S-Tab>"] = cmp.mapping({
-      i = tab("back", "i"),
-      s = tab("back", "s"),
-      c = tab("back", "c"),
+      i = tab(-1, "i"),
+      c = tab(-1, "c"),
+      s = tab(-1, "s"),
     }),
   },
   sources = cmp.config.sources({
-    { name = "nvim_lsp" },
+    { name = "nvim_lsp", max_item_count = 10 },
     -- place snips second otherwise ctrl+space doesn't give relevant completion
-    { name = "luasnip", max_item_count = 3 },
+    { name = "snippy", max_item_count = 5 },
     { name = "buffer", keyword_length = 3 },
     { name = "path", trigger_characters = { "/" } },
   }),
