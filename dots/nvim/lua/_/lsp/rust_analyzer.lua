@@ -3,11 +3,13 @@ return function(_, opts)
     tools = { hover_actions = { border = require("configs.utils").border } },
     server = {
       root_dir = require("lspconfig.util").root_pattern("Cargo.toml"),
+      settings = {
+        ["rust-analyzer"] = {
+          checkOnSave = { command = "clippy" },
+        },
+      },
     },
   })
-  if o.server.cmd_env ~= nil and o.server.cmd_env.PATH ~= nil then
-    o.server.cmd_env.PATH = nil
-  end
   require("rust-tools").setup(o)
 
   return require("rust-tools.config").options.server
