@@ -8,6 +8,7 @@ with pkgs.lib; {
 
   home.sessionVariables = {
     __sys_theme = ''$(<''${XDG_DATA_HOME:-$HOME/.local/share}/theme)'';
+    TERMINFO_DIRS = "${pkgs.kitty.terminfo}/share/terminfo";
   };
 
   programs.zsh = {
