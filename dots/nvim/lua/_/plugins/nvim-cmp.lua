@@ -34,7 +34,7 @@ cmp.setup({
       require("snippy").expand_snippet(args.body)
     end,
   },
-  mapping = {
+  mapping = cmp.mapping.preset.insert({
     ["<Down>"] = cmp.mapping({
       i = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
       s = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
@@ -68,7 +68,7 @@ cmp.setup({
       c = tab(-1, "c"),
       s = tab(-1, "s"),
     }),
-  },
+  }),
   sources = cmp.config.sources({
     { name = "nvim_lsp", max_item_count = 10 },
     -- place snips second otherwise ctrl+space doesn't give relevant completion
@@ -85,6 +85,7 @@ cmp.setup({
   },
   experimental = { ghost_text = true },
 })
+
 cmp.setup.cmdline("/", {
   sources = cmp.config.sources({ { name = "buffer" } }),
 })

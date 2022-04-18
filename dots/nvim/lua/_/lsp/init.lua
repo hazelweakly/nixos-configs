@@ -1,10 +1,6 @@
 local M = {}
 
 M.on_attach = function(client, bufnr)
-  if client.supports_method("textDocument/rangeFormatting") then
-    vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
-  end
-
   local utils = require("configs.utils")
   require("lsp_signature").on_attach({
     bind = false,

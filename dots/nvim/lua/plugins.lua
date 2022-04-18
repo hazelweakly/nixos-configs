@@ -124,7 +124,7 @@ local spec = mod_spec({
   },
   { "neovim/nvim-lspconfig", module = "lspconfig" },
   { "rafamadriz/friendly-snippets", module = "cmp_nvim_lsp", event = "InsertEnter" },
-  { "hrsh7th/nvim-cmp", after = "friendly-snippets", branch = "dev" },
+  { "hrsh7th/nvim-cmp", after = "friendly-snippets" },
   { "dcampos/nvim-snippy", after = "nvim-cmp", wants = "friendly-snippets" },
   { "danymat/neogen", after = "nvim-cmp", requires = "nvim-treesitter/nvim-treesitter", opt = true },
   { "dcampos/cmp-snippy", after = "nvim-snippy" },
