@@ -76,9 +76,6 @@
       overlays = [ inputs.rust-overlay.overlay (_: _: { inherit inputs; }) ] ++ (builtins.attrValues self.overlays);
     };
 
-    devShell = self.legacyPackages.${system}.mkShell {
-      nativeBuildInputs = with self.legacyPackages.${system};
-        [ nixUnstable ];
-    };
+    devShells = let pkgs = self.legacyPackages.${system}; in { default = pkgs.mkShell { }; };
   });
 }
