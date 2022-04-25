@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  fonts.enableFontDir = true;
+  fonts.fontDir.enable = true;
   fonts.fonts = [
     pkgs.open-sans
     pkgs.victor-mono
