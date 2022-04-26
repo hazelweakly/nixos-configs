@@ -6,6 +6,8 @@ return function(_, opts)
       settings = {
         ["rust-analyzer"] = {
           checkOnSave = { command = "clippy" },
+          cargo = { loadOutDirsFromCheck = true },
+          procMacro = { enable = true },
         },
       },
     },

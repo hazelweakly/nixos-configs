@@ -5,18 +5,16 @@
 vim.opt.shadafile = "NONE"
 local is_root = vim.env.USER == "root"
 
-for _, m in
-  ipairs({
-    "_.large_file_detect",
-    "impatient",
-    "_.disable_built_ins",
-    "configs.options",
-    "configs.filetype-nvim",
-    "configs.mappings",
-    "plugins",
-    "configs.settings",
-  })
-do
+for _, m in ipairs({
+  "_.large_file_detect",
+  "impatient",
+  "_.disable_built_ins",
+  "configs.options",
+  "configs.filetype-nvim",
+  "configs.mappings",
+  "plugins",
+  "configs.settings",
+}) do
   if not pcall(require, m) then
     require("configs.utils").log_err("error loading " .. m, "[init]")
   end

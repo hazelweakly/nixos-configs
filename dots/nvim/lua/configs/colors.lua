@@ -33,15 +33,13 @@ M.tokyonight = {
     vim.highlight.link("HlSearchLensNear", "CursorLine", true)
     vim.highlight.link("HlSearchLens", "CursorLine", true)
     local colors = M.tokyonight.get().colors -- error warning info hint
-    for level, color in
-      pairs({
-        DEBUG = colors.hint,
-        ERROR = colors.error,
-        INFO = colors.info,
-        TRACE = colors.hint,
-        WARN = colors.warning,
-      })
-    do
+    for level, color in pairs({
+      DEBUG = colors.hint,
+      ERROR = colors.error,
+      INFO = colors.info,
+      TRACE = colors.hint,
+      WARN = colors.warning,
+    }) do
       for _, i in ipairs({ "Border", "Icon", "Title", "Body" }) do
         vim.highlight.create("Notify" .. level .. i, { guifg = color })
       end
