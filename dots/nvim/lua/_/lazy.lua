@@ -3,10 +3,12 @@ return function()
     local ldr = require("packer").loader
     ldr("nvim-web-devicons")
     ldr("nvim-treesitter")
-    ldr("nvim-ts-rainbow nvim-treesitter-refactor nvim-treesitter-textsubjects nvim-ts-autotag vim-matchup")
+    ldr(
+      "nvim-ts-rainbow nvim-treesitter-refactor nvim-treesitter-textsubjects nvim-ts-autotag nvim-treehopper vim-matchup"
+    )
     ldr("bufferline.nvim")
     ldr("indent-blankline.nvim")
-  end, 30)
+  end, 10)
   vim.defer_fn(function()
     local ldr = require("packer").loader
     ldr("targets.vim")
@@ -14,7 +16,7 @@ return function()
     ldr("dressing.nvim")
     ldr("vim-repeat")
     ldr("bullets.vim")
-  end, 40)
+  end, 20)
   vim.defer_fn(function()
     local ldr = require("packer").loader
     ldr("gitsigns.nvim")
@@ -25,5 +27,5 @@ return function()
     ldr("vimtex")
     ldr("nvim-colorizer.lua")
     ldr("neogen")
-  end, 80)
+  end, 40)
 end

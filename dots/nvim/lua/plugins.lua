@@ -102,6 +102,7 @@ local spec = mod_spec({
       { "nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter", opt = true },
       { "RRethy/nvim-treesitter-textsubjects", after = "nvim-treesitter", opt = true },
       { "windwp/nvim-ts-autotag", after = "nvim-treesitter", opt = true },
+      { "mfussenegger/nvim-treehopper", after = "nvim-treesitter", opt = true },
       {
         "andymass/vim-matchup",
         keys = "%",
@@ -125,10 +126,10 @@ local spec = mod_spec({
   { "neovim/nvim-lspconfig", module = "lspconfig" },
   { "rafamadriz/friendly-snippets", module = "cmp_nvim_lsp", event = "InsertEnter" },
   { "hrsh7th/nvim-cmp", after = "friendly-snippets" },
-  { "dcampos/nvim-snippy", after = "nvim-cmp", wants = "friendly-snippets" },
+  { "L3MON4D3/LuaSnip", after = "nvim-cmp", wants = "friendly-snippets" },
   { "danymat/neogen", after = "nvim-cmp", requires = "nvim-treesitter/nvim-treesitter", opt = true },
-  { "dcampos/cmp-snippy", after = "nvim-snippy" },
-  { "hrsh7th/cmp-nvim-lsp", after = "cmp-snippy" },
+  { "saadparwaiz1/cmp_luasnip", after = "LuaSnip" },
+  { "hrsh7th/cmp-nvim-lsp", after = "cmp_luasnip" },
   { "hrsh7th/cmp-buffer", after = "cmp-nvim-lsp" },
   { "hrsh7th/cmp-path", after = "cmp-nvim-lsp" },
   { "hrsh7th/cmp-cmdline", after = "cmp-nvim-lsp" },
@@ -184,6 +185,7 @@ local spec = mod_spec({
     "monaqa/dial.nvim",
     keys = { { "n", "<C-a>" }, { "n", "<C-x>" }, { "v", "<C-a>" }, { "v", "<C-x>" }, { "v", "g" } },
   },
+  -- re-evaluate https://github.com/echasnovski/mini.nvim#minisurround
   { "machakann/vim-sandwich", opt = true },
 
   { "tweekmonster/startuptime.vim", cmd = "StartupTime" },

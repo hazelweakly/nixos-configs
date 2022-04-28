@@ -2,6 +2,7 @@ local M = {}
 
 M.on_attach = function(client, bufnr)
   local utils = require("configs.utils")
+  local buf_map = utils.buf_map
   require("lsp_signature").on_attach({
     bind = false,
     transparency = 50,
@@ -10,36 +11,37 @@ M.on_attach = function(client, bufnr)
     handler_opts = { border = utils.border },
   }, bufnr)
 
+  buf_map(bufnr, "x", "<leader>la", vim.lsp.buf.range_code_action)
   if client.supports_method("textDocument/codeAction") then
-    utils.buf_map(bufnr, "n", "ga", vim.lsp.buf.code_action)
+    buf_map(bufnr, "n", "ga", vim.lsp.buf.code_action)
   end
   if client.supports_method("textDocument/declaration") then
-    utils.buf_map(bufnr, "n", "gD", vim.lsp.buf.declaration)
+    buf_map(bufnr, "n", "gD", vim.lsp.buf.declaration)
   end
   if client.supports_method("textDocument/definition") then
-    utils.buf_map(bufnr, "n", "gd", function()
+    buf_map(bufnr, "n", "gd", function()
       return require("telescope.builtin").lsp_definitions()
     end)
   end
   if client.supports_method("textDocument/hover") then
-    utils.buf_map(bufnr, "n", "K", vim.lsp.buf.hover)
+    buf_map(bufnr, "n", "K", vim.lsp.buf.hover)
   end
   if client.supports_method("textDocument/signatureHelp") then
-    utils.buf_map(bufnr, "n", "gk", vim.lsp.buf.signature_help)
+    buf_map(bufnr, "n", "gk", vim.lsp.buf.signature_help)
   end
   if client.supports_method("textDocument/rename") then
-    utils.buf_map(bufnr, "n", "gr", vim.lsp.buf.rename)
+    buf_map(bufnr, "n", "gr", vim.lsp.buf.rename)
   end
   if client.supports_method("textDocument/references") then
-    utils.buf_map(bufnr, "n", "gR", function()
+    buf_map(bufnr, "n", "gR", function()
       return require("telescope.builtin").lsp_references()
     end)
   end
-  utils.buf_map(bufnr, "n", "<leader>e", function()
+  buf_map(bufnr, "n", "<leader>e", function()
     return require("telescope.builtin").diagnostics({ bufnr = bufnr })
   end)
-  utils.buf_map(bufnr, "n", "<C-p>", vim.diagnostic.goto_prev)
-  utils.buf_map(bufnr, "n", "<C-n>", vim.diagnostic.goto_next)
+  buf_map(bufnr, "n", "<C-p>", vim.diagnostic.goto_prev)
+  buf_map(bufnr, "n", "<C-n>", vim.diagnostic.goto_next)
 
   if client.supports_method("textDocument/formatting") then
     vim.api.nvim_create_augroup("LspFormatting" .. bufnr, {})
@@ -87,7 +89,7 @@ M.start_or_restart = function()
   for _, config in pairs(require("lspconfig.configs")) do
     for _, filetype_match in ipairs(config.filetypes or {}) do
       if buffer_filetype == filetype_match then
-        vim.defer_fn(config.launch, 500)
+        vim.defer_fn(config.launch, 50)
       end
     end
   end

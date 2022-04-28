@@ -9,7 +9,7 @@ local cmp = require("cmp")
 local function tab(d, m)
   local fwd = d == 1
   return function(fallback)
-    local s, ng = require("snippy"), require("neogen")
+    local s, ng = require("luasnip"), require("neogen")
 
     if m == "c" then
       return cmp.visible() and (fwd and cmp.select_next_item or cmp.select_prev_item)() or cmp.complete()
@@ -17,8 +17,8 @@ local function tab(d, m)
 
     if fwd and cmp.visible() then
       cmp.confirm({ select = true })
-    elseif (fwd and s.can_expand_or_advance or s.can_jump)(d) then
-      (fwd and s.expand_or_advance or s.previous)()
+    elseif (fwd and s.expand_or_jumpable or s.jumable)(d) then
+      (fwd and s.expand_or_jump or s.jump)(d)
     elseif ng.jumpable(not fwd) then
       (fwd and ng.jump_next or ng.jump_prev)()
     else
@@ -31,7 +31,7 @@ cmp.setup({
   preselect = cmp.PreselectMode.None,
   snippet = {
     expand = function(args)
-      require("snippy").expand_snippet(args.body)
+      require("luasnip").lsp_expand(args.body)
     end,
   },
   mapping = cmp.mapping.preset.insert({
@@ -72,7 +72,7 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = "nvim_lsp", max_item_count = 10 },
     -- place snips second otherwise ctrl+space doesn't give relevant completion
-    { name = "snippy", max_item_count = 5 },
+    { name = "luasnip", max_item_count = 5 },
     { name = "buffer", keyword_length = 3 },
     { name = "path", trigger_characters = { "/" } },
   }),

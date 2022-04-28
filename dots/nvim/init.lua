@@ -6,8 +6,8 @@ vim.opt.shadafile = "NONE"
 local is_root = vim.env.USER == "root"
 
 for _, m in ipairs({
-  "_.large_file_detect",
   "impatient",
+  "_.large_file_detect",
   "_.disable_built_ins",
   "configs.options",
   "configs.filetype-nvim",
@@ -20,7 +20,7 @@ for _, m in ipairs({
   end
 end
 
-local lazy_timer = 10
+local lazy_timer = 0
 vim.defer_fn(function()
   vim.cmd([[doautocmd User LoadLazyPlugin]])
 end, lazy_timer)
