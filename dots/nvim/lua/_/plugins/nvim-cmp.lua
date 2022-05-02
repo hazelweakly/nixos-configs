@@ -17,7 +17,7 @@ local function tab(d, m)
 
     if fwd and cmp.visible() then
       cmp.confirm({ select = true })
-    elseif (fwd and s.expand_or_jumpable or s.jumable)(d) then
+    elseif (fwd and s.expand_or_jumpable or s.jumpable)(d) then
       (fwd and s.expand_or_jump or s.jump)(d)
     elseif ng.jumpable(not fwd) then
       (fwd and ng.jump_next or ng.jump_prev)()

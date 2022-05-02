@@ -24,12 +24,13 @@ let
         --nodejs-${nodeVersion}
       '';
       # the shell attribute has the nodeDependencies, whereas the package does not
-      node2nixProd = (
-        (import node2nixDrv { inherit pkgs nodejs; }).shell.override (attrs: {
-          buildInputs = attrs.buildInputs ++ [ nodePackages.node-gyp-build ];
-          dontNpmInstall = true;
-        })
-      ).nodeDependencies;
+      node2nixShell = (import node2nixDrv { inherit pkgs nodejs; }).shell.overrideAttrs (attrs: {
+        buildInputs = attrs.buildInputs ++ [ nodePackages.node-gyp-build ];
+        dontNpmInstall = true;
+      });
+      node2nixProd = node2nixShell.nodeDependencies.overrideAttrs (o: {
+        dontNpmInstall = true;
+      });
     };
 
 in
@@ -38,7 +39,7 @@ in
   prettierme = prev.writeShellScriptBin "prettierme" ''
     [ ! -f ~/.prettierd ] && { prettierd start && sleep 0.1; }
     read -r prettierdport prettierdtoken <~/.prettierd
-    output=$(nc 127.0.0.1 "$prettierdport" < <(printf '%s\n%s' "$prettierdtoken $PWD $1" "$(</dev/stdin)"))
+    output = $(nc 127.0.0.1 "$prettierdport" < <(printf '%s\n%s' "$prettierdtoken $PWD $1" "$(</dev/stdin)"))
     [[ ''${output##*$'\n'} != "# exit 1" ]] && echo "$output"
     :
   '';
