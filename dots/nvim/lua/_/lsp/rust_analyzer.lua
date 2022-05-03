@@ -1,7 +1,8 @@
-return function(_, opts)
-  local o = require("configs.utils").merge({ server = opts }, {
+return function(opts)
+  require("rust-tools").setup({
     tools = { hover_actions = { border = require("configs.utils").border } },
-    server = {
+    server = require("configs.utils").merge(opts, {
+      standalone = false,
       root_dir = require("lspconfig.util").root_pattern("Cargo.toml"),
       settings = {
         ["rust-analyzer"] = {
@@ -10,9 +11,6 @@ return function(_, opts)
           procMacro = { enable = true },
         },
       },
-    },
+    }),
   })
-  require("rust-tools").setup(o)
-
-  return require("rust-tools.config").options.server
 end

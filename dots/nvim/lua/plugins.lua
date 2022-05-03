@@ -69,12 +69,7 @@ local spec = mod_spec({
       { "folke/lua-dev.nvim", module = "lua-dev" },
       { "hrsh7th/cmp-nvim-lsp" },
       { "mickael-menu/zk-nvim", ft = "markdown", module = "zk" },
-      {
-        "simrat39/rust-tools.nvim",
-        module = "rust-tools",
-        config = [[require("rust-tools").start_standalone_if_required = function() end]],
-        run = [[rm -rf plugin]],
-      },
+      { "simrat39/rust-tools.nvim", module = "rust-tools" },
       { "b0o/schemastore.nvim", module = "schemastore" },
       { "jose-elias-alvarez/nvim-lsp-ts-utils", module = "nvim-lsp-ts-utils" },
     },
@@ -192,7 +187,7 @@ local spec = mod_spec({
   -- { "dstein64/vim-startuptime", cmd = "StartupTime" },
 
   { "j-hui/fidget.nvim", after = "nvim-lsp-installer", event = "User DirenvLoaded" },
-  { "rhysd/conflict-marker.vim", after = "gitsigns.nvim", opt = true },
+  { "akinsho/git-conflict.nvim", after = "gitsigns.nvim", opt = true },
   { "norcalli/nvim-colorizer.lua", after = "indent-blankline.nvim", opt = true },
   { "kevinhwang91/nvim-hlslens", event = "CursorMoved", opt = true },
 })

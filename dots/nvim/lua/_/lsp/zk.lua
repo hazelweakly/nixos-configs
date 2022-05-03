@@ -1,4 +1,4 @@
-return function(server, opts)
+return function(opts)
   local on_attach = function(client, bufnr)
     opts.on_attach(client, bufnr)
     if require("zk.util").notebook_root(vim.fn.expand("#" .. bufnr .. ":p")) == nil then
@@ -34,14 +34,8 @@ return function(server, opts)
 
   local merge = require("configs.utils").merge
   local o = merge({
-    lsp = { config = merge(opts, { on_attach = on_attach, auto_attach = false }) },
+    lsp = { config = merge(opts, { on_attach = on_attach }) },
   }, { picker = "telescope" })
 
-  if o.lsp.config.cmd_env ~= nil and o.lsp.config.cmd_env.PATH ~= nil then
-    o.lsp.config.cmd_env.PATH = nil
-  end
   require("zk").setup(o)
-  local oo = require("zk.config").options.lsp.config
-  oo.auto_attach = true
-  server:setup_lsp(oo)
 end

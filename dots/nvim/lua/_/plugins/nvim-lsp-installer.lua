@@ -16,6 +16,11 @@ for _, name in ipairs({ "rnix", "taplo", "zk" }) do
 end
 
 local lsp_installer = require("nvim-lsp-installer")
+require("nvim-lsp-installer").setup({
+  automatic_installation = true,
+  max_concurrent_installers = 10,
+})
+
 local servers = {
   "ansiblels",
   "bashls",
@@ -44,37 +49,45 @@ local servers = {
   "zk",
 }
 
-for _, name in pairs(servers) do
-  local server_is_found, server = lsp_installer.get_server(name)
-  if server_is_found and not server:is_installed() then
-    require("configs.utils").log_info("Installing " .. name)
-    server:install()
-  end
-end
-
-lsp_installer.on_server_ready(function(server)
-  local lsp = require("_.lsp")
-  local merge = require("configs.utils").merge
-
-  local has, s_opts = pcall(require, "_.lsp." .. server.name)
+local lsp = require("_.lsp")
+local merge = require("configs.utils").merge
+local lspconfig = require("lspconfig")
+for _, s in pairs(servers) do
+  local has, s_opts = pcall(require, "_.lsp." .. s)
   if not has then
     s_opts = {}
   end
 
-  local opts = merge(server:get_default_options(), lsp.default_opts())
-  -- if opts.cmd_env ~= nil and opts.cmd_env.PATH ~= nil then
-  --   opts.cmd_env.PATH = nil
-  -- end
   if type(s_opts) == "function" then
-    s_opts(server, opts)
+    s_opts(lsp.default_opts())
   else
-    server:setup_lsp(merge(opts, s_opts))
+    lspconfig[s].setup(merge(lsp.default_opts(), s_opts))
   end
+end
 
-  if not (opts.autostart == false) then
-    server:attach_buffers()
-  end
-end)
+-- lsp_installer.on_server_ready(function(server)
+--   local lsp = require("_.lsp")
+--   local merge = require("configs.utils").merge
+--
+--   local has, s_opts = pcall(require, "_.lsp." .. server.name)
+--   if not has then
+--     s_opts = {}
+--   end
+--
+--   local opts = merge(server:get_default_options(), lsp.default_opts())
+--   -- if opts.cmd_env ~= nil and opts.cmd_env.PATH ~= nil then
+--   --   opts.cmd_env.PATH = nil
+--   -- end
+--   if type(s_opts) == "function" then
+--     s_opts(server, opts)
+--   else
+--     server:setup_lsp(merge(opts, s_opts))
+--   end
+--
+--   if not (opts.autostart == false) then
+--     server:attach_buffers()
+--   end
+-- end)
 
 vim.diagnostic.config({
   severity_sort = true,

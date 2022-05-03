@@ -20,7 +20,7 @@ return function()
   vim.defer_fn(function()
     local ldr = require("packer").loader
     ldr("gitsigns.nvim")
-    ldr("conflict-marker.vim")
+    ldr("git-conflict.nvim")
     ldr("conjure")
     ldr("nvim-hlslens")
     ldr("vim-sandwich")

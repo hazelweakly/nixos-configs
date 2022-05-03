@@ -1,5 +1,7 @@
 local M = {}
 
+local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+
 M.on_attach = function(client, bufnr)
   local utils = require("configs.utils")
   local buf_map = utils.buf_map
@@ -44,12 +46,20 @@ M.on_attach = function(client, bufnr)
   buf_map(bufnr, "n", "<C-n>", vim.diagnostic.goto_next)
 
   if client.supports_method("textDocument/formatting") then
-    vim.api.nvim_create_augroup("LspFormatting" .. bufnr, {})
+    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
     vim.api.nvim_create_autocmd("BufWritePre", {
-      group = "LspFormatting" .. bufnr,
+      group = augroup,
       buffer = bufnr,
       callback = function()
-        vim.lsp.buf.formatting_seq_sync()
+        vim.lsp.buf.format({
+          filter = function(clients)
+            -- filter out clients that you don't want to use
+            return vim.tbl_filter(function(c)
+              return c.name ~= "tsserver" and c.name ~= "jsonls" and c.name ~= "rnix" and c.name ~= "sumneko_lua"
+            end, clients)
+          end,
+          bufnr = bufnr,
+        })
       end,
     })
   end
@@ -57,19 +67,17 @@ end
 
 M.default_opts = function()
   local utils = require("configs.utils")
-  local handlers = {
-    ["textDocument/signatureHelp"] = vim.lsp.with(
-      require("lsp_signature").signature_handler,
-      { border = utils.border }
-    ),
-    ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = utils.border }),
-  }
-
   return {
     on_attach = M.on_attach,
     capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
     flags = { debounce_text_changes = 150 },
-    handlers = handlers,
+    handlers = {
+      ["textDocument/signatureHelp"] = vim.lsp.with(
+        require("lsp_signature").signature_handler,
+        { border = utils.border }
+      ),
+      ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = utils.border }),
+    },
   }
 end
 
