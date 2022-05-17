@@ -3,7 +3,7 @@
     enable = true;
     userName = "hazelweakly";
     userEmail = "hazel@theweaklys.com";
-    package = pkgs.gitAndTools.gitFull;
+    package = pkgs.gitFull;
     lfs.enable = true;
     ignores = [ ".DS_Store" ];
     extraConfig = {

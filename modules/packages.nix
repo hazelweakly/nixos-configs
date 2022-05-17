@@ -2,7 +2,7 @@
   environment.systemPackages = with pkgs; [
     kitty
     curl
-    gitAndTools.gitFull
+    gitFull
     git-lfs
     cachix
     file
@@ -26,7 +26,7 @@
     # Programs implicitly relied on in shell
     pistol
     exa
-    gitAndTools.delta
+    delta
     bat
     fd
     ripgrep
