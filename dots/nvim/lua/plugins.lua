@@ -47,7 +47,7 @@ local spec = mod_spec({
   "lewis6991/impatient.nvim",
   "antoinemadec/FixCursorHold.nvim",
   "jedi2610/nvim-rooter.lua",
-  { "hazelweakly/direnv.vim", after = "nvim-rooter.lua" },
+  { "direnv/direnv.vim", after = "nvim-rooter.lua" },
   { "folke/tokyonight.nvim", requires = "plenary.nvim", module = "tokyonight" },
   {
     "kyazdani42/nvim-web-devicons",
