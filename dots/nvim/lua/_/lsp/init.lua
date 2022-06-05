@@ -52,11 +52,9 @@ M.on_attach = function(client, bufnr)
       buffer = bufnr,
       callback = function()
         vim.lsp.buf.format({
-          filter = function(clients)
+          filter = function(c)
             -- filter out clients that you don't want to use
-            return vim.tbl_filter(function(c)
-              return c.name ~= "tsserver" and c.name ~= "jsonls" and c.name ~= "rnix" and c.name ~= "sumneko_lua"
-            end, clients)
+            return c.name ~= "tsserver" and c.name ~= "jsonls" and c.name ~= "rnix" and c.name ~= "sumneko_lua"
           end,
           bufnr = bufnr,
         })
