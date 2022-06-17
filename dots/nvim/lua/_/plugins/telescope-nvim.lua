@@ -1,7 +1,6 @@
 local telescope = require("telescope")
 telescope.setup({
   defaults = {
-    initial_mode = "insert",
     vimgrep_arguments = {
       "rg",
       "--color=never",

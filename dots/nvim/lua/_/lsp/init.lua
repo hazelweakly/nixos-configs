@@ -57,6 +57,7 @@ M.on_attach = function(client, bufnr)
             return c.name ~= "tsserver" and c.name ~= "jsonls" and c.name ~= "rnix" and c.name ~= "sumneko_lua"
           end,
           bufnr = bufnr,
+          timeout = 5000,
         })
       end,
     })

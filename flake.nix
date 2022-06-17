@@ -1,8 +1,8 @@
 {
   description = "Hazel's system configuration";
-#  nixConfig.extra-experimental-features = "nix-command flakes";
-#  nixConfig.extra-substituters = "https://nix-community.cachix.org https://hazel-nix-configs.cachix.org";
-#  nixConfig.extra-trusted-public-keys = "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= hazel-nix-configs.cachix.org-1:AyBQRdv7dppOc1Kq9VyBb+8EuGbBZD8Hgsm9e2GnyCI=";
+  #  nixConfig.extra-experimental-features = "nix-command flakes";
+  #  nixConfig.extra-substituters = "https://nix-community.cachix.org https://hazel-nix-configs.cachix.org";
+  #  nixConfig.extra-trusted-public-keys = "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= hazel-nix-configs.cachix.org-1:AyBQRdv7dppOc1Kq9VyBb+8EuGbBZD8Hgsm9e2GnyCI=";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
@@ -27,10 +27,6 @@
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    zig.url = "github:roarkanize/zig-overlay";
-    zig.inputs.nixpkgs.follows = "nixpkgs";
-    zig.inputs.flake-utils.follows = "flake-utils";
-
     rnix-lsp.url = "github:nix-community/rnix-lsp";
     rnix-lsp.inputs.nixpkgs.follows = "nixpkgs";
     rnix-lsp.inputs.utils.follows = "flake-utils";
@@ -41,9 +37,6 @@
 
     flake-compat.url = "github:edolstra/flake-compat";
     flake-compat.flake = false;
-
-    direnv.url = "github:hazelweakly/direnv";
-    direnv.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs@{ self, ... }: {
