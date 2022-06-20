@@ -1,16 +1,16 @@
-{ self, inputs, ... }: [
-  ../../cachix.nix
-  ../alias-pkgs.nix
-  ../defaults.nix
-  ../environment.nix
-  ../fonts.nix
-  ../home-manager.nix
-  ../homebrew.nix
-  ../launchd.nix
-  ../nix.nix
-  ../packages.nix
-  ../pam.nix
-  ../work.nix
+{ self, inputs, hostConfig, ... }: [
+  ../cachix.nix
+  ./alias-pkgs.nix
+  ./defaults.nix
+  ./environment.nix
+  ./fonts.nix
+  ./home-manager.nix
+  ./homebrew.nix
+  ./launchd.nix
+  ./nix.nix
+  ./packages.nix
+  ./pam.nix
+  ./work.nix
   inputs.home-manager.darwinModules.home-manager
   {
     # needed for <darwin> so that darwin-option works correctly
@@ -22,5 +22,11 @@
     programs.zsh.promptInit = "";
     programs.zsh.enableCompletion = false;
     programs.zsh.enableBashCompletion = false;
+  }
+  {
+    networking.hostName = hostConfig.hostName;
+    environment.etc.hostname.text = ''
+      ${hostConfig.hostName}
+    '';
   }
 ]

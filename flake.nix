@@ -1,9 +1,5 @@
 {
   description = "Hazel's system configuration";
-  #  nixConfig.extra-experimental-features = "nix-command flakes";
-  #  nixConfig.extra-substituters = "https://nix-community.cachix.org https://hazel-nix-configs.cachix.org";
-  #  nixConfig.extra-trusted-public-keys = "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= hazel-nix-configs.cachix.org-1:AyBQRdv7dppOc1Kq9VyBb+8EuGbBZD8Hgsm9e2GnyCI=";
-
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
@@ -40,33 +36,18 @@
   };
 
   outputs = inputs@{ self, ... }: {
-    overlays = import ./overlays;
+    overlays = import ./overlays { inherit self inputs; };
 
-    darwinConfigurations."x86_64-darwin" = inputs.nix-darwin.lib.darwinSystem {
-      system = "x86_64-darwin";
-      inherit inputs;
-      pkgs = self.legacyPackages.x86_64-darwin;
-      modules = import ./modules/hosts/Hazels-MacBook-Pro.nix { inherit self inputs; };
-      specialArgs = { inherit self; };
-    };
+    lib = import ./lib.nix;
 
-    darwinConfigurations."aarch64-darwin" = inputs.nix-darwin.lib.darwinSystem {
-      system = "aarch64-darwin";
-      inherit inputs;
-      pkgs = self.legacyPackages.aarch64-darwin;
-      modules = import ./modules/hosts/Eden-C02GR3NTQ05N.nix { inherit self inputs; };
-      specialArgs = { inherit self; };
-    };
-
-    darwinConfigurations."Hazels-MacBook-Pro" = self.darwinConfigurations.x86_64-darwin;
-    darwinConfigurations."Eden-C02GR3NTQ05N" = self.darwinConfigurations.aarch64-darwin;
+    darwinConfigurations = import ./modules/hosts { inherit self inputs; };
 
   } // inputs.flake-utils.lib.eachSystem [ "aarch64-darwin" "x86_64-darwin" ] (system: {
     legacyPackages = import inputs.nixpkgs {
       inherit system;
       config.allowUnfree = true;
       config.allowUnsupportedSystem = true;
-      overlays = [ inputs.rust-overlay.overlay (_: _: { inherit inputs; }) ] ++ (builtins.attrValues self.overlays);
+      overlays = builtins.attrValues self.overlays;
     };
 
     devShells = let pkgs = self.legacyPackages.${system}; in { default = pkgs.mkShell { }; };

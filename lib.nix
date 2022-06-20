@@ -9,4 +9,11 @@ rec {
   inputsWithPkgs = inputs: filterAttrs (_: i: any (a: (i.outputs or { }) ? "${a}") [ "packages" "legacyPackages" ]) inputs;
   inputsWithOutputs = inputs: filterAttrs (_: v: v ? outputs) inputs;
   rake = dir: genAttrs (map (removeSuffix ".nix") (attrNames (removeAttrs (readDir dir) [ "default.nix" ]))) (f: import (dir + "/${f}.nix"));
+  mkModules = { self, inputs, hostConfig, ... }@args: import ./modules/modules.nix args;
+  mkDarwinSystem = { self, inputs, system, ... }@args: inputs.nix-darwin.lib.darwinSystem {
+    inherit system inputs;
+    pkgs = self.legacyPackages.${system};
+    modules = mkModules args;
+    specialArgs = { inherit self; inherit (args) hostConfig; };
+  };
 }
