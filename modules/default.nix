@@ -1,16 +1,5 @@
-{ self, inputs, hostConfig, ... }: [
+{ self, inputs, hostConfig, ... }: builtins.attrValues (self.lib.rake ./.) ++ [
   ../cachix.nix
-  ./alias-pkgs.nix
-  ./defaults.nix
-  ./environment.nix
-  ./fonts.nix
-  ./home-manager.nix
-  ./homebrew.nix
-  ./launchd.nix
-  ./nix.nix
-  ./packages.nix
-  ./pam.nix
-  ./work.nix
   inputs.home-manager.darwinModules.home-manager
   {
     # needed for <darwin> so that darwin-option works correctly

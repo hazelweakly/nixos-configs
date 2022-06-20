@@ -52,5 +52,5 @@
   #   command = "prettierd start";
   # };
 
-  environment.launchDaemons."limit.maxfiles.plist".source = ../limit.maxfiles.plist;
+  environment.launchDaemons."limit.maxfiles.plist".source = ./limit.maxfiles.plist;
 }

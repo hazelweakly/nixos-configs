@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   imports = [ ./gpg.nix ];
   home-manager.users.hazelweakly = { config, ... }: {
-    imports = [ ../home/gpg.nix ];
+    imports = [ ../../home/gpg.nix ];
     programs.git = {
       userName = pkgs.lib.mkForce "Hazel Weakly";
       userEmail = pkgs.lib.mkForce "hazel@theweaklys.com";

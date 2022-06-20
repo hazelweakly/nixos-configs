@@ -12,9 +12,9 @@ in
       ;;
       *)
         if [ -z "$1" ]; then
-          nix repl ${../repl.nix}
+          nix repl ${./repl.nix}
         else
-          nix repl --arg flakePath $(${final.coreutils}/bin/readlink -f $1 | ${final.gnused}/bin/sed 's|/flake.nix||') ${../repl.nix}
+          nix repl --arg flakePath $(${final.coreutils}/bin/readlink -f $1 | ${final.gnused}/bin/sed 's|/flake.nix||') ${./repl.nix}
         fi
       ;;
     esac

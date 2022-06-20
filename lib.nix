@@ -1,6 +1,11 @@
 with builtins;
 rec {
-  removeSuffix = suffix: str: substring 0 ((stringLength str) - (stringLength suffix)) str;
+  # from nixpkgs lib
+  mapAttrs' = f: set: listToAttrs (map (attr: f attr set.${attr}) (attrNames set));
+
+  removeSuffix = suffix: str:
+    let end = if match ".*(${suffix})$" str == null then 0 else stringLength suffix;
+    in substring 0 ((stringLength str) - end) str;
   genAttrs' = f: vs: listToAttrs (map f vs);
   genAttrs = ns: f: listToAttrs (map (n: nameValuePair n (f n)) ns);
   nameValuePair = name: value: { inherit name value; };
@@ -8,12 +13,5 @@ rec {
     listToAttrs (concatMap (n: if p n s.${n} then [ (nameValuePair n s.${n}) ] else [ ]) (attrNames s));
   inputsWithPkgs = inputs: filterAttrs (_: i: any (a: (i.outputs or { }) ? "${a}") [ "packages" "legacyPackages" ]) inputs;
   inputsWithOutputs = inputs: filterAttrs (_: v: v ? outputs) inputs;
-  rake = dir: genAttrs (map (removeSuffix ".nix") (attrNames (removeAttrs (readDir dir) [ "default.nix" ]))) (f: import (dir + "/${f}.nix"));
-  mkModules = { self, inputs, hostConfig, ... }@args: import ./modules/modules.nix args;
-  mkDarwinSystem = { self, inputs, system, ... }@args: inputs.nix-darwin.lib.darwinSystem {
-    inherit system inputs;
-    pkgs = self.legacyPackages.${system};
-    modules = mkModules args;
-    specialArgs = { inherit self; inherit (args) hostConfig; };
-  };
+  rake = dir: mapAttrs' (k: v: { name = removeSuffix ".nix" k; value = import (dir + "/${k}"); }) (removeAttrs (readDir dir) [ "default.nix" ]);
 }

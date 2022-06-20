@@ -40,7 +40,7 @@
 
     lib = import ./lib.nix;
 
-    darwinConfigurations = import ./modules/hosts { inherit self inputs; };
+    darwinConfigurations = import ./hosts { inherit self inputs; };
 
   } // inputs.flake-utils.lib.eachSystem [ "aarch64-darwin" "x86_64-darwin" ] (system: {
     legacyPackages = import inputs.nixpkgs {
