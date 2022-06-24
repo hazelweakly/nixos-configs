@@ -24,6 +24,7 @@ let
     jq
     languagetool
     libcxx
+    ltex-ls
     luaWith
     myNodePackages
     neovim-remote

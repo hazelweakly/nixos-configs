@@ -1,5 +1,5 @@
 require("nvim-lsp-installer").setup({
-  automatic_installation = { exclude = { "hls", "rnix", "taplo", "rust_analyzer" } },
+  automatic_installation = { exclude = { "hls", "rnix", "taplo", "rust_analyzer", "ltex" } },
   max_concurrent_installers = 10,
 })
 require("lspconfig.configs").ls_emmet = { default_config = {} }
@@ -50,7 +50,7 @@ for _, s in pairs(servers) do
 end
 
 local function start_or_restart_lsp(bufnr)
-  if vim.b.direnv_lsp_loaded ~= nil then
+  if vim.fn.getbufvar(bufnr, "direnv_lsp_loaded", nil) ~= nil then
     return
   end
 
@@ -67,7 +67,7 @@ local function start_or_restart_lsp(bufnr)
     end
   end
 
-  vim.b.direnv_lsp_loaded = true
+  vim.fn.setbufvar(bufnr, "direnv_lsp_loaded", true)
 end
 
 vim.diagnostic.config({
@@ -90,6 +90,6 @@ vim.api.nvim_create_autocmd("User", {
   group = "DirenvRestartServer",
   pattern = "DirenvLoaded",
   callback = function(args)
-    start_or_restart_lsp(args.buf)
+    vim.cmd("LspRestart")
   end,
 })

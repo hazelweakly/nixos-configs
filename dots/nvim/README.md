@@ -2,7 +2,7 @@
 
 ## Enhancements
 
-- Make a bunch of the stuff (like null-ls) smartly configured based on existance of binaries
+- Make a bunch of the stuff (like null-ls) smartly configured based on existance of binaries.
   - remove more binaries from neovim.nix and make it more minimal. Its closure is currently massive.
   - add wget, apparently
 - Purge out some macos included stuff from the neovim path? maybe?

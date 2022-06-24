@@ -3,7 +3,6 @@ return function(opts)
     tools = { hover_actions = { border = require("configs.utils").border } },
     server = require("configs.utils").merge(opts, {
       root_dir = require("lspconfig.util").root_pattern("Cargo.toml"),
-      -- cmd_env = { PATH = os.getenv("PATH") },
       settings = {
         ["rust-analyzer"] = {
           checkOnSave = { command = "clippy" },
