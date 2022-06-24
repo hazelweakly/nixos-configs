@@ -3,7 +3,7 @@ let dir = config.home.homeDirectory + "/src/personal/nixos-configs";
 in
 with builtins;
 with pkgs.lib; {
-  home.stateVersion = "21.11";
+  home.stateVersion = "22.11";
   home.homeDirectory = mkForce "/Users/hazelweakly";
   xdg.enable = true;
 

@@ -1,7 +1,12 @@
 require("nvim-lsp-installer").setup({
-  automatic_installation = true,
+  automatic_installation = { exclude = { "hls", "rnix", "taplo", "rust_analyzer" } },
   max_concurrent_installers = 10,
 })
+require("lspconfig.configs").ls_emmet = { default_config = {} }
+local lsp = require("_.lsp")
+local merge = require("configs.utils").merge
+local lspconfig = require("lspconfig")
+lspconfig.util.default_config = merge(lspconfig.util.default_config, lsp.default_opts())
 
 local servers = {
   "ansiblels",
@@ -31,24 +36,38 @@ local servers = {
   "zk",
 }
 
-local lsp = require("_.lsp")
-local merge = require("configs.utils").merge
-local cfgs = require("lspconfig.configs")
-local lspconfig = require("lspconfig")
 for _, s in pairs(servers) do
   local has, s_opts = pcall(require, "_.lsp." .. s)
   if not has then
     s_opts = {}
   end
-  if not cfgs[s] then
-    cfgs[s] = { default_config = type(s_opts) == "function" and {} or s_opts }
-  end
 
   if type(s_opts) == "function" then
-    s_opts(lsp.default_opts())
+    s_opts(lspconfig.util.default_config)
   else
-    lspconfig[s].setup(merge(lsp.default_opts(), s_opts))
+    lspconfig[s].setup(s_opts)
   end
+end
+
+local function start_or_restart_lsp(bufnr)
+  if vim.b.direnv_lsp_loaded ~= nil then
+    return
+  end
+
+  for _, client in ipairs(lspconfig.util.get_managed_clients()) do
+    if lspconfig.util.get_active_client_by_name(bufnr or 0, client.name) ~= nil then
+      client.stop()
+    end
+  end
+  for _, config in pairs(require("lspconfig.configs")) do
+    for _, filetype_match in ipairs(config.filetypes or {}) do
+      if vim.bo.filetype == filetype_match then
+        vim.defer_fn(config.launch, 125)
+      end
+    end
+  end
+
+  vim.b.direnv_lsp_loaded = true
 end
 
 vim.diagnostic.config({
@@ -70,7 +89,7 @@ vim.api.nvim_create_augroup("DirenvRestartServer", {})
 vim.api.nvim_create_autocmd("User", {
   group = "DirenvRestartServer",
   pattern = "DirenvLoaded",
-  callback = function()
-    require("_.lsp").start_or_restart()
+  callback = function(args)
+    start_or_restart_lsp(args.buf)
   end,
 })

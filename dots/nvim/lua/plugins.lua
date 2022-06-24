@@ -190,5 +190,7 @@ local spec = mod_spec({
   { "akinsho/git-conflict.nvim", after = "gitsigns.nvim", opt = true },
   { "norcalli/nvim-colorizer.lua", after = "indent-blankline.nvim", opt = true },
   { "kevinhwang91/nvim-hlslens", event = "CursorMoved", opt = true },
+  { "mfussenegger/nvim-dap" },
+  { "rcarriga/nvim-dap-ui", after = "nvim-dap" },
 })
 return packer.startup(spec)

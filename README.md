@@ -26,6 +26,7 @@ Configurations for my NixOS and macOS systems (work/home laptops)
 
 ---
 
+- https://github.com/miversen33/import.nvim
 - https://www.lua.org/manual/5.1/manual.html#5.4.1 - patterns
 - https://github.com/roginfarrer/dotfiles/blob/main/nvim/.config/nvim/lua/user/packerInit.lua
   - requires plugins from user.plugins
