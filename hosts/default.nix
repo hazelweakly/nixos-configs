@@ -9,6 +9,6 @@ let
 in
 builtins.mapAttrs
   (k: v:
-  let a = args // { hostConfig.hostName = k; }; in
+  let a = args // { hostConfig.hostName = builtins.replaceStrings [ "_" ] [ "-" ] k; }; in
   mkDarwinSystem (a // (v a)))
   (self.lib.rake ./.)

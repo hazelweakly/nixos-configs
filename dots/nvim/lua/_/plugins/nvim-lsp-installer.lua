@@ -1,5 +1,5 @@
 require("nvim-lsp-installer").setup({
-  automatic_installation = { exclude = { "hls", "rnix", "taplo", "rust_analyzer", "ltex" } },
+  automatic_installation = { exclude = { "hls", "rnix", "taplo", "rust_analyzer", "ltex", "gopls" } },
   max_concurrent_installers = 10,
 })
 require("lspconfig.configs").ls_emmet = { default_config = {} }
