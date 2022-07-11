@@ -1,5 +1,9 @@
 local M = {}
 
+local function link_hl(a, b)
+  vim.api.nvim_set_hl(0, a, { link = b })
+end
+
 local safe_require = function(theme_name, package)
   local loaded, theme = pcall(require, theme_name)
   if not loaded and pcall(vim.cmd, "packadd " .. package) then
@@ -27,11 +31,11 @@ M.tokyonight = {
       vim.o.background = theme
     end
     vim.cmd("colorscheme tokyonight")
-    vim.highlight.link("TSDefinitionUsage", "CursorLine", true)
-    vim.highlight.link("TSDefinition", "CursorLine", true)
-    vim.highlight.link("HlSearchFloat", "CursorLine", true)
-    vim.highlight.link("HlSearchLensNear", "CursorLine", true)
-    vim.highlight.link("HlSearchLens", "CursorLine", true)
+    link_hl("TSDefinitionUsage", "CursorLine")
+    link_hl("TSDefinition", "CursorLine")
+    link_hl("HlSearchFloat", "CursorLine")
+    link_hl("HlSearchLensNear", "CursorLine")
+    link_hl("HlSearchLens", "CursorLine")
     local colors = M.tokyonight.get().colors -- error warning info hint
     for level, color in pairs({
       DEBUG = colors.hint,
@@ -41,12 +45,12 @@ M.tokyonight = {
       WARN = colors.warning,
     }) do
       for _, i in ipairs({ "Border", "Icon", "Title", "Body" }) do
-        vim.highlight.create("Notify" .. level .. i, { guifg = color })
+        vim.api.nvim_set_hl(0, "Notify" .. level .. i, { fg = color })
       end
     end
   end,
   get = function()
-    return require("tokyonight.theme").setup()
+    return require("tokyonight.theme").setup(require("tokyonight.config"))
   end,
   setup = function()
     vim.g.tokyonight_italic_functions = 1
