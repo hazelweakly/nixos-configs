@@ -13,7 +13,10 @@ M.map = function(mode, lhs, rhs, opts)
   vim.keymap.set(mode, lhs, rhs, M.merge({ silent = true }, opts or {}))
 end
 
+--- Merges recursively two or more map-like tables.
+---@return table
 M.merge = function(...)
+  ---@diagnostic disable-next-line: return-type-mismatch
   return vim.tbl_deep_extend("force", ...)
 end
 

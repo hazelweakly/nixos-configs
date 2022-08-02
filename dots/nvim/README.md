@@ -2,6 +2,9 @@
 
 ## Enhancements
 
+- Figure out how to get everything related to direnv working better
+  - LSP
+  - Direnv choking if I start typing during async or whatever
 - Make a bunch of the stuff (like null-ls) smartly configured based on existance of binaries.
   - remove more binaries from neovim.nix and make it more minimal. Its closure is currently massive.
   - add wget, apparently

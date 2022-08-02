@@ -14,7 +14,7 @@ M.on_attach = function(client, bufnr)
   }, bufnr)
 
   buf_map(bufnr, "x", "<leader>la", vim.lsp.buf.range_code_action)
-  if client.supports_method("textDocument/codeAction") then
+  if client.server_capabilities.codeActionProvider then
     buf_map(bufnr, "n", "ga", vim.lsp.buf.code_action)
   end
   if client.supports_method("textDocument/declaration") then
@@ -25,7 +25,8 @@ M.on_attach = function(client, bufnr)
       return require("telescope.builtin").lsp_definitions()
     end)
   end
-  if client.supports_method("textDocument/hover") then
+  -- client.server_capabilities
+  if client.server_capabilities.hoverProvider then
     buf_map(bufnr, "n", "K", vim.lsp.buf.hover)
   end
   if client.supports_method("textDocument/signatureHelp") then
@@ -45,7 +46,7 @@ M.on_attach = function(client, bufnr)
   buf_map(bufnr, "n", "<C-p>", vim.diagnostic.goto_prev)
   buf_map(bufnr, "n", "<C-n>", vim.diagnostic.goto_next)
 
-  if client.supports_method("textDocument/formatting") then
+  if client.server_capabilities.documetFormattingProvider then
     vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
     vim.api.nvim_create_autocmd("BufWritePre", {
       group = augroup,
@@ -67,6 +68,7 @@ end
 M.default_opts = function()
   local utils = require("configs.utils")
   return {
+    autostart = false,
     on_attach = M.on_attach,
     capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
     flags = { debounce_text_changes = 150 },

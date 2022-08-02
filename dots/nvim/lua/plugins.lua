@@ -1,3 +1,6 @@
+-- Compare this all with super stripped plugins list again
+-- I should be able to copy the spec table into different configs
+
 -- https://github.com/akinsho/dotfiles/blob/main/.config/nvim/lua/as/plugins/init.lua
 local present, packer_init = pcall(require, "configs.packerInit")
 if not present then
@@ -180,7 +183,7 @@ local spec = mod_spec({
     "monaqa/dial.nvim",
     keys = { { "n", "<C-a>" }, { "n", "<C-x>" }, { "v", "<C-a>" }, { "v", "<C-x>" }, { "v", "g" } },
   },
-  -- re-evaluate https://github.com/echasnovski/mini.nvim#minisurround
+  -- re-evaluate https://github.com/kylechui/nvim-surround
   { "machakann/vim-sandwich", opt = true },
 
   { "tweekmonster/startuptime.vim", cmd = "StartupTime" },
