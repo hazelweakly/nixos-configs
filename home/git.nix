@@ -12,6 +12,7 @@
       rerere.autoupdate = true;
       color.ui = true;
       diff.colorMoved = "default";
+      push.autoSetupRemote = true;
     };
     delta = {
       enable = true;

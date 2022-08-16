@@ -20,9 +20,12 @@ Configurations for my NixOS and macOS systems (work/home laptops)
 3. curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
 4. ssh-keygen
 5. clone this repo
-6. Manually add the nixConfig stuff to /etc/nix/nix.conf and restart daemon. sigh.
-7. zsh dots/zsh/fn/update
-8. once it works, remove: /etc/shells, /etc/zshrc, /etc/nix/nix.conf and run again
+6. Manually add the nixConfig stuff to /etc/nix/nix.conf and restart daemon. sigh. (to enable flakes).
+    - remove `/etc/shells`, `/etc/zshrc`
+7. `printf 'run\tprivate/var/run\n' | sudo tee -a /etc/synthetic.conf`, `/System/Library/Filesystems/apfs.fs/Contents/Resources/apfs.util -t`
+8. `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+9. zsh dots/zsh/fn/update
+10. once it works, remove: /etc/shells, /etc/zshrc, /etc/nix/nix.conf and run again
 
 ---
 

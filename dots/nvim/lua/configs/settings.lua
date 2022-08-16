@@ -1,10 +1,10 @@
-vim.api.nvim_create_augroup("_settings", {})
+vim.api.nvim_create_augroup("MySettings", {})
 vim.api.nvim_create_autocmd("VimResized", {
-  group = "_settings",
+  group = "MySettings",
   command = "tabdo wincmd =",
 })
 vim.api.nvim_create_autocmd("TextYankPost", {
-  group = "_settings",
+  group = "MySettings",
   callback = function()
     vim.highlight.on_yank({ higroup = "Visual" })
   end,
