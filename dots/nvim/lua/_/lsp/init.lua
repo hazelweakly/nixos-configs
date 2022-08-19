@@ -46,7 +46,7 @@ M.on_attach = function(client, bufnr)
   buf_map(bufnr, "n", "<C-p>", vim.diagnostic.goto_prev)
   buf_map(bufnr, "n", "<C-n>", vim.diagnostic.goto_next)
 
-  if client.server_capabilities.documetFormattingProvider then
+  if client.server_capabilities.documentFormattingProvider then
     vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
     vim.api.nvim_create_autocmd("BufWritePre", {
       group = augroup,
@@ -68,7 +68,6 @@ end
 M.default_opts = function()
   local utils = require("configs.utils")
   return {
-    autostart = false,
     on_attach = M.on_attach,
     capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
     flags = { debounce_text_changes = 150 },

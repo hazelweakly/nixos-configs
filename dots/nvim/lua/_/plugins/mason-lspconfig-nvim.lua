@@ -1,6 +1,5 @@
-require("nvim-lsp-installer").setup({
+require("mason-lspconfig").setup({
   automatic_installation = { exclude = { "hls", "rnix", "taplo", "rust_analyzer", "ltex", "gopls" } },
-  max_concurrent_installers = 10,
 })
 -- require("lspconfig.configs").ls_emmet = { default_config = {} }
 local lsp = require("_.lsp")

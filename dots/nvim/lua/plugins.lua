@@ -64,9 +64,11 @@ local spec = mod_spec({
   },
 
   -- also benchmark actual time to startup vim in an empty directory.
+
+  { "williamboman/mason.nvim" },
+  { "WhoIsSethDaniel/mason-tool-installer.nvim" },
   {
-    "williamboman/nvim-lsp-installer",
-    event = "User DirenvLoaded",
+    "williamboman/mason-lspconfig.nvim",
     requires = {
       { "ray-x/lsp_signature.nvim", module = "lsp_signature" },
       { "folke/lua-dev.nvim", module = "lua-dev" },
@@ -181,7 +183,14 @@ local spec = mod_spec({
   { "Pocco81/HighStr.nvim", cmd = { "HSHighlight", "HSRmHighlight", "HSImport", "HSExport" } }, -- https://github.com/Pocco81/HighStr.nvim
   {
     "monaqa/dial.nvim",
-    keys = { { "n", "<C-a>" }, { "n", "<C-x>" }, { "v", "<C-a>" }, { "v", "<C-x>" }, { "v", "g" } },
+    keys = {
+      { "n", "<C-a>" },
+      { "n", "<C-x>" },
+      { "v", "<C-a>" },
+      { "v", "<C-x>" },
+      { "v", "g<C-a>" },
+      { "v", "g<C-x>" },
+    },
   },
   -- re-evaluate https://github.com/kylechui/nvim-surround
   { "machakann/vim-sandwich", opt = true },
@@ -189,7 +198,7 @@ local spec = mod_spec({
   { "tweekmonster/startuptime.vim", cmd = "StartupTime" },
   -- { "dstein64/vim-startuptime", cmd = "StartupTime" },
 
-  { "j-hui/fidget.nvim", after = "nvim-lsp-installer", event = "User DirenvLoaded" },
+  { "j-hui/fidget.nvim", after = "mason.nvim", event = "User DirenvLoaded" },
   { "akinsho/git-conflict.nvim", after = "gitsigns.nvim", opt = true },
   { "norcalli/nvim-colorizer.lua", after = "indent-blankline.nvim", opt = true },
   { "kevinhwang91/nvim-hlslens", event = "CursorMoved", opt = true },
