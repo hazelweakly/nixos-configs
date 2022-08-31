@@ -21,7 +21,8 @@ Configurations for my NixOS and macOS systems (work/home laptops)
 4. ssh-keygen
 5. clone this repo
 6. Manually add the nixConfig stuff to /etc/nix/nix.conf and restart daemon. sigh. (to enable flakes).
-    - remove `/etc/shells`, `/etc/zshrc`
+    - `printf '\nexperimental-features = nix-command flakes\n' | sudo tee -a /etc/nix/nix.conf`
+    - `sudo mv /etc/shells{,.old}` `sudo mv /etc/zshrc{,.old}`
 7. `printf 'run\tprivate/var/run\n' | sudo tee -a /etc/synthetic.conf`, `/System/Library/Filesystems/apfs.fs/Contents/Resources/apfs.util -t`
 8. `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 9. zsh dots/zsh/fn/update

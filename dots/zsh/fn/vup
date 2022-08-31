@@ -1,6 +1,8 @@
 #!/usr/bin/env zsh
 printf '\n%s\n' "Packer Sync"
 nvim -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
-printf '\n%s\n' "TSUpdate"
-nvim --headless '+TSUpdateSync'  '+qall'
+printf '\n%s\n' "Install TS servers"
+nvim --headless '+TSInstallSync all' '+qall'
+nvim --headless '+TSUpdateSync' '+qall'
+nvim --headless '+LuaCacheClear' '+qall'
 echo ""
