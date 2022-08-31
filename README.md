@@ -27,6 +27,7 @@ Configurations for my NixOS and macOS systems (work/home laptops)
 8. `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 9. zsh dots/zsh/fn/update
 10. once it works, remove: /etc/shells, /etc/zshrc, /etc/nix/nix.conf and run again
+11. Execute `chsh -s $(which zsh)` to use nix's zsh on starting up kitty.
 
 ---
 
