@@ -49,3 +49,4 @@ Manual stuff:
 - https://www.auburnsounds.com/products/Renegate.html
 - https://analogobsession.com/wp-content/uploads/2021/11/SweetVox_4.0.pkg
 - https://www.meldaproduction.com/downloads
+- https://www.xp-pen.com/download-525.html
