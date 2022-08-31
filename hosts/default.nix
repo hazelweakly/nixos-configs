@@ -1,10 +1,11 @@
 { self, inputs, ... }@args:
 let
+  defaultSpecialArgs = { profiles.work = false; };
   mkDarwinSystem = cfg: inputs.nix-darwin.lib.darwinSystem {
     inherit (cfg) inputs system;
     pkgs = self.legacyPackages.${cfg.system};
     modules = import ../modules cfg;
-    specialArgs = { inherit self; inherit (cfg) hostConfig; };
+    specialArgs = (cfg.specialArgs or defaultSpecialArgs) // { inherit self; inherit (cfg) hostConfig; };
   };
 in
 builtins.mapAttrs

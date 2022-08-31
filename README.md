@@ -21,8 +21,8 @@ Configurations for my NixOS and macOS systems (work/home laptops)
 4. ssh-keygen
 5. clone this repo
 6. Manually add the nixConfig stuff to /etc/nix/nix.conf and restart daemon. sigh. (to enable flakes).
-    - `printf '\nexperimental-features = nix-command flakes\n' | sudo tee -a /etc/nix/nix.conf`
-    - `sudo mv /etc/shells{,.old}` `sudo mv /etc/zshrc{,.old}`
+   - `printf '\nexperimental-features = nix-command flakes\n' | sudo tee -a /etc/nix/nix.conf`
+   - `sudo mv /etc/shells{,.old}` `sudo mv /etc/zshrc{,.old}`
 7. `printf 'run\tprivate/var/run\n' | sudo tee -a /etc/synthetic.conf`, `/System/Library/Filesystems/apfs.fs/Contents/Resources/apfs.util -t`
 8. `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 9. zsh dots/zsh/fn/update
@@ -41,3 +41,11 @@ Configurations for my NixOS and macOS systems (work/home laptops)
   - https://old.reddit.com/r/neovim/comments/puuskh/how_to_reload_my_lua_config_while_using_neovim/
 - https://github.com/ray-x/nvim/tree/master/lua/core
   - Should just look through this.
+
+---
+
+Manual stuff:
+
+- https://www.auburnsounds.com/products/Renegate.html
+- https://analogobsession.com/wp-content/uploads/2021/11/SweetVox_4.0.pkg
+- https://www.meldaproduction.com/downloads

@@ -7,10 +7,11 @@
   homebrew.taps = [
     "homebrew/core"
     "homebrew/cask"
+    "homebrew/cask-drivers"
   ];
   # homebrew.masApps = {
-    # Tailscale = 1475387142;
-    # Xcode = # Pinned due to react native, do _not_ use mas.
+  #   Tailscale = 1475387142;
+  #   Zoom = 546505307;
   # };
   homebrew.casks = [
     "docker"
@@ -19,5 +20,6 @@
     # "openvpn-connect"
     # "react-native-debugger"
     "rectangle"
+    "elgato-wave-link"
   ];
 }

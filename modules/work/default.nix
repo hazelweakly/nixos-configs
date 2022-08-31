@@ -1,11 +1,8 @@
-{ pkgs, ... }: {
-  # imports = [ ./gpg.nix ];
+{ pkgs, lib, profiles, ... }: lib.mkIf profiles.work {
   home-manager.users.hazelweakly = { config, ... }: {
-    # imports = [ ../../home/gpg.nix ];
     programs.git = {
-      # userName = pkgs.lib.mkForce "Hazel Weakly";
-      # signing.signByDefault = false;
-      # signing.key = null;
+      userName = pkgs.lib.mkForce "Hazel Weakly";
+      userEmail = pkgs.lib.mkForce "hazel@seaplane.io";
       includes = [{
         condition = "gitdir:~/src/personal/";
         contents = {

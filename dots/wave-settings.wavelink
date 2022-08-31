@@ -1,0 +1,82 @@
+{
+    "appVersion": "1.5.0.3042",
+    "filterConfigurations": [
+        {
+            "activeMixerIDs": [
+                "com.elgato.mix.local",
+                "com.elgato.mix.microphoneFX",
+                "com.elgato.mix.stream"
+            ],
+            "filterConfigID": "60867227-E665-4A55-902E-64F05AFC5768",
+            "filterSettings": "YnBsaXN0MDDWAQIDBAUGBwgJCgsMVG5hbWVcbWFudWZhY3R1cmVyVGRhdGFUdHlwZVdzdWJ0eXBlV3ZlcnNpb25XRGVmYXVsdBJBdWJuTxCUCyC6kgAAAAAAAAAAAAIBAAAAAAAfAAAAAADAPqyqrj689Xg+60AJPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgD/NzMw+AACAPwAAAAAAAIA/AAAAAAAAgD8AAIA/AACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAgD8AAIA/AAAAABJhdW1mEkBzNDESAAECAAgVGicsMTlBSU7l6u8AAAAAAAABAQAAAAAAAAANAAAAAAAAAAAAAAAAAAAA9A==",
+            "pluginCategory": "Auburn Sounds",
+            "pluginDisplayName": "Renegate",
+            "pluginID": "/audiounit/aumf/@s41/Aubn/Auburn Sounds: Renegate",
+            "pluginOriginalName": "Renegate",
+            "pluginURL": "",
+            "pluginVendor": ""
+        },
+        {
+            "activeMixerIDs": [
+                "com.elgato.mix.local",
+                "com.elgato.mix.microphoneFX",
+                "com.elgato.mix.stream"
+            ],
+            "filterConfigID": "562D41D3-E0BD-4565-8863-24F6EA1C6884",
+            "filterSettings": "YnBsaXN0MDDWAQIDBAUGBwgJCgsMVG5hbWVcbWFudWZhY3R1cmVyVGRhdGFUdHlwZVdzdWJ0eXBlV3ZlcnNpb25QEkFub2JPEDAASZKkZvc0QLYkSRL4xDtAAIZYUb4cFEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASYXVmeBJTV1YxEgAEAAAIFRonLDE5QUJHen+EAAAAAAAAAQEAAAAAAAAADQAAAAAAAAAAAAAAAAAAAIk=",
+            "pluginCategory": "AnalogObsession",
+            "pluginDisplayName": "SweetVox",
+            "pluginID": "/audiounit/aufx/SWV1/Anob/AnalogObsession: SweetVox",
+            "pluginOriginalName": "SweetVox",
+            "pluginURL": "",
+            "pluginVendor": ""
+        },
+        {
+            "activeMixerIDs": [
+                "com.elgato.mix.local",
+                "com.elgato.mix.microphoneFX",
+                "com.elgato.mix.stream"
+            ],
+            "filterConfigID": "AD6840BE-6B7E-43EF-A400-4F18E00E54C7",
+            "filterSettings": "YnBsaXN0MDDWAQIDBAUGBwgJCgsMVG5hbWVcbWFudWZhY3R1cmVyVGRhdGFUdHlwZVdzdWJ0eXBlV3ZlcnNpb25XRGVmYXVsdBJNZWxkTxEBTXjabZFRa8IwFIXf/RXh9nXTpDXVQqOgUxCUyYS9Z/baBtNEknQ4f/1odQ9b9xa+nHPu4d58fq01+UTnlTUC2JACQXO0hTKlgCacnqcwnw3y3dLWF4feW+cxBGVKTyIBDEgkQ5DHswA6pJQDic4GsbYFCjjYUwAS2SZcmlBK1Q6gQCIng7ICkvaJGqXH1s1ac6gc+srqoiNJkvCYjZOYpUBkfdEqNAU+7BTI0prgrNbo/MrID41Fh1eFCtYd1A0FZDF/GmcZkErq070DBbJ9O7RhATsVa3vx9C+OBfDJBMhOXrfr14W2x/M9M4mB7DYvm72zpZP1spKmxHuBLv0XX8qApXXqhq77fP/ZdTZNOI9hlpdOXqpZvrfKBLLWsvQLAWycwKgPKZBrfzVfPfSPlXVW9lDHKaOMT2LG02mrHt1bDPJR/9R+NvgG72am9RJhdW1mEk1BZTESAA8CAAAIABUAGgAnACwAMQA5AEEASQBOAZ8BpAGpAAAAAAAAAgEAAAAAAAAADQAAAAAAAAAAAAAAAAAAAa4=",
+            "pluginCategory": "MeldaProduction",
+            "pluginDisplayName": "MCompressor",
+            "pluginID": "/audiounit/aumf/MAe1/Meld/MeldaProduction: MCompressor",
+            "pluginOriginalName": "MCompressor",
+            "pluginURL": "https://www.meldaproduction.com/MFreeFXBundle",
+            "pluginVendor": "MeldaProduction"
+        },
+        {
+            "activeMixerIDs": [
+                "com.elgato.mix.local",
+                "com.elgato.mix.microphoneFX",
+                "com.elgato.mix.stream"
+            ],
+            "filterConfigID": "5B786596-0267-4044-A28C-E8F25CD5C933",
+            "filterSettings": "YnBsaXN0MDDWAQIDBAUGBwgJCgsMVG5hbWVcbWFudWZhY3R1cmVyVGRhdGFUdHlwZVdzdWJ0eXBlV3ZlcnNpb25XRGVmYXVsdBJNZWxkTxEBzXjajVNdb9owFH3nV1iX15HYTgKJZKdqKe2QihaNqu0eXWISa65NbbNSfv1EEGtL2bQ3yz5f91yZnW2eNPolnVfWcCARBiTNwtbKNBzWYTnI4azssdnkeS202krnZQjKNB71ORBA/WuhDAeKAfXnrVoGDoME0HjtnDShctLLML3kcGfVQgKa1CpYN1dbySFPh18ynAG6+T5faRWC7B4IB4ILenxNOaQFATQTm5urbxfaLn7uZRIKaDa9nFbONk48jVthGjkx4lFLDhhQpdeNMrfW6kfhxlZrsfKy7sJ/oIxFkI11uxk73t2hlCJPsoxCyWYySOdpye5VHdpZyeZ27RYSVU4ulQ7SdaVhiEsWHyDxgdRj106s2pKtrDIB7QPWndMzBxwNAYXXleTwVTVtJbwH9LBbyHA03An+nfXAgUY4I/+BSuk7re4lTTJy0phGJKcZoB8cBjiiWU7+wbyxL3+IaUTyUXKa+CnYsf28lXrZySTRiOCkq3LfW4+dOyl8vDsYoV+30pEE3StT25fbvYAwBkr2fhslqzrjKy0af8GBpATQZldrggmmRVFkw66S07D0GBZ/FD+v8NtM3ZzxW7ayx+JP38aXvd8AfgkBEmF1bWYSTUFlMxIADwIAAAgAFQAaACcALAAxADkAQQBJAE4CHwIkAikAAAAAAAACAQAAAAAAAAANAAAAAAAAAAAAAAAAAAACLg==",
+            "pluginCategory": "MeldaProduction",
+            "pluginDisplayName": "MEqualizer",
+            "pluginID": "/audiounit/aumf/MAe3/Meld/MeldaProduction: MEqualizer",
+            "pluginOriginalName": "MEqualizer",
+            "pluginURL": "",
+            "pluginVendor": ""
+        },
+        {
+            "activeMixerIDs": [
+                "com.elgato.mix.local",
+                "com.elgato.mix.microphoneFX",
+                "com.elgato.mix.stream"
+            ],
+            "filterConfigID": "861006D3-E204-4488-A056-29B5B58DA0A3",
+            "pluginCategory": "MeldaProduction",
+            "pluginDisplayName": "MAnalyzer",
+            "pluginID": "/audiounit/aumf/MAeb/Meld/MeldaProduction: MAnalyzer",
+            "pluginOriginalName": "MAnalyzer",
+            "pluginURL": "",
+            "pluginVendor": ""
+        }
+    ],
+    "format": 1,
+    "platform": "Mac",
+    "type": "InputConfiguration"
+}

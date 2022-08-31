@@ -1,6 +1,9 @@
 final: prev:
 
 let
+
+  node2nix = final.inputs.node2nix.packages.${final.system}.node2nix;
+
   ifd =
     { runCommandNoCC
     , nodejs
@@ -15,7 +18,7 @@ let
       nodeVersion = builtins.elemAt (lib.versions.splitVersion nodejs.version) 0;
       node2nixDrv = runCommandNoCC "node2nix" { } ''
         mkdir $out
-        ${nodePackages.node2nix}/bin/node2nix \
+        ${node2nix}/bin/node2nix \
         --input ${src_tree}/package.json \
         --lock ${src_tree}/package-lock.json \
         --node-env $out/node-env.nix \
@@ -43,4 +46,5 @@ in
     [[ ''${output##*$'\n'} != "# exit 1" ]] && echo "$output"
     :
   '';
+  inherit node2nix;
 }

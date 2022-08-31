@@ -7,7 +7,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: cachix/install-nix-action@v16
+      - uses: cachix/install-nix-action@v17
         with:
           extra_nix_config: |
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
@@ -17,11 +17,11 @@ jobs:
           git config --global user.email "hazel@theweaklys.com"
           git config --global user.name "Hazel Weakly"
           nix develop -c nix flake update --commit-lock-file
-      - uses: cachix/cachix-action@v10
-        with:
-          name: hazel-nix-configs
-          authToken: "${{ secrets.CACHIXCI }}"
-          extraPullNames: "nix-community,hercules-ci"
+      # - uses: cachix/cachix-action@v10
+      #   with:
+      #     name: hazel-nix-configs
+      #     authToken: "${{ secrets.CACHIXCI }}"
+      #     extraPullNames: "nix-community,hercules-ci"
       - run: nix -Lv flake check
       - run: nix -Lv build ".#"darwinConfigurations.x86_64-darwin.config.system.build.toplevel
       - run: nix -Lv develop -c echo OK

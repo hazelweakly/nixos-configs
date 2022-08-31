@@ -94,7 +94,6 @@ local spec = mod_spec({
   },
   {
     "nvim-treesitter/nvim-treesitter",
-    run = ":TSUpdate",
     requires = {
       { "p00f/nvim-ts-rainbow", after = "nvim-treesitter", opt = true },
       { "IndianBoy42/tree-sitter-just", module = "tree-sitter-just", opt = true },

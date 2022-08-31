@@ -10,6 +10,10 @@
     mkalias.inputs.flake-utils.follows = "flake-utils";
     mkalias.inputs.rust-overlay.follows = "rust-overlay";
 
+    node2nix.url = "github:svanderburg/node2nix/master";
+    node2nix.inputs.nixpkgs.follows = "nixpkgs";
+    node2nix.inputs.flake-utils.follows = "flake-utils";
+
     flake-utils.url = "github:numtide/flake-utils";
 
     rust-overlay.url = "github:oxalica/rust-overlay";
