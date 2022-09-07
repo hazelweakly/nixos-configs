@@ -29,6 +29,10 @@ Configurations for my NixOS and macOS systems (work/home laptops)
 10. once it works, remove: /etc/shells, /etc/zshrc, /etc/nix/nix.conf and run again
 11. Execute `chsh -s $(which zsh)` to use nix's zsh on starting up kitty.
 
+If you rename your home folder and nix hates you, check the `XDG_` environment variables and everything else in env.
+
+Might be needed?: `sudo ln -s /nix/var/nix/profiles/system /run/current-system`
+
 ---
 
 - https://github.com/miversen33/import.nvim

@@ -1,6 +1,6 @@
 { self, inputs, ... }@args:
 let
-  defaultSpecialArgs = { profiles.work = false; };
+  defaultSpecialArgs = { profiles.work = false; profiles.user.username = "hazelweakly"; };
   mkDarwinSystem = cfg: inputs.nix-darwin.lib.darwinSystem {
     inherit (cfg) inputs system;
     pkgs = self.legacyPackages.${cfg.system};

@@ -1,10 +1,10 @@
-{ config, pkgs, ... }:
+{ config, pkgs, profiles, ... }:
 let dir = config.home.homeDirectory + "/src/personal/nixos-configs";
 in
 with builtins;
 with pkgs.lib; {
   home.stateVersion = "22.11";
-  home.homeDirectory = mkForce "/Users/hazelweakly";
+  home.homeDirectory = mkForce "/Users/${profiles.user.username}";
   xdg.enable = true;
 
   imports = [ ../task.nix ../fzf.nix ../zsh.nix ../git.nix ../neovim.nix ];

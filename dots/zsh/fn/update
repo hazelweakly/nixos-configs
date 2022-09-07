@@ -1,6 +1,11 @@
 #!/usr/bin/env zsh
 echo "Rebuilding"
 
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_STATE_HOME="$HOME/.local/state"
+
 if [ -f /etc/os-release ]; then
   sudo nixos-rebuild \
     --flake '/etc/nixos#'"$(hostname)" \

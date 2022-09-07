@@ -9,16 +9,8 @@
     "homebrew/cask"
     "homebrew/cask-drivers"
   ];
-  # homebrew.masApps = {
-  #   Tailscale = 1475387142;
-  #   Zoom = 546505307;
-  # };
   homebrew.casks = [
     "docker"
-    "mos"
-    "obsidian"
-    # "openvpn-connect"
-    # "react-native-debugger"
     "rectangle"
     "elgato-wave-link"
   ];

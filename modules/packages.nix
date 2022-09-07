@@ -17,6 +17,7 @@
     switch-theme
     _1password
 
+    docker
     docker-compose
     awscli2 # yey
     # ssm-session-manager-plugin
