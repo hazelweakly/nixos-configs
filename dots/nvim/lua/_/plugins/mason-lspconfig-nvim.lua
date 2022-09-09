@@ -78,6 +78,8 @@ vim.diagnostic.config({
   underline = false,
 })
 
+require("lsp_lines").setup()
+
 for type, icon in pairs({ Error = " ", Warn = " ", Hint = " ", Info = " " }) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })

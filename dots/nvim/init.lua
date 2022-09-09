@@ -20,20 +20,6 @@ for _, m in ipairs({
   end
 end
 
-local lazy_timer = 0
-vim.defer_fn(function()
-  vim.cmd([[doautocmd User LoadLazyPlugin]])
-end, lazy_timer)
-
-vim.api.nvim_create_autocmd("User", {
-  pattern = "LoadLazyPlugin",
-  nested = true,
-  once = true,
-  callback = function()
-    require("_.lazy")()
-  end,
-})
-
 require("configs.colors").setup()
 
 if is_root then
