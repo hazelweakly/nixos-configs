@@ -4,6 +4,7 @@ in
 with builtins;
 with pkgs.lib; {
   home.stateVersion = "22.11";
+  home.username = profiles.user.username;
   home.homeDirectory = mkForce "/Users/${profiles.user.username}";
   xdg.enable = true;
 

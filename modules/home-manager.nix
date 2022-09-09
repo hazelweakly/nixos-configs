@@ -4,4 +4,5 @@
   home-manager.backupFileExtension = "hm";
   home-manager.users = let users = import ../home/users; in { ${profiles.user.username} = users.hazelweakly; inherit (users) root; };
   home-manager.extraSpecialArgs = { inherit profiles; };
+  users.users.${profiles.user.username}.home = "/Users/{profiles.user.username}";
 }

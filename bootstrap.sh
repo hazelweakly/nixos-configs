@@ -5,27 +5,27 @@ set -euo pipefail
 echo "installing xtool stuffs by invoking a missing command (git)"
 git --version || :
 
-echo "installing nix"
 if ! command -v nix; then
+  echo "installing nix"
   sh <(curl -L https://nixos.org/nix/install)
 fi
 
-echo "installing kitty app"
 if ! command -v kitty; then
+  echo "installing kitty app"
   curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
 fi
 
 echo "making personal directory"
 mkdir -p ~/src/personal
 
-echo "setting up ssh-keygen with chosen email"
 if ! [[ -f ~/.ssh/id_ed25519 ]]; then
+  echo "setting up ssh-keygen with chosen email"
   read -r email -p 'email :'
   ssh-keygen -t ed2559 -C "$email" -N '' -f ~/.ssh/id_ed25519
 fi
 
-echo 'adding nix config stuff to /etc/nix/nix.conf if needed'
 if ! grep 'flakes' /etc/nix/nix.conf; then
+  echo 'adding nix config stuff to /etc/nix/nix.conf if needed'
   printf '\nexperimental-features = nix-command flakes\n' | sudo tee -a /etc/nix/nix.conf
 
   sudo mv /etc/shells{,.old}
@@ -36,13 +36,13 @@ if ! grep 'flakes' /etc/nix/nix.conf; then
   fi
 fi
 
-echo "installing homebrew"
-if ! command -v brew; then
+if [[ ! -x /opt/homebrew/bin/brew ]]; then
+  echo "installing homebrew"
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-echo "cloning my dotfiles (this will fail until I've added the ssh key to the profile)"
 if [[ ! -d ~/src/personal/nixos-configs ]]; then
+  echo "cloning my dotfiles (this will fail until I've added the ssh key to the profile)"
   git clone git@github.com:hazelweakly/nixos-configs.git ~/src/personal/nixos-configs
 fi
 
@@ -54,7 +54,10 @@ sudo mv /etc/shells{,old}
 sudo mv /etc/zshrc{,old}
 sudo mv /etc/nix/nix.conf{,old}
 
-echo "setting new zsh as chsh"
+echo "running the nix update again, babe"
+zsh ~/src/personal/nixos-configs/dots/zsh/fn/update
+
 if [[ -x /run/current-system/sw/bin/zsh ]]; then
+  echo "setting new zsh as chsh"
   chsh -s /run/current-system/sw/bin/zsh
 fi

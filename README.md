@@ -33,6 +33,12 @@ If you rename your home folder and nix hates you, check the `XDG_` environment v
 
 Might be needed?: `sudo ln -s /nix/var/nix/profiles/system /run/current-system`
 
+Might also be needed?
+
+- wait for home manager to fail
+- dig through the /run/current-system/activate script to find the home-manager activation script
+- execute it normally ??? y tho???
+
 ---
 
 - https://github.com/miversen33/import.nvim
