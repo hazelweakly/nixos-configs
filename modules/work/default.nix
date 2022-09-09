@@ -23,7 +23,7 @@
     };
   };
 
-  # mas seems unmaintained. RIP
+  # mas seems unmaintained. cry
   # homebrew.masApps = {
   #   Tailscale = 1475387142;
   # };
