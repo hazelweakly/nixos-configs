@@ -56,6 +56,8 @@ vim.opt.fixendofline = false
 vim.opt.pyx = 3
 vim.opt.diffopt = "filler,internal,algorithm:histogram,indent-heuristic,hiddenoff"
 vim.opt.spelllang = { "en_us" }
+vim.opt_local.spelloptions:append("noplainbuffer")
+vim.opt_local.spelloptions:append("camel")
 vim.opt.shell = "/bin/sh"
 
 -- Set filetypes that should be ignored in other plugins

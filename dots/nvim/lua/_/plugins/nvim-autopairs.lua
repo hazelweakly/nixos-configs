@@ -33,22 +33,7 @@ npairs.add_rules({
     :use_key("]"),
 })
 
--- Setup everything manually because nightly breakage
-require("tabout").setup({
-  act_as_shift_tab = false,
-  tabkey = "",
-  backwards_tabkey = "",
-  completion = false,
-})
-
--- Fix breakage with nightly neovim
-local map = require("configs.utils").map
-map("i", "<Tab>", function()
-  return vim.fn.pumvisible() ~= 0 and "<C-n>" or "<Plug>(Tabout)"
-end, { expr = true })
-map("i", "<S-Tab>", function()
-  return vim.fn.pumvisible() ~= 0 and "<C-p>" or "<Plug>(TaboutBack)<C-d>"
-end, { expr = true })
+require("tabout").setup({ act_as_shift_tab = true })
 
 local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 local cmp = require("cmp")

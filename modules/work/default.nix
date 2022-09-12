@@ -28,7 +28,7 @@
   #   Tailscale = 1475387142;
   # };
 
-  environment.systemPackages = with pkgs; [ pulumi-bin gum packer gh jq dasel figlet ansible ];
+  environment.systemPackages = with pkgs; [ pulumi-bin gum packer gh jq dasel figlet ansible google-cloud-sdk ];
 
   homebrew.taps = [ "equinix-labs/otel-cli" "withgraphite/tap" ];
   homebrew.casks = [ "zoom" ];
