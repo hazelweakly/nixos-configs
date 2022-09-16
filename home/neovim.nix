@@ -20,7 +20,6 @@ let
     go
     haskellPackages.cabal-fmt
     haskellPackages.hadolint
-    isortd
     jq
     languagetool
     libcxx

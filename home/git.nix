@@ -13,6 +13,7 @@
       color.ui = true;
       diff.colorMoved = "default";
       push.autoSetupRemote = true;
+      init.defaultBranch = "main";
     };
     delta = {
       enable = true;

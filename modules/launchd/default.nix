@@ -25,19 +25,6 @@
     command = "blackd";
   };
 
-  launchd.user.agents.isortd = {
-    path = [ pkgs.isortd ];
-    serviceConfig = {
-      KeepAlive = true;
-      RunAtLoad = true;
-      UserName = profiles.user.username;
-      GroupName = "staff";
-      StandardOutPath = "/tmp/isortd.stdout";
-      StandardErrorPath = "/tmp/isortd.stderr";
-    };
-    command = "isortd";
-  };
-
   # TODO: too much effort to rewrite the whole thing to not daemon fork.
   # launchd.user.agents.prettierd = {
   #   path = [ pkgs.myNodePackages pkgs.nodejs ];
