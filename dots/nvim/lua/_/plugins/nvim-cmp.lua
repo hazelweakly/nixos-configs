@@ -112,7 +112,6 @@ end
 ---@diagnostic disable-next-line: undefined-field
 cmp.setup.filetype({ "markdown", "tex" }, {
   sources = cmp.config.sources(table_concat(cmp.get_config().sources, {
-    { name = "nuspell", keyword_length = 4, max_item_count = 3 },
     { name = "emoji", option = { insert = true } },
     { name = "latex_symbols" },
   })),

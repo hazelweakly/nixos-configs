@@ -4,8 +4,7 @@ with pkgs;
 let
   isBroken = pkg: (builtins.tryEval (builtins.deepSeq pkg.outPath pkg)).success;
   nonBrokenPkgs = builtins.concatMap (p: pkgs.lib.optionals (isBroken p) [ p ]);
-  luaWith = neovim-unwrapped.lua.withPackages (p: [ lua-nuspell p.luarocks ]);
-  dicts = [ hunspellDicts.en_US hunspellDicts.en_US-large ];
+  luaWith = neovim-unwrapped.lua.withPackages (p: [ p.luarocks ]);
   path = builtins.sort (a: b: a.name < b.name) (nonBrokenPkgs [
     actionlint
     bat
@@ -28,7 +27,6 @@ let
     myNodePackages
     neovim-remote
     # nodePackages.prettier
-    (nuspellWithDicts dicts)
     nixpkgs-fmt
     perl
     prettierme
@@ -48,7 +46,7 @@ let
     zk
   ]);
 
-  extraLuaPackages = p: [ p.luarocks lua-nuspell ];
+  extraLuaPackages = p: [ p.luarocks ];
   nv_lua = pkgs.neovim-unwrapped.lua;
   luaPackages = extraLuaPackages nv_lua.pkgs;
   extraMakeWrapperLuaCArgs = ''--set LUA_CPATH '${lib.concatMapStringsSep ";" nv_lua.pkgs.getLuaCPath luaPackages}' '';
@@ -91,7 +89,6 @@ in
       "--suffix"
       "DICPATH"
       ":"
-      (lib.makeSearchPath "share/hunspell" dicts)
       extraMakeWrapperLuaArgs
       extraMakeWrapperLuaCArgs
     ];

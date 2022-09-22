@@ -42,11 +42,11 @@
   outputs = inputs@{ self, ... }: {
     overlays = import ./overlays { inherit self inputs; };
 
-    lib = import ./lib.nix;
+    lib = inputs.flake-utils.lib // (import ./lib.nix);
 
     darwinConfigurations = import ./hosts { inherit self inputs; };
 
-  } // inputs.flake-utils.lib.eachSystem [ "aarch64-darwin" "x86_64-darwin" ] (system: {
+  } // inputs.flake-utils.lib.eachSystem [ "aarch64-darwin" "x86_64-darwin" "x86_64-linux" "aarch64-linux" ] (system: {
     legacyPackages = import inputs.nixpkgs {
       inherit system;
       config.allowUnfree = true;

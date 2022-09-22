@@ -85,7 +85,6 @@ local spec = mod_spec({
   "hrsh7th/cmp-path",
   "hrsh7th/cmp-cmdline",
   "hrsh7th/cmp-emoji",
-  "f3fora/cmp-nuspell",
   "kdheepak/cmp-latex-symbols",
   "onsails/lspkind-nvim",
   "abecodes/tabout.nvim",
