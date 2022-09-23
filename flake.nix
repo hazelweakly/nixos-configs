@@ -46,7 +46,7 @@
 
     darwinConfigurations = import ./hosts { inherit self inputs; };
 
-  } // inputs.flake-utils.lib.eachSystem [ "aarch64-darwin" "x86_64-darwin" "x86_64-linux" "aarch64-linux" ] (system: {
+  } // inputs.flake-utils.lib.eachSystem [ "aarch64-darwin" "x86_64-darwin" "x86_64-linux" "aarch64-linux" ] (system: rec {
     legacyPackages = import inputs.nixpkgs {
       inherit system;
       config.allowUnfree = true;
@@ -54,6 +54,13 @@
       overlays = builtins.attrValues self.overlays;
     };
 
-    devShells = let pkgs = self.legacyPackages.${system}; in { default = pkgs.mkShell { }; };
+    # lol. lmao.
+    packages.neovim = builtins.head (legacyPackages.callPackage ./home/neovim.nix { }).home.packages;
+
+    devShells =
+      let pkgs = self.legacyPackages.${system};
+      in {
+        default = pkgs.mkShell { };
+      };
   });
 }

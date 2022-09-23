@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 let
   isBroken = pkg: (builtins.tryEval (builtins.deepSeq pkg.outPath pkg)).success;
@@ -22,6 +22,7 @@ let
     libcxx
     ltex-ls
     myNodePackages
+    nodejs
     neovim-remote
     nixpkgs-fmt
     perl
