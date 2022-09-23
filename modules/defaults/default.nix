@@ -1,4 +1,4 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, ... }: rec {
   imports = [ ./defaults-options.nix ];
   system.defaults.NSGlobalDomain = {
     "com.apple.mouse.tapBehavior" = 1;
@@ -38,4 +38,17 @@
     show-recents = false;
     minimize-to-application = true;
   };
+
+  system.activationScripts.dock-apps.text = ''
+    echo >&2 "setting up the dock icons"
+    defaults write com.apple.dock persistent-apps -array
+
+    for dockItem in /Applications/{"Firefox Developer Edition","kitty"}.app /System/Applications/"System Preferences"; do
+      defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>'"$dockItem"'</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
+    done
+    killall Dock
+  '';
+
+  # hack
+  system.activationScripts.postActivation.text = system.activationScripts.dock-apps.text;
 }

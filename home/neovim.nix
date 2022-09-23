@@ -85,12 +85,6 @@ in
       "--run"
       "'${preRun}'"
     ];
-    postWrapperArgs = [
-      "--suffix"
-      "DICPATH"
-      ":"
-      extraMakeWrapperLuaArgs
-      extraMakeWrapperLuaCArgs
-    ];
+    postWrapperArgs = [ extraMakeWrapperLuaArgs extraMakeWrapperLuaCArgs ];
   };
 }
