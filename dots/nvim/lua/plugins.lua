@@ -59,7 +59,6 @@ local spec = mod_spec({
   "simrat39/rust-tools.nvim",
   "b0o/schemastore.nvim",
   "jose-elias-alvarez/nvim-lsp-ts-utils",
-  "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
   "lukas-reineke/indent-blankline.nvim",
   "lewis6991/gitsigns.nvim",
   "nvim-treesitter/nvim-treesitter",
