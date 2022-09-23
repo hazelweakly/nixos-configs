@@ -1,16 +1,17 @@
 vim.b.did_sandwich_nix_ftplugin = 1
-require("packer").loader("vim-sandwich")
 vim.cmd([[
-call sandwich#util#addlocal([
-  \ { 'buns': ["''", "''"], 'input': ['q'], 'cursor': 'keep' },
-  \ { 'buns': ["''","''"],  'input': ['Q'], 'linewise': 1, 'cursor': 'keep' },
-  \ { 'buns': ['${','}'],  'input': ['$'] },
-  \ ])
+if exists("sandwich#util#addlocal")
+  call sandwich#util#addlocal([
+    \ { 'buns': ["''", "''"], 'input': ['q'], 'cursor': 'keep' },
+    \ { 'buns': ["''","''"],  'input': ['Q'], 'linewise': 1, 'cursor': 'keep' },
+    \ { 'buns': ['${','}'],  'input': ['$'] },
+    \ ])
+endif
 ]])
 
 require("configs.utils").ftplugin.undo({
   "unlet b:did_sandwich_nix_ftplugin",
-  [[call sandwich#util#ftrevert("nix")]],
+  [[if exists("sandwich#util#ftrevert") | call sandwich#util#ftrevert("nix") | endif]],
 })
 
 -- TODO: figure this out later

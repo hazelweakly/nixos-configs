@@ -1,6 +1,5 @@
 vim.b.did_sandwich_markdown_ftplugin = 1
 
-require("packer").loader("vim-sandwich")
 vim.b["sandwich_recipes"] = vim.fn["sandwich#get_recipes"]() or {}
 vim.b["sandwich_recipes"] = vim.list_extend(vim.b["sandwich_recipes"], {
   {
@@ -35,5 +34,5 @@ end
 
 require("configs.utils").ftplugin.undo({
   "unlet b:did_sandwich_markdown_ftplugin",
-  [[call sandwich#util#ftrevert("markdown")]],
+  [[if exists("sandwich#util#ftrevert") | call sandwich#util#ftrevert("markdown") | endif]],
 })
