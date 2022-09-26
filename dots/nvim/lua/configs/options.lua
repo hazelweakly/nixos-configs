@@ -44,7 +44,7 @@ vim.opt.wrap = false
 vim.wo.foldenable = false
 vim.opt.signcolumn = "yes"
 vim.opt.syntax = "off"
-vim.opt.cmdheight = 0
+vim.opt.cmdheight = 1
 
 vim.g.cursorhold_updatetime = 100
 vim.opt.synmaxcol = 500

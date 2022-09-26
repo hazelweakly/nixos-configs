@@ -56,6 +56,16 @@
 
     # lol. lmao.
     packages.neovim = builtins.head (legacyPackages.callPackage ./home/neovim.nix { }).home.packages;
+    packages.neovim-bundled =
+      let
+        neovim = builtins.head (legacyPackages.callPackage ./home/neovim.nix { }).home.packages;
+      in
+      neovim.override {
+        wrapRc = true;
+        neovimRcContent = ''
+          lua dofile("${builtins.toString ./dots/nvim/init.lua}")
+        '';
+      };
 
     devShells =
       let pkgs = self.legacyPackages.${system};
