@@ -43,15 +43,20 @@ let
     zk
   ]);
 
-  myNeovim = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped ((pkgs.neovimUtils.makeNeovimConfig {
-    extraLuaPackages = p: [ p.luarocks ];
-    withNodeJs = true;
-    vimAlias = true;
-    viAlias = true;
-    wrapRc = false;
-  }) // {
-    wrapperArgs = [ "--suffix" "PATH" ":" "${pkgs.lib.makeBinPath path}" ];
-  });
+  myNeovim = pkgs.wrapNeovimUnstable
+    (pkgs.neovim-unwrapped.overrideAttrs
+      (o: {
+        buildInputs = (o.buildInputs or [ ]) ++ [ pkgs.stdenv.cc.cc.lib ];
+      }))
+    ((pkgs.neovimUtils.makeNeovimConfig {
+      extraLuaPackages = p: [ p.luarocks ];
+      withNodeJs = true;
+      vimAlias = true;
+      viAlias = true;
+      wrapRc = false;
+    }) // {
+      wrapperArgs = [ "--prefix" "PATH" ":" "${pkgs.lib.makeBinPath path}" ];
+    });
 in
 {
   home.packages = [ myNeovim ];
