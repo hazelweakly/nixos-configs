@@ -6,27 +6,26 @@ let
   path = builtins.sort (a: b: a.name < b.name) (with pkgs; nonBrokenPkgs [
     actionlint
     bat
-    binutils
-    blackd-client
-    buildifier
-    cmake
+    # binutils
+    # blackd-client
+    # cmake
     direnv
     exa
-    gcc
+    # gcc
     git
-    go
-    haskellPackages.cabal-fmt
-    haskellPackages.hadolint
+    # go
+    # cabal-fmt
+    # hadolint
     jq
-    languagetool
-    libcxx
-    ltex-ls
+    # languagetool
+    # libcxx
+    # ltex-ls
     myNodePackages
     nodejs
     neovim-remote
     nixpkgs-fmt
-    perl
-    prettierme
+    # perl
+    # prettierme
     rnix-lsp
     shellcheck
     shellharden
@@ -34,12 +33,12 @@ let
     stylua
     taplo-lsp
     terraform
-    tmux
-    tree-sitter
-    universal-ctags
+    # tmux
+    # tree-sitter
+    # universal-ctags
     watchman
     yarn
-    zig
+    # zig
     zk
   ]);
 
@@ -51,6 +50,7 @@ let
     ((pkgs.neovimUtils.makeNeovimConfig {
       extraLuaPackages = p: [ p.luarocks ];
       withNodeJs = true;
+      withRuby = false;
       vimAlias = true;
       viAlias = true;
       wrapRc = false;

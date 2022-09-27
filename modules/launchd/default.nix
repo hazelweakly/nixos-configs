@@ -12,31 +12,17 @@
     command = "dark-mode-notify switch-theme";
   };
 
-  launchd.user.agents.blackd = {
-    path = [ pkgs.black ];
-    serviceConfig = {
-      KeepAlive = true;
-      RunAtLoad = true;
-      UserName = profiles.user.username;
-      GroupName = "staff";
-      StandardOutPath = "/tmp/blackd.stdout";
-      StandardErrorPath = "/tmp/blackd.stderr";
-    };
-    command = "blackd";
-  };
-
-  # TODO: too much effort to rewrite the whole thing to not daemon fork.
-  # launchd.user.agents.prettierd = {
-  #   path = [ pkgs.myNodePackages pkgs.nodejs ];
+  # launchd.user.agents.blackd = {
+  #   path = [ pkgs.black ];
   #   serviceConfig = {
   #     KeepAlive = true;
   #     RunAtLoad = true;
   #     UserName = profiles.user.username;
   #     GroupName = "staff";
-  #     StandardOutPath = "/tmp/prettierd.stdout";
-  #     StandardErrorPath = "/tmp/prettierd.stderr";
+  #     StandardOutPath = "/tmp/blackd.stdout";
+  #     StandardErrorPath = "/tmp/blackd.stderr";
   #   };
-  #   command = "prettierd start";
+  #   command = "blackd";
   # };
 
   environment.launchDaemons."limit.maxfiles.plist".source = ./limit.maxfiles.plist;

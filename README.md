@@ -11,6 +11,11 @@ Configurations for my NixOS and macOS systems (work/home laptops)
   - Try to keep configuration in the natural language of that environment. (eg don't fully embed vimrc into nix)
 - System configuration should be buildable from CI
 
+## TODO
+
+- Reduce closure sizes of things
+- Particularly neovim...
+
 ## Install Instructions
 
 - lol
