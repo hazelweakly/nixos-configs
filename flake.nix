@@ -46,7 +46,7 @@
 
     darwinConfigurations = import ./hosts { inherit self inputs; };
 
-  } // inputs.flake-utils.lib.eachSystem [ "aarch64-darwin" "x86_64-darwin" "x86_64-linux" "aarch64-linux" ] (system: rec {
+  } // inputs.flake-utils.lib.eachDefaultSystem (system: rec {
     legacyPackages = import inputs.nixpkgs {
       inherit system;
       config.allowUnfree = true;
@@ -55,17 +55,16 @@
     };
 
     # lol. lmao.
-    packages.neovim = builtins.head (legacyPackages.callPackage ./home/neovim.nix { }).home.packages;
-    packages.neovim-bundled =
-      let
-        neovim = builtins.head (legacyPackages.callPackage ./home/neovim.nix { }).home.packages;
-      in
-      neovim.override {
+    packages = rec {
+      neovim = builtins.head (legacyPackages.callPackage ./home/neovim.nix { }).home.packages;
+      neovim-bundled = neovim.override {
         wrapRc = true;
+        # TODO: stick the rtp stuff in here, not in init.lua
         neovimRcContent = ''
           lua dofile("${builtins.toString ./dots/nvim/init.lua}")
         '';
       };
+    };
 
     devShells =
       let pkgs = self.legacyPackages.${system};

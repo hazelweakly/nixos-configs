@@ -5,7 +5,7 @@ let
   node2nix = final.inputs.node2nix.packages.${final.system}.node2nix;
 
   ifd =
-    { runCommandNoCC
+    { runCommand
     , nodejs
     , nodePackages
     , pkgs
@@ -16,7 +16,7 @@ let
 
     rec {
       nodeVersion = builtins.elemAt (lib.versions.splitVersion nodejs.version) 0;
-      node2nixDrv = runCommandNoCC "node2nix" { } ''
+      node2nixDrv = runCommand "node2nix" { } ''
         mkdir $out
         ${node2nix}/bin/node2nix \
         --input ${src_tree}/package.json \
