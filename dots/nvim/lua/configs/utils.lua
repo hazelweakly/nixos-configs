@@ -42,15 +42,6 @@ M.ftplugin.undo = function(args)
     .. (type(args) == "table" and table.concat(args, " | ") or args)
 end
 
-M.packer_lazy_load = function(plugin, timer)
-  if plugin then
-    timer = timer or 0
-    vim.defer_fn(function()
-      require("packer").loader(plugin)
-    end, timer)
-  end
-end
-
 ---The file system path separator for the current platform.
 M.path_separator = "/"
 M.is_windows = vim.fn.has("win32") == 1 or vim.fn.has("win32unix") == 1

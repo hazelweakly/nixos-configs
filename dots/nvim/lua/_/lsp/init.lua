@@ -13,7 +13,7 @@ M.on_attach = function(client, bufnr)
     handler_opts = { border = utils.border },
   }, bufnr)
 
-  buf_map(bufnr, "x", "<leader>la", vim.lsp.buf.range_code_action)
+  buf_map(bufnr, "x", "<leader>la", vim.lsp.buf.code_action)
   if client.server_capabilities.codeActionProvider then
     buf_map(bufnr, "n", "ga", vim.lsp.buf.code_action)
   end
