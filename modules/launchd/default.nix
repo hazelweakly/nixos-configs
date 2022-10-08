@@ -12,18 +12,5 @@
     command = "dark-mode-notify switch-theme";
   };
 
-  # launchd.user.agents.blackd = {
-  #   path = [ pkgs.black ];
-  #   serviceConfig = {
-  #     KeepAlive = true;
-  #     RunAtLoad = true;
-  #     UserName = profiles.user.username;
-  #     GroupName = "staff";
-  #     StandardOutPath = "/tmp/blackd.stdout";
-  #     StandardErrorPath = "/tmp/blackd.stderr";
-  #   };
-  #   command = "blackd";
-  # };
-
   environment.launchDaemons."limit.maxfiles.plist".source = ./limit.maxfiles.plist;
 }

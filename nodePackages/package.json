@@ -1,8 +1,0 @@
-{
-  "name": "name",
-  "version": "0.0.1",
-  "dependencies": {
-    "@fsouza/prettierd": "*",
-    "ls_emmet": "*"
-  }
-}

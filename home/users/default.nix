@@ -1,1 +1,1 @@
-(import ../../lib.nix).rake ./.
+{ self }: self.lib.rake ./.

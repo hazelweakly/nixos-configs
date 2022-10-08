@@ -40,7 +40,6 @@ local function mod_spec(spec)
 end
 
 -- https://zignar.net/2022/10/01/new-lsp-features-in-neovim-08/
--- https://github.com/jayp0521/mason-null-ls.nvim
 -- https://github.com/echasnovski/mini.nvim
 local spec = mod_spec({
   "wbthomason/packer.nvim",
@@ -54,8 +53,11 @@ local spec = mod_spec({
   "kyazdani42/nvim-web-devicons",
   "nvim-lualine/lualine.nvim",
   "williamboman/mason.nvim",
-  "WhoIsSethDaniel/mason-tool-installer.nvim",
   "williamboman/mason-lspconfig.nvim",
+  "neovim/nvim-lspconfig",
+  "WhoIsSethDaniel/mason-tool-installer.nvim",
+  "jose-elias-alvarez/null-ls.nvim",
+  "jayp0521/mason-null-ls.nvim",
   "ray-x/lsp_signature.nvim",
   "folke/lua-dev.nvim",
   { "mickael-menu/zk-nvim", ft = "markdown", module = "zk" },
@@ -76,7 +78,6 @@ local spec = mod_spec({
   "andymass/vim-matchup",
   "nvim-telescope/telescope.nvim",
   { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
-  "neovim/nvim-lspconfig",
   "rafamadriz/friendly-snippets",
   "hrsh7th/nvim-cmp",
   "L3MON4D3/LuaSnip",
@@ -91,7 +92,6 @@ local spec = mod_spec({
   "onsails/lspkind-nvim",
   "abecodes/tabout.nvim",
   "windwp/nvim-autopairs",
-  { "jose-elias-alvarez/null-ls.nvim", event = "User DirenvLoaded" },
   { "editorconfig/editorconfig-vim", event = "User DirenvLoaded" },
   "ethanholz/nvim-lastplace",
   "junegunn/vim-easy-align",

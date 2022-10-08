@@ -10,10 +10,6 @@
     mkalias.inputs.flake-utils.follows = "flake-utils";
     mkalias.inputs.rust-overlay.follows = "rust-overlay";
 
-    node2nix.url = "github:svanderburg/node2nix/master";
-    node2nix.inputs.nixpkgs.follows = "nixpkgs";
-    node2nix.inputs.flake-utils.follows = "flake-utils";
-
     flake-utils.url = "github:numtide/flake-utils";
 
     rust-overlay.url = "github:oxalica/rust-overlay";
@@ -34,47 +30,20 @@
     naersk.url = "github:nmattia/naersk";
     naersk.inputs.nixpkgs.follows = "nixpkgs";
     rnix-lsp.inputs.naersk.follows = "naersk";
-
-    flake-compat.url = "github:edolstra/flake-compat";
-    flake-compat.flake = false;
   };
 
   outputs = inputs@{ self, ... }: {
     overlays = import ./overlays { inherit self inputs; };
 
-    lib = inputs.flake-utils.lib // (import ./lib.nix);
+    lib = import ./lib.nix { inherit inputs; };
 
     darwinConfigurations = import ./hosts { inherit self inputs; };
 
-  } // inputs.flake-utils.lib.eachDefaultSystem (system: rec {
-    legacyPackages = import inputs.nixpkgs {
-      inherit system;
-      config.allowUnfree = true;
-      config.allowUnsupportedSystem = true;
-      overlays = builtins.attrValues self.overlays;
-    };
+  } // inputs.flake-utils.lib.eachDefaultSystem (system:
+    let builtPkgs = import ./packages { inherit self inputs system; }; in {
+      inherit (builtPkgs) legacyPackages;
+      packages = { inherit (builtPkgs) neovim neovim-bundled; };
 
-    # TODO: Have an actual packages folder where I build bundled packages like this and zsh
-    packages = let neovimPath = builtins.toString ./dots/nvim; in rec {
-      neovim = builtins.head (legacyPackages.callPackage ./home/neovim.nix { }).home.packages;
-      neovim-bundled = neovim.override {
-        wrapRc = true;
-        wrapperArgs = (neovim.passthru.args.wrapperArgs or [ ]) ++ [
-          "--add-flags"
-          "--cmd 'set packpath^=${neovimPath}'"
-          "--add-flags"
-          "--cmd 'set rtp^=${neovimPath}'"
-        ];
-        neovimRcContent = ''
-          luafile ${neovimPath + "/init.lua"}
-        '';
-      };
-    };
-
-    devShells =
-      let pkgs = self.legacyPackages.${system};
-      in {
-        default = pkgs.mkShell { };
-      };
-  });
+      devShells.default = builtPkgs.legacyPackages.mkShell { };
+    });
 }

@@ -1,21 +1,5 @@
 {
   "nodes": {
-    "flake-compat": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1650374568,
-        "narHash": "sha256-Z+s0J8/r907g149rllvwhb4pKi8Wam5ij0st8PwAh+E=",
-        "owner": "edolstra",
-        "repo": "flake-compat",
-        "rev": "b4a34015c698c7793d592d66adbab377907a2be8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "edolstra",
-        "repo": "flake-compat",
-        "type": "github"
-      }
-    },
     "flake-utils": {
       "locked": {
         "lastModified": 1659877975,
@@ -161,30 +145,6 @@
         "type": "github"
       }
     },
-    "node2nix": {
-      "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1664397553,
-        "narHash": "sha256-361KP3ys806YgwVIeXw6CrQmdV2ldJ3u95rcZUbI5vY=",
-        "owner": "svanderburg",
-        "repo": "node2nix",
-        "rev": "a6041f67b8d4a300c6f8d097289fe5addbc5edf8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "svanderburg",
-        "ref": "master",
-        "repo": "node2nix",
-        "type": "github"
-      }
-    },
     "rnix-lsp": {
       "inputs": {
         "naersk": [
@@ -213,7 +173,6 @@
     },
     "root": {
       "inputs": {
-        "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "mkalias": "mkalias",
@@ -221,7 +180,6 @@
         "neovim-flake": "neovim-flake",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",
-        "node2nix": "node2nix",
         "rnix-lsp": "rnix-lsp",
         "rust-overlay": "rust-overlay"
       }

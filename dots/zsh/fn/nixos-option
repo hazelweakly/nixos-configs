@@ -1,2 +1,0 @@
-#!/usr/bin/env zsh
-command nixos-option -I nixpkgs=/etc/nixos/compat "$@"
