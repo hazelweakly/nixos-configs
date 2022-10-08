@@ -27,6 +27,5 @@ jobs:
           name: hazel-nix-configs
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
           extraPullNames: "nix-community,hercules-ci,pre-commit-hooks"
-      - run: nix -Lv flake check
       - run: nix -Lv build ".#"${{ matrix.path }}
       - run: nix -Lv develop -c echo OK
