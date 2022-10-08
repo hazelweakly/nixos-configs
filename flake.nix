@@ -54,14 +54,19 @@
       overlays = builtins.attrValues self.overlays;
     };
 
-    # lol. lmao.
-    packages = rec {
+    # TODO: Have an actual packages folder where I build bundled packages like this and zsh
+    packages = let neovimPath = builtins.toString ./dots/nvim; in rec {
       neovim = builtins.head (legacyPackages.callPackage ./home/neovim.nix { }).home.packages;
       neovim-bundled = neovim.override {
         wrapRc = true;
-        # TODO: stick the rtp stuff in here, not in init.lua
+        wrapperArgs = (neovim.passthru.args.wrapperArgs or [ ]) ++ [
+          "--add-flags"
+          "--cmd 'set packpath^=${neovimPath}'"
+          "--add-flags"
+          "--cmd 'set rtp^=${neovimPath}'"
+        ];
         neovimRcContent = ''
-          lua dofile("${builtins.toString ./dots/nvim/init.lua}")
+          luafile ${neovimPath + "/init.lua"}
         '';
       };
     };

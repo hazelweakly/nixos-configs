@@ -5,12 +5,6 @@
 vim.opt.shadafile = "NONE"
 local is_root = vim.env.USER == "root"
 
-if vim.env.SSH_TTY ~= nil then
-  local current_directory = debug.getinfo(1).source:match("@?(.*/)")
-  vim.cmd([[set packpath^=]] .. current_directory)
-  vim.cmd([[set rtp^=]] .. current_directory)
-end
-
 for _, m in ipairs({
   "impatient",
   "_.large_file_detect",

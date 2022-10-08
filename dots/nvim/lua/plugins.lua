@@ -39,6 +39,9 @@ local function mod_spec(spec)
   return tbl
 end
 
+-- https://zignar.net/2022/10/01/new-lsp-features-in-neovim-08/
+-- https://github.com/jayp0521/mason-null-ls.nvim
+-- https://github.com/echasnovski/mini.nvim
 local spec = mod_spec({
   "wbthomason/packer.nvim",
   "rcarriga/nvim-notify",

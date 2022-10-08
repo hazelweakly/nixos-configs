@@ -42,21 +42,22 @@ let
     zk
   ]);
 
-  myNeovim = pkgs.wrapNeovimUnstable
-    (pkgs.neovim-unwrapped.overrideAttrs
-      (o: {
-        buildInputs = (o.buildInputs or [ ]) ++ [ pkgs.stdenv.cc.cc.lib ];
-      }))
-    ((pkgs.neovimUtils.makeNeovimConfig {
-      extraLuaPackages = p: [ p.luarocks ];
-      withNodeJs = true;
-      withRuby = false;
-      vimAlias = true;
-      viAlias = true;
-      wrapRc = false;
-    }) // {
-      wrapperArgs = [ "--prefix" "PATH" ":" "${pkgs.lib.makeBinPath path}" ];
-    });
+  args = { wrapperArgs = [ "--prefix" "PATH" ":" "${pkgs.lib.makeBinPath path}" ]; };
+  myNeovim =
+    let
+      bin = pkgs.wrapNeovimUnstable
+        (pkgs.neovim-unwrapped.overrideAttrs
+          (o: { buildInputs = (o.buildInputs or [ ]) ++ [ pkgs.stdenv.cc.cc.lib ]; }))
+        ((pkgs.neovimUtils.makeNeovimConfig {
+          extraLuaPackages = p: [ p.luarocks ];
+          withNodeJs = true;
+          withRuby = false;
+          vimAlias = true;
+          viAlias = true;
+          wrapRc = false;
+        }) // args);
+    in
+    bin // { passthru = (bin.passthru or { }) // { inherit args; }; };
 in
 {
   home.packages = [ myNeovim ];

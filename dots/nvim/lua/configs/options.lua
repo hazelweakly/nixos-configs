@@ -82,6 +82,7 @@ vim.g.ignored_file_types = {
   "packer",
   "vim",
 }
+
 vim.g.markdown_fenced_languages = {
   "js=javascript",
   "ts=typescript",

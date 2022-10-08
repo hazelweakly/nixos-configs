@@ -7,8 +7,8 @@
                 "com.elgato.mix.microphoneFX",
                 "com.elgato.mix.stream"
             ],
-            "filterConfigID": "60867227-E665-4A55-902E-64F05AFC5768",
-            "filterSettings": "YnBsaXN0MDDWAQIDBAUGBwgJCgsMVG5hbWVcbWFudWZhY3R1cmVyVGRhdGFUdHlwZVdzdWJ0eXBlV3ZlcnNpb25XRGVmYXVsdBJBdWJuTxCUCyC6kgAAAAAAAAAAAAIBAAAAAAAfAAAAAADAPqyqrj689Xg+60AJPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgD/NzMw+AACAPwAAAAAAAIA/AAAAAAAAgD8AAIA/AACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAgD8AAIA/AAAAABJhdW1mEkBzNDESAAECAAgVGicsMTlBSU7l6u8AAAAAAAABAQAAAAAAAAANAAAAAAAAAAAAAAAAAAAA9A==",
+            "filterConfigID": "C3C1DCF1-E509-47E1-ACC5-8B11172B86FD",
+            "filterSettings": "YnBsaXN0MDDWAQIDBAUGBwgJCgsMVG5hbWVcbWFudWZhY3R1cmVyVGRhdGFUdHlwZVdzdWJ0eXBlV3ZlcnNpb25XRGVmYXVsdBJBdWJuTxCUCyC6kgAAAAAAAAAAAAIBAAAAAAAfAAAAAADAPlJVlT39GNw+TprRPuz+fz8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgD/NzMw+AACAPwAAAAAAAIA/AAAAAAAAgD8AAIA/AACAPwAAAAAAAIA/AAAAAAAAgD8AAAAAAACAPwAAgD8AAIA/AAAAABJhdW1mEkBzNDESAAECAAgVGicsMTlBSU7l6u8AAAAAAAABAQAAAAAAAAANAAAAAAAAAAAAAAAAAAAA9A==",
             "pluginCategory": "Auburn Sounds",
             "pluginDisplayName": "Renegate",
             "pluginID": "/audiounit/aumf/@s41/Aubn/Auburn Sounds: Renegate",
@@ -22,8 +22,8 @@
                 "com.elgato.mix.microphoneFX",
                 "com.elgato.mix.stream"
             ],
-            "filterConfigID": "562D41D3-E0BD-4565-8863-24F6EA1C6884",
-            "filterSettings": "YnBsaXN0MDDWAQIDBAUGBwgJCgsMVG5hbWVcbWFudWZhY3R1cmVyVGRhdGFUdHlwZVdzdWJ0eXBlV3ZlcnNpb25QEkFub2JPEDAASZKkZvc0QLYkSRL4xDtAAIZYUb4cFEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASYXVmeBJTV1YxEgAEAAAIFRonLDE5QUJHen+EAAAAAAAAAQEAAAAAAAAADQAAAAAAAAAAAAAAAAAAAIk=",
+            "filterConfigID": "AFF4B26D-91F5-4CC6-9B44-C79B4E4AEAB9",
+            "filterSettings": "YnBsaXN0MDDWAQIDBAUGBwgJCgsMVG5hbWVcbWFudWZhY3R1cmVyVGRhdGFUdHlwZVdzdWJ0eXBlV3ZlcnNpb25QEkFub2JPEDBv27ZtW3NJQKgkSVJuGEJANu/UtYVtNEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASYXVmeBJTV1YxEgAEAAAIFRonLDE5QUJHen+EAAAAAAAAAQEAAAAAAAAADQAAAAAAAAAAAAAAAAAAAIk=",
             "pluginCategory": "AnalogObsession",
             "pluginDisplayName": "SweetVox",
             "pluginID": "/audiounit/aufx/SWV1/Anob/AnalogObsession: SweetVox",
@@ -37,8 +37,8 @@
                 "com.elgato.mix.microphoneFX",
                 "com.elgato.mix.stream"
             ],
-            "filterConfigID": "AD6840BE-6B7E-43EF-A400-4F18E00E54C7",
-            "filterSettings": "YnBsaXN0MDDWAQIDBAUGBwgJCgsMVG5hbWVcbWFudWZhY3R1cmVyVGRhdGFUdHlwZVdzdWJ0eXBlV3ZlcnNpb25XRGVmYXVsdBJNZWxkTxEBTXjabZFRa8IwFIXf/RXh9nXTpDXVQqOgUxCUyYS9Z/baBtNEknQ4f/1odQ9b9xa+nHPu4d58fq01+UTnlTUC2JACQXO0hTKlgCacnqcwnw3y3dLWF4feW+cxBGVKTyIBDEgkQ5DHswA6pJQDic4GsbYFCjjYUwAS2SZcmlBK1Q6gQCIng7ICkvaJGqXH1s1ac6gc+srqoiNJkvCYjZOYpUBkfdEqNAU+7BTI0prgrNbo/MrID41Fh1eFCtYd1A0FZDF/GmcZkErq070DBbJ9O7RhATsVa3vx9C+OBfDJBMhOXrfr14W2x/M9M4mB7DYvm72zpZP1spKmxHuBLv0XX8qApXXqhq77fP/ZdTZNOI9hlpdOXqpZvrfKBLLWsvQLAWycwKgPKZBrfzVfPfSPlXVW9lDHKaOMT2LG02mrHt1bDPJR/9R+NvgG72am9RJhdW1mEk1BZTESAA8CAAAIABUAGgAnACwAMQA5AEEASQBOAZ8BpAGpAAAAAAAAAgEAAAAAAAAADQAAAAAAAAAAAAAAAAAAAa4=",
+            "filterConfigID": "775C1F71-8A76-4580-95EE-90B723CBBBDD",
+            "filterSettings": "YnBsaXN0MDDWAQIDBAUGBwgJCgsMVG5hbWVcbWFudWZhY3R1cmVyVGRhdGFUdHlwZVdzdWJ0eXBlV3ZlcnNpb25XRGVmYXVsdBJNZWxkTxEBO3jaXZDPSgMxEMbHi/ToVRAUFm9C2VLBgmDTtYVCF4sF2Ws0093QbGZJUqgeRDyKold9DZ/Cgw/hwbtPIGa3LVbnlHzzm2/+QNxJkjiivDBoLRmLzkmdWmABhGssoKkrpi7lUoOAKjbaLDCokFsE8fJcxtsRC1zmDTJSAsT2wdbh6/eHFw13kpaFNV840Yg5CQQ7orEDdobGStLQ9L7A4v5xf2goNTyPMq5T7Gp+rhBCYH/kiDtMycgrNGWuK6QjM/JfsK3G/l6z1QIWkXaGlPIN5i6iRGM+G/ROOoouJhUf7rDB6ahQ0jmsHMLFtDdP7X+ZxiJTu22zjKtxdRNvyfMSmgqcLxtC4gctMkiGJLVfsad4ajsQPtaXymzlRJcr7yV5v0rOb/dVkXebbn33/fOXfKjXr38AOIiP9RJhdW1mEk1BZTESABAAAAAIABUAGgAnACwAMQA5AEEASQBOAY0BkgGXAAAAAAAAAgEAAAAAAAAADQAAAAAAAAAAAAAAAAAAAZw=",
             "pluginCategory": "MeldaProduction",
             "pluginDisplayName": "MCompressor",
             "pluginID": "/audiounit/aumf/MAe1/Meld/MeldaProduction: MCompressor",
@@ -52,26 +52,12 @@
                 "com.elgato.mix.microphoneFX",
                 "com.elgato.mix.stream"
             ],
-            "filterConfigID": "5B786596-0267-4044-A28C-E8F25CD5C933",
-            "filterSettings": "YnBsaXN0MDDWAQIDBAUGBwgJCgsMVG5hbWVcbWFudWZhY3R1cmVyVGRhdGFUdHlwZVdzdWJ0eXBlV3ZlcnNpb25XRGVmYXVsdBJNZWxkTxEBzXjajVNdb9owFH3nV1iX15HYTgKJZKdqKe2QihaNqu0eXWISa65NbbNSfv1EEGtL2bQ3yz5f91yZnW2eNPolnVfWcCARBiTNwtbKNBzWYTnI4azssdnkeS202krnZQjKNB71ORBA/WuhDAeKAfXnrVoGDoME0HjtnDShctLLML3kcGfVQgKa1CpYN1dbySFPh18ynAG6+T5faRWC7B4IB4ILenxNOaQFATQTm5urbxfaLn7uZRIKaDa9nFbONk48jVthGjkx4lFLDhhQpdeNMrfW6kfhxlZrsfKy7sJ/oIxFkI11uxk73t2hlCJPsoxCyWYySOdpye5VHdpZyeZ27RYSVU4ulQ7SdaVhiEsWHyDxgdRj106s2pKtrDIB7QPWndMzBxwNAYXXleTwVTVtJbwH9LBbyHA03An+nfXAgUY4I/+BSuk7re4lTTJy0phGJKcZoB8cBjiiWU7+wbyxL3+IaUTyUXKa+CnYsf28lXrZySTRiOCkq3LfW4+dOyl8vDsYoV+30pEE3StT25fbvYAwBkr2fhslqzrjKy0af8GBpATQZldrggmmRVFkw66S07D0GBZ/FD+v8NtM3ZzxW7ayx+JP38aXvd8AfgkBEmF1bWYSTUFlMxIADwIAAAgAFQAaACcALAAxADkAQQBJAE4CHwIkAikAAAAAAAACAQAAAAAAAAANAAAAAAAAAAAAAAAAAAACLg==",
+            "filterConfigID": "F5B11437-0FB0-4065-B070-62A3F483D57B",
+            "filterSettings": "YnBsaXN0MDDWAQIDBAUGBwgJCgsMVG5hbWVcbWFudWZhY3R1cmVyVGRhdGFUdHlwZVdzdWJ0eXBlV3ZlcnNpb25XRGVmYXVsdBJNZWxkTxEB5XjajVK9axRBFH+nNhbCBawlcIIKwmYvdyo2u3MfMQe3uLgxGcEik8zc7uA4s5mdJYlFsLCxENFa8A8QJRbWEQkK2kSwEBQbUfwDxMLK2bsTL4nGTDfv934f781A0MA4aC/lRPAbTGfMGC7jDFAF3BKqtFhqEqDQP988VIkS3jO/C8efo1nL4UpCDaAMKOi0OqFWsSbXmwmRMWtLsiAYuIC2lZvEsFjpwrHA2pQbpSN7hexc7czp+kQdUDPXmkkTamZDdVqQzSq+yKyQyGMuZ5QSC0Q3lRAkzRgt0gZkpTt1sSHU4rW+ljuOupeiVHBjWF/dHQYv3/N3INUhsr7m44DZYlYFPMepSQLAkcp131mzHhcWtBuysR3HwRc0SRPAqeLSAMJAz95G81+2fnpoMDktxlsCOu9O2vPZQ2Y1tUNO8zgJSZaBM0J9sDm+rhPw/0Hd3XpwP60/Tl69+yIv+egK0KPey4/Pbm1tFL3+5YePHr//sGeiV6fO33+zUf4ft6uWd1Hx6+rm0ydHdib8i2uUMNGzy8RIM1KIIEnEqv0Z7iSg4erdA2iOS6qWZwY0IiXgbc+Bw4H1CtCbn068O/T2u4emBImzBrh3nBH02NfDdVQb80dQaxlOwJ+kJcdZ+wVS+wkiEmF1bWYSTUFlMxIAEAAAAAgAFQAaACcALAAxADkAQQBJAE4CNwI8AkEAAAAAAAACAQAAAAAAAAANAAAAAAAAAAAAAAAAAAACRg==",
             "pluginCategory": "MeldaProduction",
             "pluginDisplayName": "MEqualizer",
             "pluginID": "/audiounit/aumf/MAe3/Meld/MeldaProduction: MEqualizer",
             "pluginOriginalName": "MEqualizer",
-            "pluginURL": "",
-            "pluginVendor": ""
-        },
-        {
-            "activeMixerIDs": [
-                "com.elgato.mix.local",
-                "com.elgato.mix.microphoneFX",
-                "com.elgato.mix.stream"
-            ],
-            "filterConfigID": "861006D3-E204-4488-A056-29B5B58DA0A3",
-            "pluginCategory": "MeldaProduction",
-            "pluginDisplayName": "MAnalyzer",
-            "pluginID": "/audiounit/aumf/MAeb/Meld/MeldaProduction: MAnalyzer",
-            "pluginOriginalName": "MAnalyzer",
             "pluginURL": "",
             "pluginVendor": ""
         }
