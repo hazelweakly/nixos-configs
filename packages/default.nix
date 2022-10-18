@@ -14,7 +14,7 @@ let
   ourPkgs = pkgs: (
     builtins.mapAttrs (_: v: pkgs.legacyPackages.callPackage v { }) (self.lib.rake ./.)
   ) // {
-    neovim-bundled = let neovimPath = builtins.toString ./dots/nvim; in pkgs.neovim.passthru.override {
+    neovim-bundled = let neovimPath = ../dots/nvim; in pkgs.neovim.passthru.override {
       wrapRc = true;
       wrapperArgs = (pkgs.neovim.passthru.args.wrapperArgs or [ ]) ++ [
         "--add-flags"

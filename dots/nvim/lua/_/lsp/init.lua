@@ -69,7 +69,7 @@ M.default_opts = function()
   local utils = require("configs.utils")
   return {
     on_attach = M.on_attach,
-    capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+    capabilities = require("cmp_nvim_lsp").default_capabilities(),
     flags = { debounce_text_changes = 150 },
     handlers = {
       ["textDocument/signatureHelp"] = vim.lsp.with(
@@ -80,28 +80,5 @@ M.default_opts = function()
     },
   }
 end
-
--- M.start_or_restart = function()
---   if vim.b.direnv_lsp_loaded ~= nil then
---     return
---   end
---
---   local bufnr = vim.api.nvim_get_current_buf()
---   local util = require("lspconfig").util
---   for _, client in ipairs(util.get_managed_clients()) do
---     if util.get_active_client_by_name(bufnr, client.name) ~= nil then
---       client.stop()
---     end
---   end
---   local buffer_filetype = vim.bo.filetype
---   for _, config in pairs(require("lspconfig.configs")) do
---     for _, filetype_match in ipairs(config.filetypes or {}) do
---       if buffer_filetype == filetype_match then
---         vim.defer_fn(config.launch, 50)
---       end
---     end
---   end
---   vim.b.direnv_lsp_loaded = true
--- end
 
 return M

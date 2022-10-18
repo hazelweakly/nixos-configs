@@ -5,9 +5,11 @@
 , exa
 , git
 , jq
+, nixpkgs-fmt
 , nodejs
 , neovim-remote
 , terraform
+, tree-sitter
 , watchman
 , yarn
 , wrapNeovimUnstable
@@ -26,9 +28,11 @@ let
     exa
     git
     jq
+    nixpkgs-fmt
     nodejs
     neovim-remote
     terraform
+    tree-sitter
     watchman
     yarn
   ]);

@@ -17,7 +17,7 @@ M.is_large = function(bufnr)
   return fsize >= 512 * 1024 or fsize <= -2 or vim.api.nvim_buf_line_count(bufnr) > 5000
 end
 
-M.is_large_file = function(bufnr)
+M.is_large_file = function(_, bufnr)
   bufnr = bufnr or vim.api.nvim_get_current_buf()
   return M.get(bufnr) or M.set(bufnr, M.is_large(bufnr))
 end

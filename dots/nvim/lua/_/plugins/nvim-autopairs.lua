@@ -38,3 +38,7 @@ require("tabout").setup({ act_as_shift_tab = true })
 local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 local cmp = require("cmp")
 cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
+
+require("nvim-treesitter.configs").setup({
+  autopairs = { enable = true, disable = require("_.large_file").is_large_file },
+})

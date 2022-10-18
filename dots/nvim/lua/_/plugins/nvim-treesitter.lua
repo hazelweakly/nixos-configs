@@ -7,73 +7,18 @@ require("nvim-treesitter.parsers").ft_to_lang = function(ft)
   return ft_to_lang(ft)
 end
 
-require("tree-sitter-just").setup({})
-
-local disable_if_large = function(_, bufnr)
-  return require("_.large_file").is_large_file(bufnr)
-end
-
+-- builtin modules
 require("nvim-treesitter.configs").setup({
-  highlight = { enable = true, disable = disable_if_large },
-  indent = { enable = true, disable = disable_if_large },
-  ignore_install = { "swift" },
-  context_commentstring = {
-    enable = true,
-    disable = disable_if_large,
-    enable_autocmd = false,
-  },
+  highlight = { enable = true, disable = require("_.large_file").is_large_file },
+  auto_install = true,
+  indent = { enable = true, disable = require("_.large_file").is_large_file },
   incremental_selection = {
     enable = true,
-    disable = disable_if_large,
+    disable = require("_.large_file").is_large_file,
     keymaps = {
       init_selection = "<CR>",
       node_incremental = "<TAB>",
       node_decremental = "<S-TAB>",
     },
   },
-  rainbow = { enable = true, disable = disable_if_large, extended_mode = true },
-  autotag = { enable = true, disable = disable_if_large },
-  autopairs = { enable = true, disable = disable_if_large },
-  textobjects = {
-    select = {
-      enable = true,
-      disable = disable_if_large,
-      lookahead = true,
-      keymaps = {
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ab"] = "@block.outer",
-        ["ib"] = "@block.inner",
-      },
-    },
-    swap = {
-      enable = true,
-      disable = disable_if_large,
-      swap_next = {
-        ["g>"] = "@parameter.inner",
-      },
-      swap_previous = {
-        ["g<"] = "@parameter.inner",
-      },
-    },
-    lsp_interop = {
-      enable = true,
-      disable = disable_if_large,
-      border = require("configs.utils").border,
-      peek_definition_code = {
-        ["gD"] = "@function.outer",
-        ["<leader>gd"] = "@class.outer",
-      },
-    },
-  },
-  refactor = { highlight_definitions = { enable = true, disable = disable_if_large } },
-  textsubjects = {
-    enable = true,
-    disable = disable_if_large,
-    keymaps = {
-      ["."] = "textsubjects-smart",
-      [";"] = "textsubjects-container-outer",
-    },
-  },
-  matchup = { enable = true, disable_virtual_text = true, disable = disable_if_large },
 })

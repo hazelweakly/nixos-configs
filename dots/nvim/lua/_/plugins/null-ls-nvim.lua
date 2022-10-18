@@ -6,7 +6,6 @@ null_ls.setup({
   sources = {
     null_ls.builtins.code_actions.shellcheck,
 
-    -- null_ls.builtins.diagnostics.codespell,
     null_ls.builtins.diagnostics.shellcheck,
     null_ls.builtins.diagnostics.hadolint,
     null_ls.builtins.diagnostics.actionlint.with({
@@ -23,7 +22,6 @@ null_ls.setup({
         end
       end,
     }),
-    -- null_ls.builtins.diagnostics.statix,
 
     null_ls.builtins.formatting.shfmt.with({
       extra_args = function(params)
