@@ -6,6 +6,15 @@ final: prev: {
         kitty_path = builtins.toString ../../dots/kitty;
         isExecutable = true;
       };
+      themeText = builtins.readFile theme;
+      text = builtins.substring
+        (builtins.stringLength "#!/usr/bin/env bash\n\n")
+        (builtins.stringLength themeText)
+        themeText;
     in
-    prev.writeScriptBin "switch-theme" (builtins.readFile theme);
+    prev.writeShellApplication {
+      name = "switch-theme";
+      runtimeInputs = with prev; [ kitty coreutils neovim-remote ];
+      inherit text;
+    };
 }
