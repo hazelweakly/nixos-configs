@@ -5,6 +5,7 @@
 , exa
 , git
 , jq
+, gopls
 , nixpkgs-fmt
 , nodejs
 , neovim-remote
@@ -28,6 +29,7 @@ let
     exa
     git
     jq
+    gopls
     nixpkgs-fmt
     nodejs
     neovim-remote

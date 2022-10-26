@@ -23,7 +23,7 @@ let
         "--cmd 'set rtp^=${neovimPath}'"
       ];
       neovimRcContent = ''
-        luafile ${neovimPath + "/init.lua"}
+        luafile ${neovimPath}/init.lua
       '';
     };
   };
