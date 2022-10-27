@@ -38,6 +38,8 @@
     lib = import ./lib.nix { inherit inputs; };
 
     darwinConfigurations = import ./hosts { inherit self inputs; };
+    homeManagerModules = self.lib.rake ./home;
+    darwinModules = self.lib.rake ./modules;
 
   } // inputs.flake-utils.lib.eachDefaultSystem (system:
     let builtPkgs = import ./packages { inherit self inputs system; }; in {
