@@ -20,6 +20,3 @@ map("n", "<S-l>", ":bnext<CR>")
 map("n", "<S-h>", ":bprevious<CR>")
 map("n", "q:", "<nop>")
 map("", "<Space>", "<Nop>")
-
-map("o", "m", [[:<C-U>lua require("tsht").nodes()<CR>]])
-map("x", "m", [[:lua require("tsht").nodes()<CR>]])

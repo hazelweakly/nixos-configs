@@ -5,7 +5,7 @@ local cmp = require("cmp")
 -- the enter key to confirm completion in any way.
 ---@param d 1 | -1
 ---@param m "'i'" | "'c'" | "'s'"
----@return none
+---@return function
 local function tab(d, m)
   local fwd = d == 1
   return function(fallback)
@@ -99,26 +99,3 @@ cmp.setup.cmdline(":", {
     { name = "cmdline", keyword_length = 2 },
   }),
 })
-
-local table_concat = function(t1, t2)
-  local t0 = {}
-  for _, v in ipairs(t1) do
-    table.insert(t0, v)
-  end
-  for _, v in ipairs(t2) do
-    table.insert(t0, v)
-  end
-  return t0
-end
-
----@diagnostic disable-next-line: undefined-field
-cmp.setup.filetype({ "markdown", "tex" }, {
-  sources = cmp.config.sources(table_concat(cmp.get_config().sources, {
-    { name = "emoji", option = { insert = true } },
-    { name = "latex_symbols" },
-  })),
-})
-
-cmp.event:on("complete_done", function(_)
-  require("lsp_signature").signature()
-end)

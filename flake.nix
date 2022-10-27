@@ -41,8 +41,7 @@
 
   } // inputs.flake-utils.lib.eachDefaultSystem (system:
     let builtPkgs = import ./packages { inherit self inputs system; }; in {
-      inherit (builtPkgs) legacyPackages;
-      packages = { inherit (builtPkgs) neovim neovim-bundled; };
+      inherit (builtPkgs) legacyPackages packages;
 
       devShells.default = builtPkgs.legacyPackages.mkShell { };
     });

@@ -46,10 +46,9 @@ vim.opt.signcolumn = "yes"
 vim.opt.syntax = "off"
 vim.opt.cmdheight = 1
 
-vim.g.cursorhold_updatetime = 100
 vim.opt.synmaxcol = 500
 vim.opt.termguicolors = true
-vim.opt.updatetime = 4001
+vim.opt.updatetime = 100
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.opt.fixendofline = false

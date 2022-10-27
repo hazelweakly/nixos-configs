@@ -11,21 +11,8 @@ let
     })
   ];
 
-  ourPkgs = pkgs: (
-    builtins.mapAttrs (_: v: pkgs.legacyPackages.callPackage v { }) (self.lib.rake ./.)
-  ) // {
-    neovim-bundled = let neovimPath = ../dots/nvim; in pkgs.neovim.passthru.override {
-      wrapRc = true;
-      wrapperArgs = (pkgs.neovim.passthru.args.wrapperArgs or [ ]) ++ [
-        "--add-flags"
-        "--cmd 'set packpath^=${neovimPath}'"
-        "--add-flags"
-        "--cmd 'set rtp^=${neovimPath}'"
-      ];
-      neovimRcContent = ''
-        luafile ${neovimPath}/init.lua
-      '';
-    };
+  ourPkgs = pkgs: {
+    packages = builtins.mapAttrs (_: v: pkgs.legacyPackages.callPackage v { }) (self.lib.rake ./.);
   };
 
 in

@@ -1,4 +1,3 @@
-vim.g.matchup_override_vimtex = 1
 vim.g.matchup_matchparen_deferred = 1
 vim.g.matchup_surround_enabled = 0
 vim.g.matchup_motion_override_Npercent = 0

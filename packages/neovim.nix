@@ -24,12 +24,10 @@ let
   nonBrokenPkgs = builtins.concatMap (p: lib.optionals (isBroken p) [ p ]);
   path = builtins.sort (a: b: a.name < b.name) (nonBrokenPkgs [
     bat
-    cargo
     direnv
     exa
     git
     jq
-    gopls
     nixpkgs-fmt
     nodejs
     neovim-remote
@@ -40,6 +38,7 @@ let
   ]);
 
   args.wrapperArgs = [ "--prefix" "PATH" ":" "${lib.makeBinPath path}" ];
+  dotfiles = ../dots/nvim;
 
   myNeovim = wrapNeovimUnstable
     (neovim-unwrapped.overrideAttrs
@@ -55,5 +54,5 @@ let
 in
 
 myNeovim // {
-  passthru = (myNeovim.passthru or { }) // { inherit args; inherit (myNeovim) override; };
+  passthru = (myNeovim.passthru or { }) // { inherit args; inherit (myNeovim) override; inherit dotfiles; };
 }

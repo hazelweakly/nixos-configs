@@ -8,6 +8,7 @@ if not present then
 end
 local packer = packer_init.packer
 
+-- https://neovim.discourse.group/t/lspconfig-change-server-configuration-after-call-to-setup/2359/2
 local function mod_spec(spec)
   for idx, v in ipairs(spec) do
     if type(v) == "string" then
@@ -46,7 +47,6 @@ local spec = mod_spec({
   "rcarriga/nvim-notify",
   "nvim-lua/plenary.nvim",
   "lewis6991/impatient.nvim",
-  "antoinemadec/FixCursorHold.nvim",
   "jedi2610/nvim-rooter.lua",
   "direnv/direnv.vim",
   "folke/tokyonight.nvim",
@@ -54,26 +54,21 @@ local spec = mod_spec({
   "nvim-lualine/lualine.nvim",
   "williamboman/mason.nvim",
   "williamboman/mason-lspconfig.nvim",
-  "folke/neodev.nvim",
+  "VonHeikemen/lsp-zero.nvim",
   "neovim/nvim-lspconfig",
+  "lvimuser/lsp-inlayhints.nvim",
   "WhoIsSethDaniel/mason-tool-installer.nvim",
   "jose-elias-alvarez/null-ls.nvim",
   "jayp0521/mason-null-ls.nvim",
-  "ray-x/lsp_signature.nvim",
-  { "mickael-menu/zk-nvim", ft = "markdown", module = "zk" },
   "simrat39/rust-tools.nvim",
   "b0o/schemastore.nvim",
-  "jose-elias-alvarez/nvim-lsp-ts-utils",
   "lukas-reineke/indent-blankline.nvim",
   "lewis6991/gitsigns.nvim",
   "nvim-treesitter/nvim-treesitter",
   { "p00f/nvim-ts-rainbow", after = "nvim-treesitter" },
   { "IndianBoy42/tree-sitter-just", after = "nvim-treesitter" },
   { "nvim-treesitter/nvim-treesitter-refactor", after = "nvim-treesitter" },
-  { "nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter" },
-  { "RRethy/nvim-treesitter-textsubjects", after = "nvim-treesitter" },
   { "windwp/nvim-ts-autotag", after = "nvim-treesitter" },
-  "mfussenegger/nvim-treehopper",
   "andymass/vim-matchup",
   "nvim-telescope/telescope.nvim",
   { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
@@ -86,8 +81,6 @@ local spec = mod_spec({
   "hrsh7th/cmp-buffer",
   "hrsh7th/cmp-path",
   "hrsh7th/cmp-cmdline",
-  "hrsh7th/cmp-emoji",
-  "kdheepak/cmp-latex-symbols",
   "onsails/lspkind-nvim",
   "abecodes/tabout.nvim",
   { "windwp/nvim-autopairs", after = "nvim-treesitter" },
@@ -95,21 +88,19 @@ local spec = mod_spec({
   "ethanholz/nvim-lastplace",
   "junegunn/vim-easy-align",
   { "lambdalisue/suda.vim", cmd = "W" },
-  { "gaoDean/autolist.nvim" },
+  "gaoDean/autolist.nvim",
   "wsdjeg/vim-fetch",
   { "907th/vim-auto-save", event = "FocusLost" },
   "tpope/vim-repeat",
   "wellle/targets.vim",
-  { "lervag/vimtex", ft = { "latex", "tex" } },
   { "knubie/vim-kitty-navigator", run = "cp ./*.py ~/.config/kitty/" },
   { "JoosepAlviste/nvim-ts-context-commentstring", after = "nvim-treesitter" },
   { "numToStr/Comment.nvim", after = "nvim-ts-context-commentstring" },
   "tyru/open-browser.vim",
-  "MunifTanjim/nui.nvim",
   "stevearc/dressing.nvim",
   "akinsho/bufferline.nvim",
   { "kosayoda/nvim-lightbulb", event = "User DirenvLoaded" },
-  { "Pocco81/HighStr.nvim", cmd = { "HSHighlight", "HSRmHighlight", "HSImport", "HSExport" } }, -- https://github.com/Pocco81/HighStr.nvim
+  { "Pocco81/HighStr.nvim", cmd = { "HSHighlight", "HSRmHighlight", "HSImport", "HSExport" } },
   {
     "monaqa/dial.nvim",
     keys = {
@@ -121,9 +112,8 @@ local spec = mod_spec({
       { "v", "g<C-x>" },
     },
   },
-  -- re-evaluate https://github.com/kylechui/nvim-surround
   "machakann/vim-sandwich",
-  { "tweekmonster/startuptime.vim", cmd = "StartupTime" },
+  -- { "tweekmonster/startuptime.vim", cmd = "StartupTime" },
   -- { "dstein64/vim-startuptime", cmd = "StartupTime" },
 
   { "j-hui/fidget.nvim", event = "User DirenvLoaded" },
