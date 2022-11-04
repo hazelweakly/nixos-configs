@@ -1,12 +1,12 @@
 { pkgs, ... }: {
   programs.fzf =
-    let fd = "fd -HLE .git -c always";
+    let fd = "${pkgs.fd}/bin/fd -HLE .git -c always";
     in
     {
       enable = true;
       changeDirWidgetCommand = "${fd} -td .";
       changeDirWidgetOptions = [
-        "--preview 'exa --group-directories-first --icons --sort time --tree --color always {} | head -200'"
+        "--preview '${pkgs.exa}/bin/exa --group-directories-first --icons --sort time --tree --color always {} | ${pkgs.coreutils}/bin/head -200'"
       ];
       defaultCommand = "${fd} -tf 2> /dev/null";
       defaultOptions =
@@ -15,11 +15,11 @@
       fileWidgetOptions =
         let
           preview =
-            "(bat --style numbers,changes --color always --paging never {} || tree -C {}) 2> /dev/null";
+            "(${pkgs.bat}/bin/bat --style numbers,changes --color always --paging never {} || ${pkgs.tree}/bin/tree -C {}) 2> /dev/null";
         in
-        [ "--preview '${preview} | head -200'" ];
+        [ "--preview '${preview} | ${pkgs.coreutils}/bin/head -200'" ];
       historyWidgetOptions = [
-        ''--preview 'echo {} | cut -d\" \" -f2- | fold -w $(($(tput cols)-4))' --preview-window down:4:hidden --bind '?:toggle-preview${"'"}''
+        ''--preview 'echo {} | ${pkgs.coreutils}/bin/cut -d\" \" -f2- | ${pkgs.coreutils}/bin/fold -w $(($(${pkgs.ncurses}/bin/tput cols)-4))' --preview-window down:4:hidden --bind '?:toggle-preview${"'"}''
       ];
     };
 }

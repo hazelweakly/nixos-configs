@@ -1,8 +1,8 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   programs.git = {
     enable = true;
-    userName = "hazelweakly";
-    userEmail = "hazel@theweaklys.com";
+    userName = lib.mkDefault "hazelweakly";
+    userEmail = lib.mkDefault "hazel@theweaklys.com";
     package = pkgs.gitFull;
     lfs.enable = true;
     ignores = [ ".DS_Store" ];

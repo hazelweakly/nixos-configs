@@ -1,15 +1,28 @@
 { self, inputs, ... }@args:
 let
-  defaultSpecialArgs = { profiles.work = false; profiles.user.username = "hazelweakly"; };
   mkDarwinSystem = cfg: inputs.nix-darwin.lib.darwinSystem {
-    inherit (cfg) inputs system;
+    inherit (args) inputs;
+    inherit (cfg) system;
     pkgs = self.legacyPackages.${cfg.system};
-    modules = import ../modules cfg;
-    specialArgs = (cfg.specialArgs or defaultSpecialArgs) // { inherit self; inherit (cfg) hostConfig; };
+    modules = cfg.modules ++ [
+      ../modules/alias-pkgs.nix
+      ../modules/cachix.nix
+      ../modules/defaults
+      ../modules/environment.nix
+      ../modules/fonts.nix
+      ../modules/home-manager.nix
+      ../modules/homebrew.nix
+      ../modules/launchd
+      ../modules/nix.nix
+      ../modules/packages.nix
+      ../modules/pam.nix
+      ../modules/sudo-touch.nix
+      ../modules/zsh.nix
+      inputs.home-manager.darwinModules.home-manager
+    ];
+    specialArgs = { inherit self; };
   };
 in
 builtins.mapAttrs
-  (k: v:
-  let a = args // { hostConfig.hostName = builtins.replaceStrings [ "_" ] [ "-" ] k; }; in
-  mkDarwinSystem (a // (v a)))
+  (_: mkDarwinSystem)
   (self.lib.rake ./.)

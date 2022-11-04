@@ -1,14 +1,19 @@
-{ config, pkgs, profiles, ... }:
+{ config, pkgs, ... }:
 let dir = config.home.homeDirectory + "/src/personal/nixos-configs";
 in
 with builtins;
 with pkgs.lib; {
   home.stateVersion = "22.11";
-  home.username = profiles.user.username;
-  home.homeDirectory = mkForce "/Users/${profiles.user.username}";
   xdg.enable = true;
 
-  imports = [ ../task.nix ../fzf.nix ../zsh.nix ../git.nix ../neovim.nix ];
+  imports = [
+    ../dark-mode-notify.nix
+    ../fzf.nix
+    ../git.nix
+    ../neovim.nix
+    ../task.nix
+    ../zsh.nix
+  ];
 
   xdg.configFile."kitty".source =
     config.lib.file.mkOutOfStoreSymlink "${dir}/dots/kitty";
