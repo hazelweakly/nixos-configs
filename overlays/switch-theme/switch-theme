@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-t="${1:-''}"
-shift
+t="${1:-}"
+shift || :
 sys_t=""
 defaults read -g AppleInterfaceStyle >/dev/null 2>&1 && sys_t=dark || sys_t=light
 if [ "$t" = "" ]; then

@@ -1,10 +1,6 @@
 #!/usr/bin/env swift
 
 // Run as ./notify.swift <program to run when dark mode changes>
-// The program will have the DARKMODE env flag set to 1 or 0
-// You can also compile with:
-// swiftc notify.swift -o notify
-// And run the binary directly
 // Most credit goes to https://github.com/mnewt/dotemacs/blob/master/bin/dark-mode-notifier.swift
 
 import Cocoa
@@ -16,7 +12,7 @@ func shell(_ args: [String]) -> Int32 {
     var env = ProcessInfo.processInfo.environment
     env["__sys_theme"] = isDark ? "dark" : "light"
     task.environment = env
-    task.launchPath = "/usr/bin/env"
+    task.executableURL = URL(fileURLWithPath: "/usr/bin/env")
     task.arguments = args
     task.standardError = FileHandle.standardError
     task.standardOutput = FileHandle.standardOutput
