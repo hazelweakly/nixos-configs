@@ -8,6 +8,7 @@
       '';
     }
     {
+      imports = [ ../modules/work.nix ];
       home-manager.users.hazel = { lib, ... }: {
         home.username = "hazel";
         home.homeDirectory = lib.mkForce "/Users/hazel";
