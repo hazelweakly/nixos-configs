@@ -2,9 +2,9 @@
   system = "x86_64-darwin";
   modules = [
     {
-      networking.hostName = "x86_64-darwin";
+      networking.hostName = "x86-64-darwin";
       environment.etc.hostname.text = ''
-        x86_64-darwin
+        x86-64-darwin
       '';
     }
     {
