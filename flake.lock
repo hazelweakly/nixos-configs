@@ -63,26 +63,6 @@
         "type": "github"
       }
     },
-    "naersk": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1662220400,
-        "narHash": "sha256-9o2OGQqu4xyLZP9K6kNe1pTHnyPz0Wr3raGYnr9AIgY=",
-        "owner": "nmattia",
-        "repo": "naersk",
-        "rev": "6944160c19cb591eb85bbf9b2f2768a935623ed3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nmattia",
-        "repo": "naersk",
-        "type": "github"
-      }
-    },
     "neovim-flake": {
       "inputs": {
         "flake-utils": [
@@ -94,11 +74,11 @@
       },
       "locked": {
         "dir": "contrib",
-        "lastModified": 1668865307,
-        "narHash": "sha256-Fwoalxq8UzocDeK5LIlAOT/JglG8SeGtH6yvvzHh/uU=",
+        "lastModified": 1668974975,
+        "narHash": "sha256-71Z3oFgA2jmioieaXxjMUQDsEmv0pPt+7UGpddJAEZE=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "6e8ed5abaa9c33d1d78ab7ff5b07dd5bac623a1d",
+        "rev": "fbce9f421ad1ad466126a24524ade9df978486d5",
         "type": "github"
       },
       "original": {
@@ -131,11 +111,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1668882784,
-        "narHash": "sha256-L1mHACWrG83j8U/jDtAdQHmVZu+JwVUxRPf5mhuzr2s=",
+        "lastModified": 1668942323,
+        "narHash": "sha256-I7kVpdo7+1mcZKnaK7NQf1hpWrqY1mDf1mdgLbU9wH4=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "a1b4a562216eba8df3053bd869155dde4b5bca12",
+        "rev": "7353a83f59c7722fa04fc96a2a1c7083e08e37e7",
         "type": "github"
       },
       "original": {
@@ -145,42 +125,14 @@
         "type": "github"
       }
     },
-    "rnix-lsp": {
-      "inputs": {
-        "naersk": [
-          "naersk"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "utils": [
-          "flake-utils"
-        ]
-      },
-      "locked": {
-        "lastModified": 1666639010,
-        "narHash": "sha256-SKe5jEBHjjinb5R/fnJElwammKfof6zICc30E/we43Q=",
-        "owner": "nix-community",
-        "repo": "rnix-lsp",
-        "rev": "7339d80b7bf415ea42d790e073fbd69d21d09db4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "rnix-lsp",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "mkalias": "mkalias",
-        "naersk": "naersk",
         "neovim-flake": "neovim-flake",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",
-        "rnix-lsp": "rnix-lsp",
         "rust-overlay": "rust-overlay"
       }
     },
@@ -194,11 +146,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1668825399,
-        "narHash": "sha256-F2ro05D6tGMwSaOYeIediJq6X0ATD7JgWEG2TgOs9Wo=",
+        "lastModified": 1668912095,
+        "narHash": "sha256-3oGeJgeA4+8Wj2XZnbZKJYHoZziyJl36ZGU49I2VC8U=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "a705fe51ef5cdf932ff1cb342f0fe9e5d66f1b71",
+        "rev": "5200195aa2a0cef1becc2ba6ff61cba65e1f90fe",
         "type": "github"
       },
       "original": {

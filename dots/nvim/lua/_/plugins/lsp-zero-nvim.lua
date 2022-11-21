@@ -1,3 +1,5 @@
+require("lspconfig").nil_ls.setup({})
+
 local lsp = require("lsp-zero")
 lsp.preset("recommended")
 lsp.set_preferences({
@@ -18,8 +20,8 @@ local servers = {
   "hls",
   "html",
   "jsonls",
+  "nil_ls",
   "pyright",
-  "rnix",
   "rust_analyzer",
   "sumneko_lua",
   "tailwindcss",

@@ -22,14 +22,6 @@
 
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
-    rnix-lsp.url = "github:nix-community/rnix-lsp";
-    rnix-lsp.inputs.nixpkgs.follows = "nixpkgs";
-    rnix-lsp.inputs.utils.follows = "flake-utils";
-    # workaround to flatten nixpkgs for naersk.
-    naersk.url = "github:nmattia/naersk";
-    naersk.inputs.nixpkgs.follows = "nixpkgs";
-    rnix-lsp.inputs.naersk.follows = "naersk";
   };
 
   outputs = inputs@{ self, ... }: {

@@ -6,6 +6,7 @@
 , git
 , jq
 , gopls
+, nil
 , nixpkgs-fmt
 , nodejs
 , neovim-remote
@@ -17,6 +18,7 @@
 , neovim-unwrapped
 , stdenv
 , neovimUtils
+, vimPlugins
 }:
 
 let
@@ -28,6 +30,7 @@ let
     exa
     git
     jq
+    nil
     nixpkgs-fmt
     nodejs
     neovim-remote
@@ -37,22 +40,30 @@ let
     yarn
   ]);
 
-  args.wrapperArgs = [ "--prefix" "PATH" ":" "${lib.makeBinPath path}" ];
+  args.wrapperArgs = config.wrapperArgs ++ [ "--prefix" "PATH" ":" "${lib.makeBinPath path}" ];
   dotfiles = ../dots/nvim;
+
+  config = neovimUtils.makeNeovimConfig {
+    extraLuaPackages = p: [ p.luarocks ];
+    withNodeJs = true;
+    withRuby = false;
+    vimAlias = true;
+    viAlias = true;
+    wrapRc = false;
+    plugins = [{
+      plugin = vimPlugins.nvim-treesitter.withAllGrammars;
+      optional = false;
+    }];
+  };
 
   myNeovim = wrapNeovimUnstable
     (neovim-unwrapped.overrideAttrs
       (o: { buildInputs = (o.buildInputs or [ ]) ++ [ stdenv.cc.cc.lib ]; }))
-    ((neovimUtils.makeNeovimConfig {
-      extraLuaPackages = p: [ p.luarocks ];
-      withNodeJs = true;
-      withRuby = false;
-      vimAlias = true;
-      viAlias = true;
-      wrapRc = false;
-    }) // args);
+    (config // args);
 in
 
 myNeovim // {
-  passthru = (myNeovim.passthru or { }) // { inherit args; inherit (myNeovim) override; inherit dotfiles; };
+  passthru = (myNeovim.passthru or { }) // {
+    inherit args; inherit (myNeovim) override; inherit dotfiles;
+  };
 }
