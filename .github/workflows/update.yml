@@ -11,8 +11,6 @@ jobs:
         with:
           extra_nix_config: |
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
-      # This happens before setting up cachix so that we don't track store
-      # changes for the inputs.
       - name: update
         run: |
           set -xeuo pipefail

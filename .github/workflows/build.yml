@@ -13,7 +13,7 @@ jobs:
           - os: macos-latest
             path: darwinConfigurations.x86_64-darwin.config.system.build.toplevel
           - os: ubuntu-latest
-            path: packages.x86_64-linux.neovim-bundled
+            path: packages.x86_64-linux.neovim
     if: "! contains(toJSON(github.event.commits.*.message), 'flake.lock: Update')"
     runs-on: ${{ matrix.os }}
     steps:
