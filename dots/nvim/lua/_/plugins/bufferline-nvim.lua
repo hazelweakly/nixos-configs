@@ -5,6 +5,7 @@ require("bufferline").setup({
     always_show_bufferline = false,
     diagnostics = "nvim_lsp",
     diagnostics_update_in_insert = true,
+    show_duplicate_prefix = true,
     diagnostics_indicator = function(count, level, diagnostics_dict, context)
       local s = " "
       for e, n in pairs(diagnostics_dict) do

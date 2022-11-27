@@ -2,9 +2,28 @@ local M = {}
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
+local function is_null_ls_formatting_enabed(bufnr)
+  local file_type = vim.api.nvim_buf_get_option(bufnr, "filetype")
+  if file_type == "markdown" then
+    return false -- prettier breaks gq
+  end
+  local generators =
+    require("null-ls.generators").get_available(file_type, require("null-ls.methods").internal.FORMATTING)
+  return #generators > 0
+end
+
 M.on_attach = function(client, bufnr)
   local utils = require("configs.utils")
   local buf_map = utils.buf_map
+
+  if client.server_capabilities.documentFormattingProvider then
+    if client.name == "null-ls" and is_null_ls_formatting_enabed(bufnr) or client.name ~= "null-ls" then
+      vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
+    else
+      vim.api.nvim_buf_set_option(bufnr, "formatexpr", "")
+    end
+  end
+
   buf_map(bufnr, "x", "<leader>la", vim.lsp.buf.code_action)
   if client.server_capabilities.codeActionProvider then
     buf_map(bufnr, "n", "ga", vim.lsp.buf.code_action)

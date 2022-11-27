@@ -28,7 +28,7 @@ null_ls.setup({
         return { "-s", "-i", vim.api.nvim_buf_get_option(params.bufnr, "shiftwidth") }
       end,
     }),
-    null_ls.builtins.formatting.prettierd,
+    null_ls.builtins.formatting.prettierd, -- breaks formatexpr for gq
     null_ls.builtins.formatting.stylua,
     null_ls.builtins.formatting.terraform_fmt,
     null_ls.builtins.formatting.shellharden,
