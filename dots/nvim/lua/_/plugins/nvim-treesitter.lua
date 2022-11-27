@@ -10,7 +10,7 @@ end
 -- builtin modules
 require("nvim-treesitter.configs").setup({
   highlight = { enable = true, disable = require("_.large_file").is_large_file },
-  auto_install = true,
+  auto_install = false,
   indent = { enable = true, disable = require("_.large_file").is_large_file },
   incremental_selection = {
     enable = true,

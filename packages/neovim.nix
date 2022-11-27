@@ -51,7 +51,7 @@ let
     viAlias = true;
     wrapRc = false;
     plugins = [{
-      plugin = vimPlugins.nvim-treesitter.withAllGrammars;
+      plugin = vimPlugins.nvim-treesitter.withPlugins (_: vimPlugins.nvim-treesitter.allGrammars);
       optional = false;
     }];
   };

@@ -19,7 +19,7 @@ let
   hostname = if pathExists hostnamePath then head (match "([a-zA-Z0-9\\-]+)\n" (readFile hostnamePath)) else "";
 
   nixpkgsFromInputsPath = flake.inputs.nixpkgs.outPath or "";
-  nixpkgs = flake.pkgs.${currentSystem}.nixpkgs or (if nixpkgsFromInputsPath != "" then import nixpkgsFromInputsPath { } else { });
+  nixpkgs = flake.legacyPackages.${currentSystem} or (if nixpkgsFromInputsPath != "" then import nixpkgsFromInputsPath { } else { });
 
   nixpkgsOutput = (removeAttrs (nixpkgs // nixpkgs.lib or { }) [ "options" "config" ]);
 in
