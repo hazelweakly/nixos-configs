@@ -43,7 +43,7 @@ z4h bindkey fzf-cd-widget Alt+C
 z4h bindkey z4h-kill-word Alt+D
 z4h bindkey fzf-file-widget Ctrl+T
 z4h bindkey backward-kill-line Ctrl+U
-z4h bindkey z4h-exit Ctrl+D
+z4h bindkey z4h-eof Ctrl+D
 z4h bindkey undo Ctrl+/ Shift+Tab
 z4h bindkey redo Alt+/
 
