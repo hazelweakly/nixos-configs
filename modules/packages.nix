@@ -12,6 +12,7 @@
     coreutils
     switch-theme
     _1password
+    inputs.self.packages.${pkgs.system}.bitwarden
 
     docker
     docker-compose
