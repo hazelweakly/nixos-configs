@@ -14,6 +14,8 @@
   location.provider = "geoclue2";
   # breaks secureboot thingy?
   # services.fwupd.enable = true;
+  security.tpm2.enable = true;
+  security.tpm2.pkcs11.enable = true;
 
   # recommended settings from lxd nixos module
   boot.kernel.sysctl = {
