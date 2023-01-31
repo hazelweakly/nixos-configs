@@ -1,7 +1,7 @@
 {
   description = "Hazel's system configuration";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
 
     bootspec-secureboot.url = "github:DeterminateSystems/bootspec-secureboot/main";
     bootspec-secureboot.inputs.nixpkgs.follows = "nixpkgs";
