@@ -3,7 +3,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
-    nix-darwin.url = "github:lnl7/nix-darwin/master";
+    nix-darwin.url = "github:lnl7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     mkalias.url = "github:reckenrode/mkalias";
     mkalias.inputs.nixpkgs.follows = "nixpkgs";
@@ -17,10 +17,10 @@
     rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
 
     neovim-flake.url = "github:neovim/neovim?dir=contrib";
-    neovim-flake.inputs.nixpkgs.follows = "nixpkgs";
+    neovim-flake.inputs.nixpkgs.url = "github:nixos/nixpkgs?rev=fad51abd42ca17a60fc1d4cb9382e2d79ae31836";
     neovim-flake.inputs.flake-utils.follows = "flake-utils";
 
-    home-manager.url = "github:nix-community/home-manager/master";
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 

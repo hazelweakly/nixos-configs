@@ -6,7 +6,7 @@ final: prev: rec {
         final.callPackage (prev.path + "/pkgs/development/tools/parsing/tree-sitter/grammar.nix") { } {
           language = if grammar ? language then grammar.language else name;
           inherit (final.tree-sitter) version;
-          source = if grammar ? src then grammar.src else fetchGrammar grammar;
+          src = if grammar ? src then grammar.src else fetchGrammar grammar;
           location = if grammar ? location then grammar.location else null;
         };
       src = builtins.fromJSON ''
