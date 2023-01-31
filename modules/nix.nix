@@ -9,6 +9,7 @@ with builtins;
     keep-outputs = true
     keep-derivations = true
     experimental-features = nix-command flakes
+    trusted-users = hazelweakly root
   '';
 
   nix.nixPath = lib.mapAttrsToList (n: _: "${n}=/etc/nix/inputs/${n}") (self.lib.inputsWithPkgs inputs);

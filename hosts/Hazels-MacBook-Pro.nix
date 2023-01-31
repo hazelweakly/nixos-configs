@@ -8,9 +8,11 @@
       '';
     }
     {
+      imports = [ ../modules/work.nix ];
       home-manager.users.hazelweakly = { lib, ... }: {
         home.username = "hazelweakly";
         home.homeDirectory = lib.mkForce "/Users/hazelweakly";
+        imports = [ ../home/work.nix ];
       };
     }
     ({ lib, ... }: {
