@@ -14,6 +14,7 @@ let
       ../modules/homebrew.nix
       ../modules/launchd
       ../modules/nix.nix
+      ../modules/macos-nix.nix
       ../modules/packages.nix
       ../modules/pam.nix
       ../modules/sudo-touch.nix
