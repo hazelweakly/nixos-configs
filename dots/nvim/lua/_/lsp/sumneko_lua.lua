@@ -7,4 +7,5 @@ return {
       format = { enable = false },
     },
   },
+  force_setup = true,
 }

@@ -2,6 +2,7 @@
 , bat
 , cargo
 , direnv
+, gnumake
 , exa
 , git
 , jq
@@ -12,6 +13,9 @@
 , neovim-remote
 , terraform
 , tree-sitter
+, shellharden
+, stylua
+, sumneko-lua-language-server
 , watchman
 , yarn
 , wrapNeovimUnstable
@@ -26,14 +30,20 @@ let
   nonBrokenPkgs = builtins.concatMap (p: lib.optionals (isBroken p) [ p ]);
   path = builtins.sort (a: b: a.name < b.name) (nonBrokenPkgs [
     bat
+    cargo
     direnv
     exa
     git
+    gnumake
+    gopls
     jq
+    neovim-remote
     nil
     nixpkgs-fmt
     nodejs
-    neovim-remote
+    shellharden
+    stylua
+    sumneko-lua-language-server
     terraform
     tree-sitter
     watchman

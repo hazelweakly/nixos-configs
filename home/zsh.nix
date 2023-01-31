@@ -46,6 +46,7 @@ with pkgs.lib; {
       . "$Z4H"/z4h.zsh || return
 
       setopt rcs
+      setopt global_rcs # nixos only
     '';
     dotDir = ".config/zsh";
     enableCompletion = true;

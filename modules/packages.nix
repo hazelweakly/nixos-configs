@@ -26,5 +26,15 @@
     fd
     ripgrep
     bfs
-  ];
+  ] ++
+  (with pkgs; lib.optionals pkgs.stdenv.isLinux [
+    # linux only
+    firefox-beta-bin
+    taskopen
+    mupdf
+    zoom-us
+    htop
+    unzip
+    wl-clipboard
+  ]);
 }

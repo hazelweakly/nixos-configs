@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, lib, config, ... }: lib.mkIf pkgs.stdenv.isDarwin {
   launchd.agents.dark-mode-notify = {
     enable = true;
     config = {

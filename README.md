@@ -67,3 +67,26 @@ Manual stuff:
 - https://analogobsession.com/wp-content/uploads/2021/11/SweetVox_4.0.pkg
 - https://www.meldaproduction.com/downloads
 - https://www.xp-pen.com/download-525.html
+
+/org/gnome/desktop/peripherals/touchpad/tap-to-click
+
+```
+/org/gnome/desktop/peripherals/mouse/accel-profile
+  'adaptive'
+
+/org/gnome/desktop/interface/gtk-key-theme
+  'Emacs'
+
+/org/gnome/desktop/interface/monospace-font-name
+  'VictorMono Nerd Font 14'
+
+/org/gnome/desktop/interface/font-antialiasing
+  'none'
+
+/org/gnome/desktop/interface/font-hinting
+  'none'
+
+/org/gnome/shell/favorite-apps
+  ['firefox.desktop', 'kitty.desktop', 'org.gnome.Nautilus.desktop']
+
+```

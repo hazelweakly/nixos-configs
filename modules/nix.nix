@@ -1,16 +1,13 @@
 { pkgs, lib, inputs, self, ... }:
 with builtins;
 {
-  # set nixpkgs.{config} options in flake.nix directly
-  services.nix-daemon.enable = true;
-  system.stateVersion = 4;
-  nix.package = pkgs.nix;
-  nix.extraOptions = ''
-    keep-outputs = true
-    keep-derivations = true
-    experimental-features = nix-command flakes
-    trusted-users = hazelweakly root
-  '';
+  # services.nix-daemon.enable = true; # darwin only
+  # system.stateVersion = 4; # darwin only
+  nix.package = pkgs.nixUnstable;
+  nix.settings.experimental-features = [ "flakes" "nix-command" ];
+  nix.settings.keep-outputs = true;
+  nix.settings.keep-derivations = true;
+  nix.settings.auto-optimise-store = true;
 
   nix.nixPath = lib.mapAttrsToList (n: _: "${n}=/etc/nix/inputs/${n}") (self.lib.inputsWithPkgs inputs);
   nix.registry = mapAttrs (_: v: { flake = v; }) (self.lib.inputsWithOutputs inputs);

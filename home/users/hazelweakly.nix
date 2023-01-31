@@ -1,8 +1,7 @@
 { config, pkgs, ... }:
 let dir = config.home.homeDirectory + "/src/personal/nixos-configs";
 in
-with builtins;
-with pkgs.lib; {
+{
   home.stateVersion = "22.11";
   xdg.enable = true;
 

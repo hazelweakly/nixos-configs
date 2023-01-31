@@ -3,6 +3,9 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
+    bootspec-secureboot.url = "github:DeterminateSystems/bootspec-secureboot/main";
+    bootspec-secureboot.inputs.nixpkgs.follows = "nixpkgs";
+
     nix-darwin.url = "github:lnl7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     mkalias.url = "github:reckenrode/mkalias";
@@ -20,6 +23,9 @@
     neovim-flake.inputs.nixpkgs.url = "github:nixos/nixpkgs?rev=fad51abd42ca17a60fc1d4cb9382e2d79ae31836";
     neovim-flake.inputs.flake-utils.follows = "flake-utils";
 
+    firefox-nightly.url = "github:colemickens/flake-firefox-nightly";
+    firefox-nightly.inputs.nixpkgs.follows = "nixpkgs";
+
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
@@ -29,7 +35,8 @@
 
     lib = import ./lib.nix { inherit inputs; };
 
-    darwinConfigurations = import ./hosts { inherit self inputs; };
+    nixosConfigurations = import ./nixos-hosts { inherit self inputs; };
+    darwinConfigurations = import ./darwin-hosts { inherit self inputs; };
     homeManagerModules = self.lib.rake ./home;
     darwinModules = self.lib.rake ./modules;
 

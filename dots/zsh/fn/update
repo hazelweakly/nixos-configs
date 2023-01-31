@@ -15,7 +15,7 @@ trap cleanup EXIT INT TERM
 
   if [ -f /etc/os-release ]; then
     sudo nixos-rebuild \
-      --flake '/etc/nixos#'"$(hostname)" \
+      --flake "$HOME"'/src/personal/nixos-configs#'"$(hostname)" \
       ${1+"$@"} switch
     return
   fi

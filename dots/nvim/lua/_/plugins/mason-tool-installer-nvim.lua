@@ -1,11 +1,11 @@
 require("mason-tool-installer").setup({
   ensure_installed = {
-    "json-to-struct",
-    "chrome-debug-adapter",
+    -- "json-to-struct",
+    -- "chrome-debug-adapter",
     "bash-debug-adapter",
-    "node-debug2-adapter",
+    -- "node-debug2-adapter",
     "debugpy",
-    "delve",
+    -- "delve",
     "djlint",
   },
   auto_update = true,
