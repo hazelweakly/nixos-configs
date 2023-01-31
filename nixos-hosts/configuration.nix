@@ -8,12 +8,13 @@
   console.keyMap = "us";
 
   programs.ssh.startAgent = true;
-  # services.thermald.enable = true;
   services.openssh.enable = true;
   services.openssh.settings.PermitRootLogin = "yes";
   location.provider = "geoclue2";
-  # breaks secureboot thingy?
+
+  # doesn't work under secure boot yet
   # services.fwupd.enable = true;
+
   security.tpm2.enable = true;
   security.tpm2.pkcs11.enable = true;
 

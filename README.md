@@ -75,7 +75,7 @@ Manual stuff:
   'adaptive'
 
 /org/gnome/desktop/interface/gtk-key-theme
-  'Emacs'
+  'Default'
 
 /org/gnome/desktop/interface/monospace-font-name
   'VictorMono Nerd Font 14'
@@ -88,5 +88,14 @@ Manual stuff:
 
 /org/gnome/shell/favorite-apps
   ['firefox.desktop', 'kitty.desktop', 'org.gnome.Nautilus.desktop']
+
+/org/gnome/desktop/interface/clock-format
+  '12h'
+
+/org/gtk/settings/file-chooser/clock-format
+  '12h'
+
+/org/gnome/shell/last-selected-power-profile
+  'performance'
 
 ```
