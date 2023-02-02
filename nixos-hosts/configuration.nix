@@ -101,6 +101,7 @@
   programs.dconf.enable = true;
   environment.systemPackages = with pkgs; [
     gnome.gnome-tweaks
+    pavucontrol
   ];
 
   # Enable CUPS to print documents.

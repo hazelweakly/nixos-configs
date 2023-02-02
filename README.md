@@ -98,4 +98,12 @@ Manual stuff:
 /org/gnome/shell/last-selected-power-profile
   'performance'
 
+/org/gnome/settings-daemon/plugins/color/night-light-enabled
+  true
+
+/org/gnome/settings-daemon/plugins/color/night-light-temperature
+  uint32 2444
+
+/org/gnome/desktop/peripherals/mouse/natural-scroll
+  true
 ```

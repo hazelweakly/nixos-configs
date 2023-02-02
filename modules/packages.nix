@@ -16,7 +16,6 @@
 
     docker
     docker-compose
-    github-cli
 
     # Programs implicitly relied on in shell
     pistol
