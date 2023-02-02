@@ -6,19 +6,13 @@ let
     modules = cfg.modules ++ [
       ../modules/cachix.nix
       ../modules/environment.nix
-      ({ pkgs, ... }: {
-        fonts.fontDir.enable = true;
-        fonts.fonts = [
-          pkgs.open-sans
-          pkgs.victor-mono
-          (pkgs.nerdfonts.override { fonts = [ "VictorMono" ]; })
-        ];
-      })
       ../modules/fonts.nix
+      ../modules/linux-fonts.nix
       ../modules/home-manager.nix
       ../modules/nix.nix
       ../modules/packages.nix
       ../modules/zsh.nix
+      ../modules/linux-zsh.nix
       inputs.home-manager.nixosModules.home-manager
       inputs.bootspec-secureboot.nixosModules.bootspec-secureboot
     ];

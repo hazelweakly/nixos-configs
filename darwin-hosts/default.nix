@@ -10,6 +10,7 @@ let
       ../modules/defaults
       ../modules/environment.nix
       ../modules/fonts.nix
+      ../modules/macos-fonts.nix
       ../modules/home-manager.nix
       ../modules/homebrew.nix
       ../modules/launchd
