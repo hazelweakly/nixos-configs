@@ -4,7 +4,7 @@
     xdg.enable = true;
     programs.zsh.enable = true;
   }
-  (lib.optionals systemProfile.isDarwin {
+  (lib.optionalAttrs systemProfile.isDarwin {
     home.homeDirectory = pkgs.lib.mkForce "/var/root";
   })
 ]
