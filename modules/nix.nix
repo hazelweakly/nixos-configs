@@ -1,10 +1,13 @@
-{ pkgs, lib, inputs, self, ... }: {
+{ config, pkgs, lib, inputs, self, ... }: {
   nix.package = pkgs.nixUnstable;
   nix.settings.experimental-features = [ "flakes" "nix-command" ];
   nix.settings.keep-outputs = true;
   nix.settings.keep-derivations = true;
-  nix.settings.auto-optimise-store = true;
+  nix.settings.auto-optimise-store = !pkgs.stdenv.isDarwin;
   nix.settings.trusted-users = [ "root" ];
+  nix.extraOptions = ''
+    !include ${config.age.secrets.mercury.path}
+  '';
 
   nix.nixPath = lib.mapAttrsToList (n: _: "${n}=/etc/nix/inputs/${n}") (self.lib.inputsWithPkgs inputs)
     ++ lib.optionals pkgs.stdenv.isDarwin [ "darwin-config=/etc/nix/inputs/self" ]

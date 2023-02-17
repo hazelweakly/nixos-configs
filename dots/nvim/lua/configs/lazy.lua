@@ -10,11 +10,15 @@ if not vim.loop.fs_stat(lazypath) then
   end
 end
 vim.opt.rtp:prepend(lazypath)
+local treesitter = os.getenv("TREESITTER_PLUGIN")
+if treesitter == nil then
+  require("configs.utils").log_err("error loading treesitter, $TREESITTER_PLUGIN is empty", "[init]")
+end
 
 require("lazy").setup({ import = "plugins" }, {
   performance = {
     rtp = {
-      paths = { os.getenv("TREESITTER_PLUGIN") .. "/pack/myNeovimPackages/start/*" },
+      paths = { treesitter .. "/pack/myNeovimPackages/start/*" },
       disabled_plugins = {
         "2html_plugin",
         "getscript",

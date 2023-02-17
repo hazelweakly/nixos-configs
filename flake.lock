@@ -1,5 +1,28 @@
 {
   "nodes": {
+    "agenix": {
+      "inputs": {
+        "darwin": [
+          "nix-darwin"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1676599101,
+        "narHash": "sha256-CKS6UsOGhoNxGDBt9wyFiWHvtng/+BMAJ4G8ahhe1DE=",
+        "owner": "ryantm",
+        "repo": "agenix",
+        "rev": "de657061b13cf329c57a1a9730a5049a971b40b3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ryantm",
+        "repo": "agenix",
+        "type": "github"
+      }
+    },
     "bootspec-secureboot": {
       "inputs": {
         "nixpkgs": [
@@ -256,6 +279,7 @@
     },
     "root": {
       "inputs": {
+        "agenix": "agenix",
         "bootspec-secureboot": "bootspec-secureboot",
         "firefox-nightly": "firefox-nightly",
         "flake-utils": "flake-utils",

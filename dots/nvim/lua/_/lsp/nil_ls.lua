@@ -4,4 +4,5 @@ return {
       formatting = { command = { "nixpkgs-fmt" } },
     },
   },
+  force_setup = true,
 }

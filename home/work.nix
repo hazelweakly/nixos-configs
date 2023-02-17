@@ -1,6 +1,6 @@
 { config, pkgs, ... }: {
   programs.git = {
-    userName = pkgs.lib.mkForce "hazelweakly";
+    userName = pkgs.lib.mkForce "Hazel Weakly";
     userEmail = pkgs.lib.mkForce "hazel@mercury.com";
     extraConfig = {
       commit.gpgSign = true;
@@ -14,7 +14,7 @@
         commit.gpgSign = false;
         tag.gpgSign = false;
         user = {
-          name = "hazelweakly";
+          name = "Hazel Weakly";
           email = "hazel@theweaklys.com";
         };
       };

@@ -3,6 +3,9 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     mercury.url = "git+ssh://git@github.com/mercurytechnologies/nixos-configuration.git?ref=main";
+    agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
+    agenix.inputs.darwin.follows = "nix-darwin";
 
     bootspec-secureboot.url = "github:DeterminateSystems/bootspec-secureboot/main";
     bootspec-secureboot.inputs.nixpkgs.follows = "nixpkgs";
@@ -50,6 +53,8 @@
     let builtPkgs = import ./packages { inherit self inputs system; }; in {
       inherit (builtPkgs) legacyPackages packages;
 
-      devShells.default = builtPkgs.legacyPackages.mkShell { };
+      devShells.default = builtPkgs.legacyPackages.mkShell {
+        nativeBuildInputs = [ inputs.agenix.packages.${system}.agenix ];
+      };
     });
 }

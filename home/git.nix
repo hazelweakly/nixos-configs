@@ -1,7 +1,7 @@
 { pkgs, lib, ... }: {
   programs.git = {
     enable = true;
-    userName = lib.mkDefault "hazelweakly";
+    userName = lib.mkDefault "Hazel Weakly";
     userEmail = lib.mkDefault "hazel@theweaklys.com";
     package = pkgs.gitFull;
     lfs.enable = true;
