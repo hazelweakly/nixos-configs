@@ -66,7 +66,7 @@ M.on_attach = function(client, bufnr)
         vim.lsp.buf.format({
           filter = function(c)
             -- filter out clients that you don't want to use
-            return c.name ~= "tsserver" and c.name ~= "jsonls" and c.name ~= "sumneko_lua"
+            return c.name ~= "tsserver" and c.name ~= "jsonls" and c.name ~= "lua_ls"
           end,
           bufnr = bufnr,
           timeout = 5000,

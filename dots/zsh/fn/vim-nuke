@@ -1,10 +1,7 @@
 #!/usr/bin/env zsh
 
 set -x
-rm -rf ~/.cache/{hererocks,luarocks,nvim}
+rm -rf ~/.cache/{hererocks,luarocks,nvim,lua-language-server}
 rm -rf "$XDG_CACHE_HOME/nvim/"
-rm -rf ~dots/dots/nvim/plugin/packer_compiled.lua
-rm -rf ~/.local/share/nvim/site/pack
+rm -rf ~/.local/{state,share}/nvim/lazy
 set +x
-
-echo "run nvim -c 'lua require(\"plugins\")' to bootstrap vim"

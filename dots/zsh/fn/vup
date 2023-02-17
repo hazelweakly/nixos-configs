@@ -1,5 +1,4 @@
 #!/usr/bin/env zsh
-printf '\n%s\n' "Packer Sync"
-nvim -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
-nvim --headless '+LuaCacheClear' '+qall'
+printf '\n%s\n' "Lazy Sync"
+nvim --headless "+Lazy! sync" +qa
 echo ""

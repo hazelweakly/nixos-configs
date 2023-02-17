@@ -14,5 +14,7 @@ require("configs.utils").ftplugin.undo({
   [[if exists("sandwich#util#ftrevert") | call sandwich#util#ftrevert("nix") | endif]],
 })
 
+vim.bo.commentstring = "# %s"
+
 -- TODO: figure this out later
 -- {'buns': ['\(^\s*\)\?' . "\'\'" . '\(\s*$\)', '\(^\s*\)' . "\'\'" . '\(\s*$\)\?'], 'regex': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['q'], 'cursor': 'keep'},

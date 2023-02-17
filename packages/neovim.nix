@@ -15,13 +15,14 @@
 , tree-sitter
 , shellharden
 , stylua
-, sumneko-lua-language-server
+, lua-language-server
 , watchman
 , yarn
 , wrapNeovimUnstable
 , neovim-unwrapped
 , stdenv
 , neovimUtils
+, vimUtils
 , vimPlugins
 }:
 
@@ -43,14 +44,19 @@ let
     nodejs
     shellharden
     stylua
-    sumneko-lua-language-server
+    lua-language-server
     terraform
     tree-sitter
     watchman
     yarn
+    stdenv.cc
   ]);
 
-  args.wrapperArgs = config.wrapperArgs ++ [ "--prefix" "PATH" ":" "${lib.makeBinPath path}" ];
+  # doing it the non obvious way like this automatically collects all the grammar dependencies for us.
+  packDirArgs.myNeovimPackages = { start = [ (vimPlugins.nvim-treesitter.withPlugins (_: vimPlugins.nvim-treesitter.allGrammars)) ]; };
+  treeSitterPlugin = vimUtils.packDir packDirArgs;
+
+  args.wrapperArgs = config.wrapperArgs ++ [ "--prefix" "PATH" ":" "${lib.makeBinPath path}" ] ++ [ "--set" "TREESITTER_PLUGIN" treeSitterPlugin ];
   dotfiles = ../dots/nvim;
 
   config = neovimUtils.makeNeovimConfig {
@@ -60,10 +66,6 @@ let
     vimAlias = true;
     viAlias = true;
     wrapRc = false;
-    plugins = [{
-      plugin = vimPlugins.nvim-treesitter.withPlugins (_: vimPlugins.nvim-treesitter.allGrammars);
-      optional = false;
-    }];
   };
 
   myNeovim = wrapNeovimUnstable

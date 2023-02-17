@@ -15,6 +15,9 @@ let
       ../modules/linux-zsh.nix
       inputs.home-manager.nixosModules.home-manager
       inputs.bootspec-secureboot.nixosModules.bootspec-secureboot
+      inputs.mercury.nixosModule
+      inputs.mercury.roles.aws.aws-mfa
+      inputs.mercury.roles.certs
     ];
     specialArgs = { inherit self; inherit (args) inputs; };
   };

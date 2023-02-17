@@ -6,13 +6,11 @@ vim.opt.shadafile = "NONE"
 local is_root = vim.env.USER == "root"
 
 for _, m in ipairs({
-  "impatient",
   "_.large_file_detect",
-  "_.disable_built_ins",
   "configs.options",
   "configs.filetype-nvim",
+  "configs.lazy",
   "configs.mappings",
-  "plugins",
   "configs.settings",
 }) do
   if not pcall(require, m) then

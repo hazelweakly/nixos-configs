@@ -1,25 +1,11 @@
 local M = {}
-
 local function link_hl(a, b)
   vim.api.nvim_set_hl(0, a, { link = b })
 end
 
-local safe_require = function(theme_name, package)
-  local loaded, theme = pcall(require, theme_name)
-  ---@diagnostic disable-next-line: param-type-mismatch
-  if not loaded and pcall(vim.cmd, "packadd " .. package) then
-    loaded, theme = pcall(require, theme_name)
-  end
-  if not loaded then
-    return nil
-  end
-  return theme
-end
-
 M.tokyonight = {
   set_theme = function(args)
-    local tokyonight = safe_require("tokyonight", "tokyonight.nvim")
-    if not tokyonight then
+    if not pcall(require, "tokyonight") then
       return nil
     end
 

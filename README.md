@@ -106,4 +106,14 @@ Manual stuff:
 
 /org/gnome/desktop/peripherals/mouse/natural-scroll
   true
+
+/org/gnome/desktop/peripherals/touchpad/speed
+  0.5
+
+/org/gnome/desktop/peripherals/mouse/speed
+  0.5
+```
+
+```
+layout.css.devPixelsPerPx 1.25
 ```
