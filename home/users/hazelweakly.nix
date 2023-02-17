@@ -1,8 +1,7 @@
-{ config, pkgs, ... }:
-let dir = config.home.homeDirectory + "/src/personal/nixos-configs";
-in
-{
+{ config, pkgs, lib, userProfile, ... }: {
   home.stateVersion = "22.11";
+  home.username = userProfile.name;
+  home.homeDirectory = lib.mkForce userProfile.home;
   xdg.enable = true;
 
   imports = [
@@ -10,16 +9,19 @@ in
     ../fzf.nix
     ../git.nix
     ../neovim.nix
+    ../nix.nix
     ../task.nix
+    ../work.nix
     ../zsh.nix
+    ../../modules/age.nix
   ];
 
   xdg.configFile."kitty".source =
-    config.lib.file.mkOutOfStoreSymlink "${dir}/dots/kitty";
+    config.lib.file.mkOutOfStoreSymlink "${userProfile.flakeDir}/dots/kitty";
   xdg.configFile."ranger".source =
-    config.lib.file.mkOutOfStoreSymlink "${dir}/dots/ranger";
+    config.lib.file.mkOutOfStoreSymlink "${userProfile.flakeDir}/dots/ranger";
   xdg.configFile."nvim".source =
-    config.lib.file.mkOutOfStoreSymlink "${dir}/dots/nvim";
+    config.lib.file.mkOutOfStoreSymlink "${userProfile.flakeDir}/dots/nvim";
   xdg.configFile."isort.cfg".text = ''
     [isort]
     profile = black

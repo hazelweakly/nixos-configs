@@ -122,16 +122,16 @@
       "locked": {
         "lastModified": 1674681140,
         "narHash": "sha256-+zVcMuuAs+nSD9HtSKEIqREmPtQlV++OYZJSl6NJ0lQ=",
-        "ref": "main",
+        "owner": "mercurytechnologies",
+        "repo": "nixos-configuration",
         "rev": "e3254f28bb27fd510b96679826fb190b4d7d62ed",
-        "revCount": 48,
-        "type": "git",
-        "url": "ssh://git@github.com/mercurytechnologies/nixos-configuration.git"
+        "type": "github"
       },
       "original": {
+        "owner": "mercurytechnologies",
         "ref": "main",
-        "type": "git",
-        "url": "ssh://git@github.com/mercurytechnologies/nixos-configuration.git"
+        "repo": "nixos-configuration",
+        "type": "github"
       }
     },
     "mkalias": {
