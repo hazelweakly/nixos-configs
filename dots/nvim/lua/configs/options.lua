@@ -23,7 +23,6 @@ vim.opt.backup = not is_root
 vim.opt.writebackup = not is_root
 vim.bo.undofile = not is_root
 vim.bo.swapfile = not is_root
-vim.opt.lazyredraw = true
 vim.opt.virtualedit = "block"
 vim.opt.backupdir:remove(".")
 vim.opt.list = true

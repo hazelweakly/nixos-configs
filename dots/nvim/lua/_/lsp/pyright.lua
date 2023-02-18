@@ -25,6 +25,6 @@ end
 
 return {
   handlers = {
-    ["textDocument/hover"] = vim.lsp.with(hover, { border = require("configs.utils").border }),
+    ["textDocument/hover"] = hover,
   },
 }

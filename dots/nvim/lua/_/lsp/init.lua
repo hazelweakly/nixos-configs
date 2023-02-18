@@ -75,7 +75,7 @@ M.on_attach = function(client, bufnr)
     })
   end
 
-  require("lsp-inlayhints").on_attach(client, bufnr)
+  require("lsp-inlayhints").on_attach(client, bufnr, false)
 end
 
 return M

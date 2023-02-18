@@ -1,7 +1,7 @@
 return {
   "jose-elias-alvarez/null-ls.nvim",
   event = { "BufReadPre", "BufNewFile" },
-  dependencies = { "mason.nvim" },
+  dependencies = { "mason.nvim", "lsp-zero.nvim" },
   opts = function()
     -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
     local null_ls = require("null-ls")
@@ -18,7 +18,7 @@ return {
             return string.match(params.bufname, ".*%.github/workflows/.*%.ya?ml") ~= nil
           end,
           extra_args = function(_)
-            local path = require("configs.utils").path_join(".github", "actionlint.yaml")
+            local path = require("null-ls.utils").path.join(".github", "actionlint.yaml")
             local has = require("null-ls.utils").make_conditional_utils().has_file(path)
             if has then
               return { "-config-file", path }
@@ -42,7 +42,7 @@ return {
       },
       update_on_insert = false, -- some language servers really hate this
       on_attach = function(client)
-        return require("_.lsp").on_attach(client, vim.api.nvim_get_current_buf())
+        return require("lsp-zero").build_options("null-ls", {}).on_attach(client, vim.api.nvim_get_current_buf())
       end,
     }
   end,

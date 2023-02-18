@@ -27,5 +27,5 @@ return {
       map("v", "<Leader>h" .. i, ":<c-u>HSHighlight " .. i .. "<CR>")
     end
     map("v", "<Leader>hc", ":<c-u>HSRmHighlight<CR>")
-  end
+  end,
 }

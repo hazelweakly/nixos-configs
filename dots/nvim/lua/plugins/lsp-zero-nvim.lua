@@ -1,16 +1,34 @@
 return {
   "VonHeikemen/lsp-zero.nvim",
+  dependencies = {
+    { "neovim/nvim-lspconfig" },
+    { "williamboman/mason.nvim" },
+    { "williamboman/mason-lspconfig.nvim" },
+
+    { "hrsh7th/nvim-cmp" },
+    { "hrsh7th/cmp-nvim-lsp" },
+    { "hrsh7th/cmp-buffer" },
+    { "hrsh7th/cmp-path" },
+    { "saadparwaiz1/cmp_luasnip" },
+    { "hrsh7th/cmp-nvim-lua" },
+
+    { "L3MON4D3/LuaSnip" },
+    { "rafamadriz/friendly-snippets" },
+  },
   config = function()
+    require("mason.settings").set({
+      ui = { border = require("configs.utils").border },
+    })
     local lsp = require("lsp-zero")
     lsp.preset("recommended")
     lsp.set_preferences({
       set_lsp_keymaps = false,
       manage_nvim_cmp = false,
+      suggest_lsp_servers = false,
     })
-    lsp.nvim_workspace({
-      library = vim.api.nvim_get_runtime_file("", true),
-    })
-    lsp.on_attach(require("_.lsp").on_attach)
+
+    local lsp_init = require("_.lsp")
+    lsp.on_attach(lsp_init.on_attach)
 
     local servers = {
       "bashls",
@@ -36,7 +54,7 @@ return {
       local has, s_opts = pcall(require, "_.lsp." .. s)
       if has then
         if type(s_opts) == "function" then
-          lsp.build_options(s, {})
+          lsp.skip_server_setup({ s })
         else
           lsp.configure(s, s_opts)
         end
@@ -44,6 +62,13 @@ return {
     end
 
     lsp.setup()
+
+    for _, s in pairs(servers) do
+      local has, s_opts = pcall(require, "_.lsp." .. s)
+      if has and type(s_opts) == "function" then
+        s_opts(lsp.build_options(s, {}))
+      end
+    end
 
     for _, s in pairs(servers) do
       local has, s_opts = pcall(require, "_.lsp." .. s)

@@ -18,8 +18,6 @@ for _, m in ipairs({
   end
 end
 
-require("configs.colors").setup()
-
 if is_root then
   vim.opt.shada = ""
 else

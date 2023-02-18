@@ -55,7 +55,7 @@
       inherit (builtPkgs) legacyPackages packages;
 
       devShells.default = builtPkgs.legacyPackages.mkShell {
-        nativeBuildInputs = [ inputs.agenix.packages.${system}.agenix ];
+        nativeBuildInputs = [ inputs.agenix.packages.${system}.agenix builtPkgs.legacyPackages.stylua ];
       };
     });
 }

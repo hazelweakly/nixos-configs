@@ -28,5 +28,5 @@ return {
     map("v", "g<C-x>", function()
       require("dial.map").dec_gvisual()
     end)
-  end
+  end,
 }

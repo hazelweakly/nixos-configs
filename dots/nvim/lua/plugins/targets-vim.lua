@@ -5,5 +5,5 @@ return {
       pattern = "targets#mappings#user",
       command = [[call targets#mappings#extend({ 'a': {'argument': [{'o': '[({[]', 'c': '[]})]', 's': ','}]} })]],
     })
-  end
+  end,
 }
