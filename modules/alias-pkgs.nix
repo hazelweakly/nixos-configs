@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, systemProfile, ... }: lib.mkIf systemProfile.isDarwin {
   system.activationScripts.applications.text = lib.mkForce "";
   system.activationScripts.postActivation.text = ''
     app_folder="$HOME/Applications/Nix"

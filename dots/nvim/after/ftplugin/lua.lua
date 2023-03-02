@@ -1,8 +1,20 @@
-vim.b.minisurround_config = {
-  custom_surroundings = {
-    s = {
-      input = { "%[%[().-()%]%]" },
-      output = { left = "[[", right = "]]" },
+require("nvim-surround").buffer_setup({
+  surrounds = {
+    ["p"] = {
+      add = { "vim.pretty_print(", ")" },
+      find = "vim%.pretty_print%b()",
+      delete = "^(vim%.pretty_print%()().-(%))()$",
+      change = {
+        target = "^(vim%.pretty_print%()().-(%))()$",
+      },
+    },
+    ["s"] = {
+      add = { "[[", "]]" },
+      find = "%[%[().-()%]%]", -- ??
+      -- delete = "^(vim%.pretty_print%()().-(%))()$",
+      -- change = {
+      --   target = "^(vim%.pretty_print%()().-(%))()$",
+      -- },
     },
   },
-}
+})

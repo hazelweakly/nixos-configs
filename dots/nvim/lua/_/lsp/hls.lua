@@ -1,6 +1,6 @@
 return {
   settings = {
-    languageServerHaskell = {
+    haskell = {
       formattingProvider = "fourmolu",
       formatOnImportOn = true,
       completionSnippetOn = true,

@@ -2,6 +2,8 @@
 
 Configurations for my NixOS and macOS systems (work/home laptops)
 
+https://github.com/mrcjkb/haskell-tools.nvim
+
 ## Design philosophy
 
 - Avoid channels wherever possible

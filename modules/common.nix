@@ -1,7 +1,6 @@
 {
   imports = [
     ({ lib, config, ... }: {
-      # networking.hostName = "Hazels-P16";
       environment.etc.hostname = lib.mkIf (config.networking.hostName != "") {
         text = lib.mkDefault (config.networking.hostName + "\n");
       };

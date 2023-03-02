@@ -2,27 +2,9 @@ local M = {}
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
-local function is_null_ls_formatting_enabed(bufnr)
-  local file_type = vim.api.nvim_buf_get_option(bufnr, "filetype")
-  if file_type == "markdown" then
-    return false -- prettier breaks gq
-  end
-  local generators =
-    require("null-ls.generators").get_available(file_type, require("null-ls.methods").internal.FORMATTING)
-  return #generators > 0
-end
-
 M.on_attach = function(client, bufnr)
   local utils = require("configs.utils")
   local buf_map = utils.buf_map
-
-  if client.server_capabilities.documentFormattingProvider then
-    if client.name == "null-ls" and is_null_ls_formatting_enabed(bufnr) or client.name ~= "null-ls" then
-      vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
-    else
-      vim.api.nvim_buf_set_option(bufnr, "formatexpr", "")
-    end
-  end
 
   buf_map(bufnr, "x", "<leader>la", vim.lsp.buf.code_action)
   if client.server_capabilities.codeActionProvider then
@@ -36,7 +18,6 @@ M.on_attach = function(client, bufnr)
       return require("telescope.builtin").lsp_definitions()
     end)
   end
-  -- client.server_capabilities
   if client.server_capabilities.hoverProvider then
     buf_map(bufnr, "n", "K", vim.lsp.buf.hover)
   end
@@ -56,26 +37,55 @@ M.on_attach = function(client, bufnr)
   end)
   buf_map(bufnr, "n", "<C-p>", vim.diagnostic.goto_prev)
   buf_map(bufnr, "n", "<C-n>", vim.diagnostic.goto_next)
-
-  if client.server_capabilities.documentFormattingProvider then
-    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      group = augroup,
-      buffer = bufnr,
-      callback = function()
-        vim.lsp.buf.format({
-          filter = function(c)
-            -- filter out clients that you don't want to use
-            return c.name ~= "tsserver" and c.name ~= "jsonls" and c.name ~= "lua_ls"
-          end,
-          bufnr = bufnr,
-          timeout = 5000,
-        })
-      end,
-    })
-  end
-
-  require("lsp-inlayhints").on_attach(client, bufnr, false)
 end
+
+local lspAttach = vim.api.nvim_create_augroup("LspAttach_personal", {})
+vim.api.nvim_clear_autocmds({ group = lspAttach })
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = lspAttach,
+  callback = function(args)
+    if not (args.data and args.data.client_id) then
+      return
+    end
+
+    local bufnr = args.buf
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    require("lsp-inlayhints").on_attach(client, bufnr)
+  end,
+})
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = lspAttach,
+  callback = function(args)
+    local bufnr = args.buf
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client.server_capabilities.completionProvider then
+      vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
+    end
+    if client.server_capabilities.definitionProvider then
+      vim.bo[bufnr].tagfunc = "v:lua.vim.lsp.tagfunc"
+    end
+
+    if client.server_capabilities.documentFormattingProvider then
+      local buf_map = require("configs.utils").buf_map
+      buf_map(bufnr, "v", "<C-f>", vim.lsp.buf.format)
+      vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        group = augroup,
+        buffer = bufnr,
+        callback = function()
+          vim.lsp.buf.format({
+            filter = function(c)
+              -- filter out clients that you don't want to use
+              return c.name ~= "tsserver" and c.name ~= "jsonls" and c.name ~= "lua_ls"
+            end,
+            bufnr = bufnr,
+            timeout = 5000,
+          })
+        end,
+      })
+    end
+  end,
+})
 
 return M

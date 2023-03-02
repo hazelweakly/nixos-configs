@@ -1,6 +1,6 @@
 return {
   "kosayoda/nvim-lightbulb",
-  event = "User DirenvLoaded",
+  event = "VeryLazy",
   config = function()
     vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
       callback = function()

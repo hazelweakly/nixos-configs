@@ -17,20 +17,31 @@ let
       ../modules/work.nix
       ../modules/common.nix
       ../modules/age.nix
+      ../modules/alias-pkgs.nix
       ../modules/cachix.nix
+      ../modules/defaults
       ../modules/environment.nix
       ../modules/fonts.nix
       ../modules/home-manager.nix
+      ../modules/homebrew.nix
+      ../modules/launchd
       ../modules/nix.nix
+      ../modules/pam.nix
+      ../modules/sudo-touch.nix
       ../modules/packages.nix
       ../modules/zsh.nix
-      inputs.home-manager.nixosModules.home-manager
       ../home/homeage.nix
-      inputs.bootspec-secureboot.nixosModules.bootspec-secureboot
-      inputs.mercury.nixosModule
-      inputs.mercury.roles.aws.aws-mfa
-      inputs.mercury.roles.certs
-      inputs.agenix.nixosModules.default
+    ] ++ inputs.self.lib.optionals systemProfile.isLinux [
+      inputs.home-manager.nixosModules.home-manager # nixos only
+      inputs.bootspec-secureboot.nixosModules.bootspec-secureboot # nixos only
+      inputs.agenix.nixosModules.default # nixos
+    ] ++ inputs.self.lib.optionals (systemProfile.isLinux && systemProfile.isWork) [
+      inputs.mercury.nixosModule # nixos + work only
+      inputs.mercury.roles.aws.aws-mfa # nixos  + work only
+      inputs.mercury.roles.certs # nixos + work only
+    ] ++ inputs.self.lib.optionals systemProfile.isDarwin [
+      inputs.agenix.darwinModules.default # macos only
+      inputs.home-manager.darwinModules.home-manager # macos only
     ];
     specialArgs = { inherit self userProfile systemProfile; inherit (args) inputs; };
   };

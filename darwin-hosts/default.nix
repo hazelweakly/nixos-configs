@@ -31,9 +31,18 @@ let
       ../modules/pam.nix
       ../modules/sudo-touch.nix
       ../modules/zsh.nix
-      inputs.home-manager.darwinModules.home-manager
       ../home/homeage.nix
+    ] ++ inputs.self.lib.optionals systemProfile.isLinux [
+      inputs.home-manager.nixosModules.home-manager
+      inputs.bootspec-secureboot.nixosModules.bootspec-secureboot
+      inputs.agenix.nixosModules.default
+    ] ++ inputs.self.lib.optionals (systemProfile.isLinux && systemProfile.isWork) [
+      inputs.mercury.nixosModule
+      inputs.mercury.roles.aws.aws-mfa
+      inputs.mercury.roles.certs
+    ] ++ inputs.self.lib.optionals systemProfile.isDarwin [
       inputs.agenix.darwinModules.default
+      inputs.home-manager.darwinModules.home-manager
     ];
     specialArgs = { inherit self userProfile systemProfile; };
   };

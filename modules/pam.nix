@@ -50,7 +50,7 @@ in
     '';
   };
 
-  config = rec {
+  config = mkIf cfg.sudoTouchIdAuth.enable rec {
     system.activationScripts.pam.text = ''
       # PAM settings
       echo >&2 "setting up pam..."
