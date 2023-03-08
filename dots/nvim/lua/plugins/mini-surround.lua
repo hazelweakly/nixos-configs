@@ -1,5 +1,4 @@
 return {
-  -- "echasnovski/mini.surround",
   "kylechui/nvim-surround",
   keys = function(_, keys)
     local mappings = {
@@ -12,15 +11,7 @@ return {
     return vim.list_extend(mappings, keys)
   end,
   opts = {
-    keymaps = {
-      normal = "sa",
-      normal_cur = "ssa",
-      normal_line = "ssa",
-      delete = "sd",
-      change = "sr",
-      visual = "sa",
-      visual_line = "sa",
-    },
+    keymaps = { normal = "sa", normal_cur = "ssa", delete = "sd", change = "sr", visual = "sa" },
     surrounds = {
       ["F"] = {
         find = function()

@@ -39,8 +39,7 @@ M.on_attach = function(client, bufnr)
   buf_map(bufnr, "n", "<C-n>", vim.diagnostic.goto_next)
 end
 
-local lspAttach = vim.api.nvim_create_augroup("LspAttach_personal", {})
-vim.api.nvim_clear_autocmds({ group = lspAttach })
+local lspAttach = vim.api.nvim_create_augroup("LspAttach_personal", { clear = true })
 vim.api.nvim_create_autocmd("LspAttach", {
   group = lspAttach,
   callback = function(args)

@@ -11,7 +11,6 @@ return {
       debounce = 250,
       sources = {
         null_ls.builtins.code_actions.shellcheck,
-        null_ls.builtins.hover.printenv,
 
         null_ls.builtins.diagnostics.shellcheck,
         null_ls.builtins.diagnostics.hadolint,

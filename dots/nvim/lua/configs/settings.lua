@@ -37,6 +37,14 @@ vim.api.nvim_create_autocmd("FileType", {
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
-    vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+    vim.keymap.set("n", "q", vim.cmd.close, { buffer = event.buf, silent = true, nowait = true })
+  end,
+})
+vim.api.nvim_create_autocmd("TextYankPost", {
+  pattern = "*",
+  callback = function()
+    if vim.v.event.operator == "y" and vim.v.event.regname == "" then
+      vim.fn.setreg("+", table.concat(vim.v.event.regcontents, "\n"))
+    end
   end,
 })
