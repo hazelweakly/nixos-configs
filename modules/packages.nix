@@ -25,9 +25,11 @@
     fd
     ripgrep
     bfs
+
+    # I don't use this yet but I should
+    git-absorb
   ] ++
-  (with pkgs; lib.optionals pkgs.stdenv.isLinux [
-    # linux only
+  (with pkgs; lib.optionals stdenv.isLinux [
     firefox-beta-bin
     taskopen
     mupdf
@@ -36,4 +38,6 @@
     unzip
     wl-clipboard
   ]);
+
+  documentation.dev.enable = true;
 }

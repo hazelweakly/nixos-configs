@@ -1,1 +1,1 @@
-return { "ethanholz/nvim-lastplace", config = true }
+return { "ethanholz/nvim-lastplace", opts = {} }

@@ -12,4 +12,4 @@
 - re-evaluate targets.vim again
 - keybind of : doesn't pop up in the right spot.
 - Better insert bindings for commandline and telescope prompt?
-- nerdsnipe on the packer config again
+-  nerdsnipe on the packer config again

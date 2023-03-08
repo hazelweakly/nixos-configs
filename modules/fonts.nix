@@ -7,6 +7,31 @@
       pkgs.noto-fonts-extra
       pkgs.open-sans
       pkgs.victor-mono
+      (pkgs.iosevka.override {
+        privateBuildPlan = ''
+          [buildPlans.iosevka-custom]
+          family = "Iosevka Custom"
+          spacing = "quasi-proportional"
+          serifs = "slab"
+          no-cv-ss = false
+          export-glyph-names = true
+
+            [buildPlans.iosevka-custom.variants]
+            inherits = "ss08"
+
+              [buildPlans.iosevka-custom.variants.italic]
+              capital-q = "open-swash"
+              capital-z = "cursive-with-horizontal-crossbar"
+              f = "tailed-crossbar-at-x-height"
+              k = "symmetric-connected-serifed"
+              q = "straight"
+              z = "cursive-with-horizontal-crossbar"
+
+            [buildPlans.iosevka-custom.ligations]
+            inherits = "dlig"
+        '';
+        set = "custom";
+      })
       (pkgs.nerdfonts.override { fonts = [ "VictorMono" ]; })
     ];
   }
@@ -16,6 +41,9 @@
       sansSerif = [ "Open Sans" ];
       serif = [ "Noto Serif" ];
     };
+
+    console.font = "latarcyrheb-sun32";
+    console.keyMap = "us";
   })
   (lib.optionalAttrs systemProfile.isDarwin {
     system.activationScripts.fonts.text = lib.mkForce ''

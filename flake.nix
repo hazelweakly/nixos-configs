@@ -8,6 +8,8 @@
     agenix.inputs.nixpkgs.follows = "nixpkgs";
     agenix.inputs.darwin.follows = "nix-darwin";
 
+    # https://github.com/NixOS/rfcs/pull/125
+    # look at https://github.com/nix-community/lanzaboote
     bootspec-secureboot.url = "github:DeterminateSystems/bootspec-secureboot/main";
     bootspec-secureboot.inputs.nixpkgs.follows = "nixpkgs";
 

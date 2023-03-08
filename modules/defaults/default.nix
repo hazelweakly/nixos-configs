@@ -1,4 +1,9 @@
-{ pkgs, lib, systemProfile, ... }: lib.mkMerge [
+{ pkgs, lib, config, systemProfile, ... }: lib.mkMerge [
+  {
+    environment.etc.hostname = lib.mkIf (config.networking.hostName != "") {
+      text = lib.mkDefault (config.networking.hostName + "\n");
+    };
+  }
   (lib.optionalAttrs systemProfile.isDarwin rec {
     imports = [ ./defaults-options.nix ];
     system.defaults.NSGlobalDomain = {
