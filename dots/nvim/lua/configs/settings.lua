@@ -9,12 +9,12 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     vim.highlight.on_yank({ higroup = "Visual" })
   end,
 })
-vim.api.nvim_create_autocmd({ "FocusLost" }, {
+vim.api.nvim_create_autocmd("FocusLost", {
   callback = function(opts)
     if vim.bo.modified and not vim.bo.readonly and vim.fn.expand("%") ~= "" and vim.bo.buftype == "" then
       vim.api.nvim_buf_call(opts.buf, function()
         vim.cmd.doautocmd("BufWritePre")
-        vim.cmd.write()
+        vim.cmd.write({ mods = { silent = true } })
       end)
     end
   end,
@@ -38,13 +38,5 @@ vim.api.nvim_create_autocmd("FileType", {
   callback = function(event)
     vim.bo[event.buf].buflisted = false
     vim.keymap.set("n", "q", vim.cmd.close, { buffer = event.buf, silent = true, nowait = true })
-  end,
-})
-vim.api.nvim_create_autocmd("TextYankPost", {
-  pattern = "*",
-  callback = function()
-    if vim.v.event.operator == "y" and vim.v.event.regname == "" then
-      vim.fn.setreg("+", table.concat(vim.v.event.regcontents, "\n"))
-    end
   end,
 })

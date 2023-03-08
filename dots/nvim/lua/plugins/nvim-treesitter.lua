@@ -17,10 +17,11 @@ return {
     },
   },
   config = function(_, opts)
+    local parsers = require("nvim-treesitter.parsers")
     -- ugly hack to "add" zsh: https://github.com/nvim-treesitter/nvim-treesitter/issues/655
-    local ft_to_lang = require("nvim-treesitter.parsers").ft_to_lang
+    local ft_to_lang = parsers.ft_to_lang
     ---@diagnostic disable-next-line: duplicate-set-field
-    require("nvim-treesitter.parsers").ft_to_lang = function(ft)
+    parsers.ft_to_lang = function(ft)
       if ft == "zsh" then
         return "bash"
       end

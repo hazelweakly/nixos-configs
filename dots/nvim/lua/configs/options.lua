@@ -57,29 +57,6 @@ vim.opt_local.spelloptions:append("noplainbuffer")
 vim.opt_local.spelloptions:append("camel")
 vim.opt.shell = "/bin/sh"
 
--- Set filetypes that should be ignored in other plugins
-vim.g.ignored_buffer_types = {
-  "Trouble",
-  "help",
-  "nofile",
-  "packer",
-  "quickfix",
-  "terminal",
-}
-
-vim.g.ignored_file_types = {
-  "TelescopePrompt",
-  "TelescopeResults",
-  "checkhealth",
-  "gitcommit",
-  "gitrebase",
-  "glowpreview",
-  "help",
-  "minimap",
-  "packer",
-  "vim",
-}
-
 vim.g.markdown_fenced_languages = {
   "js=javascript",
   "ts=typescript",
