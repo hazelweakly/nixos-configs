@@ -16,9 +16,6 @@ return {
     { "rafamadriz/friendly-snippets" },
   },
   config = function()
-    require("mason.settings").set({
-      ui = { border = require("configs.utils").border },
-    })
     local lsp = require("lsp-zero")
     lsp.preset("recommended")
     lsp.set_preferences({

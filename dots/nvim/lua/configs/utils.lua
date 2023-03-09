@@ -20,19 +20,6 @@ M.buf_map = function(bufnr, mode, lhs, rhs, opts)
   M.map(mode, lhs, rhs, M.merge({ buffer = bufnr }, opts or {}))
 end
 
-M.border = {
-  { "🭽", "FloatBorder" },
-  { "▔", "FloatBorder" },
-  { "🭾", "FloatBorder" },
-  { "▕", "FloatBorder" },
-  { "🭿", "FloatBorder" },
-  { "▁", "FloatBorder" },
-  { "🭼", "FloatBorder" },
-  { "▏", "FloatBorder" },
-}
-
-M.border_simple = { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" }
-
 M.ftplugin = {}
 M.ftplugin.undo = function(args)
   vim.b.undo_ftplugin = (vim.b.undo_ftplugin or "")

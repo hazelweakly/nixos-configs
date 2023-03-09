@@ -10,6 +10,8 @@ M.on_attach = function(client, bufnr)
   if client.server_capabilities.codeActionProvider then
     buf_map(bufnr, "n", "ga", vim.lsp.buf.code_action)
   end
+  buf_map(bufnr, "n", "gl", vim.lsp.codelens.run)
+
   if client.supports_method("textDocument/declaration") then
     buf_map(bufnr, "n", "gD", vim.lsp.buf.declaration)
   end

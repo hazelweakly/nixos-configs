@@ -2,6 +2,7 @@ return {
   "hrsh7th/nvim-cmp",
   event = "InsertEnter",
   dependencies = {
+    "onsails/lspkind-nvim",
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-path",
@@ -90,10 +91,7 @@ return {
       formatting = {
         format = require("lspkind").cmp_format({ with_text = false }),
       },
-      window = {
-        completion = { border = require("configs.utils").border },
-        documentation = { border = require("configs.utils").border },
-      },
+      window = { completion = cmp.config.window.bordered(), documentation = cmp.config.window.bordered() },
       experimental = {
         ghost_text = {
           hl_group = "LspCodeLens",
@@ -109,9 +107,9 @@ return {
     cmp.setup.cmdline(":", {
       mapping = cmp.mapping.preset.cmdline(),
       sources = cmp.config.sources({
-        { name = "path", keyword_length = 2 },
+        { name = "path", option = { keyword_length = 2 } },
       }, {
-        { name = "cmdline", keyword_length = 2 },
+        { name = "cmdline", option = { keyword_length = 2 } },
       }),
     })
   end,

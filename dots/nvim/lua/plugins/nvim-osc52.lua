@@ -1,6 +1,6 @@
 return {
   "ojroques/nvim-osc52",
-  opts = {},
+  opts = { silent = true },
   init = function()
     local function copy(lines, _)
       require("osc52").copy(table.concat(lines, "\n"))

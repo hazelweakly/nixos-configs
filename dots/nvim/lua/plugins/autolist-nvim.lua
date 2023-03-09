@@ -1,6 +1,6 @@
 return {
   "gaoDean/autolist.nvim",
-  dependencies = { "mini.pairs" },
+  dependencies = { "windwp/nvim-autopairs" },
   ft = { "markdown", "text", "tex", "plaintex" },
   config = function()
     local autolist = require("autolist")

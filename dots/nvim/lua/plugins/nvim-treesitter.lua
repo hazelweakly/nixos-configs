@@ -5,10 +5,9 @@ return {
   opts = {
     highlight = { enable = true },
     auto_install = false,
-    indent = { enable = true, disable = require("_.large_file").is_large_file },
+    indent = { enable = true },
     incremental_selection = {
       enable = true,
-      disable = require("_.large_file").is_large_file,
       keymaps = {
         init_selection = "<CR>",
         node_incremental = "<TAB>",
@@ -27,6 +26,15 @@ return {
       end
       return ft_to_lang(ft)
     end
+    local parser_config = parsers.get_parser_configs()
+    parser_config.dhall = {
+      install_info = {
+        url = "https://github.com/jbellerb/tree-sitter-dhall",
+        files = { "src/parser.c", "src/scanner.c" },
+        branch = "master",
+      },
+      maintainers = { "@jbellerb" },
+    }
     require("nvim-treesitter.configs").setup(opts)
   end,
 }

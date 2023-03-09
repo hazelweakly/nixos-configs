@@ -17,8 +17,6 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     mkalias.url = "github:reckenrode/mkalias";
     mkalias.inputs.nixpkgs.follows = "nixpkgs";
-    mkalias.inputs.flake-utils.follows = "flake-utils";
-    mkalias.inputs.rust-overlay.follows = "rust-overlay";
 
     flake-utils.url = "github:numtide/flake-utils";
 
