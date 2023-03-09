@@ -12,7 +12,6 @@
     homebrew.casks = [
       "docker"
       "rectangle"
-      "elgato-wave-link"
     ];
   })
 ]

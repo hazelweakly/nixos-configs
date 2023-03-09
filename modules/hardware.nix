@@ -5,19 +5,8 @@
     # https://github.com/NixOS/rfcs/pull/125
     # services.fwupd.enable = true;
 
-    boot.initrd.availableKernelModules = [
-      "aesni_intel"
-      "xhci_pci"
-      "nvme"
-      "thunderbolt"
-      "usb_storage"
-      "sd_mod"
-      "rtsx_pci_sdmmc"
-    ];
-    boot.initrd.kernelModules = [ ];
+    boot.initrd.availableKernelModules = [ "aesni_intel" "xhci_pci" "nvme" "thunderbolt" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
     boot.kernelModules = [ "kvm-intel" ];
-    boot.extraModulePackages = [ ];
-
 
     boot.plymouth.enable = true;
     boot.kernelParams = [ "quiet" "splash" ];

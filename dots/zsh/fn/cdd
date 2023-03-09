@@ -1,7 +1,8 @@
 #!/usr/bin/env zsh
-[[ $# == 1 ]] || exit
-(( $+commands[$1] )) || exit
+local fek() { echo "usage: cd into path of nix store derivation given by executable" >&2; }
+[[ $# == 1 ]] || { fek && return 1; }
+(( $+commands[$1] )) || { fek && return 1; }
 dir="${commands[$1]:P:h}"
 [[ "${dir:t}" == bin ]] && dir="${dir:h}"
-[[ -d "$dir" ]] || exit
+[[ -d "$dir" ]] || { fek && return 1; }
 cd -- "$dir"

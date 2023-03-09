@@ -37,8 +37,10 @@
     luaenv
     jenv
     plenv
+    perlbrew
     phpenv
     scalaenv
+    haskell_stack
     kubecontext
     terraform
     terraform_version
@@ -56,6 +58,7 @@
     midnight_commander
     vpn_id
     todo
+    cpu_arch
     time
     newline
     taskwarrior

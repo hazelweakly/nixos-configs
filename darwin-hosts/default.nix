@@ -28,7 +28,6 @@ let
       ../modules/launchd
       ../modules/nix.nix
       ../modules/packages.nix
-      ../modules/pam.nix
       ../modules/sudo-touch.nix
       ../modules/zsh.nix
       ../home/homeage.nix
