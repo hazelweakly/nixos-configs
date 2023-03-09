@@ -38,16 +38,16 @@ let
       ../modules/ssh.nix
       ../modules/users.nix
     ] ++ inputs.self.lib.optionals systemProfile.isLinux [
-      inputs.agenix.nixosModules.default # nixos
-      inputs.bootspec-secureboot.nixosModules.bootspec-secureboot # nixos only
-      inputs.home-manager.nixosModules.home-manager # nixos only
+      inputs.agenix.nixosModules.default
+      inputs.bootspec-secureboot.nixosModules.bootspec-secureboot
+      inputs.home-manager.nixosModules.home-manager
     ] ++ inputs.self.lib.optionals (systemProfile.isLinux && systemProfile.isWork) [
-      inputs.mercury.nixosModule # nixos + work only
-      inputs.mercury.roles.aws.aws-mfa # nixos  + work only
-      inputs.mercury.roles.certs # nixos + work only
+      inputs.mercury.nixosModule
+      inputs.mercury.roles.aws.aws-mfa
+      inputs.mercury.roles.certs
     ] ++ inputs.self.lib.optionals systemProfile.isDarwin [
-      inputs.agenix.darwinModules.default # macos only
-      inputs.home-manager.darwinModules.home-manager # macos only
+      inputs.agenix.darwinModules.default
+      inputs.home-manager.darwinModules.home-manager
     ];
     specialArgs = { inherit self userProfile systemProfile; inherit (args) inputs; };
   };

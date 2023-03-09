@@ -5,7 +5,6 @@
     };
   }
   (lib.optionalAttrs systemProfile.isDarwin rec {
-    imports = [ ./defaults-options.nix ];
     system.defaults.NSGlobalDomain = {
       "com.apple.mouse.tapBehavior" = 1;
       "com.apple.sound.beep.feedback" = 0;
@@ -58,4 +57,6 @@
     # hack
     system.activationScripts.postActivation.text = system.activationScripts.dock-apps.text;
   })
-]
+] // lib.optionalAttrs systemProfile.isDarwin {
+  imports = [ ./defaults-options.nix ];
+}

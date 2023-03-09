@@ -1,4 +1,4 @@
-{ pkgs, lib, systemProfile, userProfile, ... }: lib.mkIf systemProfile.isWork (lib.mkMerge [
+{ pkgs, lib, systemProfile, userProfile, ... }: lib.mkMerge [
   {
     home-manager.users = {
       root = import ../home/users/root.nix;
@@ -31,5 +31,4 @@
       LC_TIME = "en_US.UTF-8";
     };
   })
-  (lib.optionalAttrs systemProfile.isDarwin { })
-])
+]
