@@ -15,12 +15,12 @@ lib.mkMerge [
       enable = true;
 
       iconTheme = {
-        name = pkgs.qogir-icon-theme.pname;
+        name = "Qogir";
         package = pkgs.qogir-icon-theme;
       };
 
       theme = {
-        name = pkgs.rose-pine-gtk-theme.meta.description;
+        name = "rose-pine-dawn";
         package = pkgs.rose-pine-gtk-theme;
       };
 
@@ -28,18 +28,6 @@ lib.mkMerge [
         name = "Numix-Cursor";
         package = pkgs.numix-cursor-theme;
       };
-
-      # gtk3.extraConfig = {
-      #   Settings = ''
-      #     gtk-application-prefer-dark-theme=1
-      #   '';
-      # };
-
-      # gtk4.extraConfig = {
-      #   Settings = ''
-      #     gtk-application-prefer-dark-theme=1
-      #   '';
-      # };
     };
 
     home.sessionVariables.GTK_THEME = config.gtk.theme.name;
@@ -48,8 +36,8 @@ lib.mkMerge [
     dconf.settings = {
       "org/gnome/desktop/interface" = {
         "clock-format" = "12h";
-        "font-antialiasing" = "none";
-        "font-hinting" = "none";
+        "font-antialiasing" = "rgba";
+        "font-hinting" = "full";
         "monospace-font-name" = "VictorMono Nerd Font 14";
       };
       "org/gnome/desktop/peripherals/mouse" = {
@@ -61,20 +49,19 @@ lib.mkMerge [
         "speed" = 0.5;
         tap-to-click = true;
       };
-      "org/gnome/desktop/wm/preferences" = {
-        workspace-names = [ "Main" ];
-      };
+      "org/gnome/desktop/wm/preferences" = { workspace-names = [ "Main" ]; };
       "org/gnome/settings-daemon/plugins/color" = {
         "night-light-enabled" = true;
         "night-light-temperature" = 2444;
       };
+      "org/gnome/desktop/sound" = { "event-sounds" = false; };
       "org/gnome/shell" = {
         disable-user-extensions = false;
         enabled-extensions = builtins.map (p: p.extensionUuid) extensions;
-        "favorite-apps" = [ "firefox.desktop" "kitty.desktop" "org.gnome.Nautilus.desktop" ];
+        "favorite-apps" = [ "firefox.desktop" "kitty.desktop" ];
       };
       "org/gnome/shell/extensions/user-theme" = {
-        name = config.gtk.theme.name;
+        name = "rose-pine-moon";
       };
       "org/gtk/settings/file-chooser" = { "clock-format" = "12h"; };
     };

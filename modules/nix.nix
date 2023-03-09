@@ -1,6 +1,5 @@
 { config, pkgs, lib, inputs, self, systemProfile, userProfile, ... }: lib.mkMerge [
   {
-    nix.package = pkgs.nixUnstable;
     nix.settings.experimental-features = [ "flakes" "nix-command" ];
     nix.settings.keep-outputs = true;
     nix.settings.keep-derivations = true;
