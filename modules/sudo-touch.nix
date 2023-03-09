@@ -1,3 +1,5 @@
-{ lib, systemProfile, ... }: lib.mkIf systemProfile.isDarwin {
-  security.pam.sudoTouchIdAuth.enable = true;
-}
+{ lib, systemProfile, ... }: lib.mkMerge [
+  (lib.optionalAttrs systemProfile.isDarwin {
+    security.pam.sudoTouchIdAuth.enable = true;
+  })
+]

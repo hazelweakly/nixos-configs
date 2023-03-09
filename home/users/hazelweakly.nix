@@ -8,12 +8,13 @@
     ../dark-mode-notify.nix
     ../fzf.nix
     ../git.nix
+    ../gtk.nix
+    ../../modules/age.nix
     ../neovim.nix
     ../nix.nix
     ../task.nix
     ../work.nix
     ../zsh.nix
-    ../../modules/age.nix
   ];
 
   xdg.configFile."kitty".source =
