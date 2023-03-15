@@ -30,16 +30,17 @@ return {
     local servers = {
       "bashls",
       "cssls",
+      "dhall_lsp_server",
       "dockerls",
       "eslint",
       "gopls",
       "hls",
       "html",
       "jsonls",
+      "lua_ls",
       "nil_ls",
       "pyright",
       "rust_analyzer",
-      "lua_ls",
       "tailwindcss",
       "terraformls",
       "tsserver",
@@ -64,15 +65,6 @@ return {
       local has, s_opts = pcall(require, "_.lsp." .. s)
       if has and type(s_opts) == "function" then
         s_opts(lsp.build_options(s, {}))
-      end
-    end
-
-    for _, s in pairs(servers) do
-      local has, s_opts = pcall(require, "_.lsp." .. s)
-      if has then
-        if type(s_opts) == "function" then
-          s_opts(lsp.build_options(s, {}))
-        end
       end
     end
   end,

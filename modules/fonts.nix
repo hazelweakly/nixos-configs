@@ -5,6 +5,7 @@
       pkgs.noto-fonts
       pkgs.noto-fonts-emoji
       pkgs.noto-fonts-extra
+      pkgs.zilla-slab
       pkgs.open-sans
       pkgs.victor-mono
       (pkgs.nerdfonts.override { fonts = [ "VictorMono" ]; })

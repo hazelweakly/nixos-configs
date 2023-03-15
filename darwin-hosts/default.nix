@@ -20,6 +20,7 @@ let
       ../modules/alias-pkgs.nix
       ../modules/cachix.nix
       ../modules/defaults
+      ../modules/docker.nix
       ../modules/encryption.nix
       ../modules/environment.nix
       ../modules/fonts.nix

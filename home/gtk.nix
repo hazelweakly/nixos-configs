@@ -3,10 +3,6 @@ let
   extensions = with pkgs; with gnomeExtensions; [
     user-themes
     night-theme-switcher
-    arc-menu
-    just-perfection
-    rounded-window-corners
-    blur-my-shell
   ];
 in
 lib.mkMerge [
@@ -34,11 +30,58 @@ lib.mkMerge [
     home.packages = extensions;
 
     dconf.settings = {
+      # /org/gnome/shell/extensions/nightthemeswitcher/gtk-variants/day
+      #   'rose-pine-dawn'
+      #
+      # /org/gnome/desktop/interface/gtk-theme
+      #   'rose-pine-dawn'
+      #
+      # /org/gnome/shell/extensions/nightthemeswitcher/gtk-variants/night
+      #   'rose-pine-moon'
+      #
+      # /org/gnome/shell/extensions/nightthemeswitcher/shell-variants/enabled
+      #   true
+      #
+      # /org/gnome/shell/extensions/user-theme/name
+      #   ''
+      #
+      # /org/gnome/shell/extensions/nightthemeswitcher/shell-variants/day
+      #   ''
+      #
+      # /org/gnome/shell/extensions/nightthemeswitcher/shell-variants/day
+      #   'rose-pine-moon'
+      #
+      # /org/gnome/shell/extensions/user-theme/name
+      #   'rose-pine-moon'
+      #
+      # /org/gnome/shell/extensions/nightthemeswitcher/shell-variants/night
+      #   'rose-pine-moon'
+      # /org/gnome/shell/extensions/nightthemeswitcher/cursor-variants/day
+      #   'Numix-Cursor'
+      #
+      # /org/gnome/desktop/interface/cursor-theme
+      #   'Numix-Cursor'
+      #
+      # /org/gnome/shell/extensions/nightthemeswitcher/cursor-variants/day
+      #   'Numix-Cursor-Light'
+      #
+      # /org/gnome/desktop/interface/cursor-theme
+      #   'Numix-Cursor-Light'
+      #
+      # /org/gnome/shell/extensions/nightthemeswitcher/cursor-variants/night
+      #   'Numix-Cursor'
+      #
+      #
+
+
+
+      "org/gnome/system/location" = { "enabled" = true; };
       "org/gnome/desktop/interface" = {
         "clock-format" = "12h";
-        "font-antialiasing" = "rgba";
-        "font-hinting" = "full";
+        "font-antialiasing" = "grayscale";
+        "font-hinting" = "none";
         "monospace-font-name" = "VictorMono Nerd Font 14";
+        "text-scaling-factor" = 1.25;
       };
       "org/gnome/desktop/peripherals/mouse" = {
         accel-profile = "adaptive";
@@ -67,3 +110,106 @@ lib.mkMerge [
     };
   })
 ]
+
+# /org/gnome/desktop/interface/color-scheme
+#   'prefer-dark'
+#
+# /org/gnome/desktop/interface/color-scheme
+#   'default'
+#
+# /org/gnome/desktop/interface/color-scheme
+#   'prefer-dark'
+#
+# /org/gnome/desktop/interface/color-scheme
+#   'default'
+#
+# /org/gnome/control-center/last-panel
+#   'wifi'
+#
+# /org/gnome/control-center/last-panel
+#   'background'
+#
+# /org/gnome/shell/extensions/nightthemeswitcher/gtk-variants/enabled
+#   true
+#
+# /org/gnome/desktop/interface/gtk-theme
+#   'Adwaita'
+#
+# /org/gnome/shell/extensions/nightthemeswitcher/gtk-variants/day
+#   'Adwaita'
+#
+# /org/gnome/shell/extensions/nightthemeswitcher/gtk-variants/day
+#   'rose-pine-dawn'
+#
+# /org/gnome/desktop/interface/gtk-theme
+#   'rose-pine-dawn'
+#
+# /org/gnome/shell/extensions/nightthemeswitcher/gtk-variants/night
+#   'rose-pine-moon'
+#
+# /org/gnome/shell/extensions/nightthemeswitcher/shell-variants/enabled
+#   true
+#
+# /org/gnome/shell/extensions/user-theme/name
+#   ''
+#
+# /org/gnome/shell/extensions/nightthemeswitcher/shell-variants/day
+#   ''
+#
+# /org/gnome/shell/extensions/nightthemeswitcher/shell-variants/day
+#   'rose-pine-moon'
+#
+# /org/gnome/shell/extensions/user-theme/name
+#   'rose-pine-moon'
+#
+# /org/gnome/shell/extensions/nightthemeswitcher/shell-variants/night
+#   'rose-pine-moon'
+#
+# /org/gnome/shell/extensions/nightthemeswitcher/icon-variants/enabled
+#   true
+#
+# /org/gnome/desktop/interface/icon-theme
+#   'Adwaita'
+#
+# /org/gnome/shell/extensions/nightthemeswitcher/icon-variants/day
+#   'Adwaita'
+#
+# /org/gnome/shell/extensions/nightthemeswitcher/icon-variants/day
+#   'Qogir'
+#
+# /org/gnome/desktop/interface/icon-theme
+#   'Qogir'
+#
+# /org/gnome/shell/extensions/nightthemeswitcher/icon-variants/night
+#   'Qogir-dark'
+#
+# /org/gnome/shell/extensions/nightthemeswitcher/cursor-variants/enabled
+#   true
+#
+# /org/gnome/desktop/interface/cursor-theme
+#   'Adwaita'
+#
+# /org/gnome/shell/extensions/nightthemeswitcher/cursor-variants/day
+#   'Adwaita'
+#
+# /org/gnome/shell/extensions/nightthemeswitcher/cursor-variants/day
+#   'Qogir'
+#
+# /org/gnome/desktop/interface/cursor-theme
+#   'Qogir'
+#
+# /org/gnome/shell/extensions/nightthemeswitcher/cursor-variants/day
+#   'Numix-Cursor'
+#
+# /org/gnome/desktop/interface/cursor-theme
+#   'Numix-Cursor'
+#
+# /org/gnome/shell/extensions/nightthemeswitcher/cursor-variants/day
+#   'Numix-Cursor-Light'
+#
+# /org/gnome/desktop/interface/cursor-theme
+#   'Numix-Cursor-Light'
+#
+# /org/gnome/shell/extensions/nightthemeswitcher/cursor-variants/night
+#   'Numix-Cursor'
+#

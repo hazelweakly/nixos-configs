@@ -12,6 +12,8 @@ return {
       paste = { ["+"] = { "wl-paste" }, ["*"] = { "wl-paste" } },
     }
 
+    vim.o.clipboard = "unnamedplus"
+
     vim.api.nvim_create_autocmd("TextYankPost", {
       pattern = "*",
       callback = function()

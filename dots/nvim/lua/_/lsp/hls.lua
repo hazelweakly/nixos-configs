@@ -12,6 +12,7 @@ return function(opts)
           maxCompletions = 10,
         },
       },
+      cmd_env = { GHCRTS = "-M24G" },
       force_setup = true,
     }),
   })

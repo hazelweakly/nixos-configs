@@ -14,9 +14,7 @@
       switch-theme
       _1password
       inputs.self.packages.${pkgs.system}.bitwarden
-
-      docker
-      docker-compose
+      signal-desktop-beta
 
       # Programs implicitly relied on in shell
       pistol

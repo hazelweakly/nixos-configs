@@ -10,7 +10,6 @@
       "homebrew/cask-drivers"
     ];
     homebrew.casks = [
-      "docker"
       "rectangle"
     ];
   })

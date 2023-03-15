@@ -16,5 +16,5 @@ NixOS is "fun". Will maybe document that later if I ever need to reinstall it ag
 ---
 
 ```
-layout.css.devPixelsPerPx 1.25
+layout.css.devPixelsPerPx 1.10
 ```
