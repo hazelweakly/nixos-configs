@@ -1,6 +1,6 @@
 return {
   "folke/lazy.nvim",
-  "direnv/direnv.vim",
+  { "direnv/direnv.vim", enabled = false },
   "simrat39/rust-tools.nvim",
   {
     "mrcjkb/haskell-tools.nvim",

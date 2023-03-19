@@ -1,1 +1,1 @@
-return { "jedi2610/nvim-rooter.lua", config = true }
+return { "notjedi/nvim-rooter.lua", config = true }

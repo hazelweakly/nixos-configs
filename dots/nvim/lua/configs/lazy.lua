@@ -16,6 +16,7 @@ if treesitter == nil then
 end
 
 require("lazy").setup({ import = "plugins" }, {
+  change_detection = { notify = false },
   performance = {
     rtp = {
       paths = { treesitter .. "/pack/myNeovimPackages/start/*" },

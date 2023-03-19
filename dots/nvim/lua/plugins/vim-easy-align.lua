@@ -1,6 +1,12 @@
 return {
-  "junegunn/vim-easy-align",
-  init = function()
-    require("configs.utils").map("x", "<CR>", "<Plug>(EasyAlign)")
+  "echasnovski/mini.align",
+  config = function(_, opts)
+    require("mini.align").setup(opts)
   end,
+  opts = {
+    mappings = {
+      start = "<leader>A",
+      start_with_preview = "<leader>a",
+    },
+  },
 }

@@ -23,7 +23,7 @@ return {
     },
     presets = { command_palette = true, lsp_doc_border = true },
     routes = {
-      { filter = { event = "msg_show", kind = "", find = "[w]" }, opts = { skip = true } },
+      { filter = { event = "msg_show", kind = "", find = "%[w%]" }, opts = { skip = true } },
     },
   },
   dependenies = {
