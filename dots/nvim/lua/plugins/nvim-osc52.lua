@@ -2,6 +2,10 @@ return {
   "ojroques/nvim-osc52",
   opts = { silent = true },
   init = function()
+    if require("jit").os == "OSX" then
+      vim.o.clipboard = "unnamedplus"
+      return
+    end
     local function copy(lines, _)
       require("osc52").copy(table.concat(lines, "\n"))
     end
