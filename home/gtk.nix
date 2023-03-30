@@ -79,7 +79,7 @@ lib.mkMerge [
       "org/gnome/desktop/interface" = {
         "clock-format" = "12h";
         "font-antialiasing" = "grayscale";
-        "font-hinting" = "none";
+        "font-hinting" = "slight";
         "monospace-font-name" = "VictorMono Nerd Font 14";
         "text-scaling-factor" = 1.25;
       };

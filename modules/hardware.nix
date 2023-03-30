@@ -63,7 +63,6 @@
     powerManagement.enable = false;
 
     hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-    hardware.video.hidpi.enable = true;
   })
 ] // lib.optionalAttrs systemProfile.isLinux {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];

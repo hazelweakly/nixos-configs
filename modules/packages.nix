@@ -36,6 +36,7 @@
       htop
       unzip
       wl-clipboard
+      inputs.self.packages.${pkgs.system}.say
     ]);
   }
   (lib.optionalAttrs systemProfile.isLinux {

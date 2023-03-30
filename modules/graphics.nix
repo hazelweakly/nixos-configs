@@ -1,4 +1,4 @@
-{ pkgs, lib, config, systemProfile, ... }: lib.mkMerge [
+{ pkgs, lib, systemProfile, ... }: lib.mkMerge [
   # https://hoverbear.org/blog/declarative-gnome-configuration-in-nixos/
   (lib.optionalAttrs systemProfile.isLinux {
     services.xserver.enable = true;

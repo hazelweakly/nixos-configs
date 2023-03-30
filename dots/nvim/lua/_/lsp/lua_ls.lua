@@ -5,6 +5,7 @@ return {
       completion = { keywordSnippet = "Replace", autoRequire = false },
       diagnostics = { globals = { "vim" } },
       format = { enable = false },
+      workspace = { checkThirdParty = false },
     },
   },
   force_setup = true,
