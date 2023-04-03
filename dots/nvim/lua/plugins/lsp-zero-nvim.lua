@@ -1,8 +1,14 @@
 return {
   "VonHeikemen/lsp-zero.nvim",
+  branch = "v2.x",
   dependencies = {
     { "neovim/nvim-lspconfig" },
-    { "williamboman/mason.nvim" },
+    {
+      "williamboman/mason.nvim",
+      build = function()
+        pcall(vim.cmd, "MasonUpdate")
+      end,
+    },
     { "williamboman/mason-lspconfig.nvim" },
 
     { "hrsh7th/nvim-cmp" },
@@ -17,12 +23,7 @@ return {
   },
   config = function()
     local lsp = require("lsp-zero")
-    lsp.preset("recommended")
-    lsp.set_preferences({
-      set_lsp_keymaps = false,
-      manage_nvim_cmp = false,
-      suggest_lsp_servers = false,
-    })
+    lsp.preset({ manage_nvim_cmp = false, suggest_lsp_servers = false })
 
     local lsp_init = require("_.lsp")
     lsp.on_attach(lsp_init.on_attach)

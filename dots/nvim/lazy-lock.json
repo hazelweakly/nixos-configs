@@ -19,7 +19,7 @@
   "indent-blankline.nvim": { "branch": "master", "commit": "018bd04d80c9a73d399c1061fa0c3b14a7614399" },
   "lazy.nvim": { "branch": "main", "commit": "57cce98dfdb2f2dd05a0567d89811e6d0505e13b" },
   "lsp-inlayhints.nvim": { "branch": "main", "commit": "84ca3abe8aaecbb5b30ad89e4701d4a9c821b72c" },
-  "lsp-zero.nvim": { "branch": "main", "commit": "416cc687ba7eedae1da36d8426ddd538c2ceb2f4" },
+  "lsp-zero.nvim": { "branch": "v2.x", "commit": "893b2469917a18f83fb278f0155ac2e45af83278" },
   "lspkind-nvim": { "branch": "master", "commit": "c68b3a003483cf382428a43035079f78474cd11e" },
   "lualine.nvim": { "branch": "master", "commit": "9170434aa100f3967b43d5d34bb9adc56fae1986" },
   "mason-lspconfig.nvim": { "branch": "main", "commit": "b64fdede85fd5e0b720ce722919e0a9b95ed6547" },
