@@ -5,7 +5,6 @@ return {
   opts = {
     highlight = { enable = true },
     auto_install = false,
-    indent = { enable = true },
     incremental_selection = {
       enable = true,
       keymaps = {
