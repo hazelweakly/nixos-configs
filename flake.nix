@@ -1,7 +1,9 @@
 {
   description = "Hazel's system configuration";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    # https://nixpk.gs/pr-tracker.html?pr=225148 tree-sitter
+    nixpkgs.url = "github:nixos/nixpkgs/master";
+    # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     mercury.url = "github:mercurytechnologies/nixos-configuration/main";
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";

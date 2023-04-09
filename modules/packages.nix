@@ -1,20 +1,19 @@
 { pkgs, lib, systemProfile, ... }: lib.mkMerge [
   {
     environment.systemPackages = with pkgs; [
-      kitty
-      curl
+      _1password
       cachix
+      coreutils
+      curl
       file
-      timewarrior
-      taskwarrior
+      inputs.self.packages.${pkgs.system}.bitwarden
+      kitty
+      openssh
       ranger
       repl
-      openssh
-      coreutils
       switch-theme
-      _1password
-      inputs.self.packages.${pkgs.system}.bitwarden
-      signal-desktop-beta
+      taskwarrior
+      timewarrior
 
       # Programs implicitly relied on in shell
       pistol
@@ -30,13 +29,14 @@
     ] ++
     (with pkgs; lib.optionals stdenv.isLinux [
       firefox-beta-bin
-      taskopen
-      mupdf
-      zoom-us
       htop
+      inputs.self.packages.${pkgs.system}.say
+      mupdf
+      signal-desktop-beta
+      taskopen
       unzip
       wl-clipboard
-      inputs.self.packages.${pkgs.system}.say
+      zoom-us
     ]);
   }
   (lib.optionalAttrs systemProfile.isLinux {
