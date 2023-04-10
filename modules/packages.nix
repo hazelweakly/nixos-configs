@@ -36,6 +36,7 @@
       taskopen
       unzip
       wl-clipboard
+      xp-pen-deco-01-v2-driver
       zoom-us
     ]);
   }
