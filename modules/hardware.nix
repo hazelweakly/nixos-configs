@@ -40,7 +40,7 @@
     };
 
     # Bootloader.
-    boot.tmpOnTmpfs = true;
+    boot.tmp.useTmpfs = true;
     boot.loader.timeout = 0;
     boot.loader.systemd-boot.configurationLimit = 10;
     boot.loader.efi.canTouchEfiVariables = true;
