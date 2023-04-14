@@ -1,5 +1,6 @@
 return {
   "folke/noice.nvim",
+  event = "VeryLazy",
   init = function()
     local map = require("configs.utils").map
     map({ "n", "i", "s" }, "<c-f>", function()

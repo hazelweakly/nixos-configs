@@ -1,7 +1,29 @@
 return {
   "nvim-telescope/telescope.nvim",
+  cmd = "Telescope",
+  keys = {
+    {
+      "<leader><space>",
+      function()
+        return require("telescope.builtin").live_grep()
+      end,
+    },
+    {
+      "<leader>f",
+      function()
+        return require("telescope.builtin").find_files()
+      end,
+    },
+    {
+      "<leader>b",
+      function()
+        return require("telescope.builtin").buffers()
+      end,
+    },
+  },
   dependencies = {
     "nvim-telescope/telescope-fzf-native.nvim",
+    lazy = true,
     build = "make",
     config = function()
       local telescope = require("telescope")
@@ -40,17 +62,5 @@ return {
         },
       },
     })
-  end,
-  init = function()
-    local map = require("configs.utils").map
-    map("n", "<leader><space>", function()
-      return require("telescope.builtin").live_grep()
-    end)
-    map("n", "<leader>f", function()
-      return require("telescope.builtin").find_files()
-    end)
-    map("n", "<leader>b", function()
-      return require("telescope.builtin").buffers()
-    end)
   end,
 }
