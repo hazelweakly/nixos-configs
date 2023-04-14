@@ -13,8 +13,13 @@ trap cleanup EXIT INT TERM
   export XDG_DATA_HOME="$HOME/.local/share"
   export XDG_STATE_HOME="$HOME/.local/state"
 
+  if (( ${+commands[cachix]} )) && [[ -n "$CACHIX_AUTH_TOKEN" ]] ; then
+    echo "pushing to cachix"
+    push_cmd=( "cachix" "watch-exec" "hazel-nix-configs" "--" )
+  fi
+
   if [ -f /etc/os-release ]; then
-    sudo nixos-rebuild \
+    "${push_cmd[@]}" sudo nixos-rebuild \
       --flake "$HOME"'/src/personal/nixos-configs#'"$(hostname)" \
       ${1+"$@"} switch
     return
@@ -23,13 +28,13 @@ trap cleanup EXIT INT TERM
   cd "$HOME"/src/personal/nixos-configs >/dev/null || return
 
   if (( ${+commands[darwin-rebuild]} )) ; then
-    darwin-rebuild --flake "$HOME"/src/personal/nixos-configs ${1+"$@"} switch
+    "${push_cmd[@]}" darwin-rebuild --flake "$HOME"/src/personal/nixos-configs ${1+"$@"} switch
   else
     nix() {
       command nix --extra-experimental-features 'nix-command flakes' "$@"
     }
 
-    nix build .#darwinConfigurations."${"$(hostname)"%\.local}".system --keep-going ${1+"$@"}
+    "${push_cmd[@]}" nix build .#darwinConfigurations."${"$(hostname)"%\.local}".system --keep-going ${1+"$@"}
     ./result/sw/bin/darwin-rebuild --flake "$HOME"/src/personal/nixos-configs ${1+"$@"} switch
   fi
 
