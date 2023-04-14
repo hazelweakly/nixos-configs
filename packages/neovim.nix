@@ -1,23 +1,43 @@
 { lib
-, bat
-, cargo
-, direnv
-, gnumake
-, exa
-, git
-, jq
-, gopls
-, nil
-, nixpkgs-fmt
-, nodejs
-, neovim-remote
-, terraform
-, tree-sitter
-, shellharden
-, stylua
-, lua-language-server
-, watchman
-, yarn
+, pkgs
+, neovimPackages ? with pkgs; [
+    actionlint
+    bat
+    black
+    cargo
+    dhall-lsp-server
+    direnv
+    docker-ls
+    exa
+    git
+    gnumake
+    gopls
+    hadolint
+    isort
+    jq
+    lua-language-server
+    neovim-remote
+    nil
+    nixpkgs-fmt
+    nodejs
+    nodePackages.bash-language-server
+    nodePackages.prettier_d_slim
+    nodePackages.typescript-language-server
+    nodePackages.vscode-langservers-extracted
+    pyright
+    rust-analyzer
+    shellcheck
+    shellharden
+    shfmt
+    stylua
+    taplo
+    terraform
+    terraform-ls
+    tree-sitter
+    watchman
+    yaml-language-server
+    yarn
+  ]
 , wrapNeovimUnstable
 , neovim-unwrapped
 , stdenv
@@ -30,27 +50,8 @@ let
   isBroken = pkg: (builtins.tryEval (builtins.deepSeq pkg.outPath pkg)).success;
   nonBrokenPkgs = builtins.concatMap (p: lib.optionals (isBroken p) [ p ]);
   path = builtins.sort (a: b: a.name < b.name) (nonBrokenPkgs [
-    bat
-    cargo
-    direnv
-    exa
-    git
-    gnumake
-    gopls
-    jq
-    neovim-remote
-    nil
-    nixpkgs-fmt
-    nodejs
-    shellharden
-    stylua
-    lua-language-server
-    terraform
-    tree-sitter
-    watchman
-    yarn
     stdenv.cc
-  ]);
+  ] ++ neovimPackages);
 
   # doing it the non obvious way like this automatically collects all the grammar dependencies for us.
   packDirArgs.myNeovimPackages = { start = [ (vimPlugins.nvim-treesitter.withPlugins (_: vimPlugins.nvim-treesitter.allGrammars)) ]; };

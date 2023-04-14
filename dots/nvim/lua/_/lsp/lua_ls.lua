@@ -8,5 +8,5 @@ return {
       workspace = { checkThirdParty = false },
     },
   },
-  force_setup = true,
+  -- force_setup = true,
 }
