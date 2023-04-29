@@ -1,1 +1,1 @@
-return { "ethanholz/nvim-lastplace", opts = {} }
+return { "ethanholz/nvim-lastplace", opts = {}, event = "BufReadPre" }

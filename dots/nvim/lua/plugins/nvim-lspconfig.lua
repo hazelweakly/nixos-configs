@@ -2,17 +2,8 @@ return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
-    { "folke/neodev.nvim", opts = { experimental = { pathStrict = true } } },
-    "hrsh7th/cmp-nvim-lsp",
-    "hrsh7th/nvim-cmp",
-    "hrsh7th/cmp-nvim-lsp",
-    "hrsh7th/cmp-buffer",
-    "hrsh7th/cmp-path",
-    "saadparwaiz1/cmp_luasnip",
-    "hrsh7th/cmp-nvim-lua",
-    "L3MON4D3/LuaSnip",
-    "b0o/schemastore.nvim",
-    "rafamadriz/friendly-snippets",
+    { "folke/neodev.nvim", opts = { experimental = { pathStrict = true } }, lazy = true, lspconfig = false },
+    { "b0o/schemastore.nvim", lazy = true },
   },
   config = function()
     local lsp_init = require("_.lsp")

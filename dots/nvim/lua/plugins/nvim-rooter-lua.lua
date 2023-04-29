@@ -1,1 +1,1 @@
-return { "notjedi/nvim-rooter.lua", config = true }
+return { "notjedi/nvim-rooter.lua", config = true, event = "BufReadPost" }
