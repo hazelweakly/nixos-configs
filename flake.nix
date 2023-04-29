@@ -1,9 +1,7 @@
 {
   description = "Hazel's system configuration";
   inputs = {
-    # https://nixpk.gs/pr-tracker.html?pr=225148 tree-sitter
-    nixpkgs.url = "github:nixos/nixpkgs/master";
-    # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     mercury.url = "github:mercurytechnologies/nixos-configuration/main";
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
@@ -26,7 +24,6 @@
     rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
 
     neovim-flake.url = "github:neovim/neovim?dir=contrib";
-    # neovim-flake.inputs.nixpkgs.url = "github:nixos/nixpkgs?rev=fad51abd42ca17a60fc1d4cb9382e2d79ae31836";
     neovim-flake.inputs.nixpkgs.follows = "nixpkgs";
     neovim-flake.inputs.flake-utils.follows = "flake-utils";
 

@@ -5,5 +5,7 @@ final: prev: {
       name = "xp-pen-deco-01-v2-driver-${o.version}.tar.gz";
       sha256 = "sha256-CV4ZaGCFFcfy2J0O8leYgcyzFVwJQFQJsShOv9B7jfI=";
     };
+
+    nativeBuildInputs = (o.nativeBuildInputs or [ ]) ++ [ prev.makeShellWrapper ];
   });
 }
