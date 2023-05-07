@@ -70,11 +70,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1683333421,
-        "narHash": "sha256-jiswH5JltU0gYyCW+boj61420cvIFwR8pGrWWFgSe9Y=",
+        "lastModified": 1683373569,
+        "narHash": "sha256-h4I0mh9qQUvEtEtyPyrNJrV+8qikJwZfAMI5XgrZkD8=",
         "owner": "colemickens",
         "repo": "flake-firefox-nightly",
-        "rev": "a7173690fd1405420af900dd9a906011ccd19d3a",
+        "rev": "d749c98b88be747cea99c2a037132e677c4aec1a",
         "type": "github"
       },
       "original": {
@@ -199,11 +199,11 @@
       },
       "locked": {
         "dir": "contrib",
-        "lastModified": 1683334560,
-        "narHash": "sha256-eypBBydEysErHK0CZT81SBlDuIKklD/kEG+yIvDG7JY=",
+        "lastModified": 1683417608,
+        "narHash": "sha256-qdWRY50WhpjHKLKe7ngYdEnA+gYjOnE3PScQws0YofY=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "b99f13385cfd15e161b18f103a5e36469f49431f",
+        "rev": "fa1baa9a47cdb3eed17d48b6011a164d4009d2ee",
         "type": "github"
       },
       "original": {
@@ -226,11 +226,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1683254762,
-        "narHash": "sha256-BjJ3hNPCGBHJ/PttVFdVc2ogDAQqrOLSuWqLPAl72Lw=",
+        "lastModified": 1683398769,
+        "narHash": "sha256-9q8kLxA5vHPwRb8SOx/7K9QqLOAl0JbQemRUWC2VDNM=",
         "owner": "oxalica",
         "repo": "nil",
-        "rev": "c2f303fd8be05039958b5fefcd0ea38e362cf04b",
+        "rev": "67bfe95a3cc07626fca40b185e627c85d3a555e6",
         "type": "github"
       },
       "original": {
@@ -301,11 +301,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1683253065,
-        "narHash": "sha256-92vzWdV7VNGNQJeF+gtlcw18nj3ERU+i/fnSVzI7Lsw=",
+        "lastModified": 1683339427,
+        "narHash": "sha256-CRf4eHfdud0imCZpCGrDC2rbwgJpnQZnb/kIm8D+tJM=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "59e9ddf0c5232136f71c458eea1303a418f7a117",
+        "rev": "a61fcd9910229d097ffef92b5a2440065e3b64d5",
         "type": "github"
       },
       "original": {
