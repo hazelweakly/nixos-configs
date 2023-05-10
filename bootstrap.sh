@@ -7,10 +7,10 @@ git --version || :
 
 if ! command -v nix; then
   echo "installing nix"
-  sh <(curl -L https://nixos.org/nix/install)
+  curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 fi
 
-if ! command -v kitty; then
+if ! command -v kitty && ! [[ -d /Applications/kitty.app ]]; then
   echo "installing kitty app"
   curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
 fi
@@ -20,8 +20,9 @@ mkdir -p ~/src/personal
 
 if ! [[ -f ~/.ssh/id_ed25519 ]]; then
   echo "setting up ssh-keygen with chosen email"
-  read -r email -p 'email :'
-  ssh-keygen -t ed2559 -C "$email" -N '' -f ~/.ssh/id_ed25519
+  read -r email
+  printf 'email: '
+  ssh-keygen -t ed25519 -C "$email" -N '' -f ~/.ssh/id_ed25519
 fi
 
 if ! grep 'flakes' /etc/nix/nix.conf; then

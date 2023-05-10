@@ -2,7 +2,7 @@
 let
   userProfile = rec {
     name = "hazelweakly";
-    home = "/Users/hazelweakly";
+    home = "/Users/${name}";
     flakeDir = home + "/src/personal/nixos-configs";
   };
   systemProfile = rec {
@@ -51,7 +51,7 @@ let
       inputs.agenix.darwinModules.default
       inputs.home-manager.darwinModules.home-manager
     ];
-    specialArgs = { inherit self userProfile systemProfile; };
+    specialArgs = { inherit self userProfile systemProfile; } // (cfg.specialArgs or { });
   };
 in
 builtins.mapAttrs
