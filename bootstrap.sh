@@ -31,10 +31,11 @@ if ! grep 'flakes' /etc/nix/nix.conf; then
 
   sudo mv /etc/shells{,.old}
   sudo mv /etc/zshrc{,old}
-  if ! grep 'private/var/run' /etc/synthetic.conf; then
-    printf 'run\tprivate/var/run\n' | sudo tee -a /etc/synthetic.conf
-    /System/Library/Filesystems/apfs.fs/Contents/Resources/apfs.util -t
-  fi
+fi
+
+if ! sudo grep 'private/var/run' /etc/synthetic.conf; then
+  printf 'run\tprivate/var/run\n' | sudo tee -a /etc/synthetic.conf
+  sudo /System/Library/Filesystems/apfs.fs/Contents/Resources/apfs.util -t
 fi
 
 if [[ ! -x /opt/homebrew/bin/brew ]]; then
