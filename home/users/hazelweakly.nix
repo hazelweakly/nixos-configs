@@ -11,7 +11,6 @@
     ../gtk.nix
     ../../modules/age.nix
     ../neovim.nix
-    ../nix.nix
     ../task.nix
     ../work.nix
     ../zsh.nix
