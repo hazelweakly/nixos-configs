@@ -1,3 +1,5 @@
+vim.loader.enable()
+
 for _, m in ipairs({
   "configs.options",
   "configs.filetype-nvim",
