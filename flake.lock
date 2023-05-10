@@ -136,22 +136,6 @@
         "type": "github"
       }
     },
-    "mercury": {
-      "locked": {
-        "lastModified": 1683224766,
-        "narHash": "sha256-R2idpbgoVnkgRnyTJYz9Xux/0yvIyYWkCHGCVyojcvA=",
-        "owner": "mercurytechnologies",
-        "repo": "nixos-configuration",
-        "rev": "5f6104b99679e2e25e54f3984c049c0c939febc6",
-        "type": "github"
-      },
-      "original": {
-        "owner": "mercurytechnologies",
-        "ref": "main",
-        "repo": "nixos-configuration",
-        "type": "github"
-      }
-    },
     "mkalias": {
       "inputs": {
         "nixpkgs": [
@@ -282,7 +266,6 @@
         "firefox-nightly": "firefox-nightly",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
-        "mercury": "mercury",
         "mkalias": "mkalias",
         "neovim-flake": "neovim-flake",
         "nil": "nil",
