@@ -26,9 +26,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: cachix/install-nix-action@v20
-        with:
-          extra_nix_config: |
-            access-tokens = github.com=${{ secrets.MERCURY_NIXOS_CONFIGURATION }}
       - uses: cachix/cachix-action@v12
         with:
           name: hazel-nix-configs
