@@ -25,7 +25,7 @@ function -z4h-postinstall-fzf() {}
 zstyle ':z4h:Tarrasch/zsh-bd' postinstall "command cp \$Z4H_PACKAGE_DIR/{,zsh-}bd.plugin.zsh"
 zstyle ':z4h:chisui/zsh-nix-shell' postinstall "command cp \$Z4H_PACKAGE_DIR/{,zsh-}nix-shell.plugin.zsh"
 
-z4h install chisui/zsh-nix-shell
+z4h install chisui/zsh-nix-shell@v0.5.0
 z4h install hlissner/zsh-autopair
 z4h install Tarrasch/zsh-bd
 
