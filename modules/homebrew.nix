@@ -11,6 +11,7 @@
     ];
     homebrew.casks = [
       "rectangle"
+      "signal"
     ];
   })
 ]
