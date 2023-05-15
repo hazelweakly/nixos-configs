@@ -1,31 +1,30 @@
 return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },
-  dependencies = {
-    { "folke/neodev.nvim", opts = { experimental = { pathStrict = true } }, lazy = true, lspconfig = false },
-    { "b0o/schemastore.nvim", lazy = true },
-  },
   config = function()
-    local lsp_init = require("_.lsp")
     local lspconfig = require("lspconfig")
     local merge = require("configs.utils").merge
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
+    require("_.lsp")
 
+    -- TODO: at some point I want to make it so I can truly lazy load these
+    -- but currently even setting them up often invokes requiring all the dependencies
+    -- which might be heavyweight and adds a *lot* of startup time
     local servers = {
       "bashls",
       "cssls",
-      "dhall_lsp_server",
-      "dockerls",
-      "eslint",
-      "gopls",
-      "hls",
-      "html",
+      -- "dhall_lsp_server",
+      -- "dockerls",
+      -- "eslint",
+      -- "gopls",
+      -- "hls",
+      -- "html",
       "jsonls",
       "lua_ls",
       "nil_ls",
-      "pyright",
-      "rust_analyzer",
-      "terraformls",
+      -- "pyright",
+      -- "rust_analyzer",
+      -- "terraformls",
       "tsserver",
       "yamlls",
     }
@@ -35,7 +34,6 @@ return {
       if has then
         if type(s_opts) == "function" then
           s_opts(merge({
-            on_attach = lsp_init.on_attach,
             capabilities = capabilities,
             flags = {
               allow_incremental_sync = true,
@@ -44,7 +42,6 @@ return {
           }, lspconfig[s] or {}))
         else
           lspconfig[s].setup(merge({
-            on_attach = lsp_init.on_attach,
             capabilities = capabilities,
             flags = {
               allow_incremental_sync = true,

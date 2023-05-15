@@ -1,6 +1,6 @@
 return {
   "windwp/nvim-ts-autotag",
-  event = "VeryLazy",
+  ft = { "html", "typescriptreact" },
   dependencies = { "nvim-treesitter" },
   config = function()
     require("nvim-treesitter.configs").setup({

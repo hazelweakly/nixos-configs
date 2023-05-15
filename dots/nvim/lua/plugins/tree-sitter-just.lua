@@ -1,1 +1,1 @@
-return { "IndianBoy42/tree-sitter-just", config = true, event = { "BufReadPost", "BufNewFile" } }
+return { "IndianBoy42/tree-sitter-just", config = true, ft = "just" }

@@ -39,10 +39,6 @@ return {
         null_ls.builtins.formatting.black,
       },
       update_on_insert = false, -- some language servers really hate this
-      on_attach = function(client, bufnr)
-        ---@diagnostic disable-next-line: redundant-parameter
-        return require("_.lsp").on_attach(client, bufnr)
-      end,
     }
   end,
 }

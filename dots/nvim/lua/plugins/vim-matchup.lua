@@ -1,11 +1,13 @@
 return {
   "andymass/vim-matchup",
   event = { "BufReadPost", "BufNewFile" },
-  dependencies = { "nvim-treesitter" },
+  dependencies = { "nvim-treesitter", lazy = "true" },
   config = function()
-    require("nvim-treesitter.configs").setup({
-      matchup = { enable = true, disable_virtual_text = true },
-    })
+    vim.defer_fn(function()
+      require("nvim-treesitter.configs").setup({
+        matchup = { enable = true, disable_virtual_text = true },
+      })
+    end, 0)
   end,
   init = function()
     vim.g.matchup_matchparen_deferred = 1
