@@ -8,8 +8,11 @@
       "homebrew/core"
       "homebrew/cask"
       "homebrew/cask-drivers"
+      "homebrew/cask-versions"
     ];
     homebrew.casks = [
+      "firefox-developer-edition"
+      "google-chrome"
       "rectangle"
       "signal"
     ];
