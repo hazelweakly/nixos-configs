@@ -1,0 +1,35 @@
+name: 'Build Configs'
+description: 'Builds my configs'
+inputs:
+  paths:
+    description: 'The paths to build'
+    required: true
+  updateInputs:
+    description: 'Whether to update inputs or not'
+    required: false
+    default: "false"
+runs:
+  using: "composite"
+  steps:
+    - uses: cachix/install-nix-action@v20
+    - name: update
+      if: inputs.updateInputs != 'false'
+      shell: bash
+      run: |
+        set -xeuo pipefail
+        git config --global user.email "hazel@theweaklys.com"
+        git config --global user.name "Hazel Weakly"
+        nix develop -c nix flake update --commit-lock-file
+    - uses: cachix/cachix-action@v12
+      with:
+        name: hazel-nix-configs
+        authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+        extraPullNames: "nix-community,hercules-ci,pre-commit-hooks"
+    - run: nix -Lv build ${{ inputs.paths }}
+      shell: bash
+    - run: nix -Lv develop -c echo OK
+      shell: bash
+    - name: Push updated inputs
+      if: inputs.updateInputs != 'false'
+      shell: bash
+      run: git push origin HEAD

@@ -12,18 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: cachix/install-nix-action@v20
-      - name: update
-        run: |
-          set -xeuo pipefail
-          git config --global user.email "hazel@theweaklys.com"
-          git config --global user.name "Hazel Weakly"
-          nix develop -c nix flake update --commit-lock-file
-      - uses: cachix/cachix-action@v12
+      - uses: ./.github/actions/build
         with:
-          name: hazel-nix-configs
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-          extraPullNames: "nix-community,hercules-ci,pre-commit-hooks"
-      - run: nix -Lv build .#nixosConfigurations.x86_64-linux.config.system.build.toplevel
-      - run: nix -Lv develop -c echo OK
-      - run: git push origin HEAD
+          paths: .#nixosConfigurations.x86_64-linux.config.system.build.toplevel
+          updateInputs: "true"
