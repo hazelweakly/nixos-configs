@@ -16,3 +16,4 @@ jobs:
         with:
           paths: .#nixosConfigurations.x86_64-linux.config.system.build.toplevel
           updateInputs: "true"
+          CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}

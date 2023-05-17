@@ -28,3 +28,4 @@ jobs:
       - uses: ./.github/actions/build
         with:
           paths: ${{ matrix.path }}
+          CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
