@@ -15,6 +15,7 @@
       "google-chrome"
       "rectangle"
       "signal"
+      # "zoom"
     ];
   })
 ]
