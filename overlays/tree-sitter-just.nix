@@ -1,7 +1,22 @@
-final: prev: rec {
+final: prev:
+let
+  nvim-ts = prev.vimPlugins.nvim-treesitter.overrideAttrs (o: {
+    name = "vimplugin-nvim-treesitter-2023-05-19";
+    version = "2023-05-19";
+    src = prev.fetchFromGitHub {
+      owner = "nvim-treesitter";
+      repo = "nvim-treesitter";
+      rev = "dad1b7cd6606ffaa5c283ba73d707b4741a5f445";
+      hash = "sha256-Xrk+fjG2/X4NfqAZ5G9G+MNoZAZ0ElDOoJagFv3jfP8=";
+    };
+  });
+in
+rec {
   tree-sitter-grammars =
     let
-      fetchGrammar = (v: prev.fetchgit { inherit (v) url rev sha256 fetchSubmodules; });
+      fetchGrammar = (v: prev.fetchgit {
+        inherit (v) url rev sha256 fetchSubmodules;
+      });
       change = name: grammar:
         final.callPackage (prev.path + "/pkgs/development/tools/parsing/tree-sitter/grammar.nix") { } {
           language = if grammar ? language then grammar.language else name;
@@ -46,12 +61,36 @@ final: prev: rec {
     };
     allGrammars = prev.tree-sitter.allGrammars ++ [ tree-sitter-grammars.tree-sitter-just tree-sitter-grammars.tree-sitter-dhall ];
   };
-  vimPlugins = prev.vimPlugins // {
-    nvim-treesitter = prev.vimPlugins.nvim-treesitter // {
-      builtGrammars = prev.vimPlugins.nvim-treesitter.builtGrammars // {
-        inherit (tree-sitter-grammars) tree-sitter-just tree-sitter-dhall;
+  vimPlugins =
+    let
+      grammarToPlugin = grammar:
+        let
+          name = prev.lib.pipe grammar [
+            prev.lib.getName
+
+            # added in buildGrammar
+            (prev.lib.removeSuffix "-grammar")
+
+            # grammars from tree-sitter.builtGrammars
+            (prev.lib.removePrefix "tree-sitter-")
+            (prev.lib.replaceStrings [ "-" ] [ "_" ])
+          ];
+        in
+        prev.runCommand "nvim-treesitter-grammar-${name}" { } ''
+          mkdir -p $out/parser
+          ln -s ${grammar}/parser $out/parser/${name}.so
+        '';
+    in
+    prev.vimPlugins // {
+      nvim-treesitter = nvim-ts // rec {
+        builtGrammars = nvim-ts.builtGrammars // {
+          inherit (tree-sitter-grammars) tree-sitter-just tree-sitter-dhall;
+        };
+        withPlugins = f: nvim-ts.overrideAttrs (_: {
+          passthru.dependencies = map grammarToPlugin allGrammars;
+        });
+        allGrammars = nvim-ts.allGrammars ++ [ tree-sitter-grammars.tree-sitter-just tree-sitter-grammars.tree-sitter-dhall ];
+        passthru.dependencies = map grammarToPlugin allGrammars;
       };
-      allGrammars = prev.vimPlugins.nvim-treesitter.allGrammars ++ [ tree-sitter-grammars.tree-sitter-just tree-sitter-grammars.tree-sitter-dhall ];
     };
-  };
 }

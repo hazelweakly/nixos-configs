@@ -22,6 +22,7 @@
     nodejs
     nodePackages.bash-language-server
     nodePackages.prettier_d_slim
+    nodePackages.prettier
     nodePackages.typescript-language-server
     nodePackages.vscode-langservers-extracted
     pyright

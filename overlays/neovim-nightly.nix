@@ -31,15 +31,25 @@ final: prev: rec {
     in
     (final.inputs.neovim-flake.packages.${prev.system}.neovim.override {
       tree-sitter = final.tree-sitter;
-    }).overrideAttrs (o:
-      if final.stdenv.isDarwin then {
-        preConfigure = ''
-          sed -i cmake.config/versiondef.h.in -e 's/@NVIM_VERSION_PRERELEASE@/-dev-${o.version}/'
-        '';
-        nativeBuildInputs = o.nativeBuildInputs ++ [
-          liblpeg
-          final.libiconv
-        ];
-      } else { });
+    }).overrideAttrs (o: {
+      patches = builtins.filter
+        (p:
+          (
+            if builtins.typeOf p == "set"
+            then baseNameOf p.name
+            else baseNameOf
+          )
+          != "use-the-correct-replacement-args-for-gsub-directive.patch")
+        o.patches;
+    } //
+    (if final.stdenv.isDarwin then {
+      preConfigure = ''
+        sed -i cmake.config/versiondef.h.in -e 's/@NVIM_VERSION_PRERELEASE@/-dev-${o.version}/'
+      '';
+      nativeBuildInputs = o.nativeBuildInputs ++ [
+        liblpeg
+        final.libiconv
+      ];
+    } else { }));
   neovim-remote = prev.neovim-remote.overridePythonAttrs (o: { doCheck = false; });
 }
