@@ -4,7 +4,7 @@
       text = lib.mkDefault (config.networking.hostName + "\n");
     };
   }
-  (lib.optionalAttrs systemProfile.isDarwin rec {
+  (lib.optionalAttrs systemProfile.isDarwin {
     system.defaults.NSGlobalDomain = {
       "com.apple.mouse.tapBehavior" = 1;
       "com.apple.sound.beep.feedback" = 0;
@@ -42,20 +42,22 @@
       tilesize = 32;
       show-recents = false;
       minimize-to-application = true;
+      # hot corners
+      wvous-br-corner = 1;
+      wvous-br-modifier = 0;
+      wvous-tl-corner = 2;
+      wvous-tl-modifier = 0;
     };
 
-    system.activationScripts.dock-apps.text = ''
+    system.activationScripts.postUserActivation.text = ''
       echo >&2 "setting up the dock icons"
       defaults write com.apple.dock persistent-apps -array
 
-      for dockItem in /Applications/{"Firefox Developer Edition","kitty"}.app /System/Applications/"System Preferences"; do
+      for dockItem in /Applications/{"Firefox Developer Edition","kitty",Signal,"zoom.us"}.app /System/Applications/"System Settings.app"; do
         defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>'"$dockItem"'</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
       done
       killall Dock
     '';
-
-    # hack
-    system.activationScripts.postActivation.text = system.activationScripts.dock-apps.text;
   })
 ] // lib.optionalAttrs systemProfile.isDarwin {
   imports = [ ./defaults-options.nix ];
