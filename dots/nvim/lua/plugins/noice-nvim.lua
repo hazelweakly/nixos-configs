@@ -25,6 +25,14 @@ return {
     presets = { command_palette = true, lsp_doc_border = true },
     routes = {
       { filter = { event = "msg_show", kind = "", find = "%[w%]" }, opts = { skip = true } },
+      { filter = { event = "msg_show", kind = "", find = "Already at newest change" }, opts = { skip = true } },
+      { filter = { event = "msg_show", kind = "", find = "change;.*seconds ago" }, opts = { skip = true } },
+      { filter = { event = "msg_show", kind = "", find = "line.*seconds ago" }, opts = { skip = true } },
+      {
+        view = "notify",
+        filter = { error = true },
+        opts = { title = "Error", replace = true, merge = true, level = "error" },
+      },
     },
   },
   dependenies = {
