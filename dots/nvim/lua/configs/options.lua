@@ -30,7 +30,8 @@ vim.opt.showbreak = "↪  "
 vim.opt.scrolloff = 2
 vim.opt.sidescrolloff = 2
 vim.opt.number = true
-vim.opt.shortmess:append("caIA")
+vim.opt.shortmess:append("cIA")
+vim.opt.shortmess:remove("tToO")
 vim.opt.expandtab = true
 vim.opt.softtabstop = 2
 vim.opt.tabstop = 2

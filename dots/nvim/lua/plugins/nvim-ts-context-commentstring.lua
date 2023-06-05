@@ -1,6 +1,6 @@
 return {
   "JoosepAlviste/nvim-ts-context-commentstring",
-  event = "CursorMoved",
+  event = "VeryLazy",
   dependencies = { "nvim-treesitter" },
   config = function()
     require("nvim-treesitter.configs").setup({

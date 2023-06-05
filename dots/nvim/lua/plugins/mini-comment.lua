@@ -1,6 +1,7 @@
 return {
   "echasnovski/mini.comment",
-  event = "VeryLazy",
+  dependencies = { "JoosepAlviste/nvim-ts-context-commentstring" },
+  keys = { { "gc", mode = { "n", "v" } } },
   opts = {
     hooks = {
       pre = function()
@@ -8,7 +9,4 @@ return {
       end,
     },
   },
-  config = function(_, opts)
-    require("mini.comment").setup(opts)
-  end,
 }

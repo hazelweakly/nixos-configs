@@ -1,6 +1,7 @@
 return {
   "nvim-lualine/lualine.nvim",
   event = "VeryLazy",
+  depencencies = { "nvim-tree/nvim-web-devicons" },
   opts = function()
     local conditions = {
       buffer_not_empty = function()
@@ -11,33 +12,28 @@ return {
       end,
     }
 
-    local function dirname()
-      return "  " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
-    end
-
-    local function filenameIcon()
-      local filename = vim.fn.expand("%:t")
-      local extension = vim.fn.expand("%:e")
-      local icon = require("nvim-web-devicons").get_icon(filename, extension) or ""
-      return icon .. " " .. filename
-    end
-
-    local function has_lsp()
-      return next(vim.lsp.buf_get_clients()) ~= nil and "  LSP" or ""
-    end
-
     return {
       options = { globalstatus = true },
       sections = {
         lualine_a = {
           {
-            dirname,
-            padding = { left = 0, right = 1 },
+            function()
+              return " " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+            end,
+            padding = { left = 1, right = 1 },
             cond = function()
               return conditions.buffer_not_empty() and conditions.hide_in_width()
             end,
           },
-          { filenameIcon, cond = conditions.buffer_not_empty },
+          {
+            function()
+              local filename = vim.fn.expand("%:t")
+              local extension = vim.fn.expand("%:e")
+              local icon = require("nvim-web-devicons").get_icon(filename, extension) or ""
+              return icon .. " " .. filename
+            end,
+            cond = conditions.buffer_not_empty,
+          },
         },
         lualine_b = {
           { "branch", cond = conditions.hide_in_width },
@@ -46,12 +42,17 @@ return {
         lualine_c = {
           {
             "diagnostics",
-            symbols = { error = "  ", warn = "  ", info = "  ", hint = "  " },
+            symbols = { error = " ", warn = " ", info = "", hint = "󰌵" },
             update_in_insert = true,
           },
         },
         lualine_x = {
-          { has_lsp, cond = conditions.hide_in_width },
+          {
+            function()
+              return next(vim.lsp.get_active_clients()) ~= nil and "  LSP" or ""
+            end,
+            cond = conditions.hide_in_width,
+          },
           {
             "mode",
             fmt = function(str)
