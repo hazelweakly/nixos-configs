@@ -38,6 +38,7 @@ return {
             { event = "msg_show", find = "more lines" },
             { event = "msg_show", find = "lines yanked" },
             { event = "msg_show", find = "lines yanked" },
+            { event = "msg_show", find = "lines >ed" },
             { error = true, find = "E486:" },
             { event = "lsp", kind = "progress", find = "code_action" },
           },

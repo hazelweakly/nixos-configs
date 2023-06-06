@@ -1,4 +1,4 @@
-{ config, pkgs, lib, userProfile, ... }: {
+{ config, lib, userProfile, ... }: {
   home.stateVersion = "22.11";
   home.username = userProfile.name;
   home.homeDirectory = lib.mkForce userProfile.home;
@@ -22,6 +22,11 @@
     config.lib.file.mkOutOfStoreSymlink "${userProfile.flakeDir}/dots/ranger";
   xdg.configFile."nvim".source =
     config.lib.file.mkOutOfStoreSymlink "${userProfile.flakeDir}/dots/nvim";
+
+  home.activation.us-keyboard = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    cp -R "${userProfile.flakeDir}/dots/US No Dead Keys.bundle" ~/Library/"Keyboard Layouts"
+  '';
+
   xdg.configFile."isort.cfg".text = ''
     [isort]
     profile = black

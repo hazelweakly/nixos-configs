@@ -36,6 +36,9 @@
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    todoist.url = "github:sachaos/todoist";
+    todoist.flake = false;
   };
 
   outputs = inputs@{ self, ... }: {

@@ -1,0 +1,2 @@
+#!/usr/bin/env zsh
+cd "$HOME/Documents/$1"

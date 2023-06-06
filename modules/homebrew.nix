@@ -13,6 +13,7 @@
     homebrew.casks = [
       "firefox-developer-edition"
       "google-chrome"
+      "karabiner-elements"
       "rectangle"
       "signal"
       # "zoom"

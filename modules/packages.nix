@@ -7,6 +7,7 @@
       curl
       file
       inputs.self.packages.${pkgs.system}.bitwarden
+      jira-cli-go
       kitty
       openssh
       ranger
@@ -14,6 +15,7 @@
       switch-theme
       taskwarrior
       timewarrior
+      todoist
 
       # Programs implicitly relied on in shell
       pistol

@@ -293,7 +293,8 @@
         "nil": "nil",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",
-        "rust-overlay": "rust-overlay"
+        "rust-overlay": "rust-overlay",
+        "todoist": "todoist"
       }
     },
     "rust-overlay": {
@@ -331,6 +332,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "todoist": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1683505685,
+        "narHash": "sha256-igZvY5OMDvQvj+jPrjKJ3lNeBoNNjG1crVElHykuKgI=",
+        "owner": "sachaos",
+        "repo": "todoist",
+        "rev": "af8652cb9c294c1f80cd29920c7b6fdce0148332",
+        "type": "github"
+      },
+      "original": {
+        "owner": "sachaos",
+        "repo": "todoist",
         "type": "github"
       }
     }

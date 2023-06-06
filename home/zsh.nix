@@ -1,8 +1,7 @@
 { pkgs, config, ... }:
 let dir = config.home.homeDirectory + "/src/personal/nixos-configs";
 in
-with builtins;
-with pkgs.lib; {
+{
   xdg.configFile."zsh/config".source =
     config.lib.file.mkOutOfStoreSymlink "${dir}/dots/zsh";
 

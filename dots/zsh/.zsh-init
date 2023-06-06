@@ -54,6 +54,7 @@ alias ssh='TERM=xterm-256color ssh'
 
 hash -d dots=~/src/personal/nixos-configs
 hash -d src=~/src
+hash -d doc=~/Documents
 
 chpwd_functions=(${chpwd_functions[@]} "list_all")
 
