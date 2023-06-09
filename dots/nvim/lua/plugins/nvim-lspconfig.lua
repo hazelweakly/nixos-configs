@@ -27,6 +27,7 @@ return {
       -- "terraformls",
       "tsserver",
       "yamlls",
+      "zk",
     }
 
     for _, s in pairs(servers) do

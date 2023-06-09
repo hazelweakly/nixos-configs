@@ -1,6 +1,7 @@
 return {
   "folke/lazy.nvim",
   { "direnv/direnv.vim", enabled = false },
+  { "mickael-menu/zk-nvim", lazy = true },
   { "simrat39/rust-tools.nvim", lazy = true },
   {
     "mrcjkb/haskell-tools.nvim",
