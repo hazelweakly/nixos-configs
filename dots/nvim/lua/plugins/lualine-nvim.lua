@@ -1,6 +1,6 @@
 return {
   "nvim-lualine/lualine.nvim",
-  event = "VeryLazy",
+  event = "User UltraLazy",
   depencencies = { "nvim-tree/nvim-web-devicons" },
   opts = function()
     local conditions = {

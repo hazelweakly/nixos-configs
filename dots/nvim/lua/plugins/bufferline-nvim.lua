@@ -1,6 +1,6 @@
 return {
   "akinsho/bufferline.nvim",
-  event = "VeryLazy",
+  event = "User UltraLazy",
   opts = {
     options = {
       show_close_icon = false,

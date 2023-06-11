@@ -9,6 +9,25 @@ return {
     "hrsh7th/cmp-cmdline",
     "saadparwaiz1/cmp_luasnip",
     "L3MON4D3/LuaSnip",
+    {
+      "zbirenbaum/copilot-cmp",
+      dependencies = "copilot.lua",
+      opts = {},
+      config = function(_, opts)
+        local copilot_cmp = require("copilot_cmp")
+        copilot_cmp.setup(opts)
+        -- attach cmp source whenever copilot attaches
+        -- fixes lazy-loading issues with the copilot cmp source
+        vim.api.nvim_create_autocmd("LspAttach", {
+          callback = function(args)
+            local client = vim.lsp.get_client_by_id(args.data.client_id)
+            if client.name == "copilot" then
+              copilot_cmp._on_insert_enter({})
+            end
+          end,
+        })
+      end,
+    },
   },
   config = function()
     local cmp = require("cmp")
@@ -83,6 +102,7 @@ return {
         }),
       }),
       sources = cmp.config.sources({
+        { name = "copilot" },
         { name = "nvim_lsp", max_item_count = 10 },
         -- place snips second otherwise ctrl+space doesn't give relevant completion
         { name = "luasnip", max_item_count = 5 },
@@ -90,12 +110,36 @@ return {
         { name = "path", trigger_characters = { "/" } },
       }),
       formatting = {
-        format = require("lspkind").cmp_format({ with_text = false }),
+        format = require("lspkind").cmp_format({
+          mode = "symbol",
+          max_width = 50,
+          symbol_map = { Copilot = "" },
+        }),
       },
       window = { completion = cmp.config.window.bordered(), documentation = cmp.config.window.bordered() },
       experimental = {
         ghost_text = {
           hl_group = "LspCodeLens",
+        },
+      },
+      sorting = {
+        priority_weight = 2,
+        comparators = {
+          require("copilot_cmp.comparators").prioritize,
+
+          -- Below is the default comparitor list and order for nvim-cmp
+          cmp.config.compare.offset,
+          -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
+          cmp.config.compare.exact,
+          cmp.config.compare.score,
+          ---@diagnostic disable-next-line: assign-type-mismatch
+          cmp.config.compare.recently_used,
+          ---@diagnostic disable-next-line: assign-type-mismatch
+          cmp.config.compare.locality,
+          cmp.config.compare.kind,
+          cmp.config.compare.sort_text,
+          cmp.config.compare.length,
+          cmp.config.compare.order,
         },
       },
     })
@@ -113,5 +157,8 @@ return {
         { name = "cmdline", option = { keyword_length = 2 } },
       }),
     })
+
+    local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+    cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
   end,
 }

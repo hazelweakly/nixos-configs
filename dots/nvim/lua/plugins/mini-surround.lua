@@ -1,15 +1,12 @@
 return {
   "kylechui/nvim-surround",
-  keys = function(_, keys)
-    local mappings = {
-      { "sa", mode = { "n", "v" } },
-      "sd",
-      "sf",
-      "sF",
-      "sr",
-    }
-    return vim.list_extend(mappings, keys)
-  end,
+  keys = {
+    { "sa", mode = { "n", "v" } },
+    "sd",
+    "sf",
+    "sF",
+    "sr",
+  },
   opts = {
     keymaps = { normal = "sa", normal_cur = "ssa", delete = "sd", change = "sr", visual = "sa" },
     surrounds = {

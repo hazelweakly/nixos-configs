@@ -2,6 +2,11 @@ return {
   name = "nvim-treesitter",
   dir = os.getenv("TREESITTER_PLUGIN") .. "/pack/myNeovimPackages/start/nvim-treesitter",
   event = { "BufReadPost", "BufNewFile" },
+  keys = {
+    { "<CR>", desc = "Init selection" },
+    { "<TAB>", desc = "Increment selection", mode = "x" },
+    { "<S-TAB>", desc = "Decrement selection", mode = "x" },
+  },
   opts = {
     highlight = { enable = true },
     auto_install = false,

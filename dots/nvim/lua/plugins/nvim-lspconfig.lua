@@ -5,7 +5,7 @@ return {
     local lspconfig = require("lspconfig")
     local merge = require("configs.utils").merge
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
-    require("_.lsp")
+    require("null-ls")
 
     -- TODO: at some point I want to make it so I can truly lazy load these
     -- but currently even setting them up often invokes requiring all the dependencies

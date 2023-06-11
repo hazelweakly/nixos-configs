@@ -5,6 +5,7 @@ for _, m in ipairs({
   "configs.filetype-nvim",
   "configs.lazy",
   "configs.mappings",
+  "_.lsp",
   "configs.settings",
 }) do
   if not pcall(require, m) then
@@ -18,4 +19,4 @@ vim.defer_fn(function()
   end
   vim.g.did_ultra_lazy = true
   vim.api.nvim_exec_autocmds("User", { pattern = "UltraLazy", modeline = false })
-end, 200)
+end, 500)

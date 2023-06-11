@@ -1,6 +1,19 @@
 return {
   "Pocco81/HighStr.nvim",
   cmd = { "HSHighlight", "HSRmHighlight", "HSImport", "HSExport" },
+  keys = {
+    { "<Leader>hc", mode = "v" },
+    { "<Leader>h0", mode = "v" },
+    { "<Leader>h1", mode = "v" },
+    { "<Leader>h2", mode = "v" },
+    { "<Leader>h3", mode = "v" },
+    { "<Leader>h4", mode = "v" },
+    { "<Leader>h5", mode = "v" },
+    { "<Leader>h6", mode = "v" },
+    { "<Leader>h7", mode = "v" },
+    { "<Leader>h8", mode = "v" },
+    { "<Leader>h9", mode = "v" },
+  },
   config = function()
     local high_str = require("high-str")
     local colors = require("configs.colors").get().colors
@@ -20,8 +33,7 @@ return {
         color_9 = { colors.yellow, "smart" },
       },
     })
-  end,
-  init = function()
+
     local map = require("configs.utils").map
     for i = 0, 9, 1 do
       map("v", "<Leader>h" .. i, ":<c-u>HSHighlight " .. i .. "<CR>")
