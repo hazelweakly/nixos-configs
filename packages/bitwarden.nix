@@ -1,9 +1,9 @@
-{ lib, coreutils, utillinux, bitwarden-cli, gnused, flock, writeShellScriptBin, installShellFiles, ... }:
+{ lib, bitwarden-cli, flock, writeShellScriptBin, installShellFiles, ... }:
 let
   path = lib.makeBinPath
-    [ coreutils utillinux bitwarden-cli gnused flock ];
+    [ bitwarden-cli flock ];
   bw = writeShellScriptBin "bw" ''
-    export PATH=${path};
+    export PATH=${path}
     token_file=/tmp/bw-token
     lock_file=/tmp/bw-token.lock
 
@@ -17,7 +17,7 @@ let
       if [[ -e "$token_file" ]]; then
         export BW_SESSION=$(<"$token_file")
       else
-        for i in $(seq 1 4); do
+        for i in {1..4}; do
           export BW_SESSION=$(bw unlock --raw)
           if [[ "$BW_SESSION" != "" ]]; then
             echo "$BW_SESSION" > "$token_file"
