@@ -17,14 +17,15 @@
     jq
     lua-language-server
     neovim-remote
+    neovim-unwrapped.lua
     nil
     nixpkgs-fmt
-    nodejs
     nodePackages.bash-language-server
-    nodePackages.prettier_d_slim
     nodePackages.prettier
+    nodePackages.prettier_d_slim
     nodePackages.typescript-language-server
     nodePackages.vscode-langservers-extracted
+    nodejs
     pyright
     rust-analyzer
     shellcheck
