@@ -37,6 +37,9 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    treesitter.url = "github:nvim-treesitter/nvim-treesitter";
+    treesitter.flake = false;
+
     todoist.url = "github:sachaos/todoist";
     todoist.flake = false;
   };

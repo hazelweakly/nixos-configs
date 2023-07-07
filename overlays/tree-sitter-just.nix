@@ -1,14 +1,11 @@
 final: prev:
 let
+  dateFrom = d: builtins.substring 0 4 d + "-" + builtins.substring 4 2 d + "-" + builtins.substring 6 2 d;
+  date = dateFrom final.inputs.treesitter.lastModifiedDate;
   nvim-ts = prev.vimPlugins.nvim-treesitter.overrideAttrs (o: {
-    name = "vimplugin-nvim-treesitter-2023-05-19";
-    version = "2023-05-19";
-    src = prev.fetchFromGitHub {
-      owner = "nvim-treesitter";
-      repo = "nvim-treesitter";
-      rev = "dad1b7cd6606ffaa5c283ba73d707b4741a5f445";
-      hash = "sha256-Xrk+fjG2/X4NfqAZ5G9G+MNoZAZ0ElDOoJagFv3jfP8=";
-    };
+    name = "vimplugin-nvim-treesitter-${date}";
+    version = date;
+    src = final.inputs.treesitter;
   });
 in
 rec {
