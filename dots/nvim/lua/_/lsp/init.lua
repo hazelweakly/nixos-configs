@@ -10,8 +10,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     local bufnr = args.buf
     local client = vim.lsp.get_client_by_id(args.data.client_id)
 
-    require("lsp-inlayhints").on_attach(client, bufnr)
-
     if client.server_capabilities.completionProvider then
       vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
     end
@@ -37,6 +35,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
           })
         end,
       })
+    end
+
+    if client.server_capabilities.inlayHintProvider then
+      vim.lsp.inlay_hint(bufnr, true)
     end
 
     buf_map(bufnr, "x", "<leader>la", vim.lsp.buf.code_action)

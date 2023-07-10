@@ -5,7 +5,6 @@ return {
   { "mickael-menu/zk-nvim", lazy = true },
   { "simrat39/rust-tools.nvim", lazy = true },
   { "nvim-lua/plenary.nvim", lazy = true },
-  { "lvimuser/lsp-inlayhints.nvim", config = true, lazy = true },
   { "ethanholz/nvim-lastplace", opts = {}, event = "BufReadPre" },
   { "notjedi/nvim-rooter.lua", config = true, event = "BufReadPost" },
   { "nvim-tree/nvim-web-devicons", lazy = true },

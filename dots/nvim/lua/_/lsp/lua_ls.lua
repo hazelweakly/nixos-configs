@@ -1,7 +1,8 @@
 return {
   settings = {
     Lua = {
-      semantic = { enable = false },
+      semantic = { enable = true },
+      hint = { enable = true },
       completion = { keywordSnippet = "Replace", autoRequire = false },
       diagnostics = { globals = { "vim" } },
       format = { enable = false },
