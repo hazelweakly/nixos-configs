@@ -1,6 +1,8 @@
 return {
+  "nvim-treesitter/nvim-treesitter",
   name = "nvim-treesitter",
-  dir = os.getenv("TREESITTER_PLUGIN") .. "/pack/myNeovimPackages/start/nvim-treesitter",
+
+  -- dir = os.getenv("TREESITTER_PLUGIN") .. "/pack/myNeovimPackages/start/nvim-treesitter",
   event = { "BufReadPost", "BufNewFile" },
   keys = {
     { "<CR>", desc = "Init selection" },

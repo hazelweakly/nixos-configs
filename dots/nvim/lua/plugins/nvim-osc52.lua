@@ -2,7 +2,7 @@ return {
   "ojroques/nvim-osc52",
   opts = { silent = true },
   lazy = true,
-  events = "VeryLazy",
+  event = "VeryLazy",
   init = function()
     if require("jit").os == "OSX" then
       vim.o.clipboard = "unnamedplus"

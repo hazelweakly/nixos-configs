@@ -65,7 +65,7 @@ return {
       { view = "mini", filter = { event = "lsp", kind = "progress" }, opts = { replace = true, merge = true } },
     },
   },
-  dependenies = {
+  dependencies = {
     "MunifTanjim/nui.nvim",
     "rcarriga/nvim-notify",
     "nvim-treesitter",
