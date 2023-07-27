@@ -14,6 +14,7 @@
       diff.colorMoved = "default";
       push.autoSetupRemote = true;
       init.defaultBranch = "main";
+      pull.twohead = "ort";
     };
     delta = {
       enable = true;

@@ -16,6 +16,7 @@
       "karabiner-elements"
       "rectangle"
       "signal"
+      "visual-studio-code"
       # "zoom"
     ];
   })

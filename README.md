@@ -12,9 +12,3 @@ Configurations for my NixOS and macOS systems (work/home laptops)
 ```
 
 NixOS is "fun". Will maybe document that later if I ever need to reinstall it again.
-
----
-
-```
-layout.css.devPixelsPerPx 1.10
-```
