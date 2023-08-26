@@ -5,7 +5,7 @@
     bat
     black
     cargo
-    dhall-lsp-server
+    # dhall-lsp-server
     direnv
     docker-ls
     exa
