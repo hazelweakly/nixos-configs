@@ -28,7 +28,7 @@ runs:
         name: hazel-nix-configs
         authToken: "${{ inputs.CACHIX_AUTH_TOKEN }}"
         extraPullNames: "nix-community,hercules-ci,pre-commit-hooks"
-    - run: nix -Lv build ${{ inputs.paths }}
+    - run: nix -Lv build ${{ inputs.paths }} --keep-going
       shell: bash
     - run: nix -Lv develop -c echo OK
       shell: bash

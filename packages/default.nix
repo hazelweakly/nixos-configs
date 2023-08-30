@@ -6,6 +6,7 @@ let
         inherit system;
         config.allowUnfree = true;
         config.allowUnsupportedSystem = true;
+        config.allowBroken = true;
         overlays = builtins.attrValues self.overlays;
       };
     })
