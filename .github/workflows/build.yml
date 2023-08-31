@@ -17,10 +17,10 @@ jobs:
           - os: macos-latest
             path: >-
               .#darwinConfigurations.x86_64-darwin.config.system.build.toplevel
-          - os: ubuntu-latest
-            path: >-
-              .#packages.x86_64-linux.neovim
-              .#nixosConfigurations.x86_64-linux.config.system.build.toplevel
+          # - os: ubuntu-latest
+          #   path: >-
+          #     .#packages.x86_64-linux.neovim
+          #     .#nixosConfigurations.x86_64-linux.config.system.build.toplevel
     if: "! contains(toJSON(github.event.commits.*.message), 'flake.lock: Update')"
     runs-on: ${{ matrix.os }}
     steps:
