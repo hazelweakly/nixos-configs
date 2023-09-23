@@ -57,3 +57,6 @@ vim.opt.spelllang = { "en_us" }
 vim.opt_local.spelloptions:append("noplainbuffer")
 vim.opt_local.spelloptions:append("camel")
 vim.opt.shell = "/bin/sh"
+
+vim.opt.foldnestmax = 3
+vim.opt.foldminlines = 1

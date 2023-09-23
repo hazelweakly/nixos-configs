@@ -1,4 +1,5 @@
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export MANROFFOPT="-c"
 export GPG_TTY=$TTY
 export HOMEBREW_NO_ANALYTICS=1
 export DIRENV_LOG_FORMAT=''

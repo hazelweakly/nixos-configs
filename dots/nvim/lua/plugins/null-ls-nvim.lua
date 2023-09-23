@@ -1,3 +1,7 @@
+-- TODO: Replace with:
+-- - https://github.com/mfussenegger/nvim-lint
+-- - https://github.com/stevearc/conform.nvim
+-- - https://github.com/lewis6991/hover.nvim
 return {
   "jose-elias-alvarez/null-ls.nvim",
   lazy = true,

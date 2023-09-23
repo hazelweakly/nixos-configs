@@ -22,25 +22,14 @@ return {
     },
   },
   config = function(_, opts)
-    local parsers = require("nvim-treesitter.parsers")
-    -- ugly hack to "add" zsh: https://github.com/nvim-treesitter/nvim-treesitter/issues/655
-    local ft_to_lang = parsers.ft_to_lang
-    ---@diagnostic disable-next-line: duplicate-set-field
-    parsers.ft_to_lang = function(ft)
-      if ft == "zsh" then
-        return "bash"
-      end
-      return ft_to_lang(ft)
-    end
-    local parser_config = parsers.get_parser_configs()
-    parser_config.dhall = {
-      install_info = {
-        url = "https://github.com/jbellerb/tree-sitter-dhall",
-        files = { "src/parser.c", "src/scanner.c" },
-        branch = "master",
-      },
-      maintainers = { "@jbellerb" },
-    }
+    vim.treesitter.language.register("bash", "zsh")
+
     require("nvim-treesitter.configs").setup(opts)
+    vim.o.foldmethod = "expr"
+    vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+    vim.o.foldenable = false
+    vim.o.foldtext =
+      [[substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g'). ' (' . (v:foldend - v:foldstart + 1) . ' lines)']]
+    vim.o.fillchars = "fold: "
   end,
 }
