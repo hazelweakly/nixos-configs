@@ -4,7 +4,10 @@ return {
   ft = { "markdown", "text", "tex", "plaintex" },
   priority = 0,
   config = function()
-    require("autolist").setup({ cycle = { "-", "1." } })
+    require("autolist").setup({
+      colon = { indent_raw = false },
+      cycle = { "-", "1." },
+    })
 
     vim.keymap.set("i", "<tab>", "<cmd>AutolistTab<cr>")
     vim.keymap.set("i", "<s-tab>", "<cmd>AutolistShiftTab<cr>")

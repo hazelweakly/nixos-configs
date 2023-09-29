@@ -1,3 +1,4 @@
+-- TODO: https://github.com/stevearc/oil.nvim
 return {
   "folke/lazy.nvim",
   { "MunifTanjim/nui.nvim", lazy = true },

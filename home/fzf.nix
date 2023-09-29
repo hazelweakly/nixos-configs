@@ -6,7 +6,7 @@
       enable = true;
       changeDirWidgetCommand = "${fd} -td .";
       changeDirWidgetOptions = [
-        "--preview '${pkgs.exa}/bin/exa --group-directories-first --icons --sort time --tree --color always {} | ${pkgs.coreutils}/bin/head -200'"
+        "--preview '${pkgs.eza}/bin/eza --group-directories-first --icons --sort time --tree --color always {} | ${pkgs.coreutils}/bin/head -200'"
       ];
       defaultCommand = "${fd} -tf 2> /dev/null";
       defaultOptions =

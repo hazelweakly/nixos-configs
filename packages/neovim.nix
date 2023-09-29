@@ -8,7 +8,7 @@
     # dhall-lsp-server
     direnv
     docker-ls
-    exa
+    eza
     git
     gnumake
     gopls

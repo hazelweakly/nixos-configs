@@ -19,7 +19,7 @@
 
       # Programs implicitly relied on in shell
       pistol
-      exa
+      eza
       delta
       bat
       fd
