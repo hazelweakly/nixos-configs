@@ -17,6 +17,8 @@
       timewarrior
       todoist
 
+      pmd
+
       # Programs implicitly relied on in shell
       pistol
       eza
