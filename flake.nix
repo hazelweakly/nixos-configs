@@ -22,7 +22,7 @@
     rust-overlay.inputs.flake-utils.follows = "flake-utils";
     rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
 
-    neovim-flake.url = "github:neovim/neovim?dir=contrib";
+    neovim-flake.url = "github:neovim/neovim/a63c67005b9ea17214d86391e2fd649658c1bdec?dir=contrib";
     neovim-flake.inputs.nixpkgs.follows = "nixpkgs";
     neovim-flake.inputs.flake-utils.follows = "flake-utils";
 
