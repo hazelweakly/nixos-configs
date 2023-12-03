@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields, param-type-mismatch
 -- Surround markdown link title, using clipboard contents
 require("nvim-surround").buffer_setup({
   surrounds = {

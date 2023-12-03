@@ -51,7 +51,7 @@ return {
     local function tab(d, m)
       local fwd = d == 1
       return vim.schedule_wrap(function(fallback)
-        local s, ng = require("luasnip"), require("neogen")
+        local s = require("luasnip")
 
         if m == "c" then
           return cmp.visible() and has_words_before() and (fwd and cmp.select_next_item or cmp.select_prev_item)()
@@ -62,8 +62,6 @@ return {
           cmp.confirm({ select = true })
         elseif (fwd and s.expand_or_jumpable or s.jumpable)(d) then
           (fwd and s.expand_or_jump or s.jump)(d)
-        elseif ng.jumpable(d) then
-          (fwd and ng.jump_next or ng.jump_prev)()
         else
           fallback()
         end

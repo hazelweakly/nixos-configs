@@ -23,7 +23,7 @@ local hover = function(_, result, ctx, config)
 end
 
 return {
-  -- handlers = {
-  --   ["textDocument/hover"] = hover,
-  -- },
+  handlers = {
+    ["textDocument/hover"] = hover,
+  },
 }

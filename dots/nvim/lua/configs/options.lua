@@ -60,3 +60,6 @@ vim.opt.shell = "/bin/sh"
 
 vim.opt.foldnestmax = 3
 vim.opt.foldminlines = 1
+
+-- on OSX, gets overwritten by osc52 if on linux
+vim.o.clipboard = "unnamedplus"

@@ -1,6 +1,9 @@
 return {
   "ojroques/nvim-osc52",
   opts = { silent = true },
+  cond = function()
+    return require("jit").os ~= "OSX"
+  end,
   lazy = true,
   event = "VeryLazy",
   init = function()
