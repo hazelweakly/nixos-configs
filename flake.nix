@@ -1,7 +1,7 @@
 {
   description = "Hazel's system configuration";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
     agenix.inputs.darwin.follows = "nix-darwin";
@@ -22,7 +22,7 @@
     rust-overlay.inputs.flake-utils.follows = "flake-utils";
     rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
 
-    neovim-flake.url = "github:neovim/neovim/a63c67005b9ea17214d86391e2fd649658c1bdec?dir=contrib";
+    neovim-flake.url = "github:neovim/neovim?dir=contrib";
     neovim-flake.inputs.nixpkgs.follows = "nixpkgs";
     neovim-flake.inputs.flake-utils.follows = "flake-utils";
 

@@ -3,7 +3,7 @@
 -- - https://github.com/stevearc/conform.nvim
 -- - https://github.com/lewis6991/hover.nvim
 return {
-  "jose-elias-alvarez/null-ls.nvim",
+  "nvimtools/none-ls.nvim",
   lazy = true,
   opts = function()
     -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
@@ -20,7 +20,7 @@ return {
         null_ls.builtins.formatting.shfmt.with({
           extra_args = function(params)
             ---@diagnostic disable-next-line: redundant-parameter
-            return { "-s", "-i", vim.api.nvim_buf_get_option(params.bufnr, "shiftwidth") }
+            return { "-s", "-i", vim.api.nvim_get_option_value("shiftwidth", { buf = params.bufnr }) }
           end,
         }),
         -- null_ls.builtins.formatting.prettier_d_slim, -- breaks formatexpr for gq

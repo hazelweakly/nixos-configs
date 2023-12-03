@@ -1,3 +1,13 @@
+---@diagnostic disable: missing-fields
+
+local has_words_before = function()
+  if vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt" then
+    return false
+  end
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
+end
+
 return {
   "hrsh7th/nvim-cmp",
   event = "InsertEnter",
@@ -21,7 +31,7 @@ return {
         vim.api.nvim_create_autocmd("LspAttach", {
           callback = function(args)
             local client = vim.lsp.get_client_by_id(args.data.client_id)
-            if client.name == "copilot" then
+            if client and client.name == "copilot" then
               copilot_cmp._on_insert_enter({})
             end
           end,
@@ -40,14 +50,15 @@ return {
     ---@return function
     local function tab(d, m)
       local fwd = d == 1
-      return function(fallback)
+      return vim.schedule_wrap(function(fallback)
         local s, ng = require("luasnip"), require("neogen")
 
         if m == "c" then
-          return cmp.visible() and (fwd and cmp.select_next_item or cmp.select_prev_item)() or cmp.complete()
+          return cmp.visible() and has_words_before() and (fwd and cmp.select_next_item or cmp.select_prev_item)()
+            or cmp.complete()
         end
 
-        if fwd and cmp.visible() then
+        if fwd and cmp.visible() and has_words_before() then
           cmp.confirm({ select = true })
         elseif (fwd and s.expand_or_jumpable or s.jumpable)(d) then
           (fwd and s.expand_or_jump or s.jump)(d)
@@ -56,7 +67,7 @@ return {
         else
           fallback()
         end
-      end
+      end)
     end
 
     cmp.setup({
@@ -102,12 +113,12 @@ return {
         }),
       }),
       sources = cmp.config.sources({
-        { name = "copilot" },
         { name = "nvim_lsp", max_item_count = 10 },
         -- place snips second otherwise ctrl+space doesn't give relevant completion
         { name = "luasnip", max_item_count = 5 },
         { name = "buffer", keyword_length = 3 },
         { name = "path", trigger_characters = { "/" } },
+        { name = "copilot", max_item_count = 2, keyword_length = 3 },
       }),
       formatting = {
         format = require("lspkind").cmp_format({
@@ -117,30 +128,12 @@ return {
         }),
       },
       window = { completion = cmp.config.window.bordered(), documentation = cmp.config.window.bordered() },
-      experimental = {
-        ghost_text = {
-          hl_group = "LspCodeLens",
-        },
-      },
-      sorting = {
-        priority_weight = 2,
-        comparators = {
-          cmp.config.compare.exact,
-          require("copilot_cmp.comparators").prioritize,
-          -- Below is the default comparitor list and order for nvim-cmp
-          cmp.config.compare.offset,
-          -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
-          cmp.config.compare.score,
-          ---@diagnostic disable-next-line: assign-type-mismatch
-          cmp.config.compare.recently_used,
-          ---@diagnostic disable-next-line: assign-type-mismatch
-          cmp.config.compare.locality,
-          cmp.config.compare.kind,
-          cmp.config.compare.sort_text,
-          cmp.config.compare.length,
-          cmp.config.compare.order,
-        },
-      },
+      -- disable when using copilot
+      -- experimental = {
+      --   ghost_text = {
+      --     hl_group = "LspCodeLens",
+      --   },
+      -- },
     })
 
     cmp.setup.cmdline({ "/", "?" }, {
