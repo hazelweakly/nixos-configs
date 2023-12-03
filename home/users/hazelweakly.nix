@@ -22,6 +22,7 @@
     config.lib.file.mkOutOfStoreSymlink "${userProfile.flakeDir}/dots/ranger";
   xdg.configFile."nvim".source =
     config.lib.file.mkOutOfStoreSymlink "${userProfile.flakeDir}/dots/nvim";
+  home.file.".hushlogin".text = "";
 
   home.activation.us-keyboard = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     cp -R "${userProfile.flakeDir}/dots/US No Dead Keys.bundle" ~/Library/"Keyboard Layouts"

@@ -39,9 +39,6 @@
 
     treesitter.url = "github:nvim-treesitter/nvim-treesitter";
     treesitter.flake = false;
-
-    todoist.url = "github:sachaos/todoist";
-    todoist.flake = false;
   };
 
   outputs = inputs@{ self, ... }: {

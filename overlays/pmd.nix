@@ -1,9 +1,9 @@
 final: prev: {
   pmd = prev.pmd.overrideAttrs (o: {
-    version = "7.0.0-rc3";
+    version = "7.0.0-rc4";
     src = builtins.fetchurl {
-      url = "https://github.com/pmd/pmd/releases/download/pmd_releases%2F7.0.0-rc3/pmd-dist-7.0.0-rc3-bin.zip";
-      sha256 = "0aa2kibk7kbc4aizy8zmp3jcdcsfmvja8x9dn5inli42hp214jz2";
+      url = "https://github.com/pmd/pmd/releases/download/pmd_releases%2F7.0.0-rc4/pmd-dist-7.0.0-rc4-bin.zip";
+      sha256 = "02sphnrc9s741ranb7rvk0rippxi8405yvi4wj4cgw3mx2wmrhc1";
     };
     installPhase = ''
       runHook preInstall
