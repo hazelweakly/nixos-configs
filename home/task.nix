@@ -1,8 +1,4 @@
-{ pkgs, config, inputs, ... }: {
-
-  programs.zsh.initExtra = ''
-    source ${inputs.todoist}/todoist_functions_fzf.sh
-  '';
+{ pkgs, config, ... }: {
 
   xdg.configFile."task/dark".source =
     config.lib.file.mkOutOfStoreSymlink "${pkgs.taskwarrior}/share/doc/task/rc/dark-16.theme";
