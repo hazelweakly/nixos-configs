@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+
+pushd ~/src
+gh repo list datavant --limit 250 --no-archived --source | while read -r target _; do
+  repo="${"${target##*/}"%.git}"
+  if [ -d $repo ]; then
+    echo "$repo yes"
+    git -C $repo pull
+  else
+    echo "$target no"
+    gh repo clone "$target"
+  fi
+done
+
+popd
