@@ -16,6 +16,7 @@
       "karabiner-elements"
       "rectangle"
       "signal"
+      "steam"
       "visual-studio-code"
       # "zoom"
     ];
