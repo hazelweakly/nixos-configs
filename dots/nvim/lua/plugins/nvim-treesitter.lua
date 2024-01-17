@@ -1,9 +1,13 @@
 return {
   "nvim-treesitter/nvim-treesitter",
   name = "nvim-treesitter",
+  init = function(plugin)
+    require("lazy.core.loader").add_to_rtp(plugin)
+    require("nvim-treesitter.query_predicates")
+  end,
 
   -- dir = os.getenv("TREESITTER_PLUGIN") .. "/pack/myNeovimPackages/start/nvim-treesitter",
-  event = { "BufReadPost", "BufNewFile" },
+  event = { "BufReadPost", "BufNewFile", "VeryLazy" },
   keys = {
     { "<CR>", desc = "Init selection" },
     { "<TAB>", desc = "Increment selection", mode = "x" },
@@ -12,6 +16,8 @@ return {
   opts = {
     highlight = { enable = true },
     auto_install = false,
+    -- ensure_installed = {},
+    ignore_install = { "all" },
     incremental_selection = {
       enable = true,
       keymaps = {

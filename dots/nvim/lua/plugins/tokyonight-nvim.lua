@@ -6,6 +6,9 @@ return {
       pattern = "VeryLazy",
       callback = function()
         require("configs.colors").setup()
+        vim.defer_fn(function()
+          require("configs.colors").setup()
+        end, 100)
       end,
       once = true,
     })
