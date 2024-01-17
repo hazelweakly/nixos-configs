@@ -1,15 +1,22 @@
 #!/usr/bin/env zsh
 
-pushd ~/src
-gh repo list datavant --limit 250 --no-archived --source | while read -r target _; do
+. $(which env_parallel.zsh)
+
+function clone_thing() {
+  target="$1"
   repo="${"${target##*/}"%.git}"
   if [ -d $repo ]; then
     echo "$repo yes"
-    git -C $repo pull
+    git -C "$repo" fetch --all
+    git -C "$repo" pull
   else
     echo "$target no"
     gh repo clone "$target"
   fi
-done
+}
+
+pushd ~/src
+
+env_parallel -j 20 "clone_thing {}" ::: $(gh repo list datavant --limit 250 --no-archived --source --json name --jq '.[] | .name')
 
 popd

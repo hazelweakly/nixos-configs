@@ -11,7 +11,7 @@ return {
     -- but currently even setting them up often invokes requiring all the dependencies
     -- which might be heavyweight and adds a *lot* of startup time
     local servers = {
-      "bashls",
+      -- "bashls",
       "cssls",
       -- "dhall_lsp_server",
       -- "dockerls",
@@ -22,7 +22,7 @@ return {
       "jsonls",
       "lua_ls",
       "nil_ls",
-      "pyright",
+      -- "pyright",
       -- "rust_analyzer",
       "terraformls",
       "tsserver",

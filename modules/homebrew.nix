@@ -5,8 +5,6 @@
     homebrew.onActivation.cleanup = "zap";
     homebrew.global.brewfile = true;
     homebrew.taps = [
-      "homebrew/core"
-      "homebrew/cask"
       "homebrew/cask-drivers"
       "homebrew/cask-versions"
     ];
@@ -18,7 +16,10 @@
       "signal"
       "steam"
       "visual-studio-code"
-      # "zoom"
     ];
+  })
+
+  (lib.optionalAttrs (systemProfile.isDarwin && !systemProfile.isWork) {
+    homebrew.casks = [ "zoom" ];
   })
 ]

@@ -20,6 +20,7 @@
       pmd
 
       # Programs implicitly relied on in shell
+      parallel
       pistol
       eza
       delta
