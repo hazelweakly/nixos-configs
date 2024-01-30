@@ -8,6 +8,9 @@ let
         config.allowUnsupportedSystem = true;
         config.allowBroken = true;
         overlays = builtins.attrValues self.overlays;
+        config.permittedInsecurePackages = [
+          "xpdf-4.04"
+        ];
       };
     })
   ];
