@@ -9,6 +9,7 @@
       "homebrew/cask-versions"
     ];
     homebrew.casks = [
+      "deskpad"
       "firefox-developer-edition"
       "google-chrome"
       "karabiner-elements"
