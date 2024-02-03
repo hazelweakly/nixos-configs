@@ -16,7 +16,7 @@
       taskwarrior
       timewarrior
       todoist
-      xpdf
+      # xpdf
 
       pmd
 

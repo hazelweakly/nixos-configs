@@ -9,7 +9,7 @@ let
         config.allowBroken = true;
         overlays = builtins.attrValues self.overlays;
         config.permittedInsecurePackages = [
-          "xpdf-4.04"
+          # "xpdf-4.04"
         ];
       };
     })

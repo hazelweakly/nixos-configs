@@ -33,7 +33,8 @@
     profile = black
   '';
   xdg.configFile."nixpkgs/config.nix".text =
-    ''{ allowUnfree = true; allowUnsupportedSystem = true; permittedInsecurePackages = [ "xpdf-4.04" ]; }'';
+    ''{ allowUnfree = true; allowUnsupportedSystem = true; }'';
+  # ''{ allowUnfree = true; allowUnsupportedSystem = true; permittedInsecurePackages = [ "xpdf-4.04" ]; }'';
 
   programs.info.enable = true;
   programs.nix-index.enable = true;
