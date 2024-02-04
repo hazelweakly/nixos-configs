@@ -24,22 +24,25 @@ rec {
       justSrc = builtins.fromJSON ''
         {
           "url": "https://github.com/IndianBoy42/tree-sitter-just",
-          "rev": "8af0aab79854aaf25b620a52c39485849922f766",
-          "date": "2021-11-02T20:53:27+08:00",
-          "path": "/nix/store/pcpnqn0m64003ac8f3253s3wfji3yzzp-tree-sitter-just-8af0aab",
-          "sha256": "15hl3dsr5kxjl1kl9md2gb9bwj0ni54d9k6jv1h74b3psf4qb0l5",
+          "rev": "4f5d53b52a65771f9695df3f1a294d5c80b916fb",
+          "date": "2024-01-23T00:25:02-06:00",
+          "path": "/nix/store/hvzm91rdhr3a7j50z6r7wpanzv92cqli-tree-sitter-just",
+          "sha256": "0wizbdskbsmr1l83nkc8cln364brq9faca7bawz6iz2m2ikf46kg",
+          "hash": "sha256-bxriZhRV/Gg+V+soplzCeREzLGWITTsQDbnqNXVbP3I=",
           "fetchLFS": false,
           "fetchSubmodules": false,
           "deepClone": false,
           "leaveDotGit": false
-        }'';
+        }
+      '';
       dhallSrc = builtins.fromJSON ''
         {
           "url": "https://github.com/jbellerb/tree-sitter-dhall",
           "rev": "affb6ee38d629c9296749767ab832d69bb0d9ea8",
           "date": "2022-06-26T01:12:29-04:00",
-          "path": "/nix/store/f2ikmhfxpx1zpfg5wyw772arfjz6ph2z-tree-sitter-dhall-affb6ee",
+          "path": "/nix/store/6l7g4d7v0zil6k1nl3a06iq1r65vw3v7-tree-sitter-dhall",
           "sha256": "0r4f4w2jhm2hyvh3r3phdjhigsh0an8g4p21cbz8ldkld8ma9lxb",
+          "hash": "sha256-q9OkKmp0Nor+YkFc8pBVAOoXoWzwjjzg9lBUKAUnjmQ=",
           "fetchLFS": false,
           "fetchSubmodules": false,
           "deepClone": false,
