@@ -10,10 +10,10 @@ if ! command -v nix; then
   curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 fi
 
-if ! command -v kitty && ! [[ -d /Applications/kitty.app ]]; then
-  echo "installing kitty app"
-  curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
-fi
+# if ! command -v kitty && ! [[ -d /Applications/kitty.app ]]; then
+#   echo "installing kitty app"
+#   curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+# fi
 
 echo "making personal directory"
 mkdir -p ~/src/personal
