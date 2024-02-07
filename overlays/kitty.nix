@@ -1,5 +1,6 @@
 final: prev: {
   kitty = prev.kitty.overrideAttrs (o: rec {
+    nativeBuildInputs = (o.nativeBuildInputs or [ ]) ++ [ prev.makeBinaryWrapper ];
     src = final.inputs.kitty;
     version = "0.32.1";
     goModules = (prev.buildGoModule {

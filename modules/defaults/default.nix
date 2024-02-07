@@ -1,4 +1,4 @@
-{ pkgs, lib, config, systemProfile, ... }: lib.mkMerge [
+{ pkgs, lib, config, systemProfile, userProfile, ... }: lib.mkMerge [
   {
     environment.etc.hostname = lib.mkIf (config.networking.hostName != "") {
       text = lib.mkDefault (config.networking.hostName + "\n");
@@ -54,7 +54,7 @@
       echo >&2 "setting up the dock icons"
       defaults write com.apple.dock persistent-apps -array
 
-      for dockItem in /Applications/{"Firefox Developer Edition","kitty",Signal,"zoom.us"}.app /System/Applications/"System Settings.app"; do
+      for dockItem in /Applications/"Firefox Developer Edition".app "${userProfile.home}/Applications/Nix/kitty.app" /Applications/Signal.app /Applications/"Microsoft Teams (work or school).app/" /System/Applications/"System Settings.app"; do
         defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>'"$dockItem"'</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
       done
       killall Dock
