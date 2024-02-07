@@ -52,4 +52,22 @@ final: prev: rec {
       ];
     } else { }));
   neovim-remote = prev.neovim-remote.overridePythonAttrs (o: { doCheck = false; });
+  tree-sitter = prev.tree-sitter.overrideAttrs (drv: rec {
+    name = "tree-sitter";
+    src = prev.fetchFromGitHub {
+      owner = "tree-sitter";
+      repo = "tree-sitter";
+      rev = "v0.20.9";
+      hash = "sha256-NxWqpMNwu5Ajffw1E2q9KS4TgkCH6M+ctFyi9Jp0tqQ=";
+    };
+    version = "0.20.9";
+    cargoDeps = prev.rustPlatform.importCargoLock {
+      lockFile = builtins.fetchurl {
+        url =
+          "https://raw.githubusercontent.com/tree-sitter/tree-sitter/v${version}/Cargo.lock";
+        sha256 = "sha256-CVxS6AAHkySSYI9vY9k1DLrffZC39nM7Bc01vfjMxWk=";
+      };
+      allowBuiltinFetchGit = true;
+    };
+  });
 }
