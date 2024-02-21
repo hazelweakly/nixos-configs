@@ -1,0 +1,6 @@
+#!/usr/bin/env zsh
+
+local fek() { echo "usage: diffu file1 file2" >&2; }
+[[ $# == 2 ]] && [[ -f "$1" ]] && [[ -f "$2" ]] || { fek && return 1; }
+
+diff -u <(<"$1") <(<"$2") | delta

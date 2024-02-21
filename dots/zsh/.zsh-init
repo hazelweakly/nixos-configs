@@ -25,15 +25,16 @@ function -z4h-postinstall-fzf() {}
 zstyle ':z4h:Tarrasch/zsh-bd' postinstall "command cp \$Z4H_PACKAGE_DIR/{,zsh-}bd.plugin.zsh"
 zstyle ':z4h:chisui/zsh-nix-shell' postinstall "command cp \$Z4H_PACKAGE_DIR/{,zsh-}nix-shell.plugin.zsh"
 
-z4h install chisui/zsh-nix-shell@v0.5.0
+z4h install chisui/zsh-nix-shell
 z4h install hlissner/zsh-autopair
 z4h install Tarrasch/zsh-bd
+z4h install hazelweakly/kubectl-aliases
 
 z4h init || return
 
-z4h load -c -- chisui/zsh-nix-shell hlissner/zsh-autopair Tarrasch/zsh-bd
+z4h load -c -- chisui/zsh-nix-shell hlissner/zsh-autopair Tarrasch/zsh-bd hazelweakly/kubectl-aliases
 
-z4h source -c -- ${ZDOTDIR}/config/[0-9]*.zsh(.)
+z4h source -c -- "${ZDOTDIR}"/config/[0-9]*.zsh(.) "${Z4H}"/hazelweakly/kubectl-aliases/*.zsh(.)
 
 z4h bindkey z4h-backward-kill-word  Ctrl+Backspace Ctrl+H
 z4h bindkey z4h-backward-kill-zword Ctrl+Alt+Backspace Ctrl+W
