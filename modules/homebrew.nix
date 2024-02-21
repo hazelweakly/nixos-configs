@@ -9,6 +9,7 @@
       "homebrew/cask-versions"
     ];
     homebrew.casks = [
+      "caffeine"
       "deskpad"
       "firefox-developer-edition"
       "google-chrome"
