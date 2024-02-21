@@ -12,7 +12,7 @@
     git
     gnumake
     gopls
-    # hadolint
+    hadolint
     isort
     jq
     lua-language-server

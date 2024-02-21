@@ -3,6 +3,9 @@ export MANROFFOPT="-c"
 export GPG_TTY=$TTY
 export HOMEBREW_NO_ANALYTICS=1
 export DIRENV_LOG_FORMAT=''
+# kity with the vte patch doesn't support non-UTF8 encodings
+# and ncurses will use one without that env var set
+export NCURSES_NO_UTF8_ACS=1
 
 # TODO: Replace when https://github.com/dandavison/delta/issues/447 is fixed
 typeset -A _bat_themes=(
