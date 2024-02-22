@@ -57,7 +57,7 @@ hash -d dots=~/src/personal/nixos-configs
 hash -d src=~/src
 hash -d doc=~/Documents
 
-chpwd_functions=(${chpwd_functions[@]} "list_all")
+chpwd_functions=(${chpwd_functions[@]} "list_all" "update_paths")
 
 autoload -Uz -- zmv ${ZDOTDIR}/config/fn/[^_]*(.)
 
@@ -69,6 +69,3 @@ setopt no_flow_control
 setopt extended_history
 setopt hist_reduce_blanks
 setopt hist_ignore_space
-
-# smoother rendering
-POSTEDIT=$'\n\n\e[2A'

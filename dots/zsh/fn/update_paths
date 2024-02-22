@@ -1,30 +1,4 @@
-[ -d "$HOME/.local/bin" ] && path+=($HOME/.local/bin)
-fpath+=("$ZDOTDIR"/config/{completions,fn})
-
-() { # remove zsh4human paths
-  # When I wrote this, only the gods and I understood it
-  # and now, who knows?
-  #
-  # j:|: joins the array with the delimiter |
-  # ~${} forces the string to be treated as a pattern
-  # ${a:#pat} removes anything matching the pattern from the array
-  path=(${path:#${~${(j:|:)@}}})
-} {$Z4H/zsh4humans/zb,$Z4H/fzf/bin}
-
-() { # remove non-existing nix profiles
-  NIX_PROFILES=${(j: :)@}
-} ${^=NIX_PROFILES}(-FNoN)
-
-# TODO: Make function that splits a path into
-# - all paths prefixed with NIX_PROFILES whatever
-# - all non-nix-store paths
-# - exactly preserves order
-# - removes non-existing entries
-# () {
-#   local q=^\(${(j:|:)${(z)NIX_PROFILES}}\)
-#   local no_nix=${path:#${~(j:|:)${(z)NIX_PROFILES}}}
-#   echo ${path:|q}
-# }
+#!/usr/bin/env zsh
 
 () { # Move nix paths to the front of the first non nix-store paths and prune non existing entries
   # a[(i)pattern] gets the index of the first element patching the pattern
@@ -41,5 +15,8 @@ fpath+=("$ZDOTDIR"/config/{completions,fn})
 () {
   local idx=$((${fpath[(i)/(opt|usr|Library|bin|sbin)/*]} - 1))
   local a=(${fpath[1,idx]} $@ ${fpath[idx,-1]})
+  local x=( "${fpath[@]}" )
   fpath=(${(@)^a}(-FNoN))
+  # needed so that nix-direnv lets you get dynamic completion
+  [[ ${(pj:\0:)x} != ${(pj:\0:)fpath} ]] && -z4h-compinit
 } ${(z)^NIX_PROFILES}/share/zsh/{site-functions,$ZSH_VERSION/functions,vendor-completions} ${(z)^buildInputs}/share/zsh/{site-functions,$ZSH_VERSION/functions,vendor-completions} ${(z)^nativeBuildInputs}/share/zsh/{site-functions,$ZSH_VERSION/functions,vendor-completions}

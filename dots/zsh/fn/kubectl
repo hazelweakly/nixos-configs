@@ -1,3 +1,0 @@
-#!/usr/bin/env zsh
-echo "+ kubectl $@">&2
-command kubectl "$@";
