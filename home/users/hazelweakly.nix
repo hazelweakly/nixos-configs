@@ -23,6 +23,8 @@
   xdg.configFile."nvim".source =
     config.lib.file.mkOutOfStoreSymlink "${userProfile.flakeDir}/dots/nvim";
   home.file.".hushlogin".text = "";
+  xdg.configFile."tridactyl".source =
+    config.lib.file.mkOutOfStoreSymlink "${userProfile.flakeDir}/dots/tridactyl";
 
   home.activation.us-keyboard = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     cp -R "${userProfile.flakeDir}/dots/US No Dead Keys.bundle" ~/Library/"Keyboard Layouts"

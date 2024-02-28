@@ -1,0 +1,138 @@
+set smoothscroll true
+set modeindicator false
+colorscheme one
+" like set allowautofocus false but doesn't break CodeMirror
+autocmd TabEnter .* unfocus
+
+" Git{Hub,Lab} git clone via SSH yank
+bind yg composite js document.location.href.replace(/https?:\/\//,"git@").replace("/",":").replace(/$/,".git") | clipboard yank
+
+bindurl ^https://duckduckgo.com f hint -Jc [class=result__a]
+bindurl ^https://duckduckgo.com F hint -Jbc [class=result__a]
+
+unbind <C-a>
+unbind <C-x>
+unbind <C-c>
+unbind <C-i>
+unbind <C-f>
+unbind <C-b>
+unbind <C-e>
+unbind <C-y>
+unbind <A-p>
+unbind <A-m>
+unbind <F1>
+unbind <F1>
+unbind ]c
+unbind [c
+unbind gH
+unbind <C-o>
+unbind x
+unbind g?
+unbind g;
+unbind gx0
+unbind gx$
+unbind >>
+unbind <<
+unbind ys
+unbind yq
+unbind ym
+unbind yt
+unbind gu
+unbind gU
+unbind s
+unbind S
+unbind M
+unbind ZZ
+unbind gF
+unbind ;i
+unbind ;b
+unbind ;o
+unbind ;I
+unbind ;k
+unbind ;K
+unbind ;y
+unbind ;Y
+unbind ;p
+unbind ;h
+unbind v
+unbind ;P
+unbind ;r
+unbind ;s
+unbind ;S
+unbind ;a
+unbind ;A
+unbind ;;
+unbind ;#
+unbind ;v
+unbind ;V
+unbind ;w
+unbind ;t
+unbind ;O
+unbind ;W
+unbind ;T
+unbind ;d
+unbind ;gd
+unbind ;z
+unbind ;m
+unbind ;M
+unbind ;gi
+unbind ;gI
+unbind ;gk
+unbind ;gy
+unbind ;gp
+unbind ;gP
+unbind ;gr
+unbind ;gs
+unbind ;gS
+unbind ;ga
+unbind ;gA
+unbind ;g;
+unbind ;g#
+unbind ;gv
+unbind ;gw
+unbind ;gb
+unbind ;gf
+unbind ;gF
+unbind <C-[>
+unbind a
+unbind A
+unbind zi
+unbind zo
+unbind zm
+unbind zr
+unbind zM
+unbind zR
+unbind zz
+unbind zO
+unbind /
+unbind ?
+
+bind --mode=normal <C-P> composite get_current_url | winopen -private
+
+bind j scrollline 5
+bind k scrollline -5
+
+bind J tabnext
+bind K tabprev
+bind gh tabmove -1
+bind gl tabmove +1
+
+" Make yy use canonical / short links on the 5 websites that support them
+bind yy clipboard yankshort
+
+" Handy multiwindow/multitasking binds
+bind gD composite tabduplicate ; tabdetach
+bind gd tabduplicate
+
+set hintfiltermode vimperator-reflow
+set hintnames numeric
+
+set hintdelay 50
+
+" Don't run tridactyl on misbehaving sites
+seturl ^https?://mail.google.com superignore true
+seturl ^https?://mattermost* superignore true
+seturl ^https?://*spicehtml5-main.jsp* superignore true
+seturl ^https?://outlook.office* superignore true
+
+" vim: set filetype=vim:

@@ -17,6 +17,8 @@
       "rectangle"
       "signal"
       "steam"
+      "steermouse"
+      "todoist"
       "visual-studio-code"
     ];
   })
