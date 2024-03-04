@@ -24,11 +24,11 @@ rec {
       justSrc = builtins.fromJSON ''
         {
           "url": "https://github.com/IndianBoy42/tree-sitter-just",
-          "rev": "4f5d53b52a65771f9695df3f1a294d5c80b916fb",
-          "date": "2024-01-23T00:25:02-06:00",
-          "path": "/nix/store/hvzm91rdhr3a7j50z6r7wpanzv92cqli-tree-sitter-just",
-          "sha256": "0wizbdskbsmr1l83nkc8cln364brq9faca7bawz6iz2m2ikf46kg",
-          "hash": "sha256-bxriZhRV/Gg+V+soplzCeREzLGWITTsQDbnqNXVbP3I=",
+          "rev": "43f2c5efb96e51bbd8e64284662911b60849df00",
+          "date": "2024-03-04T13:46:59-06:00",
+          "path": "/nix/store/5889r37baadhg4l0khc4yyyd392x09w4-tree-sitter-just",
+          "sha256": "0kgivykyvc63vbjvn22x7dmwfy2c73hl1skkvfzyz3wfxnj5np4l",
+          "hash": "sha256-lFxbpO2Oj++/23PqQOE4THjHaztdCLvl2sOw7aff8U0=",
           "fetchLFS": false,
           "fetchSubmodules": false,
           "deepClone": false,

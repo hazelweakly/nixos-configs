@@ -6,7 +6,7 @@ return {
     require("nvim-treesitter.query_predicates")
   end,
 
-  -- dir = os.getenv("TREESITTER_PLUGIN") .. "/pack/myNeovimPackages/start/nvim-treesitter",
+  dir = os.getenv("TREESITTER_PLUGIN") .. "/pack/myNeovimPackages/start/nvim-treesitter",
   event = { "BufReadPost", "BufNewFile", "VeryLazy" },
   keys = {
     { "<CR>", desc = "Init selection" },

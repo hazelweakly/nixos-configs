@@ -13,8 +13,9 @@ return {
     client.notify("workspace/didChangeConfiguration", {
       settings = {
         completions = { completeFunctionCalls = true },
-        typescript = { inlayHints = inlayHints },
-        javascript = { inlayHints = inlayHints },
+        -- Re-enable when typescript 5.4 is out
+        -- typescript = { inlayHints = inlayHints },
+        -- javascript = { inlayHints = inlayHints },
       },
     })
   end,
