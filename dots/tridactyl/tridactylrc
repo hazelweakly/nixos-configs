@@ -134,6 +134,6 @@ seturl ^https?://mail.google.com superignore true
 seturl ^https?://mattermost* superignore true
 seturl ^https?://*spicehtml5-main.jsp* superignore true
 seturl ^https?://outlook.office* superignore true
-seturl ^https?://app.todoist.com  mode ignore
+seturl ^https?://app.todoist.com*  superignore true
 
 " vim: set filetype=vim:
