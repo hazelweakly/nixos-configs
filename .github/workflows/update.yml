@@ -9,11 +9,11 @@ concurrency:
 
 jobs:
   update:
-    runs-on: macos-latest
+    runs-on: macos-14
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/build
         with:
-          paths: .#darwinConfigurations.x86_64-darwin.config.system.build.toplevel
+          paths: .#darwinConfigurations.aarch64-darwin.config.system.build.toplevel
           updateInputs: "true"
           CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}

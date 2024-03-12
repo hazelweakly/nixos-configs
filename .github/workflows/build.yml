@@ -14,7 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: macos-latest
+          - os: macos-14
             path: >-
               .#darwinConfigurations.x86_64-darwin.config.system.build.toplevel
           # - os: ubuntu-latest
@@ -24,7 +24,7 @@ jobs:
     if: "! contains(toJSON(github.event.commits.*.message), 'flake.lock: Update')"
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/build
         with:
           paths: ${{ matrix.path }}

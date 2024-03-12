@@ -14,7 +14,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: DeterminateSystems/nix-installer-action@v4
+    - uses: DeterminateSystems/nix-installer-action@main
     - name: update
       if: inputs.updateInputs != 'false'
       shell: bash
@@ -23,7 +23,7 @@ runs:
         git config --global user.email "hazel@theweaklys.com"
         git config --global user.name "Hazel Weakly"
         nix develop -c nix flake update --commit-lock-file
-    - uses: cachix/cachix-action@v12
+    - uses: cachix/cachix-action@v14
       with:
         name: hazel-nix-configs
         authToken: "${{ inputs.CACHIX_AUTH_TOKEN }}"
