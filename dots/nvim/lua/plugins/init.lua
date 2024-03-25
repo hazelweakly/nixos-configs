@@ -10,7 +10,7 @@ return {
   { "notjedi/nvim-rooter.lua", config = true, event = "BufReadPost" },
   { "nvim-tree/nvim-web-devicons", lazy = true },
   { "tyru/open-browser.vim", keys = { { "gx", "<Plug>(openbrowser-smart-search)" } } },
-  { "IndianBoy42/tree-sitter-just", config = true },
+  -- { "IndianBoy42/tree-sitter-just", config = true, lazy = true },
   { "windwp/nvim-autopairs", event = "InsertEnter", opts = { check_ts = true } },
   {
     "mrcjkb/haskell-tools.nvim",
