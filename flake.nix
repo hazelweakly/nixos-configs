@@ -40,7 +40,7 @@
     treesitter.url = "github:nvim-treesitter/nvim-treesitter";
     treesitter.flake = false;
 
-    kitty.url = "github:kovidgoyal/kitty/vt";
+    kitty.url = "github:kovidgoyal/kitty";
     kitty.flake = false;
   };
 
