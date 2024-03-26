@@ -73,11 +73,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1711386925,
-        "narHash": "sha256-6pTwmo+4SYJe0oPQu6zYiYvdbayhHfntAvBg0YSt7cU=",
+        "lastModified": 1711414564,
+        "narHash": "sha256-svaQ6yf3i9OkxCf2/Oi4ubtXoNJ5BA+UZjJvPjUcDE4=",
         "owner": "colemickens",
         "repo": "flake-firefox-nightly",
-        "rev": "77052eefe6f4d4078c31ca6b74ef372acaab8a84",
+        "rev": "f11e926278835c6676093939186d3780df0b4cfd",
         "type": "github"
       },
       "original": {
@@ -260,11 +260,11 @@
       },
       "locked": {
         "dir": "contrib",
-        "lastModified": 1711392137,
-        "narHash": "sha256-d89eJZzvU7oUeJA31JwqOWxrGz7T21BR2RnOI3vx+qQ=",
+        "lastModified": 1711405268,
+        "narHash": "sha256-ixaLbLdtiUBy03xG7jg8hgGsvZdjgiTLoPa+/S6nqXA=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "2bcf88d35462325d1b90b0dacb373685f2d708a5",
+        "rev": "00e71d3da3464df2b4c4f33bfd5fac6d88e7c867",
         "type": "github"
       },
       "original": {
