@@ -42,6 +42,18 @@
 
     kitty.url = "github:kovidgoyal/kitty";
     kitty.flake = false;
+
+    lix = {
+      url = "git+ssh://git@git.lix.systems/lix-project/lix";
+      flake = false;
+    };
+
+    lix-module = {
+      url = "git+ssh://git@git.lix.systems/lix-project/nixos-module";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.lix.follows = "lix";
+    };
   };
 
   outputs = inputs@{ self, ... }: {

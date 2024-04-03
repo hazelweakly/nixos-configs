@@ -1,4 +1,4 @@
-{ config, lib, userProfile, ... }: {
+{ config, lib, userProfile, pkgs, ... }: {
   home.stateVersion = "22.11";
   home.username = userProfile.name;
   home.homeDirectory = lib.mkForce userProfile.home;

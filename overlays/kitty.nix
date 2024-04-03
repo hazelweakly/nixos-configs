@@ -6,7 +6,8 @@ final: prev: {
     goModules = (prev.buildGo122Module {
       pname = "kitty-go-modules";
       inherit src version;
-      vendorHash = "sha256-z015IiDrAZ2vsqEYbKFhspfap2rf+Gfg9mZo6Zqy/SU=";
+      vendorHash = "sha256-hbvQrRKY8V8vMNyzsoR6+mdZ0vIZPDZ5Po1YxzYEJHE=";
+      # vendorHash = prev.lib.fakeHash;
     }).goModules;
     buildInputs = o.buildInputs ++ [ prev.simde ];
   });

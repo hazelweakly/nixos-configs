@@ -11,6 +11,7 @@
     homebrew.casks = [
       "caffeine"
       "deskpad"
+      "drawio"
       "firefox-developer-edition"
       "google-chrome"
       "karabiner-elements"
