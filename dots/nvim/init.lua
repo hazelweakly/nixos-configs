@@ -19,4 +19,4 @@ vim.defer_fn(function()
   end
   vim.g.did_ultra_lazy = true
   vim.api.nvim_exec_autocmds("User", { pattern = "UltraLazy", modeline = false })
-end, 200)
+end, 100)

@@ -5,7 +5,6 @@
     bat
     black
     cargo
-    # dhall-lsp-server
     direnv
     docker-ls
     eza
@@ -56,7 +55,7 @@ let
   ] ++ neovimPackages);
 
   # doing it the non obvious way like this automatically collects all the grammar dependencies for us.
-  packDirArgs.myNeovimPackages = { start = [ (vimPlugins.nvim-treesitter.withPlugins (_: vimPlugins.nvim-treesitter.allGrammars)) ]; };
+  packDirArgs.myNeovimPackages = { start = [ vimPlugins.nvim-treesitter.withAllGrammars ]; };
   treeSitterPlugin = vimUtils.packDir packDirArgs;
 
   args.wrapperArgs = config.wrapperArgs ++ [ "--prefix" "PATH" ":" "${lib.makeBinPath path}" ] ++ [ "--set" "TREESITTER_PLUGIN" treeSitterPlugin ];
