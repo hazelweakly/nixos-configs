@@ -13,11 +13,11 @@ return {
     local servers = {
       "bashls",
       "cssls",
-      "dhall_lsp_server",
+      -- "dhall_lsp_server",
       "dockerls",
       "eslint",
       "gopls",
-      "hls",
+      -- "hls",
       "html",
       "jsonls",
       "lua_ls",

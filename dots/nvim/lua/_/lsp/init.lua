@@ -13,6 +13,18 @@ vim.api.nvim_create_autocmd("LspAttach", {
       return
     end
 
+    local fname = vim.api.nvim_buf_get_name(bufnr)
+    if #fname <= 0 then
+      return
+    end
+    local size = vim.fn.getfsize(fname) / 1024
+    if size >= 100 then
+      client.server_capabilities.semanticTokensProvider = nil
+      -- vim.schedule(function()
+      --   vim.lsp.buf_detach_client(bufnr, client)
+      -- end)
+    end
+
     if client.server_capabilities.completionProvider then
       vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
     end

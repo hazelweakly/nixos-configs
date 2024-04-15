@@ -1,5 +1,6 @@
 return {
   "echasnovski/mini.comment",
+  enabled = false,
   dependencies = { "JoosepAlviste/nvim-ts-context-commentstring" },
   keys = { { "gc", mode = { "n", "v" } } },
   opts = {

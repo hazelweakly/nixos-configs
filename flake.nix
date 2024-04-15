@@ -34,6 +34,9 @@
     firefox-nightly.url = "github:colemickens/flake-firefox-nightly";
     firefox-nightly.inputs.nixpkgs.follows = "nixpkgs";
 
+    otel-cli.url = "github:equinix-labs/otel-cli";
+    otel-cli.flake = false;
+
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 

@@ -16,6 +16,7 @@
       taskwarrior
       timewarrior
       todoist
+      otel-cli
       # xpdf
 
       pmd
