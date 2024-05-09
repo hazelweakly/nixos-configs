@@ -8,6 +8,7 @@ vim.filetype.add({
     cls = "tex", -- vimtex
     tik = "tex", -- vimtex
     nix = "nix",
+    d2 = "d2",
   },
   filename = {
     httpd = "apache",

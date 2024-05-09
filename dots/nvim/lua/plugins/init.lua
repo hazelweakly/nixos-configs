@@ -11,6 +11,7 @@ return {
   { "nvim-tree/nvim-web-devicons", lazy = true },
   { "tyru/open-browser.vim", keys = { { "gx", "<Plug>(openbrowser-smart-search)" } } },
   { "windwp/nvim-autopairs", event = "InsertEnter", opts = { check_ts = true } },
+  { "terrastruct/d2-vim", ft = "d2" },
   {
     "mrcjkb/haskell-tools.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
