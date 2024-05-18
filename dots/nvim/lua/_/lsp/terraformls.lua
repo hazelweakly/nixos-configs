@@ -1,6 +1,6 @@
 return {
   init_options = {
-    experimentalFeatures = { validateOnSave = true, prefillRequiredFields = true },
+    experimentalFeatures = { prefillRequiredFields = true },
   },
   capabilities = {
     experimental = { showReferencesCommandId = "client.showReferences" },

@@ -49,7 +49,7 @@ return {
         lualine_x = {
           {
             function()
-              return next(vim.lsp.get_active_clients()) ~= nil and "  LSP" or ""
+              return next(vim.lsp.get_clients()) ~= nil and "  LSP" or ""
             end,
             cond = conditions.hide_in_width,
           },

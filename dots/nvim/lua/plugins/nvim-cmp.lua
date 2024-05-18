@@ -20,7 +20,9 @@ return {
     "saadparwaiz1/cmp_luasnip",
     "L3MON4D3/LuaSnip",
     {
-      "zbirenbaum/copilot-cmp",
+      -- "zbirenbaum/copilot-cmp",
+      "augustocdias/copilot-cmp",
+      branch = "rm-deprecated-call",
       dependencies = "copilot.lua",
       opts = {},
       config = function(_, opts)

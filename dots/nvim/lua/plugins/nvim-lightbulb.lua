@@ -1,5 +1,6 @@
 return {
-  "kosayoda/nvim-lightbulb",
+  -- "kosayoda/nvim-lightbulb",
+  "gh-liu/nvim-lightbulb",
   event = "LspAttach",
   config = function()
     vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {

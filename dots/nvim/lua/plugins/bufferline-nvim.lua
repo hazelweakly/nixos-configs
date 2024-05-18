@@ -1,5 +1,7 @@
 return {
-  "akinsho/bufferline.nvim",
+  -- "akinsho/bufferline.nvim",
+  "cttttt/bufferline.nvim",
+  branch = "vim_tbl_add_reverse_is_deprecated",
   event = "User UltraLazy",
   opts = {
     options = {

@@ -40,8 +40,8 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    treesitter.url = "github:nvim-treesitter/nvim-treesitter";
-    treesitter.flake = false;
+    nvim-treesitter.url = "github:nvim-treesitter/nvim-treesitter";
+    nvim-treesitter.flake = false;
 
     kitty.url = "github:kovidgoyal/kitty";
     kitty.flake = false;

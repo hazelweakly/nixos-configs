@@ -11,7 +11,6 @@ vim.g.netrw_nogx = 1
 vim.opt.title = true
 vim.opt.pumblend = 30
 vim.opt.winblend = 30
-vim.opt.grepprg = "rg --engine auto --vimgrep --smart-case --hidden"
 vim.opt.grepformat = "%f:%l:%c:%m"
 vim.opt.mouse = "a"
 vim.opt.complete:append("k")
