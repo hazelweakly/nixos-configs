@@ -3,7 +3,11 @@ return {
   "folke/lazy.nvim",
   { "MunifTanjim/nui.nvim", lazy = true, enabled = false },
   { "direnv/direnv.vim", enabled = false },
-  { "mickael-menu/zk-nvim", lazy = true },
+  {
+    "zk-org/zk-nvim",
+    build = "sed -i 's/ vim.lsp.get_active_clients(/ (vim.lsp.get_clients or vim.lsp.get_active_clients)(/' lua/zk/lsp.lua",
+    lazy = true,
+  },
   { "simrat39/rust-tools.nvim", lazy = true },
   { "nvim-lua/plenary.nvim", lazy = true },
   { "ethanholz/nvim-lastplace", opts = {}, event = "BufReadPre" },

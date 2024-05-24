@@ -2,21 +2,32 @@
 
 . $(which env_parallel.zsh)
 
+env_parallel --record-env
+
+t=$(mktemp)
+echo "logs at: $t"
+
 function clone_thing() {
   target="$1"
+  log=("$target")
   repo="${"${target##*/}"%.git}"
   if [ -d $repo ]; then
-    echo "$repo yes"
+    log+=("\t" "$repo YES")
     git -C "$repo" fetch --all
     git -C "$repo" pull
   else
-    echo "$target no"
-    gh repo clone "$target"
+    log+=("\t" "$target NO")
+    gh repo clone "datavant/$target"
   fi
+  log+=("\n")
+  echo "${log[@]}" >> "$t"
 }
 
-pushd ~/src
+pushd ~/src 2>&1 >/dev/null
 
-env_parallel -j 20 "clone_thing {}" ::: $(gh repo list datavant --limit 250 --no-archived --source --json name --jq '.[] | .name')
+env_parallel --env _ -j 20 "clone_thing {}" ::: $(gh repo list datavant --limit 750 --no-archived --source --json name --jq '.[] | .name')
 
-popd
+popd 2>&1 >/dev/null
+
+cat "$t"
+rm -f "$t"
