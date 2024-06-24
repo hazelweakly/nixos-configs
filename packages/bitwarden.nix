@@ -1,4 +1,4 @@
-{ lib, bitwarden-cli, flock, writeShellScriptBin, installShellFiles, ... }:
+{ lib, bitwarden-cli, flock, writeShellScriptBin, installShellFiles, hello, ... }:
 let
   path = lib.makeBinPath
     [ bitwarden-cli flock ];
@@ -30,15 +30,16 @@ let
     exec bw "$@"
   '';
 in
-bw.overrideAttrs (o: {
-  buildCommand = o.buildCommand + ''
-    runHook postInstall
-  '';
-  postInstall = ''
-    mkdir -p $out/share/zsh/site-functions
-    HOME=.
-    ${bitwarden-cli}/bin/bw completion --shell zsh > $out/share/zsh/site-functions/_bw
-  '';
-  nativeBuildInputs = (o.nativeBuildInputs or [ ])
-    ++ [ installShellFiles ];
-})
+hello
+# bw.overrideAttrs (o: {
+#   buildCommand = o.buildCommand + ''
+#     runHook postInstall
+#   '';
+#   postInstall = ''
+#     mkdir -p $out/share/zsh/site-functions
+#     HOME=.
+#     ${bitwarden-cli}/bin/bw completion --shell zsh > $out/share/zsh/site-functions/_bw
+#   '';
+#   nativeBuildInputs = (o.nativeBuildInputs or [ ])
+#     ++ [ installShellFiles ];
+# })

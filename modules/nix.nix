@@ -6,10 +6,10 @@
     nix.settings.keep-derivations = true;
     nix.settings.auto-optimise-store = !pkgs.stdenv.isDarwin;
     nix.settings.trusted-users = [ "root" userProfile.name ];
-    nix.settings.plugin-files = lib.optionals pkgs.stdenv.isLinux [ "${pkgs.nix-doc}/lib/libnix_doc_plugin.so" ];
+    # nix.settings.plugin-files = lib.optionals pkgs.stdenv.isLinux [ "${pkgs.nix-doc}/lib/libnix_doc_plugin.so" ];
     # ++ lib.optionals pkgs.stdenv.isDarwin [ "${pkgs.nix-doc}/lib/libnix_doc_plugin.dylib" ];
 
-    environment.systemPackages = [ pkgs.nix-doc ];
+    # environment.systemPackages = [ pkgs.nix-doc ];
 
     nix.nixPath = lib.mapAttrsToList (n: _: "${n}=/etc/nix/inputs/${n}") (self.lib.inputsWithPkgs inputs)
       ++ lib.optionals pkgs.stdenv.isDarwin [ "darwin-config=/etc/nix/inputs/self" ]

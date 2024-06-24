@@ -29,7 +29,8 @@ final: prev: rec {
         nativeBuildInputs = [ final.fixDarwinDylibNames ];
       };
     in
-    (final.inputs.neovim-flake.packages.${prev.system}.neovim.override {
+    # (final.inputs.neovim-flake.packages.${prev.system}.neovim.override {
+    (final.inputs.neovim-nightly-overlay.packages.${prev.system}.neovim.override {
       tree-sitter = final.tree-sitter;
     }).overrideAttrs (o: {
       patches = builtins.filter
