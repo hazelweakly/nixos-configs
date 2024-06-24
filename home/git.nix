@@ -15,6 +15,16 @@
       push.autoSetupRemote = true;
       init.defaultBranch = "main";
       pull.twohead = "ort";
+      remote.origin = {
+        tagopt = "--tags";
+        prune = true;
+        pruneTags = true;
+      };
+      # TODO: https://stackoverflow.com/questions/16678072/fetching-all-tags-from-a-remote-with-git-pull
+    };
+    aliases = {
+      ref = "!git rev-parse --short HEAD | tr -d '\n'";
+      cp-ref = "!git rev-parse --short HEAD | tr -d '\n' | pbcopy";
     };
     delta = {
       enable = true;
