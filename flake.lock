@@ -73,11 +73,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1719602032,
-        "narHash": "sha256-lo++QFr3uTDrbPjmG0oY5TzjypSq3lIoY8lFOkuO0LI=",
+        "lastModified": 1719616633,
+        "narHash": "sha256-zwk1NNaj8q2y3HMgn3UXTvH1g4376pvXLCq2eGuBJQ0=",
         "owner": "colemickens",
         "repo": "flake-firefox-nightly",
-        "rev": "a263e9804994774da51518721171a6350513f22d",
+        "rev": "ff3908d6a79f843618f6ec29a484a7308c828066",
         "type": "github"
       },
       "original": {
@@ -380,7 +380,7 @@
         "narHash": "sha256-Qn0y/WEYcBL/SKEnpJq1e9tDpVi57YGDiJM2MgavLXM=",
         "rev": "5dc85e8b72d1ba433f69200537146275ff1c4a03",
         "type": "tarball",
-        "url": "https://git.lix.systems/api/v1/repos/lix-project/lix/archive/5dc85e8b72d1ba433f69200537146275ff1c4a03.tar.gz?rev=5dc85e8b72d1ba433f69200537146275ff1c4a03"
+        "url": "https://git.lix.systems/api/v1/repos/lix-project/lix/archive/5dc85e8b72d1ba433f69200537146275ff1c4a03.tar.gz"
       },
       "original": {
         "type": "tarball",
@@ -405,7 +405,7 @@
         "narHash": "sha256-86NBqDxAP20ET/UoKX0WvSItblNQ97czXb2q7lkMrwk=",
         "rev": "5d9d94089fb1ca96222a34bfe245ef5c5ebefd37",
         "type": "tarball",
-        "url": "https://git.lix.systems/api/v1/repos/lix-project/nixos-module/archive/5d9d94089fb1ca96222a34bfe245ef5c5ebefd37.tar.gz?rev=5d9d94089fb1ca96222a34bfe245ef5c5ebefd37"
+        "url": "https://git.lix.systems/api/v1/repos/lix-project/nixos-module/archive/5d9d94089fb1ca96222a34bfe245ef5c5ebefd37.tar.gz"
       },
       "original": {
         "type": "tarball",
