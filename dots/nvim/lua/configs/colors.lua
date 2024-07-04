@@ -1,8 +1,4 @@
 local M = {}
-local function link_hl(a, b)
-  vim.api.nvim_set_hl(0, a, { link = b })
-end
-
 M.tokyonight = {
   set_theme = function(args)
     if not pcall(require, "tokyonight") then
@@ -19,24 +15,6 @@ M.tokyonight = {
     end
     require("tokyonight").setup({
       style = vim.g.tokyonight_style,
-      on_highlights = function(hl, colors)
-        link_hl("TSDefinitionUsage", "CursorLine")
-        link_hl("TSDefinition", "CursorLine")
-        link_hl("HlSearchFloat", "CursorLine")
-        link_hl("HlSearchLensNear", "CursorLine")
-        link_hl("HlSearchLens", "CursorLine")
-        for level, color in pairs({
-          DEBUG = colors.hint,
-          ERROR = colors.error,
-          INFO = colors.info,
-          TRACE = colors.hint,
-          WARN = colors.warning,
-        }) do
-          for _, i in ipairs({ "Border", "Icon", "Title", "Body" }) do
-            vim.api.nvim_set_hl(0, "Notify" .. level .. i, { fg = color })
-          end
-        end
-      end,
     })
     vim.cmd("colorscheme tokyonight-" .. vim.g.tokyonight_style)
   end,
