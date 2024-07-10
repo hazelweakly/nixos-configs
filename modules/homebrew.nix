@@ -12,7 +12,7 @@
       "caffeine"
       "deskpad"
       "drawio"
-      "firefox-developer-edition"
+      "firefox@developer-edition"
       "google-chrome"
       "karabiner-elements"
       "rectangle"
