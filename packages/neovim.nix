@@ -6,7 +6,8 @@
     black
     cargo
     direnv
-    docker-ls
+    docker-compose-language-service
+    dockerfile-language-server-nodejs
     eza
     git
     gnumake

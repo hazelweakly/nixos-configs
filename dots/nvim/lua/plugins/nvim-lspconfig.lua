@@ -14,6 +14,7 @@ return {
       "bashls",
       "cssls",
       -- "dhall_lsp_server",
+      "docker_compose_language_service",
       "dockerls",
       "eslint",
       "gopls",
