@@ -16,7 +16,7 @@ runs:
   steps:
     - uses: DeterminateSystems/nix-installer-action@main
       with:
-        source-url: "https://install.lix.systems/lix"
+        source-url: "https://install.lix.systems/lix/lix-installer-aarch64-darwin"
         diagnostic-endpoint: ""
         backtrace: "true"
     - name: update
