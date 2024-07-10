@@ -16,7 +16,9 @@ runs:
   steps:
     - uses: DeterminateSystems/nix-installer-action@main
       with:
-        source-url: https://install.lix.systems/lix
+        source-url: "https://install.lix.systems/lix"
+        diagnostic-endpoint: ""
+        backtrace: "true"
     - name: update
       if: inputs.updateInputs != 'false'
       shell: bash
