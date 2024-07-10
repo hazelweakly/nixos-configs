@@ -7,7 +7,6 @@ return {
       show_buffer_close_icons = false,
       always_show_bufferline = false,
       diagnostics = "nvim_lsp",
-      diagnostics_update_in_insert = true,
       show_duplicate_prefix = true,
       diagnostics_indicator = function(_, _, diagnostics_dict)
         local s = " "

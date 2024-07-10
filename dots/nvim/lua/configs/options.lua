@@ -63,3 +63,5 @@ vim.opt.foldminlines = 1
 -- on OSX, gets overwritten by osc52 if on linux
 vim.o.clipboard = "unnamedplus"
 vim.o.cmdheight = 0
+
+vim.diagnostic.config({ update_in_insert = true })
