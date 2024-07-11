@@ -2,6 +2,8 @@
 , pkgs
 , neovimPackages ? with pkgs; [
     actionlint
+    basedpyright
+    bash-language-server
     bat
     black
     cargo
@@ -13,6 +15,7 @@
     gnumake
     gopls
     hadolint
+    helm-ls
     isort
     jq
     lua-language-server
@@ -20,13 +23,11 @@
     neovim-unwrapped.lua
     nil
     nixpkgs-fmt
-    nodePackages.bash-language-server
     nodePackages.prettier
     nodePackages.prettier_d_slim
     nodePackages.typescript-language-server
     nodePackages.vscode-langservers-extracted
     nodejs
-    pyright
     rust-analyzer
     shellcheck
     shellharden

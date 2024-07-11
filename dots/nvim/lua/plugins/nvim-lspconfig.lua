@@ -1,3 +1,8 @@
+-- TODO: https://github.com/wader/jq-lsp ??
+-- https://github.com/msvechla/yaml-companion.nvim/tree/kubernetes_crd_detection ??
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#textlsp
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#typos_lsp
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#typst_lsp if I rewrite my resume in typst
 return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },
@@ -11,19 +16,18 @@ return {
     -- but currently even setting them up often invokes requiring all the dependencies
     -- which might be heavyweight and adds a *lot* of startup time
     local servers = {
+      "basedpyright",
       "bashls",
       "cssls",
-      -- "dhall_lsp_server",
       "docker_compose_language_service",
       "dockerls",
       "eslint",
       "gopls",
-      -- "hls",
+      "helm_ls",
       "html",
       "jsonls",
       "lua_ls",
       "nil_ls",
-      "pyright",
       "rust_analyzer",
       "terraformls",
       "tsserver",
@@ -51,6 +55,14 @@ return {
             },
           }, lspconfig[s] or {}, s_opts))
         end
+      else
+        lspconfig[s].setup(merge({
+          capabilities = capabilities,
+          flags = {
+            allow_incremental_sync = true,
+            debounce_text_changes = 250,
+          },
+        }, lspconfig[s] or {}))
       end
     end
   end,

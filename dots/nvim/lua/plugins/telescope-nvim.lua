@@ -20,15 +20,23 @@ return {
         return require("telescope.builtin").buffers()
       end,
     },
+    {
+      "<leader>y",
+      function()
+        return require("yaml-companion").open_ui_select()
+      end,
+    },
   },
   dependencies = {
-    "nvim-telescope/telescope-fzf-native.nvim",
-    lazy = true,
-    build = "make",
-    config = function()
-      local telescope = require("telescope")
-      telescope.load_extension("fzf")
-    end,
+    {
+      "nvim-telescope/telescope-fzf-native.nvim",
+      lazy = true,
+      build = "make",
+    },
+    {
+      "argogl/yaml-companion.nvim",
+      lazy = true,
+    },
   },
   config = function()
     local telescope = require("telescope")
@@ -61,5 +69,8 @@ return {
         },
       },
     })
+
+    telescope.load_extension("fzf")
+    telescope.load_extension("yaml_schema")
   end,
 }
