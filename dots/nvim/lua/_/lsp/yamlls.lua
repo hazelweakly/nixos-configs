@@ -44,6 +44,7 @@ local cfg = require("yaml-companion").setup({
   lspconfig = {
     settings = {
       yaml = {
+        format = { enable = false },
         schemaStore = { enable = false, url = "" },
         schemas = require("configs.utils").merge(require("schemastore").yaml.schemas(), {
           -- ["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/_definitions.json"] = "*.yaml",

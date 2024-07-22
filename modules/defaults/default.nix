@@ -53,8 +53,18 @@
     system.activationScripts.postUserActivation.text = ''
       echo >&2 "setting up the dock icons"
       defaults write com.apple.dock persistent-apps -array
+      apps=(
+          "/Applications/Firefox Developer Edition.app"
+          "/Applications/Google Chrome.app"
+          "${userProfile.home}/Applications/Nix/kitty.app"
+          "/Applications/Slack.app"
+          "/Applications/Signal.app"
+          "/Applications/zoom.us.app"
+          "/System/Applications/System Settings.app"
+          "/System/Applications/Self-Service.app"
+      )
 
-      for dockItem in /Applications/"Firefox Developer Edition".app "${userProfile.home}/Applications/Nix/kitty.app" /Applications/Signal.app /Applications/"Microsoft Teams (work or school).app/" /System/Applications/"System Settings.app"; do
+      for dockItem in "''${apps[@]}" ; do
         defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>'"$dockItem"'</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
       done
       killall Dock

@@ -16,5 +16,6 @@ return {
   end,
   init = function()
     vim.g.kitty_navigator_no_mappings = 1
+    vim.g.kitty_navigator_enable_stack_layout = 1
   end,
 }
