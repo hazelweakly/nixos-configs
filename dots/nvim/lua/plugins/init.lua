@@ -3,7 +3,7 @@ return {
   "folke/lazy.nvim",
   { "MunifTanjim/nui.nvim", lazy = true, enabled = false },
   { "direnv/direnv.vim", enabled = false },
-  { "zk-org/zk-nvim", lazy = true },
+  -- { "zk-org/zk-nvim", lazy = true },
   { "simrat39/rust-tools.nvim", lazy = true },
   { "nvim-lua/plenary.nvim", lazy = true },
   { "ethanholz/nvim-lastplace", opts = {}, event = "BufReadPre" },
