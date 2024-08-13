@@ -1,7 +1,7 @@
 { config, pkgs, lib, systemProfile, ... }: lib.mkIf systemProfile.isWork {
   programs.git = {
     userName = pkgs.lib.mkForce "Hazel Weakly";
-    userEmail = pkgs.lib.mkForce "hazel@datavant.com";
+    userEmail = pkgs.lib.mkForce "hazel@work.com";
     extraConfig = {
       commit.gpgSign = true;
       tag.gpgSign = true;

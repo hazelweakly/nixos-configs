@@ -37,7 +37,7 @@
     terraform
     terraform-ls
     tree-sitter
-    watchman
+    # watchman
     yaml-language-server
     yarn
   ]

@@ -1,7 +1,7 @@
 { self, inputs, ... }@args:
 let
   userProfile = rec {
-    name = "hazelweakly";
+    name = "hazel";
     home = "/Users/${name}";
     flakeDir = home + "/src/personal/nixos-configs";
   };

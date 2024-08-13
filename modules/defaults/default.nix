@@ -61,7 +61,6 @@
           "/Applications/Signal.app"
           "/Applications/zoom.us.app"
           "/System/Applications/System Settings.app"
-          "/System/Applications/Self-Service.app"
       )
 
       for dockItem in "''${apps[@]}" ; do

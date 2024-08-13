@@ -1,7 +1,7 @@
-{ pkgs, lib, systemProfile, ... }: lib.mkIf systemProfile.isDarwin {
+{ pkgs, lib, systemProfile, userProfile, ... }: lib.mkIf systemProfile.isDarwin {
   system.activationScripts.applications.text = lib.mkForce "";
   system.activationScripts.postActivation.text = ''
-    app_folder="$HOME/Applications/Nix"
+    app_folder="${userProfile.home}/Applications/Nix"
     mkdir -p "$app_folder"
     IFS=$'\n'
     old_paths=($(mdfind kMDItemKind="Alias" -onlyin "$app_folder"))
