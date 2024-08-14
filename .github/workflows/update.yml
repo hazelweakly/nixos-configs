@@ -9,11 +9,21 @@ concurrency:
 
 jobs:
   update:
-    runs-on: macos-14
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-14
+            path: >-
+              .#darwinConfigurations.aarch64-darwin.config.system.build.toplevel
+          - os: macos-13
+            path: >-
+              .#darwinConfigurations.x86_64-darwin.config.system.build.toplevel
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/build
         with:
-          paths: .#darwinConfigurations.aarch64-darwin.config.system.build.toplevel
+          paths: ${{ matrix.path }}
           updateInputs: "true"
           CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
