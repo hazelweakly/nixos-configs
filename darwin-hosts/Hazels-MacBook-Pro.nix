@@ -1,5 +1,5 @@
 {
-  system = "x86_64-darwin";
+  system = "aarch64-darwin";
   modules = [{ networking.hostName = "Hazels-MacBook-Pro"; }];
   specialArgs = {
     userProfile = rec {
