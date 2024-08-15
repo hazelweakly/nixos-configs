@@ -4,12 +4,7 @@
     homebrew.onActivation.autoUpdate = true;
     homebrew.onActivation.cleanup = "zap";
     homebrew.global.brewfile = true;
-    # homebrew.taps = [
-    #   "homebrew/cask-drivers"
-    #   "homebrew/cask-versions"
-    # ];
     homebrew.casks = [
-      "caffeine"
       "deskpad"
       "drawio"
       "firefox@developer-edition"

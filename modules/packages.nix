@@ -47,7 +47,6 @@
       zoom-us
     ]) ++
     (with pkgs; lib.optionals stdenv.isDarwin [
-      caffeine
     ]);
   }
   (lib.optionalAttrs systemProfile.isLinux {
