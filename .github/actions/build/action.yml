@@ -20,7 +20,7 @@ runs:
   steps:
     - uses: DeterminateSystems/nix-installer-action@main
       with:
-        source-url: ${{ format("https://install.lix.systems/lix/lix-installer-{0}", inputs.arch) }}
+        source-url: "${{ format('https://install.lix.systems/lix/lix-installer-{0}', inputs.arch) }}"
         diagnostic-endpoint: ""
         backtrace: "true"
     - name: update
