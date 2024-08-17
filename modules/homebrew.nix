@@ -6,6 +6,7 @@
     homebrew.global.brewfile = true;
     homebrew.casks = [
       "deskpad"
+      "displaylink"
       "drawio"
       "firefox@developer-edition"
       "google-chrome"

@@ -11,12 +11,16 @@ inputs:
   CACHIX_AUTH_TOKEN:
     description: "CACHIX_AUTH_TOKEN"
     required: true
+  arch:
+    description: "which arch to install nix for"
+    required: false
+    default: aarch64-darwin
 runs:
   using: "composite"
   steps:
     - uses: DeterminateSystems/nix-installer-action@main
       with:
-        source-url: "https://install.lix.systems/lix/lix-installer-aarch64-darwin"
+        source-url: ${{ format("https://install.lix.systems/lix/lix-installer-{0}", inputs.arch) }}
         diagnostic-endpoint: ""
         backtrace: "true"
     - name: update
