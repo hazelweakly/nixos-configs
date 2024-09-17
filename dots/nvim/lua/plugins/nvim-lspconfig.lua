@@ -30,7 +30,7 @@ return {
       "nil_ls",
       "rust_analyzer",
       "terraformls",
-      "tsserver",
+      "ts_ls",
       "yamlls",
       -- "zk",
     }

@@ -1,16 +1,16 @@
 { pkgs, config, ... }: {
 
   xdg.configFile."task/dark".source =
-    config.lib.file.mkOutOfStoreSymlink "${pkgs.taskwarrior}/share/doc/task/rc/dark-16.theme";
+    config.lib.file.mkOutOfStoreSymlink "${pkgs.taskwarrior3}/share/doc/task/rc/dark-16.theme";
 
   xdg.configFile."task/light".source =
-    config.lib.file.mkOutOfStoreSymlink "${pkgs.taskwarrior}/share/doc/task/rc/light-16.theme";
+    config.lib.file.mkOutOfStoreSymlink "${pkgs.taskwarrior3}/share/doc/task/rc/light-16.theme";
 
   xdg.configFile."task/taskrc".text = ''
     data.location=~/.local/share/task
     hooks.location=~/.config/task/hooks
 
-    include ${pkgs.taskwarrior}/share/doc/task/rc/no-color.theme
+    include ${pkgs.taskwarrior3}/share/doc/task/rc/no-color.theme
     include ~/.config/task/$__sys_theme
 
     journal.time=on

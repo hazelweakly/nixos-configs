@@ -13,7 +13,7 @@
       ranger
       repl
       switch-theme
-      taskwarrior
+      taskwarrior3
       timewarrior
       todoist
       otel-cli

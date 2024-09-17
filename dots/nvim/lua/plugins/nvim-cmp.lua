@@ -9,7 +9,9 @@ local has_words_before = function()
 end
 
 return {
-  "hrsh7th/nvim-cmp",
+  -- "hrsh7th/nvim-cmp",
+  "yioneko/nvim-cmp",
+  branch = "perf",
   event = "InsertEnter",
   dependencies = {
     "onsails/lspkind-nvim",

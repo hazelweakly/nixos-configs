@@ -43,7 +43,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
           vim.lsp.buf.format({
             filter = function(c)
               -- filter out clients that you don't want to use
-              return c.name ~= "tsserver" and c.name ~= "jsonls" and c.name ~= "lua_ls"
+              return c.name ~= "ts_ls" and c.name ~= "jsonls" and c.name ~= "lua_ls"
             end,
             bufnr = bufnr,
             timeout = 5000,
