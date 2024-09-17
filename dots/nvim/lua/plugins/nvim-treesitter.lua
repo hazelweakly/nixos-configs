@@ -1,6 +1,7 @@
 return {
   "nvim-treesitter/nvim-treesitter",
   name = "nvim-treesitter",
+  lazy = true,
   init = function(plugin)
     require("lazy.core.loader").add_to_rtp(plugin)
     require("nvim-treesitter.query_predicates")
