@@ -11,6 +11,7 @@
       "firefox@developer-edition"
       "google-chrome"
       "karabiner-elements"
+      "obs"
       "rectangle"
       "signal"
       "steam"
