@@ -4,8 +4,8 @@
     app_folder="${userProfile.home}/Applications/Nix"
     mkdir -p "$app_folder"
     IFS=$'\n'
-    old_paths=($(mdfind kMDItemKind="Alias" -onlyin "$app_folder"))
-    new_paths=($(find -L "$systemConfig/Applications" -maxdepth 1 -name '*.app'))
+    mapfile -t old_paths < <(mdfind kMDItemKind="Alias" -onlyin "$app_folder")
+    mapfile -t new_paths < <(find -L "$systemConfig/Applications" -maxdepth 1 -name '*.app')
     unset IFS
     old_size="''${#old_paths[@]}"
     echo "removing $old_size aliased apps from $app_folder"

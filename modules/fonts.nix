@@ -7,7 +7,7 @@
       pkgs.zilla-slab
       pkgs.open-sans
       pkgs.victor-mono
-      (pkgs.nerdfonts.override { fonts = [ "VictorMono" ]; })
+      pkgs.nerd-fonts.victor-mono
     ];
   }
   (lib.optionalAttrs systemProfile.isLinux {
