@@ -1,7 +1,7 @@
 { pkgs, lib, systemProfile, ... }: lib.mkMerge [
   {
     environment.systemPackages = with pkgs; [
-      _1password
+      _1password-cli
       cachix
       coreutils
       curl
