@@ -30,7 +30,6 @@
       path = ''
         "PATH": "${lib.concatStringsSep ":" [
               (lib.makeBinPath [pkgs.nodejs_latest])
-              "/nix/var/nix/profiles/default/bin"
               "/run/current-system/sw/bin"
               "/etc/profiles/per-user/${userProfile.name}/bin"
               "/bin"

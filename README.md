@@ -12,7 +12,3 @@ Configurations for my NixOS and macOS systems (work/home laptops)
 ```
 
 NixOS is "fun". Will maybe document that later if I ever need to reinstall it again.
-
-## To check out sometime
-
-- https://github.com/taupiqueur/batch
