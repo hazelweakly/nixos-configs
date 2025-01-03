@@ -17,6 +17,8 @@
       timewarrior
       todoist
       otel-cli
+      aider-chat
+      repomix
       # xpdf
 
       pmd

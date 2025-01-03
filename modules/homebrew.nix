@@ -5,6 +5,7 @@
     homebrew.onActivation.cleanup = "zap";
     homebrew.global.brewfile = true;
     homebrew.casks = [
+      "claude"
       "deskpad"
       "displaylink"
       "drawio"

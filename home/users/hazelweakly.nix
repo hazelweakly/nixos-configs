@@ -25,6 +25,40 @@
   home.file.".hushlogin".text = "";
   xdg.configFile."tridactyl".source =
     config.lib.file.mkOutOfStoreSymlink "${userProfile.flakeDir}/dots/tridactyl";
+  home.file."Library/Application Support/Claude/claude_desktop_config.json".text =
+    let
+      path = ''
+        "PATH": "${lib.concatStringsSep ":" [
+              (lib.makeBinPath [pkgs.nodejs_latest])
+              "/nix/var/nix/profiles/default/bin"
+              "/run/current-system/sw/bin"
+              "/etc/profiles/per-user/${userProfile.name}/bin"
+              "/bin"
+              "/opt/homebrew/bin"
+              "/System/Cryptexes/App/usr/bin"
+              "/usr/local/bin"
+              "/usr/bin"
+              "/usr/sbin"
+              "/sbin"
+            ]}"
+      '';
+    in
+    ''
+      {
+        "mcpServers": {
+          "memory": {
+            "command": "npx",
+            "args": ["-y", "@modelcontextprotocol/server-memory"],
+            "env": {${path}}
+          },
+          "filesystem": {
+            "command": "npx",
+            "args": ["-y", "@modelcontextprotocol/server-filesystem", "${userProfile.home}/src/personal"],
+            "env": {${path}}
+          }
+        }
+      }
+    '';
 
   home.activation.us-keyboard = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     cp -R "${userProfile.flakeDir}/dots/US No Dead Keys.bundle" ~/Library/"Keyboard Layouts"
