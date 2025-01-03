@@ -6,7 +6,6 @@ return {
     require("lazy.core.loader").add_to_rtp(plugin)
     require("nvim-treesitter.query_predicates")
   end,
-
   dir = os.getenv("TREESITTER_PLUGIN") .. "/pack/myNeovimPackages/start/nvim-treesitter",
   event = { "BufReadPost", "BufNewFile", "VeryLazy" },
   keys = {

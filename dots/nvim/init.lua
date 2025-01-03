@@ -1,9 +1,9 @@
-vim.loader.enable()
-
+vim.loader.enable() -- speeds up init by ~2ms for some reason
 for _, m in ipairs({
+  "configs.bootstrap",
   "configs.options",
-  "configs.filetype-nvim",
   "configs.lazy",
+  "configs.filetype-nvim",
   "configs.mappings",
   "_.lsp",
   "configs.settings",

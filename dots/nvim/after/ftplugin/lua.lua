@@ -1,3 +1,6 @@
+if not pcall(require, "nvim-surround") then
+  return nil
+end
 require("nvim-surround").buffer_setup({
   surrounds = {
     ["p"] = {
