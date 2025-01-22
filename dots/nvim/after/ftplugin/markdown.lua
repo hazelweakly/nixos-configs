@@ -1,3 +1,6 @@
+-- Prevents tpope's markdown code from overwriting tabstop
+vim.g.markdown_recommended_style = 0
+
 ---@diagnostic disable: missing-fields, param-type-mismatch
 -- Surround markdown link title, using clipboard contents
 require("nvim-surround").buffer_setup({
