@@ -21,7 +21,6 @@
     system.stateVersion = "23.05";
   })
   (lib.optionalAttrs systemProfile.isDarwin {
-    services.nix-daemon.enable = true;
     system.stateVersion = 4;
   })
 ]
