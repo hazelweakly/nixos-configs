@@ -1,3 +1,4 @@
+-- Future: https://github.com/kylechui/nvim-surround/discussions/53#discussioncomment-10070567
 return {
   "kylechui/nvim-surround",
   keys = {
