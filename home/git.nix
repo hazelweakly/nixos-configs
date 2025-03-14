@@ -8,13 +8,25 @@
     ignores = [ ".DS_Store" ];
     extraConfig = {
       fetch.prune = true;
+      fetch.pruneTags = true;
+      fetch.all = true;
       rerere.enabled = true;
       rerere.autoupdate = true;
       color.ui = true;
       diff.colorMoved = "default";
+      diff.algorithm = "histogram";
       push.autoSetupRemote = true;
+      # Every push, also push all tags locally that aren't on the server
+      # push.followTags = true;
       init.defaultBranch = "main";
+      rebase.autoSquash = true;
+      rebase.autoStash = true;
+      rebase.updateRefs = true;
       pull.twohead = "ort";
+      pull.rebase = true;
+      branch.sort = "-committerdate";
+      merge.conflictstyle = "zdiff3";
+      tag.sort = "version:refname";
       remote.origin = {
         tagopt = "--tags";
         prune = true;
@@ -31,10 +43,12 @@
       options = {
         line-numbers = true;
         side-by-side = true;
+        navigate = true;
         features = "side-by-side line-numbers decorations";
         commit-decoration-style = "box";
         file-decoration-style = "box";
         hunk-header-decoration-style = "box";
+        hyperlinks = true;
       };
     };
   };
