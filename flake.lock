@@ -55,11 +55,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1741951016,
-        "narHash": "sha256-7pgU+ULa79CzfHltpZallvfrw+0XxjJNsCwZHWbwERw=",
+        "lastModified": 1742001187,
+        "narHash": "sha256-OB0Tf03A/bxDqWkiw5/RN5i/rqZWFSbGbocOgUsIJa0=",
         "owner": "colemickens",
         "repo": "flake-firefox-nightly",
-        "rev": "8b690f3752a7c1433cc5f308d70c9600ee471085",
+        "rev": "673f86b6c79c3687fdf8295bde5e1d45817292d3",
         "type": "github"
       },
       "original": {
@@ -354,11 +354,11 @@
     "lix": {
       "flake": false,
       "locked": {
-        "lastModified": 1741957871,
-        "narHash": "sha256-BSim3favVai9y7eMaFWNNDbIJ0mdRp5TMcJvHWdjC1s=",
-        "rev": "af15a446ea88a2244e3c5a50eab776c33ab3bd80",
+        "lastModified": 1741976543,
+        "narHash": "sha256-hSiO4cq2ub0Hs1bH+Qnne7pF8596wKZxmbWH2Kqe9UE=",
+        "rev": "85d614538fd1e6fa8a230d5f1c4d6e5587e9e3ef",
         "type": "tarball",
-        "url": "https://git.lix.systems/api/v1/repos/lix-project/lix/archive/af15a446ea88a2244e3c5a50eab776c33ab3bd80.tar.gz?rev=af15a446ea88a2244e3c5a50eab776c33ab3bd80"
+        "url": "https://git.lix.systems/api/v1/repos/lix-project/lix/archive/85d614538fd1e6fa8a230d5f1c4d6e5587e9e3ef.tar.gz?rev=85d614538fd1e6fa8a230d5f1c4d6e5587e9e3ef"
       },
       "original": {
         "type": "tarball",
@@ -423,11 +423,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1741911010,
-        "narHash": "sha256-CIKnxI//A8J3N0cUXQ8HMqwpo/1igU89H8eIOrlrNts=",
+        "lastModified": 1741997831,
+        "narHash": "sha256-tXKyAFC5dNEPrSFxjcApyqQfZAZJoz6oyYnKjd0aYQU=",
         "owner": "nix-community",
         "repo": "neovim-nightly-overlay",
-        "rev": "6b175fb7c9d12ff039dc3e7f944256522658581d",
+        "rev": "fe31af14006b75ecaceb6f38e80dc62577a1ad11",
         "type": "github"
       },
       "original": {
@@ -439,11 +439,11 @@
     "neovim-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1741907753,
-        "narHash": "sha256-T8iwRFgFGQyENPRm/RIIpjDxP+GDIwTlYuFcY1LexQ8=",
+        "lastModified": 1741954637,
+        "narHash": "sha256-kdLre/oVxg9fJa88qbNEhIVpY7jz2xNpXnBXsFNSia8=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "4f6196e91d23f17e6b25ea7356d5bbc5b87d95b6",
+        "rev": "f1422a313fa57c8c7045163aa209a9fd9166fe5a",
         "type": "github"
       },
       "original": {
