@@ -34,4 +34,10 @@ return {
   { "folke/neodev.nvim", opts = { lspconfig = false }, lazy = true },
   { "b0o/schemastore.nvim", lazy = true },
   "wsdjeg/vim-fetch",
+  {
+    "pmizio/typescript-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    lazy = true,
+    opts = {},
+  },
 }

@@ -25,7 +25,7 @@
     nixpkgs-fmt
     nodePackages.prettier
     nodePackages.prettier_d_slim
-    nodePackages.typescript-language-server
+    # nodePackages.typescript-language-server
     nodePackages.vscode-langservers-extracted
     nodejs
     rust-analyzer
@@ -56,11 +56,15 @@ let
     stdenv.cc
   ] ++ neovimPackages);
 
+  # This gives us a /parser directory with all the treesitter parsers in it, so that when it's added to the RTP, neovim gets all the parsers.
+  # See nvim/lua/plugins/nvim-treesitter.lua for how this (and the TREESITTER_PLUGIN variable) gets used.
+  aggregatedParsers = pkgs.symlinkJoin { name = "parsers"; paths = builtins.map neovimUtils.grammarToPlugin vimPlugins.nvim-treesitter.allGrammars; };
+
   # doing it the non obvious way like this automatically collects all the grammar dependencies for us.
   packDirArgs.myNeovimPackages = { start = [ vimPlugins.nvim-treesitter.withAllGrammars ]; };
-  treeSitterPlugin = vimUtils.packDir packDirArgs;
+  treeSitterPlugin = neovimUtils.packDir packDirArgs;
 
-  args.wrapperArgs = config.wrapperArgs ++ [ "--prefix" "PATH" ":" "${lib.makeBinPath path}" ] ++ [ "--set" "TREESITTER_PLUGIN" treeSitterPlugin ];
+  args.wrapperArgs = config.wrapperArgs ++ [ "--prefix" "PATH" ":" "${lib.makeBinPath path}" ] ++ [ "--set" "TREESITTER_PLUGIN" treeSitterPlugin ] ++ [ "--set" "TREESITTER_PARSERS" aggregatedParsers ];
   dotfiles = ../dots/nvim;
 
   config = neovimUtils.makeNeovimConfig {

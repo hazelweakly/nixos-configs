@@ -3,6 +3,7 @@ return {
   name = "nvim-treesitter",
   lazy = true,
   init = function(plugin)
+    vim.opt.runtimepath:prepend(os.getenv("TREESITTER_PARSERS"))
     require("lazy.core.loader").add_to_rtp(plugin)
     require("nvim-treesitter.query_predicates")
   end,

@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, config, lib, ... }:
 let dir = config.home.homeDirectory + "/src/personal/nixos-configs";
 in
 {
@@ -52,15 +52,21 @@ in
     defaultKeymap = "emacs";
     history.path = "${config.xdg.configHome}/zsh/.zsh_history";
     completionInit = "";
-    initExtraBeforeCompInit = ''
-      XDG_DATA_HOME=${config.xdg.dataHome}
-      XDG_CONFIG_HOME=${config.xdg.configHome}
-      . $XDG_CONFIG_HOME/zsh/config/theme.zsh
-    '';
-    initExtra = ''
-      __fzf_dir=${pkgs.fzf}
-      . $XDG_CONFIG_HOME/zsh/config/.zsh-init
-      unset __fzf_dir
-    '';
+    initContent = lib.mkMerge [
+      # before compinit
+      (lib.mkOrder 550 ''
+        XDG_DATA_HOME=${config.xdg.dataHome}
+        XDG_CONFIG_HOME=${config.xdg.configHome}
+        . $XDG_CONFIG_HOME/zsh/config/theme.zsh
+      '')
+      # General config
+      (
+        ''
+          __fzf_dir=${pkgs.fzf}
+          . $XDG_CONFIG_HOME/zsh/config/.zsh-init
+          unset __fzf_dir
+        ''
+      )
+    ];
   };
 }

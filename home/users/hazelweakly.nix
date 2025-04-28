@@ -76,6 +76,7 @@
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
   programs.direnv.enableZshIntegration = true;
+  programs.direnv.silent = true;
   programs.direnv.stdlib = ''
     : ''${XDG_CACHE_HOME:=$HOME/.cache}
     declare -A direnv_layout_dirs

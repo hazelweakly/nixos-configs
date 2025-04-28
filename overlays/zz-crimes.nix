@@ -13,5 +13,5 @@
 #
 # rules for thee, not for mee, etc etc #womenInMaleDominatedFields
 final: prev: {
-  nix = prev.lixVersions.stable;
+  nix = prev.lixPackageSets.stable.lix;
 }

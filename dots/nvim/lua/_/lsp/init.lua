@@ -67,10 +67,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
       buf_map(bufnr, "n", "ga", vim.lsp.buf.code_action)
     end
 
-    if client.supports_method("textDocument/declaration") then
+    if client:supports_method("textDocument/declaration") then
       buf_map(bufnr, "n", "gD", vim.lsp.buf.declaration)
     end
-    if client.supports_method("textDocument/definition") then
+    if client:supports_method("textDocument/definition") then
       buf_map(bufnr, "n", "gd", function()
         return require("telescope.builtin").lsp_definitions()
       end)
@@ -78,13 +78,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
     if client.server_capabilities.hoverProvider then
       buf_map(bufnr, "n", "K", vim.lsp.buf.hover)
     end
-    if client.supports_method("textDocument/signatureHelp") then
+    if client:supports_method("textDocument/signatureHelp") then
       buf_map(bufnr, "n", "gk", vim.lsp.buf.signature_help)
     end
-    if client.supports_method("textDocument/rename") then
+    if client:supports_method("textDocument/rename") then
       buf_map(bufnr, "n", "gr", vim.lsp.buf.rename)
     end
-    if client.supports_method("textDocument/references") then
+    if client:supports_method("textDocument/references") then
       buf_map(bufnr, "n", "gR", function()
         return require("telescope.builtin").lsp_references()
       end)

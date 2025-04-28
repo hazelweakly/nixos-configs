@@ -10,7 +10,7 @@ return {
     local lspconfig = require("lspconfig")
     local merge = require("configs.utils").merge
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
-    require("null-ls")
+    pcall(require, "null-ls")
 
     -- TODO: at some point I want to make it so I can truly lazy load these
     -- but currently even setting them up often invokes requiring all the dependencies
@@ -30,7 +30,7 @@ return {
       "nil_ls",
       "rust_analyzer",
       "terraformls",
-      "ts_ls",
+      "ts_ls", -- Actually is https://github.com/pmizio/typescript-tools.nvim
       "yamlls",
       -- "zk",
     }
