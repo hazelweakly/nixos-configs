@@ -5,11 +5,11 @@
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#typst_lsp if I rewrite my resume in typst
 return {
   "neovim/nvim-lspconfig",
+  -- lazy = true,
   event = { "BufReadPre", "BufNewFile" },
   config = function()
     local lspconfig = require("lspconfig")
     local merge = require("configs.utils").merge
-    local capabilities = require("cmp_nvim_lsp").default_capabilities()
     pcall(require, "null-ls")
 
     -- TODO: at some point I want to make it so I can truly lazy load these
@@ -28,41 +28,21 @@ return {
       "jsonls",
       "lua_ls",
       "nil_ls",
-      "rust_analyzer",
       "terraformls",
-      "ts_ls", -- Actually is https://github.com/pmizio/typescript-tools.nvim
       "yamlls",
-      -- "zk",
     }
 
     for _, s in pairs(servers) do
       local has, s_opts = pcall(require, "_.lsp." .. s)
       if has then
         if type(s_opts) == "function" then
-          s_opts(merge({
-            capabilities = capabilities,
-            flags = {
-              allow_incremental_sync = true,
-              debounce_text_changes = 250,
-            },
-          }, lspconfig[s] or {}))
+          s_opts(lspconfig[s] or {})
         else
-          lspconfig[s].setup(merge({
-            capabilities = capabilities,
-            flags = {
-              allow_incremental_sync = true,
-              debounce_text_changes = 250,
-            },
-          }, lspconfig[s] or {}, s_opts))
+          vim.lsp.config(s, s_opts)
+          vim.lsp.enable(s)
         end
       else
-        lspconfig[s].setup(merge({
-          capabilities = capabilities,
-          flags = {
-            allow_incremental_sync = true,
-            debounce_text_changes = 250,
-          },
-        }, lspconfig[s] or {}))
+        vim.lsp.enable(s)
       end
     end
   end,

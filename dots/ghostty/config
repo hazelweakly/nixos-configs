@@ -1,0 +1,40 @@
+# Can't switch to ghostty until https://github.com/ghostty-org/ghostty/discussions/2353 is resolved
+
+font-family = Victor Mono
+font-family-bold = Victor Mono Bold
+font-family-italic = Victor Mono Italic
+font-family-bold-italic = Victor Mono Bold Italic
+font-size = 16.0
+
+font-codepoint-map = U+E5FA-U+E62B,U+E700-U+E7C5,U+F000-U+F2E0,U+E200-U+E2A9,U+F500-U+FD46,U+E300-U+E3EB,U+F400-U+F4A8,U+2665,U+26A1,U+F27C,U+E0A3,U+E0B4-U+E0C8,U+E0CA,U+E0CC-U+E0D2,U+E0D4,U+23FB-U+23FE,U+2B58,U+F300-U+F313,U+E000-U+E00D=VictorMono Nerd Font
+theme = light:tokyonight-day,dark:tokyonight_night
+
+cursor-style-blink = false
+working-directory = inherit
+
+auto-update = off
+copy-on-select = false
+
+macos-option-as-alt = true
+
+keybind = global:cmd+grave_accent=toggle_quick_terminal
+keybind = ctrl+shift+page_up=move_tab:-1
+keybind = ctrl+shift+page_down=move_tab:+1
+keybind = shift+page_up=scroll_page_up
+keybind = shift+page_down=scroll_page_down
+keybind = ctrl+shift+t=new_tab
+
+keybind = ctrl+shift+enter=new_split:auto
+keybind = ctrl+shift+alt+enter>j=new_split:down
+keybind = ctrl+shift+alt+enter>k=new_split:up
+keybind = ctrl+shift+alt+enter>h=new_split:left
+keybind = ctrl+shift+alt+enter>l=new_split:right
+
+# Eventually this isn't the right approach and needs to be replaced with a vim
+# + ghostty integration setup
+keybind = unconsumed:alt+j=goto_split:down
+keybind = unconsumed:alt+k=goto_split:up
+keybind = unconsumed:alt+h=goto_split:left
+keybind = unconsumed:alt+l=goto_split:right
+
+keybind = ctrl+shift+z=toggle_split_zoom

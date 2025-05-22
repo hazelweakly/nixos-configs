@@ -33,10 +33,10 @@ return {
       lazy = true,
       build = "make",
     },
-    {
-      "argogl/yaml-companion.nvim",
-      lazy = true,
-    },
+    -- {
+    --   "argogl/yaml-companion.nvim",
+    --   lazy = true,
+    -- },
   },
   config = function()
     local telescope = require("telescope")
@@ -71,6 +71,6 @@ return {
     })
 
     telescope.load_extension("fzf")
-    telescope.load_extension("yaml_schema")
+    -- telescope.load_extension("yaml_schema")
   end,
 }

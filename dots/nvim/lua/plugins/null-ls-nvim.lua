@@ -4,11 +4,6 @@
 -- - https://github.com/lewis6991/hover.nvim
 return {
   "nvimtools/none-ls.nvim",
-  -- https://github.com/nvimtools/none-ls.nvim/issues/276
-  build = {
-    [[perl -pi -e "s/$/ or lsp.protocol._request_name_to_server_capability/ if $. == 78" ./lua/null-ls/client.lua ]],
-    [[git update-index --assume-unchanged ./lua/null-ls/client.lua ]],
-  },
   lazy = true,
   opts = function()
     -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md

@@ -10,6 +10,7 @@
       "displaylink"
       "drawio"
       "firefox@developer-edition"
+      "ghostty"
       "google-chrome"
       "karabiner-elements"
       "obs"

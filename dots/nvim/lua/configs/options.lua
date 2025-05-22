@@ -65,3 +65,4 @@ vim.o.clipboard = "unnamedplus"
 vim.o.cmdheight = 0
 
 vim.diagnostic.config({ update_in_insert = true })
+vim.o.winborder = "rounded"
