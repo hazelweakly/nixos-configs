@@ -50,9 +50,9 @@
       wvous-tl-modifier = 0;
     };
 
-    system.activationScripts.postUserActivation.text = ''
-      echo >&2 "setting up the dock icons"
-      defaults write com.apple.dock persistent-apps -array
+    system.activationScripts.postActivation.text = ''
+      sudo -u "${userProfile.name}" echo >&2 "setting up the dock icons"
+      sudo -u "${userProfile.name}" defaults write com.apple.dock persistent-apps -array
       apps=(
           "/Applications/Firefox Developer Edition.app"
           "/Applications/Google Chrome.app"
@@ -64,9 +64,9 @@
       )
 
       for dockItem in "''${apps[@]}" ; do
-        defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>'"$dockItem"'</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
+        sudo -u "${userProfile.name}" defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>'"$dockItem"'</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
       done
-      killall Dock
+      sudo -u "${userProfile.name}" killall Dock
     '';
   })
 ] // lib.optionalAttrs systemProfile.isDarwin {

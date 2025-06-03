@@ -31,4 +31,7 @@
       LC_TIME = "en_US.UTF-8";
     };
   })
+  (lib.optionalAttrs systemProfile.isDarwin {
+    system.primaryUser = "${userProfile.name}";
+  })
 ]
