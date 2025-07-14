@@ -21,7 +21,7 @@ return {
       "cssls",
       "docker_compose_language_service",
       "dockerls",
-      "eslint",
+      -- "eslint", (figure out later why missing config breaks this horribly)
       "gopls",
       "helm_ls",
       "html",
