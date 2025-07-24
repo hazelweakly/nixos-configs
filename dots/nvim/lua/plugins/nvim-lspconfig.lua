@@ -6,12 +6,10 @@
 return {
   "neovim/nvim-lspconfig",
   -- lazy = true,
-  event = { "BufReadPre", "BufNewFile" },
+  dependencies = { "nvimtools/none-ls.nvim" },
+  event = { "LazyFile", "VeryLazy" },
+  -- event = "LazyFile", -- breaks :e file from empty buffer
   config = function()
-    local lspconfig = require("lspconfig")
-    local merge = require("configs.utils").merge
-    pcall(require, "null-ls")
-
     -- TODO: at some point I want to make it so I can truly lazy load these
     -- but currently even setting them up often invokes requiring all the dependencies
     -- which might be heavyweight and adds a *lot* of startup time
@@ -35,12 +33,8 @@ return {
     for _, s in pairs(servers) do
       local has, s_opts = pcall(require, "_.lsp." .. s)
       if has then
-        if type(s_opts) == "function" then
-          s_opts(lspconfig[s] or {})
-        else
-          vim.lsp.config(s, s_opts)
-          vim.lsp.enable(s)
-        end
+        vim.lsp.config(s, s_opts)
+        vim.lsp.enable(s)
       else
         vim.lsp.enable(s)
       end

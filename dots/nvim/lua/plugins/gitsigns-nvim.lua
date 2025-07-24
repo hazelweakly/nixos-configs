@@ -1,6 +1,6 @@
 return {
   "lewis6991/gitsigns.nvim",
-  event = "User UltraLazy",
+  event = "LazyFile",
   keys = { "gn", "gp" },
   opts = {
     signs = {

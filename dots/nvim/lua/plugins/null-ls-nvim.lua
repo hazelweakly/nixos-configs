@@ -2,6 +2,7 @@
 -- - https://github.com/mfussenegger/nvim-lint
 -- - https://github.com/stevearc/conform.nvim
 -- - https://github.com/lewis6991/hover.nvim
+-- Also I should technically only enable this on certain filetypes, somehow
 return {
   "nvimtools/none-ls.nvim",
   lazy = true,

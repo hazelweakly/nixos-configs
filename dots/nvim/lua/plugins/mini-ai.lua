@@ -7,6 +7,7 @@ return {
       lazy = true,
       init = function()
         -- no need to load the plugin, if we only need its queries for mini.ai
+        -- (if this changes, see https://github.com/LazyVim/LazyVim/blob/25abbf546d564dc484cf903804661ba12de45507/lua/lazyvim/plugins/treesitter.lua#L101)
         local plugin = require("lazy.core.config").spec.plugins["nvim-treesitter"]
         local opts = require("lazy.core.plugin").values(plugin, "opts", false)
         local enabled = false

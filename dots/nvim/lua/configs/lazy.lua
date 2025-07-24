@@ -25,5 +25,13 @@ require("lazy").setup({ import = "plugins" }, {
       },
     },
   },
+  -- This is a bit slower but useful for debugging / profiling performance
+  -- profiling = {
+  --   -- Enables extra stats on the debug tab related to the loader cache.
+  --   -- Additionally gathers stats about all package.loaders
+  --   loader = false,
+  --   -- Track each new require in the Lazy profiling tab
+  --   require = false,
+  -- },
   install = { colorscheme = { "tokyonight", "habamax" } },
 })

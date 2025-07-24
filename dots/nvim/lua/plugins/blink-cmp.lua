@@ -15,7 +15,7 @@ return {
     -- See :h blink-cmp-config-keymap for defining your own keymap
     -- (Default) Only show the documentation popup when manually triggered
     completion = {
-      ghost_text = { enabled = true },
+      -- ghost_text = { enabled = true },
       documentation = { auto_show = true },
       list = { selection = { auto_insert = false } },
       menu = { draw = { treesitter = { "lsp" } } },

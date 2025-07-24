@@ -1,14 +1,14 @@
 return {
   "nvim-treesitter/nvim-treesitter",
   name = "nvim-treesitter",
-  lazy = true,
+  lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
   init = function(plugin)
     vim.opt.runtimepath:prepend(os.getenv("TREESITTER_PARSERS"))
     require("lazy.core.loader").add_to_rtp(plugin)
     require("nvim-treesitter.query_predicates")
   end,
   dir = os.getenv("TREESITTER_PLUGIN") .. "/pack/myNeovimPackages/start/nvim-treesitter",
-  event = { "BufReadPost", "BufNewFile", "VeryLazy" },
+  event = "LazyFile",
   keys = {
     { "<CR>", desc = "Init selection" },
     { "<TAB>", desc = "Increment selection", mode = "x" },
@@ -16,6 +16,7 @@ return {
   },
   opts = {
     highlight = { enable = true },
+    indent = { enable = true },
     auto_install = false,
     -- ensure_installed = {},
     ignore_install = { "all" },

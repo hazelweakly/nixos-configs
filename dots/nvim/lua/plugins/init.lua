@@ -1,4 +1,17 @@
 -- TODO: https://github.com/stevearc/oil.nvim
+
+local M = {}
+M.lazy_file_events = { "BufReadPost", "BufNewFile", "BufWritePre" }
+
+function M.lazy_file()
+  -- Add support for the LazyFile event
+  local Event = require("lazy.core.handler.event")
+
+  Event.mappings.LazyFile = { id = "LazyFile", event = M.lazy_file_events }
+  Event.mappings["User LazyFile"] = Event.mappings.LazyFile
+end
+M.lazy_file()
+
 return {
   {
     "folke/lazy.nvim",
@@ -19,8 +32,8 @@ return {
   { "direnv/direnv.vim", enabled = false },
   { "mrcjkb/rustaceanvim", version = "^6", lazy = true },
   { "nvim-lua/plenary.nvim", lazy = true },
-  { "ethanholz/nvim-lastplace", opts = {}, event = "BufReadPre" },
-  { "notjedi/nvim-rooter.lua", config = true, event = "BufReadPost" },
+  { "ethanholz/nvim-lastplace", opts = {}, event = "LazyFile" },
+  { "notjedi/nvim-rooter.lua", config = true, event = "LazyFile" },
   { "nvim-tree/nvim-web-devicons", lazy = true },
   { "tyru/open-browser.vim", keys = { { "gx", "<Plug>(openbrowser-smart-search)" } } },
   { "windwp/nvim-autopairs", event = "InsertEnter", opts = { check_ts = true } },
