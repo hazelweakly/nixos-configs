@@ -3,7 +3,9 @@
     enable = true;
     userName = lib.mkDefault "Hazel Weakly";
     userEmail = lib.mkDefault "hazel@theweaklys.com";
-    package = pkgs.gitFull;
+    # Forcing a rebuild here because the package got corrupted somehow.
+    # I'll wait for a few updates and then remove this.
+    package = pkgs.gitFull.overrideAttrs (_: { rebuildMe = true; });
     lfs.enable = true;
     ignores = [ ".DS_Store" ];
     extraConfig = {

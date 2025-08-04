@@ -1,0 +1,3 @@
+#!/usr/bin/env zsh
+
+nix-shell -p androidenv.androidPkgs.platform-tools scrcpy --command "scrcpy --video-codec=h265 --max-size=1920 --max-fps=60 --no-audio --keyboard=uhid"

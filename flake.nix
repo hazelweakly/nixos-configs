@@ -24,15 +24,6 @@
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     neovim-nightly-overlay.inputs.nixpkgs.follows = "nixpkgs";
 
-    # neovim-flake.url = "github:neovim/neovim?dir=contrib";
-    # neovim-flake.inputs.nixpkgs.follows = "nixpkgs";
-    # neovim-flake.inputs.flake-utils.follows = "flake-utils";
-
-    nil.url = "github:oxalica/nil";
-    nil.inputs.nixpkgs.follows = "nixpkgs";
-    nil.inputs.flake-utils.follows = "flake-utils";
-    nil.inputs.rust-overlay.follows = "rust-overlay";
-
     firefox-nightly.url = "github:colemickens/flake-firefox-nightly";
     firefox-nightly.inputs.nixpkgs.follows = "nixpkgs";
 
