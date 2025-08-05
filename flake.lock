@@ -12,11 +12,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1754322362,
-        "narHash": "sha256-+JVuBDHIsPoc4OCOhisJeP0iQigO0WiZmwCQ2NPul1s=",
+        "lastModified": 1754337839,
+        "narHash": "sha256-fEc2/4YsJwtnLU7HCFMRckb0u9UNnDZmwGhXT5U5NTw=",
         "owner": "ryantm",
         "repo": "agenix",
-        "rev": "890be82dac39377c1f86b7c96aa655f42628b60f",
+        "rev": "856df6f6922845abd4fd958ce21febc07ca2fa45",
         "type": "github"
       },
       "original": {
@@ -55,11 +55,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1754311269,
-        "narHash": "sha256-y84Q8qS5acSxl3QsLLGs4DboPhM/AYUMiTsJJZwmQxY=",
+        "lastModified": 1754357400,
+        "narHash": "sha256-6WBVZT3bBNn7PoxNMjX/NwTR4nogkQPBMSEyyxfULuM=",
         "owner": "colemickens",
         "repo": "flake-firefox-nightly",
-        "rev": "5a6856f353975206aec02373c18e8cea3fa6bb75",
+        "rev": "11a79a2c21cf8a4e050556972f10345b1f33eaae",
         "type": "github"
       },
       "original": {
