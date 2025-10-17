@@ -9,7 +9,7 @@
     cargo
     direnv
     docker-compose-language-service
-    dockerfile-language-server-nodejs
+    dockerfile-language-server
     eza
     git
     gnumake
