@@ -2,8 +2,7 @@
   {
     fonts.packages = [
       pkgs.noto-fonts
-      pkgs.noto-fonts-emoji
-      pkgs.noto-fonts-extra
+      pkgs.noto-fonts-color-emoji
       pkgs.zilla-slab
       pkgs.open-sans
       pkgs.victor-mono
