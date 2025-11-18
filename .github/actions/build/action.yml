@@ -18,7 +18,9 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: DeterminateSystems/nix-installer-action@main
+    # https://github.com/DeterminateSystems/nix-installer-action/releases/tag/v21
+    # breaks lix
+    - uses: DeterminateSystems/nix-installer-action@v20
       with:
         source-url: "${{ format('https://install.lix.systems/lix/lix-installer-{0}', inputs.arch) }}"
         diagnostic-endpoint: ""
