@@ -1,6 +1,9 @@
 name: "Build Configs"
 description: "Builds my configs"
 inputs:
+  GITHUB_TOKEN:
+    description: "Github token"
+    required: true
   paths:
     description: "The paths to build"
     required: true
@@ -25,7 +28,7 @@ runs:
         source-url: "${{ format('https://install.lix.systems/lix/lix-installer-{0}', inputs.arch) }}"
         diagnostic-endpoint: ""
         backtrace: "true"
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ inputs.GITHUB_TOKEN }}
     - name: update
       if: inputs.updateInputs != 'false'
       shell: bash
