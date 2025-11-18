@@ -23,6 +23,7 @@ runs:
         source-url: "${{ format('https://install.lix.systems/lix/lix-installer-{0}', inputs.arch) }}"
         diagnostic-endpoint: ""
         backtrace: "true"
+        github-token: ${{ secrets.GITHUB_TOKEN }}
     - name: update
       if: inputs.updateInputs != 'false'
       shell: bash
