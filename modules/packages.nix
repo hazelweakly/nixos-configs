@@ -1,7 +1,7 @@
 { pkgs, lib, systemProfile, ... }: lib.mkMerge [
   {
     environment.systemPackages = with pkgs; [
-      _1password-cli
+      # _1password-cli
       cachix
       coreutils
       curl
@@ -17,7 +17,7 @@
       timewarrior
       todoist
       otel-cli
-      aider-chat
+      # aider-chat
       repomix
       # xpdf
 
