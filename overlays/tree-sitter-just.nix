@@ -10,19 +10,19 @@ let
 
 in
 {
-  tree-sitter = prev.tree-sitter // {
-    builtGrammars = prev.tree-sitter.builtGrammars;
-    allGrammars = prev.tree-sitter.allGrammars;
-  };
-  vimPlugins = prev.vimPlugins // {
-    nvim-treesitter = nvim-ts // rec {
-      builtGrammars = nvim-ts.builtGrammars;
-      withPlugins = f: nvim-ts.overrideAttrs (_: {
-        passthru.dependencies = map prev.neovimUtils.grammarToPlugin allGrammars;
-      });
-      withAllGrammars = withPlugins (_: allGrammars);
-      allGrammars = nvim-ts.allGrammars;
-      passthru.dependencies = map prev.neovimUtils.grammarToPlugin allGrammars;
-    };
-  };
+  # tree-sitter = prev.tree-sitter // {
+  #   builtGrammars = prev.tree-sitter.builtGrammars;
+  #   allGrammars = prev.tree-sitter.allGrammars;
+  # };
+  # vimPlugins = prev.vimPlugins // {
+  #   nvim-treesitter = nvim-ts // rec {
+  #     builtGrammars = nvim-ts.builtGrammars;
+  #     withPlugins = f: nvim-ts.overrideAttrs (_: {
+  #       passthru.dependencies = map prev.neovimUtils.grammarToPlugin allGrammars;
+  #     });
+  #     withAllGrammars = withPlugins (_: allGrammars);
+  #     allGrammars = nvim-ts.allGrammars;
+  #     passthru.dependencies = map prev.neovimUtils.grammarToPlugin allGrammars;
+  #   };
+  # };
 }
