@@ -6,7 +6,7 @@
       coreutils
       curl
       file
-      inputs.self.packages.${pkgs.system}.bitwarden
+      inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.bitwarden
       jira-cli-go
       kitty
       openssh
@@ -39,7 +39,7 @@
     (with pkgs; lib.optionals stdenv.isLinux [
       firefox-beta-bin
       htop
-      inputs.self.packages.${pkgs.system}.say
+      inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.say
       mupdf
       signal-desktop-beta
       taskopen
