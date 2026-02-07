@@ -55,11 +55,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1770342694,
-        "narHash": "sha256-vAzbxc2HUBJ5TEVaqZo3KkJmbIJRoKUxV9jYPAhNUrk=",
+        "lastModified": 1770428914,
+        "narHash": "sha256-80x9/U/ZmBsnqUEXUQ0e/uBThK9GYogwjIPpH4XblCY=",
         "owner": "colemickens",
         "repo": "flake-firefox-nightly",
-        "rev": "373b85e16fc6073c1f45763627d75a428f4dcb05",
+        "rev": "e197d4fef0b400787d10a530be88f3c70763d0ff",
         "type": "github"
       },
       "original": {
@@ -199,11 +199,11 @@
     "kitty": {
       "flake": false,
       "locked": {
-        "lastModified": 1770312718,
-        "narHash": "sha256-L40GBn3l8kMcPfqVjKS4cA+YGZToh2isu9frAJseVfI=",
+        "lastModified": 1770365057,
+        "narHash": "sha256-4pxUTcZ2k/96lL5wQ8pTkfQc2TNYwIc483bFsN7NHBo=",
         "owner": "kovidgoyal",
         "repo": "kitty",
-        "rev": "0afe77ebc933662d1ddab6023599b68ec6c9585b",
+        "rev": "a7b8e880c91613907c655550669dbad4c04153ac",
         "type": "github"
       },
       "original": {
@@ -234,11 +234,11 @@
     "lix": {
       "flake": false,
       "locked": {
-        "lastModified": 1770244550,
-        "narHash": "sha256-xy4VqEXytC5V+/juIcjGgsmBWOyxsiYycuO5FjlYPvw=",
-        "rev": "ba4f4f917a5989205443b581917e046b5da2ba12",
+        "lastModified": 1770389753,
+        "narHash": "sha256-J/ovUWKZ5ynr/i0syV8BbxLzs7umq9wI3r0ojp6fvSU=",
+        "rev": "684aba046a2e7f7af28c39c523c20210afd399e7",
         "type": "tarball",
-        "url": "https://git.lix.systems/api/v1/repos/lix-project/lix/archive/ba4f4f917a5989205443b581917e046b5da2ba12.tar.gz?rev=ba4f4f917a5989205443b581917e046b5da2ba12"
+        "url": "https://git.lix.systems/api/v1/repos/lix-project/lix/archive/684aba046a2e7f7af28c39c523c20210afd399e7.tar.gz?rev=684aba046a2e7f7af28c39c523c20210afd399e7"
       },
       "original": {
         "type": "tarball",
@@ -299,11 +299,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1770336287,
-        "narHash": "sha256-czvrg8uyf2VWRmbobsthTAIJCg1GH4mEekyW01AvHco=",
+        "lastModified": 1770422685,
+        "narHash": "sha256-iiYLm2JrIPtahwOEv+0/dFnkKziiJQectkGvdJxFnT0=",
         "owner": "nix-community",
         "repo": "neovim-nightly-overlay",
-        "rev": "1cd999cdf20536ac6a6d1aa17ba0242eefd2312b",
+        "rev": "f64796929ddee4ba1159ea5d1ab6b1bfc1d523e9",
         "type": "github"
       },
       "original": {
@@ -315,11 +315,11 @@
     "neovim-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1770334851,
-        "narHash": "sha256-FvT3T0l8eNr1Hv+D1Sj1jM/2vLkonLxpadTk6gdYHAo=",
+        "lastModified": 1770402523,
+        "narHash": "sha256-BuljN+J1f1vVRUV1FqOwhHUdp+V2VX150JsSORiN9gA=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "db133879b2a115cdf982b2899f154f1851d59a60",
+        "rev": "7720e52a0b4aa973540934ab6dcf4703dbde3b9f",
         "type": "github"
       },
       "original": {
@@ -382,11 +382,11 @@
     "nvim-treesitter": {
       "flake": false,
       "locked": {
-        "lastModified": 1770279356,
-        "narHash": "sha256-NgocMrn3I4bJW37BtVvEYGkPraEC5TU/gb3ibJcG3wA=",
+        "lastModified": 1770376611,
+        "narHash": "sha256-0Ub8nRzJakmh1m2jyw+Bzoa8VgxTBf5IRgmUpuQHNmo=",
         "owner": "nvim-treesitter",
         "repo": "nvim-treesitter",
-        "rev": "70a9fecaf5aeae70c765d4c51a8038165a91aa06",
+        "rev": "92c9b016d16473dabd2bf3760196cf2d928edacc",
         "type": "github"
       },
       "original": {
@@ -437,11 +437,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1770260791,
-        "narHash": "sha256-ADTBfENFjRVDQMcCycyX/pAy6NFI/Ct6Mrar3gsmXI0=",
+        "lastModified": 1770347142,
+        "narHash": "sha256-uz+ZSqXpXEPtdRPYwvgsum/CfNq7AUQ/0gZHqTigiPM=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "42ec85352e419e601775c57256a52f6d48a39906",
+        "rev": "2859683cd9ef7858d324c5399b0d8d6652bf4044",
         "type": "github"
       },
       "original": {
