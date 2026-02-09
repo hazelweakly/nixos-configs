@@ -5,7 +5,6 @@ return {
   init = function(plugin)
     vim.opt.runtimepath:prepend(os.getenv("TREESITTER_PARSERS"))
     require("lazy.core.loader").add_to_rtp(plugin)
-    require("nvim-treesitter.query_predicates")
   end,
   dir = os.getenv("TREESITTER_PLUGIN") .. "/pack/myNeovimPackages/start/nvim-treesitter",
   event = "LazyFile",
@@ -15,10 +14,10 @@ return {
     { "<S-TAB>", desc = "Decrement selection", mode = "x" },
   },
   opts = {
-    highlight = { enable = true },
     indent = { enable = true },
     auto_install = false,
-    -- ensure_installed = {},
+    install_dir = os.getenv("TREESITTER_PLUGIN") .. "/pack/myNeovimPackages/start/nvim-treesitter-grammars",
+    ensure_installed = {},
     ignore_install = { "all" },
     incremental_selection = {
       enable = true,
@@ -32,21 +31,23 @@ return {
   config = function(_, opts)
     vim.treesitter.language.register("bash", "zsh")
 
-    require("nvim-treesitter.configs").setup(opts)
-    vim.o.foldmethod = "expr"
-    vim.o.foldexpr = "nvim_treesitter#foldexpr()"
-    vim.o.foldenable = false
-    vim.o.foldtext =
-      [[substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g'). ' (' . (v:foldend - v:foldstart + 1) . ' lines)']]
-    vim.o.fillchars = "fold: "
-
-    local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-    parser_config.just = {
-      install_info = {
-        url = os.getenv("TREESITTER_PLUGIN")
-          .. "/pack/myNeovimPackages/start/nvim-treesitter/nvim-treesitter-grammar-just",
-        files = { "parser/just.so" },
-      },
-    }
+    require("nvim-treesitter").setup(opts)
+    local group = vim.api.nvim_create_augroup("MyNvimTreesitter", { clear = true })
+    vim.api.nvim_create_autocmd("FileType", {
+      group = group,
+      pattern = "*",
+      callback = function(event)
+        local has, _ = pcall(vim.treesitter.start)
+        if has then
+          vim.bo[event.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          vim.wo[0][0].foldenable = false
+          vim.wo[0][0].foldtext =
+            [[substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g'). ' (' . (v:foldend - v:foldstart + 1) . ' lines)']]
+          vim.wo[0][0].fillchars = "fold: "
+          vim.wo[0][0].foldexpr = "v:lua.vim.treesitter.foldexpr()"
+          vim.wo[0][0].foldmethod = "expr"
+        end
+      end,
+    })
   end,
 }

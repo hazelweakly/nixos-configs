@@ -1,5 +1,5 @@
 { config, lib, userProfile, pkgs, ... }: {
-  home.stateVersion = "22.11";
+  home.stateVersion = "26.05";
   home.username = userProfile.name;
   home.homeDirectory = lib.mkForce userProfile.home;
   xdg.enable = true;

@@ -1,3 +1,4 @@
+# TODO: https://github.com/nix-community/nixvim
 { lib
 , pkgs
 , neovimPackages ? with pkgs; [
