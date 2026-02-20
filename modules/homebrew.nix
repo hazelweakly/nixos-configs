@@ -20,6 +20,7 @@
       "steermouse"
       "todoist"
       "visual-studio-code"
+      "tor-browser"
     ];
   })
 
