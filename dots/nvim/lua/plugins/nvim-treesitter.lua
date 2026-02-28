@@ -30,6 +30,7 @@ return {
   },
   config = function(_, opts)
     vim.treesitter.language.register("bash", "zsh")
+    vim.treesitter.language.register("terraform", { "terraform", "terraform-vars" })
 
     require("nvim-treesitter").setup(opts)
     local group = vim.api.nvim_create_augroup("MyNvimTreesitter", { clear = true })

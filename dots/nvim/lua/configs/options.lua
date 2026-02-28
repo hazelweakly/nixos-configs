@@ -39,6 +39,7 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.showmatch = false
 vim.opt.wrap = false
+vim.opt.linebreak = true
 vim.wo.foldenable = false
 vim.opt.signcolumn = "yes"
 vim.opt.syntax = "off"

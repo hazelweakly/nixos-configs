@@ -1,3 +1,4 @@
+-- Ignore unknown filetypes in checkhealth, they're false positives
 vim.filetype.add({
   extension = {
     stack = "yaml",
@@ -22,9 +23,10 @@ vim.filetype.add({
     ["flake.lock"] = "json",
   },
   pattern = {
-    ["docker-compose*.{yaml,yml}*"] = "yaml",
+    ["compose.*%.ya?ml"] = "yaml.docker-compose",
+    ["docker%-compose.*%.ya?ml"] = "yaml.docker-compose",
     ["ghost-*"] = "html",
-    ["*/templates/*.yaml"] = "helm.yaml",
-    ["*/templates/*.tpl"] = "helm.yaml",
+    [".*/templates/*%.tpl"] = "yaml.helm",
+    [".*/templates/.*%.ya?ml"] = "yaml.helm",
   },
 })
