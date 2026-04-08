@@ -24,10 +24,10 @@
     neovim-unwrapped.lua
     nil
     nixpkgs-fmt
-    nodePackages.prettier
-    nodePackages.prettier_d_slim
+    prettier
+    prettier-d-slim
     # nodePackages.typescript-language-server
-    nodePackages.vscode-langservers-extracted
+    vscode-langservers-extracted
     nodejs
     rust-analyzer
     shellcheck
