@@ -22,7 +22,7 @@ let
       ../modules/home-manager.nix
       ../modules/nix.nix
       ../modules/packages.nix
-      # ../modules/work.nix
+      ../modules/work.nix
       ../modules/zsh.nix
     ]
       ++ inputs.self.lib.optionals (!systemProfile.isWork) [

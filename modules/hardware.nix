@@ -15,8 +15,8 @@
     services.earlyoom.freeSwapThreshold = 2;
     services.earlyoom.enableNotifications = true;
     services.earlyoom.extraArgs = [
-      "--prefer '^(Web Content|.haskell-langua|ghc|ghcid|.cabal-wrapped)$'" # fuck hls. all my homies hate hls. (actually i luv it, it just sux ram like its tryna do a run on a ram bank)
-      "--avoid '^(gnome.*|\.gnome.*|gdm|gdm-.*|Xwayland|systemd|systemd-.*|dbus-.*|ssh|\.gsd-.*)$'"
+      # "--prefer '^(Web Content|.haskell-langua|ghc|ghcid|.cabal-wrapped)$'"
+      # "--avoid '^(gnome.*|\.gnome.*|gdm|gdm-.*|Xwayland|systemd|systemd-.*|dbus-.*|ssh|\.gsd-.*)$'"
     ];
 
     boot.plymouth.enable = true;
