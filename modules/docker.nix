@@ -14,9 +14,9 @@
     };
     users.users.${userProfile.name}.extraGroups = [ "docker" ];
   })
-  (lib.optionalAttrs systemProfile.isDarwin {
+  (lib.optionalAttrs (systemProfile.isDarwin && !systemProfile.isWork) {
     homebrew.casks = [
-      "docker"
+      "docker-desktop"
     ];
   })
 ]

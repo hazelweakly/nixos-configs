@@ -33,6 +33,10 @@
       }
     '';
   }
+  (lib.optionalAttrs (systemProfile.isWork) {
+    targets.darwin.copyApps.enable = false;
+    targets.darwin.linkApps.enable = false;
+  })
   (lib.optionalAttrs (!systemProfile.isWork) {
     xdg.configFile."tridactyl".source =
       config.lib.file.mkOutOfStoreSymlink "${userProfile.flakeDir}/dots/tridactyl";
