@@ -4,6 +4,7 @@
 
   home.sessionVariables = {
     __sys_theme = ''$(<''${XDG_DATA_HOME:-$HOME/.local/share}/theme)'';
+    FLAKEDIR = userProfile.flakeDir;
     TERMINFO_DIRS = "${pkgs.kitty.terminfo}/share/terminfo";
   };
 

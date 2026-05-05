@@ -6,7 +6,7 @@
       curl
       file
 
-      # kitty
+      kitty
       # openssh
       ranger
       repl
@@ -23,7 +23,6 @@
       inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.bitwarden
       jira-cli-go
       switch-theme
-      kitty
       openssh
       taskwarrior3
       timewarrior

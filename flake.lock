@@ -135,22 +135,6 @@
         "type": "github"
       }
     },
-    "kitty": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1777917627,
-        "narHash": "sha256-YH96E9W15+xIpc0c1QvEifBYMo3N/4xXXVzLHNgncdo=",
-        "owner": "kovidgoyal",
-        "repo": "kitty",
-        "rev": "4ab166c9ac5e6d32fd0c0c65e10e9378fbdaad5c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "kovidgoyal",
-        "repo": "kitty",
-        "type": "github"
-      }
-    },
     "lib-aggregate": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -317,7 +301,6 @@
         "firefox-nightly": "firefox-nightly",
         "flake-utils": "flake-utils_2",
         "home-manager": "home-manager",
-        "kitty": "kitty",
         "mkalias": "mkalias",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix-darwin": "nix-darwin",

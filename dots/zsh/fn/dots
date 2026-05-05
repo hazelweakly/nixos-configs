@@ -1,2 +1,2 @@
 #!/usr/bin/env zsh
-cd "$HOME/src/personal/nixos-configs/$1"
+cd "${FLAKEDIR:-"$HOME/src/personal/nixos-configs"}/$1"

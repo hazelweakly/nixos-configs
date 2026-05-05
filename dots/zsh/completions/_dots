@@ -1,2 +1,2 @@
 #compdef dots
-_path_files -/ -W ~/src/personal/nixos-configs
+_path_files -/ -W "${FLAKEDIR:-"$HOME/src/personal/nixos-configs"}"

@@ -34,7 +34,7 @@
     '';
   }
   (lib.optionalAttrs (systemProfile.isWork) {
-    targets.darwin.copyApps.enable = false;
+    targets.darwin.copyApps.enable = true;
     targets.darwin.linkApps.enable = false;
   })
   (lib.optionalAttrs (!systemProfile.isWork) {

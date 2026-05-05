@@ -32,9 +32,6 @@
 
     nvim-treesitter.url = "github:nvim-treesitter/nvim-treesitter";
     nvim-treesitter.flake = false;
-
-    kitty.url = "github:kovidgoyal/kitty";
-    kitty.flake = false;
   };
 
   outputs = inputs@{ self, ... }: {
