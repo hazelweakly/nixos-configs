@@ -1,9 +1,6 @@
-{ pkgs, config, lib, ... }:
-let dir = config.home.homeDirectory + "/src/personal/nixos-configs";
-in
-{
+{ pkgs, config, userProfile, lib, ... }: {
   xdg.configFile."zsh/config".source =
-    config.lib.file.mkOutOfStoreSymlink "${dir}/dots/zsh";
+    config.lib.file.mkOutOfStoreSymlink "${userProfile.flakeDir}/dots/zsh";
 
   home.sessionVariables = {
     __sys_theme = ''$(<''${XDG_DATA_HOME:-$HOME/.local/share}/theme)'';
