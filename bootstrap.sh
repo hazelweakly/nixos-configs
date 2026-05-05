@@ -7,7 +7,7 @@ git --version || :
 
 if ! command -v nix; then
   echo "installing nix"
-  curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+  curl -sSf -L https://install.lix.systems/lix | sh -s -- install
 fi
 
 # if ! command -v kitty && ! [[ -d /Applications/kitty.app ]]; then
