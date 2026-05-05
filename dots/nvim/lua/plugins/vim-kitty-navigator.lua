@@ -1,12 +1,6 @@
 return {
   "knubie/vim-kitty-navigator",
-  build = "cp ./*.py ~/.config/kitty/",
-  keys = {
-    "<M-h>",
-    "<M-j>",
-    "<M-k>",
-    "<M-l>",
-  },
+  event = "User UltraLazy",
   config = function()
     local map = require("configs.utils").map
     map("n", "<M-h>", ":KittyNavigateLeft<cr>")
