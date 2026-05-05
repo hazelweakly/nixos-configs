@@ -1,18 +1,30 @@
 { pkgs, lib, systemProfile, ... }: lib.mkMerge [
   {
     environment.systemPackages = with pkgs; [
-      # _1password-cli
       cachix
       coreutils
       curl
       file
-      inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.bitwarden
-      jira-cli-go
-      kitty
-      openssh
+
+      # kitty
+      # openssh
       ranger
       repl
+
+      # Programs implicitly relied on in shell
+      eza
+      delta
+      bat
+      fd
+      ripgrep
+      bfs
+    ]
+    ++ (with pkgs; lib.optionals (!systemProfile.isWork) [
+      inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.bitwarden
+      jira-cli-go
       switch-theme
+      kitty
+      openssh
       taskwarrior3
       timewarrior
       todoist
@@ -26,16 +38,13 @@
       # Programs implicitly relied on in shell
       parallel
       pistol
-      eza
-      delta
-      bat
-      fd
-      ripgrep
-      bfs
 
       # I don't use this yet but I should
       git-absorb
-    ] ++
+    ])
+    ++ (with pkgs; lib.optionals (systemProfile.isWork) [
+    ])
+    ++
     (with pkgs; lib.optionals stdenv.isLinux [
       firefox-beta-bin
       htop

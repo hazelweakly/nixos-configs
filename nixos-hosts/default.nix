@@ -14,8 +14,6 @@ let
     inherit (cfg) system;
     pkgs = self.legacyPackages.${cfg.system};
     modules = cfg.modules ++ [
-      ../home/homeage.nix
-      ../modules/age.nix
       ../modules/alias-pkgs.nix
       ../modules/cachix.nix
       ../modules/defaults
@@ -39,11 +37,9 @@ let
       ../modules/ssh.nix
       ../modules/users.nix
     ] ++ inputs.self.lib.optionals systemProfile.isLinux [
-      inputs.agenix.nixosModules.default
       inputs.bootspec-secureboot.nixosModules.bootspec-secureboot
       inputs.home-manager.nixosModules.home-manager
     ] ++ inputs.self.lib.optionals systemProfile.isDarwin [
-      inputs.agenix.darwinModules.default
       inputs.home-manager.darwinModules.home-manager
     ];
     specialArgs = { inherit self userProfile systemProfile; inherit (args) inputs; };

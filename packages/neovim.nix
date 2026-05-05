@@ -65,26 +65,27 @@ let
   packDirArgs.myNeovimPackages = { start = [ vimPlugins.nvim-treesitter.withAllGrammars ]; };
   treeSitterPlugin = neovimUtils.packDir packDirArgs;
 
-  args.wrapperArgs = config.wrapperArgs ++ [ "--prefix" "PATH" ":" "${lib.makeBinPath path}" ] ++ [ "--set" "TREESITTER_PLUGIN" treeSitterPlugin ] ++ [ "--set" "TREESITTER_PARSERS" aggregatedParsers ];
-  dotfiles = ../dots/nvim;
-
-  config = neovimUtils.makeNeovimConfig {
+  # args.wrapperArgs = config.wrapperArgs ++ [ "--prefix" "PATH" ":" "${lib.makeBinPath path}" ] ++ [ "--set" "TREESITTER_PLUGIN" treeSitterPlugin ] ++ [ "--set" "TREESITTER_PARSERS" aggregatedParsers ];
+  #
+  config = {
+    autowrapRuntimeDeps = true;
     extraLuaPackages = p: [ p.luarocks ];
     withNodeJs = true;
     withRuby = false;
     vimAlias = true;
     viAlias = true;
     wrapRc = false;
+    wrapperArgs = [ "--prefix" "PATH" ":" "${lib.makeBinPath path}" ] ++ [ "--set" "TREESITTER_PLUGIN" treeSitterPlugin ] ++ [ "--set" "TREESITTER_PARSERS" aggregatedParsers ];
   };
 
   myNeovim = wrapNeovimUnstable
     (neovim-unwrapped.overrideAttrs
       (o: { buildInputs = (o.buildInputs or [ ]) ++ [ stdenv.cc.cc.lib ]; }))
-    (config // args);
+    config;
 in
 
 myNeovim // {
   passthru = (myNeovim.passthru or { }) // {
-    inherit args; inherit (myNeovim) override; inherit dotfiles;
+    inherit (myNeovim) override;
   };
 }

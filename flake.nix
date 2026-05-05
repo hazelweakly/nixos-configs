@@ -2,9 +2,6 @@
   description = "Hazel's system configuration";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    agenix.url = "github:ryantm/agenix";
-    agenix.inputs.nixpkgs.follows = "nixpkgs";
-    agenix.inputs.darwin.follows = "nix-darwin";
 
     # https://github.com/NixOS/rfcs/pull/125
     # look at https://github.com/nix-community/lanzaboote
@@ -67,7 +64,7 @@
       inherit (builtPkgs) legacyPackages packages;
 
       devShells.default = builtPkgs.legacyPackages.mkShell {
-        nativeBuildInputs = [ inputs.agenix.packages.${system}.agenix builtPkgs.legacyPackages.stylua ];
+        nativeBuildInputs = [ builtPkgs.legacyPackages.stylua ];
       };
     });
 }

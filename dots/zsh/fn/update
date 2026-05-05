@@ -1,7 +1,9 @@
 #!/usr/bin/env zsh
 
+FLAKEDIR="${FLAKEDIR:-"$HOME/src/personal/nixos-configs"}"
+
 cleanup() {
-  rm -f "$HOME"/src/personal/nixos-configs/result
+  rm -f "$FLAKEDIR"/result
 }
 trap cleanup EXIT INT TERM
 
@@ -15,22 +17,22 @@ trap cleanup EXIT INT TERM
 
   if [ -f /etc/os-release ]; then
     sudo nixos-rebuild \
-      --flake "$HOME"'/src/personal/nixos-configs#'"$(hostname)" \
+      --flake "$FLAKEDIR"'#'"$(hostname)" \
       ${1+"$@"} switch
     return
   fi
 
-  cd "$HOME"/src/personal/nixos-configs >/dev/null || return
+  cd "$FLAKEDIR" >/dev/null || return
 
   if (( ${+commands[darwin-rebuild]} )) ; then
-    sudo darwin-rebuild --flake "$HOME"/src/personal/nixos-configs ${1+"$@"} switch
+    sudo darwin-rebuild --flake "$FLAKEDIR" ${1+"$@"} switch
   else
     nix() {
       command nix --extra-experimental-features 'nix-command flakes' "$@"
     }
 
     nix build .#darwinConfigurations."${"$(hostname)"%\.local}".system --keep-going ${1+"$@"}
-    sudo ./result/sw/bin/darwin-rebuild --flake "$HOME"/src/personal/nixos-configs ${1+"$@"} switch
+    sudo ./result/sw/bin/darwin-rebuild --flake "$FLAKEDIR" ${1+"$@"} switch
   fi
 
   # kitty_macos_bin=/Applications/kitty.app/Contents/MacOS/kitty

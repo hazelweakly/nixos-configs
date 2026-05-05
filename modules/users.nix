@@ -1,7 +1,11 @@
 { pkgs, lib, systemProfile, userProfile, ... }: lib.mkMerge [
-  {
+  (lib.optionalAttrs (!systemProfile.isWork) {
     home-manager.users = {
       root = import ../home/users/root.nix;
+    };
+  })
+  {
+    home-manager.users = {
       ${userProfile.name} = import ../home/users/hazelweakly.nix;
     };
 
